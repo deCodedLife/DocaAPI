@@ -1,0 +1,102 @@
+{
+  "required_modules": [],
+  "required_permissions": [],
+  "structure": [
+    {
+      "title": "Шапка",
+      "type": "header",
+      "size": 4,
+      "settings": {
+        "description": "Сотрудники - Редактирование",
+        "title": ["№ ", ":id", " ", ":last_name", " ", ":last_name", " ", ":patronymic"]
+      },
+      "components": {
+        "buttons": [{
+          "type": "href",
+          "settings": {
+            "title": "Вернуться",
+            "background": "dark",
+            "icon": "",
+            "page": "users"
+          }
+        }]
+      }
+    },
+    {
+      "title": "Табы",
+      "type": "tabs",
+      "size": 4,
+      "settings": [
+        {
+          "title": "Основная информация",
+          "body": [
+            {
+              "title": "Форма",
+              "type": "form",
+              "size": 4,
+              "settings": {
+                "object": "users",
+                "command": "update",
+                "areas": [{
+                  "size": 2,
+                  "blocks": [{
+                    "title": "Основное",
+                    "fields": ["first_name", "last_name", "patronymic", "store_id", "birthday", "is_visible_in_schedule"]
+                  }, {
+                    "title": "Доступы",
+                    "fields": ["role_id", "email", "password"]
+                  }]
+                }, {
+                  "size": 2,
+                  "blocks": [{
+                    "title": "Документы",
+                    "fields": ["passport_series", "passport_number", "passport_issued", "snils", "inn"]
+                  }, {
+                    "title": "Контакты",
+                    "fields": ["phone", "second_phone", "address"]
+                  }]
+                }, {
+                  "size": 4,
+                  "blocks": [{
+                    "title": "",
+                    "fields": ["comment"]
+                  }]
+                }]
+              },
+              "components": {
+                "buttons": [{
+                  "type": "submit",
+                  "settings": {
+                    "title": "Редактирование",
+                    "background": "dark",
+                    "href": "users"
+                  }
+                }]
+              }
+            }
+          ]
+        },
+        {
+          "title": "Отчеты",
+          "body": [
+
+          ]
+        },
+        {
+          "title": "Лог",
+          "body": [
+            {
+              "title": "Логи",
+              "type": "list",
+              "size": 4,
+              "settings": {
+                "object": "logs"
+              },
+              "components": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "title": "Филиалы",
+  "properties": [{
+    "title": "Название",
+    "article": "title",
+    "type": "varchar(255)",
+    "default": null,
+    "is_required": "Y"
+  },{
+    "title": "График работы (от)",
+    "article": "schedule_from",
+    "type": "time",
+    "default": "00:00",
+    "is_required": "Y"
+  },{
+    "title": "График работы (до)",
+    "article": "schedule_to",
+    "type": "time",
+    "default": "00:00",
+    "is_required": "Y"
+  }, {
+    "title": "Активность (Y/N)",
+    "article": "is_active",
+    "type": "char(1)",
+    "default": "Y",
+    "is_required": "Y"
+  }]
+}

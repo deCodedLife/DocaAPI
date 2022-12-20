@@ -1,0 +1,48 @@
+{
+  "required_modules": [],
+  "required_permissions": [],
+  "structure": [{
+    "title": "Шапка",
+    "type": "header",
+    "size": 4,
+    "settings": {
+      "description": "Группы услуг - Редактирование",
+      "title": [":title"]
+    },
+    "components": {
+      "buttons": [{
+        "type": "href",
+        "settings": {
+          "title": "Вернуться",
+          "background": "dark",
+          "icon": "",
+          "page": "serviceGroups"
+        }
+      }]
+    }
+  }, {
+    "title": "Форма",
+    "type": "form",
+    "size": 4,
+    "settings": {
+      "object": "serviceGroups",
+      "command": "update",
+      "areas": [{
+        "size": 2,
+        "blocks": [{
+          "title": "Основное",
+          "fields": ["title", "parent_id"]
+        }]
+      }]
+    },
+    "components": {
+      "buttons": [{
+        "type": "submit",
+        "settings": {
+          "title": "Редактирование",
+          "background": "dark"
+        }
+      }]
+    }
+  }]
+}

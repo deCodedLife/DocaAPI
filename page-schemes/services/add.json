@@ -1,0 +1,60 @@
+{
+  "required_modules": [],
+  "required_permissions": [],
+  "structure": [{
+    "title": "Шапка",
+    "type": "header",
+    "size": 4,
+    "settings": {
+      "description": "Услуги - Добавление",
+      "title": ["Добавление услуги"]
+    },
+    "components": {
+      "buttons": [{
+        "type": "href",
+        "settings": {
+          "title": "Вернуться",
+          "background": "dark",
+          "icon": "",
+          "page": "services"
+        }
+      }]
+    }
+  }, {
+    "title": "Форма",
+    "type": "form",
+    "size": 4,
+    "settings": {
+      "object": "services",
+      "command": "add",
+      "areas": [{
+        "size": 2,
+        "blocks": [{
+          "title": "Основное",
+          "fields": ["title", "article", "category_id"]
+        }]
+      }, {
+        "size": 2,
+        "blocks": [{
+          "title": "Условия",
+          "fields": ["price", "take_minutes"]
+        }]
+      }, {
+        "size": 4,
+        "blocks": [{
+          "title": "",
+          "fields": ["description"]
+        }]
+      }]
+    },
+    "components": {
+      "buttons": [{
+        "type": "submit",
+        "settings": {
+          "title": "Добавление",
+          "background": "dark"
+        }
+      }]
+    }
+  }]
+}

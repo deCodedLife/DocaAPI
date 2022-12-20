@@ -1,0 +1,1 @@
+{"title":"Посещения - Исполнители","properties":[{"title":"Исполнитель","article":"visit_id","type":"int","default":null,"is_required":"Y"},{"title":"Посещение","article":"user_id","type":"int","default":null,"is_required":"Y"}]}

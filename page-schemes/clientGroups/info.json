@@ -1,0 +1,39 @@
+{
+  "required_modules": [],
+  "required_permissions": [],
+  "structure": [{
+    "title": "Шапка",
+    "type": "header",
+    "size": 4,
+    "settings": {
+      "description": "Группы клиентов - Просмотр",
+      "title": [":title"]
+    },
+    "components": {
+      "buttons": [{
+        "type": "href",
+        "settings": {
+          "title": "Вернуться",
+          "background": "light",
+          "icon": "",
+          "page": "clientGroups"
+        }
+      }]
+    }
+  }, {
+    "title": "Форма",
+    "type": "info",
+    "size": 4,
+    "settings": {
+      "object": "clientGroups",
+      "areas": [{
+        "size": 2,
+        "blocks": [{
+          "title": "Основное",
+          "fields": ["title", "parent_id"]
+        }]
+      }]
+    },
+    "components": {}
+  }]
+}

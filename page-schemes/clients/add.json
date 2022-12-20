@@ -1,0 +1,63 @@
+{
+  "required_modules": [],
+  "required_permissions": [],
+  "structure": [{
+    "title": "Шапка",
+    "type": "header",
+    "size": 4,
+    "settings": {
+      "description": "Клиенты - Добавление",
+      "title": ["Добавление клиента"]
+    },
+    "components": {
+      "buttons": [{
+        "type": "href",
+        "settings": {
+          "title": "Вернуться",
+          "background": "dark",
+          "icon": "",
+          "page": "clients"
+        }
+      }]
+    }
+  }, {
+    "title": "Форма",
+    "type": "form",
+    "size": 4,
+    "settings": {
+      "object": "clients",
+      "command": "add",
+      "areas": [{
+        "size": 2,
+        "blocks": [{
+          "title": "Основное",
+          "fields": ["first_name", "last_name", "patronymic", "gender", "birthday"]
+        }, {
+            "title": "Контакты",
+            "fields": ["email", "phone", "second_phone", "address"]
+          }]
+      }, {
+        "size": 2,
+        "blocks": [{
+          "title": "Документы",
+          "fields": ["passport_series", "passport_number", "passport_issued"]
+        }]
+      }, {
+        "size": 4,
+        "blocks": [{
+          "title": "",
+          "fields": ["comment"]
+        }]
+      }]
+    },
+    "components": {
+      "buttons": [{
+        "type": "submit",
+        "settings": {
+          "title": "Добавление",
+          "background": "dark"
+        }
+      }]
+    }
+  }]
+}
