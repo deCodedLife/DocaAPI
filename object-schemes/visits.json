@@ -33,6 +33,7 @@
     "is_default_in_list": true,
     "is_unique": false,
     "is_autofill": false,
+    "is_disabled": true,
     "custom_list": [{
       "title": "Запланировано",
       "value": "planning"

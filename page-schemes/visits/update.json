@@ -1,1 +1,130 @@
-{"required_modules":[],"required_permissions":[],"structure":[{"title":"Шапка","type":"header","size":4,"settings":{"description":"Записи к врачам - Редактирование","title":["Запись № ",":id"]},"components":[]},{"title":"Форма","type":"form","size":4,"settings":{"object":"visits","command":"update","areas":[{"size":2,"blocks":[{"title":"","fields":["start_at","end_at","status"]},{"title":"","fields":["users_id","clients_id","services_id"]}]},{"size":2,"blocks":[{"title":"","fields":["store_id","cabinet_id"]},{"title":"","fields":["price","discount_type","discount_value"]}]}]},"components":{"buttons":[{"type":"submit","settings":{"title":"Сохранить","background":"dark"}},{"type":"script","settings":{"title":"Завершить","background":"dark","object":"visits","command":"check-success"}}]}}]}
+{
+  "required_modules": [],
+  "required_permissions": [],
+  "structure": [{
+    "title": "Шапка",
+    "type": "header",
+    "size": 4,
+    "settings": {
+      "description": "Записи к врачам - Редактирование",
+      "title": ["Запись № ", ":id"]
+    },
+    "components": []
+  },{
+    "title": "Табы",
+    "type": "tabs",
+    "size": 4,
+    "settings": [
+      {
+        "title": "Основная информация",
+        "body": [
+          {
+            "title": "Форма",
+            "type": "form",
+            "size": 4,
+            "settings": {
+              "object": "visits",
+              "command": "update",
+              "areas": [{
+                "size": 2,
+                "blocks": [{
+                  "title": "",
+                  "fields": ["start_at", "end_at", "status"]
+                }, {
+                  "title": "",
+                  "fields": ["users_id", "clients_id", "services_id"]
+                }]
+              }, {
+                "size": 2,
+                "blocks": [{
+                  "title": "",
+                  "fields": ["store_id", "cabinet_id"]
+                }, {
+                  "title": "",
+                  "fields": ["price", "discount_type", "discount_value"]
+                }]
+              }]
+            },
+            "components": {
+              "buttons": [{
+                "type": "submit",
+                "settings": {
+                  "title": "Сохранить",
+                  "background": "dark"
+                }
+              }, {
+                "type": "script",
+                "settings": {
+                  "title": "Завершить",
+                  "background": "dark",
+                  "object": "visits",
+                  "command": "check-success"
+                }
+              }]
+            }
+          }
+        ]
+      },
+      {
+        "title": "История посещений",
+        "body": [
+          {
+            "title": "История посещений",
+            "type": "list",
+            "size": 4,
+            "settings": {
+              "object": "visits",
+              "filters": [
+                {
+                  "property": "clients_id",
+                  "value": ":clients_id"
+                }
+              ]
+            },
+            "components": []
+          }
+        ]
+      },
+      {
+        "title": "Статистика",
+        "body": [
+          {
+            "title": "Статистика клиентов",
+            "type": "analytic_widgets",
+            "size": 4,
+            "settings": {
+              "widgets_group": "client_statistic",
+              "filters": [
+                {
+                  "property": "client_id",
+                  "value": ":clients_id"
+                }
+              ]
+            },
+            "components": []
+          }
+        ]
+      },
+      {
+        "title": "Логи",
+        "body": [
+          {
+            "title": "Логи",
+            "type": "list",
+            "size": 4,
+            "settings": {
+              "object": "logs",
+              "filters": [
+                {
+                  "property": "client_id",
+                  "value": ":clients_id"
+                }
+              ]
+            },
+            "components": []
+          }
+        ]
+      }
+    ]
+  }]
+}
