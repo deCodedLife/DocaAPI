@@ -1,1 +1,0 @@
-{"required_modules":[],"required_permissions":[],"structure":[{"title":"Шапка","type":"header","size":4,"settings":{"description":"Тестовая страница","title":["Тестовая страница"]},"components":[]},{"title":"Логи","type":"list","size":4,"settings":{"object":"logs"},"components":[]}]}

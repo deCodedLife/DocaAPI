@@ -10,15 +10,7 @@
       "title": ["Добавление услуги"]
     },
     "components": {
-      "buttons": [{
-        "type": "href",
-        "settings": {
-          "title": "Вернуться",
-          "background": "dark",
-          "icon": "",
-          "page": "services"
-        }
-      }]
+      "buttons": []
     }
   }, {
     "title": "Форма",

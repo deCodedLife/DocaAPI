@@ -10,15 +10,7 @@
       "title": ["Добавление группы клиентов"]
     },
     "components": {
-      "buttons": [{
-        "type": "href",
-        "settings": {
-          "title": "Вернуться",
-          "background": "dark",
-          "icon": "",
-          "page": "clientGroups"
-        }
-      }]
+      "buttons": []
     }
   }, {
     "title": "Форма",

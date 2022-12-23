@@ -1,1 +1,39 @@
-{"required_modules":[],"required_permissions":[],"structure":[{"title":"Шапка","type":"header","size":4,"settings":{"title":[":title"],"description":"Специальности - Редактирование"},"components":{"buttons":[{"settings":{"title":"Вернуться","background":"dark","page":"professions"},"type":"href"}]}},{"title":"Форма","type":"form","size":4,"settings":{"object":"professions","command":"update","areas":[{"size":4,"blocks":[{"title":"Основное","fields":["title"]}]}]},"components":{"buttons":[{"settings":{"title":"Редактировать","background":"dark"}}]}}]}
+{
+  "required_modules": [],
+  "required_permissions": [],
+  "structure": [{
+    "title": "Шапка",
+    "type": "header",
+    "size": 4,
+    "settings": {
+      "title": [":title"],
+      "description": "Специальности - Редактирование"
+    },
+    "components": {
+      "buttons": []
+    }
+  }, {
+    "title": "Форма",
+    "type": "form",
+    "size": 4,
+    "settings": {
+      "object": "professions",
+      "command": "update",
+      "areas": [{
+        "size": 4,
+        "blocks": [{
+          "title": "Основное",
+          "fields": ["title"]
+        }]
+      }]
+    },
+    "components": {
+      "buttons": [{
+        "settings": {
+          "title": "Редактировать",
+          "background": "dark"
+        }
+      }]
+    }
+  }]
+}

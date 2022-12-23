@@ -52,9 +52,13 @@ $API->returnResponse(
                 "value" => "",
                 "background" => ""
             ],
-            "type" => "char",
             "background" => "",
-            "detail" => $userVisitsGraph
+            "detail" => [
+                "type" => "char",
+                "settings" => [
+                    "char" => $userVisitsGraph
+                ]
+            ]
 
         ]
     ]

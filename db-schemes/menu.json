@@ -119,15 +119,6 @@
       "parent_id": 2,
       "icon": "garage",
       "is_system": "Y"
-    },
-    {
-      "id": 12,
-      "title": "Тесты",
-      "href": "test",
-      "order_position": 106,
-      "parent_id": 2,
-      "icon": "garage",
-      "is_system": "Y"
     }
   ]
 }

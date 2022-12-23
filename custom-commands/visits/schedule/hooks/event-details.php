@@ -1,6 +1,22 @@
 <?php
 
 /**
+ * Определение цвета Записи
+ */
+switch ( $event[ "status" ][ "value" ] ) {
+
+    case "planning":
+        $event[ "color" ] = "info";
+        break;
+
+    case "ended":
+        $event[ "color" ] = "danger";
+        break;
+
+} // switch. $event[ "status" ][ "value" ]
+
+
+/**
  * Получение детальной информации о пациенте
  */
 $clientDetail = $API->DB->from( "clients" )

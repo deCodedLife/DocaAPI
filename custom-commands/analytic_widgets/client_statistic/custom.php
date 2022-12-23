@@ -96,9 +96,13 @@ $API->returnResponse(
                 "value" => "",
                 "background" => ""
             ],
-            "type" => "char",
             "background" => "",
-            "detail" => []
+            "detail" => [
+                "type" => "char",
+                "settings" => [
+                    "char" => []
+                ]
+            ]
 
         ]
     ]

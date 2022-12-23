@@ -10,15 +10,7 @@
       "title": ["Добавление клиента"]
     },
     "components": {
-      "buttons": [{
-        "type": "href",
-        "settings": {
-          "title": "Вернуться",
-          "background": "dark",
-          "icon": "",
-          "page": "clients"
-        }
-      }]
+      "buttons": []
     }
   }, {
     "title": "Форма",

@@ -48,17 +48,22 @@
             "components": {
               "buttons": [{
                 "type": "submit",
+                "required_permissions": [ "manager_schedule" ],
                 "settings": {
                   "title": "Сохранить",
                   "background": "dark"
                 }
               }, {
                 "type": "script",
+                "required_permissions": [ "manager_schedule" ],
                 "settings": {
                   "title": "Завершить",
                   "background": "dark",
                   "object": "visits",
-                  "command": "check-success"
+                  "command": "check-success",
+                  "data": {
+                    "id": ":id"
+                  }
                 }
               }]
             }

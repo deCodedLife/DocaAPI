@@ -70,6 +70,7 @@ foreach ( $existingVisits as $existingVisit ) {
         ->where( "visit_id", $existingVisit[ "id" ] );
 
     foreach ( $visitClients as $visitClient )
+
         if ( in_array( $visitClient[ "client_id" ], $requestData->client_id ) ) {
 
             /**

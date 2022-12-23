@@ -1,1 +1,49 @@
-{"required_modules":[],"required_permissions":[],"structure":[{"title":"Шапка","type":"header","size":4,"settings":{"object":"professions","command":"add","areas":[{"size":4,"blocks":[{"title":"Добавить специальность","fields":["title"]}]}],"title":["Добавить специальность"],"description":"Специальности - Добавление"},"components":{"buttons":[{"type":"href","settings":{"title":"Вернуться","background":"dark","href":"professions","page":"professions"}}]}},{"title":"Форма","type":"form","size":4,"settings":{"object":"professions","command":"add","areas":[{"size":4,"blocks":[{"title":"Основное","fields":["title"]}]}]},"components":{"buttons":[{"type":"submit","settings":{"title":"Добавить","background":"dark"}}]}}]}
+{
+  "required_modules": [],
+  "required_permissions": [],
+  "structure": [{
+    "title": "Шапка",
+    "type": "header",
+    "size": 4,
+    "settings": {
+      "object": "professions",
+      "command": "add",
+      "areas": [{
+        "size": 4,
+        "blocks": [{
+          "title": "Добавить специальность",
+          "fields": ["title"]
+        }]
+      }],
+      "title": ["Добавить специальность"],
+      "description": "Специальности - Добавление"
+    },
+    "components": {
+      "buttons": []
+    }
+  }, {
+    "title": "Форма",
+    "type": "form",
+    "size": 4,
+    "settings": {
+      "object": "professions",
+      "command": "add",
+      "areas": [{
+        "size": 4,
+        "blocks": [{
+          "title": "Основное",
+          "fields": ["title"]
+        }]
+      }]
+    },
+    "components": {
+      "buttons": [{
+        "type": "submit",
+        "settings": {
+          "title": "Добавить",
+          "background": "dark"
+        }
+      }]
+    }
+  }]
+}

@@ -1,1 +1,37 @@
-{"required_modules":[],"required_permissions":[],"structure":[{"title":"Шапка","type":"header","size":4,"settings":{"description":"Филиалы - Просмотр","title":[":title"]},"components":{"buttons":[{"type":"href","settings":{"title":"Вернуться","background":"light","icon":"","page":"stores"}}]}},{"title":"Форма","type":"info","size":4,"settings":{"object":"stores","areas":[{"size":2,"blocks":[{"title":"Основное","fields":["title"]}]},{"size":2,"blocks":[{"title":"Расписание","fields":["schedule_from","schedule_to"]}]}]},"components":[]}]}
+{
+  "required_modules": [],
+  "required_permissions": [],
+  "structure": [{
+    "title": "Шапка",
+    "type": "header",
+    "size": 4,
+    "settings": {
+      "description": "Филиалы - Просмотр",
+      "title": [":title"]
+    },
+    "components": {
+      "buttons": []
+    }
+  }, {
+    "title": "Форма",
+    "type": "info",
+    "size": 4,
+    "settings": {
+      "object": "stores",
+      "areas": [{
+        "size": 2,
+        "blocks": [{
+          "title": "Основное",
+          "fields": ["title"]
+        }]
+      }, {
+        "size": 2,
+        "blocks": [{
+          "title": "Расписание",
+          "fields": ["schedule_from", "schedule_to"]
+        }]
+      }]
+    },
+    "components": []
+  }]
+}

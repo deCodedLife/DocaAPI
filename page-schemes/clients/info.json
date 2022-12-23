@@ -10,15 +10,7 @@
       "title": ["№ ", ":id", " ", ":last_name", " ", ":last_name", " ", ":patronymic"]
     },
     "components": {
-      "buttons": [{
-        "type": "href",
-        "settings": {
-          "title": "Вернуться",
-          "background": "light",
-          "icon": "",
-          "page": "clients"
-        }
-      }]
+      "buttons": []
     }
   }, {
     "title": "Форма",

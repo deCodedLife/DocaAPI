@@ -1,1 +1,33 @@
-{"required_modules":[],"required_permissions":[],"structure":[{"title":"Шапка","type":"header","size":4,"settings":{"description":"Кабинеты","title":["Кабинеты"]},"components":{"buttons":[{"type":"href","settings":{"title":"Добавление кабинета","background":"dark","page":"cabinets/add"}}]}},{"title":"Список","type":"list","size":4,"settings":{"object":"cabinets"},"components":[]}]}
+{
+  "required_modules": [],
+  "required_permissions": [],
+  "structure": [{
+    "title": "Шапка",
+    "type": "header",
+    "size": 4,
+    "settings": {
+      "description": "Кабинеты",
+      "title": ["Кабинеты"]
+    },
+    "components": {
+      "buttons": []
+    }
+  }, {
+    "title": "Список",
+    "type": "list",
+    "size": 4,
+    "settings": {
+      "object": "cabinets"
+    },
+    "components": {
+      "buttons": [{
+        "type": "href",
+        "settings": {
+          "title": "Добавление кабинета",
+          "background": "dark",
+          "page": "cabinets/add"
+        }
+      }]
+    }
+  }]
+}

@@ -11,15 +11,7 @@
         "title": ["№ ", ":id", " ", ":last_name", " ", ":last_name", " ", ":patronymic"]
       },
       "components": {
-        "buttons": [{
-          "type": "href",
-          "settings": {
-            "title": "Вернуться",
-            "background": "dark",
-            "icon": "",
-            "page": "users"
-          }
-        }]
+        "buttons": []
       }
     },
     {

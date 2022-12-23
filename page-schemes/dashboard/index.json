@@ -1,1 +1,87 @@
-{"required_permissions":[],"required_modules":[],"structure":[{"title":"Расписание","type":"schedule","size":4,"settings":{"object":"visits","performers_table":"users","performers_row_article":"users_id","performers_row_title":"first_name","row_href":"visits/add"},"components":{"filters":[{"title":"Дата","type":"date","required_permissions":[],"required_modules":[],"settings":{"recipient_property":"start_at"}},{"title":"Филиал","type":"list","required_permissions":[],"required_modules":[],"settings":{"is_search":false,"recipient_property":"store_id","donor_object":"stores","donor_property_title":"title","donor_property_value":"id"}},{"title":"Сотрудник","type":"list","required_permissions":[],"required_modules":[],"settings":{"is_search":false,"recipient_property":"users_id","donor_object":"users","donor_property_title":"last_name","donor_property_value":"id"}},{"title":"Клиент","type":"list","required_permissions":[],"required_modules":[],"settings":{"is_search":false,"recipient_property":"clients_id","donor_object":"clients","donor_property_title":"last_name","donor_property_value":"id"}},{"title":"Специальность","type":"list","settings":{"donor_object":"professions","donor_property_title":"title","donor_property_value":"id","recipient_property":"profession_id"}}],"buttons":[]}}],"subpages":[]}
+{
+  "required_permissions": [],
+  "required_modules": [],
+  "structure": [
+    {
+      "title": "Расписание",
+      "type": "list",
+      "size": 4,
+      "required_permissions": [ "doctor_schedule" ],
+      "required_modules": [],
+      "settings": {
+        "object": "visits"
+      },
+      "components": {}
+    },{
+    "title": "Расписание",
+    "type": "schedule",
+    "size": 4,
+    "required_permissions": [ "manager_schedule" ],
+    "required_modules": [],
+    "settings": {
+      "object": "visits",
+      "performers_table": "users",
+      "performers_row_article": "users_id",
+      "performers_row_title": "first_name",
+      "row_href": "visits/add"
+    },
+    "components": {
+      "filters": [{
+        "title": "Дата",
+        "type": "date",
+        "required_permissions": [],
+        "required_modules": [],
+        "settings": {
+          "recipient_property": "start_at"
+        }
+      }, {
+        "title": "Филиал",
+        "type": "list",
+        "required_permissions": [],
+        "required_modules": [],
+        "settings": {
+          "is_search": false,
+          "recipient_property": "store_id",
+          "donor_object": "stores",
+          "donor_property_title": "title",
+          "donor_property_value": "id"
+        }
+      }, {
+        "title": "Сотрудник",
+        "type": "list",
+        "required_permissions": [],
+        "required_modules": [],
+        "settings": {
+          "is_search": false,
+          "recipient_property": "users_id",
+          "donor_object": "users",
+          "donor_property_title": "last_name",
+          "donor_property_value": "id"
+        }
+      }, {
+        "title": "Клиент",
+        "type": "list",
+        "required_permissions": [],
+        "required_modules": [],
+        "settings": {
+          "is_search": false,
+          "recipient_property": "clients_id",
+          "donor_object": "clients",
+          "donor_property_title": "last_name",
+          "donor_property_value": "id"
+        }
+      }, {
+        "title": "Специальность",
+        "type": "list",
+        "settings": {
+          "donor_object": "professions",
+          "donor_property_title": "title",
+          "donor_property_value": "id",
+          "recipient_property": "profession_id"
+        }
+      }],
+      "buttons": []
+    }
+  }],
+  "subpages": []
+}

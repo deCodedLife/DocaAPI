@@ -10,15 +10,7 @@
       "title": [":article", " ", ":title"]
     },
     "components": {
-      "buttons": [{
-        "type": "href",
-        "settings": {
-          "title": "Вернуться",
-          "background": "light",
-          "icon": "",
-          "page": "services"
-        }
-      }]
+      "buttons": []
     }
   }, {
     "title": "Форма",
