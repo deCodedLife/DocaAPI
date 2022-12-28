@@ -40,8 +40,9 @@
       "buttons": [{
         "type": "submit",
         "settings": {
-          "title": "Добавить",
-          "background": "dark"
+          "title": "Сохранить",
+          "background": "dark",
+          "href": "professions"
         }
       }]
     }

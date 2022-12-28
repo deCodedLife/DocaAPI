@@ -131,6 +131,8 @@
     "is_default_in_list": false,
     "is_unique": false,
     "is_autofill": true,
+    "search": "services",
+    "joined_field": "users_id",
     "is_hook": true,
     "use_in_commands": ["add", "update", "hook"],
     "require_in_commands": ["add"],

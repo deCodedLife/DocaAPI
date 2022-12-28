@@ -30,8 +30,9 @@
     "components": {
       "buttons": [{
         "settings": {
-          "title": "Редактировать",
-          "background": "dark"
+          "title": "Сохранить",
+          "background": "dark",
+          "href": "professions"
         }
       }]
     }

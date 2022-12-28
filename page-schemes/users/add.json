@@ -23,7 +23,7 @@
         "size": 2,
         "blocks": [{
           "title": "Основное",
-          "fields": ["first_name", "last_name", "patronymic", "professions_id", "birthday", "store_id", "is_visible_in_schedule"]
+          "fields": ["last_name", "first_name", "patronymic", "professions_id", "birthday", "store_id", "gender", "is_visible_in_schedule"]
         }, {
           "title": "Доступы",
           "fields": ["role_id", "email", "password"]
@@ -49,8 +49,9 @@
       "buttons": [{
         "type": "submit",
         "settings": {
-          "title": "Добавление",
-          "background": "dark"
+          "title": "Сохранить",
+          "background": "dark",
+          "href": "users"
         }
       }]
     }

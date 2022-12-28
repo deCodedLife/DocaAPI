@@ -22,7 +22,7 @@
         "size": 2,
         "blocks": [{
           "title": "Основное",
-          "fields": ["first_name", "last_name", "patronymic", "gender", "birthday"]
+          "fields": ["last_name", "first_name", "patronymic", "gender", "birthday"]
         }, {
           "title": "Контакты",
           "fields": ["email", "phone", "second_phone", "address"]

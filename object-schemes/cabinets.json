@@ -36,6 +36,19 @@
         "icon": "gear",
         "background": "dark"
       }
+    },
+    {
+      "type": "script",
+      "settings": {
+        "title": "Удалить",
+        "background": "dark",
+        "icon": "trash",
+        "object": "cabinets",
+        "command": "remove",
+        "data": {
+          "id": ":id"
+        }
+      }
     }
   ]
 }

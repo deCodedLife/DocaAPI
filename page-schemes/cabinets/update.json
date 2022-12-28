@@ -31,8 +31,9 @@
       "buttons": [{
         "type": "submit",
         "settings": {
-          "title": "Редактирование",
-          "background": "dark"
+          "title": "Сохранить",
+          "background": "dark",
+          "href": "cabinets"
         }
       }]
     }

@@ -1,6 +1,34 @@
 <?php
 
 /**
+ * Фильтр по Сотруднику
+ */
+
+if ( $requestData->users_id ) {
+
+    /**
+     * Отфильтрованный список сотрудников
+     */
+    $filteredUsers = [];
+
+
+    /**
+     * Добавление сотрудников с указанной специальностью
+     * в отфильтрованный список
+     */
+    foreach ( $performersRows as $performersRowKey => $performersRow )
+        if ( $performersRow[ "id" ] == $requestData->users_id ) $filteredUsers[] = $performersRow;
+
+
+    /**
+     * Обновление списка сотрудников
+     */
+    $performersRows = $filteredUsers;
+
+} // if. $requestData->users_id
+
+
+/**
  * Фильтр по Специальности
  */
 

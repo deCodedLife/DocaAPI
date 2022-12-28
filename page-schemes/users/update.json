@@ -8,7 +8,7 @@
       "size": 4,
       "settings": {
         "description": "Сотрудники - Редактирование",
-        "title": ["№ ", ":id", " ", ":last_name", " ", ":last_name", " ", ":patronymic"]
+        "title": ["№ ", ":id", " ", ":last_name", " ", ":first_name", " ", ":patronymic"]
       },
       "components": {
         "buttons": []
@@ -48,10 +48,10 @@
                   "size": 2,
                   "blocks": [{
                     "title": "Основное",
-                    "fields": ["first_name", "last_name", "patronymic", "store_id", "birthday", "is_visible_in_schedule"]
+                    "fields": ["last_name", "first_name", "patronymic", "store_id", "birthday", "gender", "is_visible_in_schedule"]
                   }, {
                     "title": "Доступы",
-                    "fields": ["role_id", "email", "password"]
+                    "fields": ["role_id", "professions_id", "email", "password"]
                   }]
                 }, {
                   "size": 2,
@@ -74,7 +74,7 @@
                 "buttons": [{
                   "type": "submit",
                   "settings": {
-                    "title": "Редактирование",
+                    "title": "Сохранить",
                     "background": "dark",
                     "href": "users"
                   }
@@ -94,7 +94,7 @@
                 "object": "logs",
                 "filters": [
                   {
-                    "property": "user_id",
+                    "property": "users_id",
                     "value": ":id"
                   }
                 ]

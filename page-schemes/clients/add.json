@@ -23,7 +23,7 @@
         "size": 2,
         "blocks": [{
           "title": "Основное",
-          "fields": ["first_name", "last_name", "patronymic", "gender", "birthday"]
+          "fields": ["last_name", "first_name", "patronymic", "gender", "birthday"]
         }, {
             "title": "Контакты",
             "fields": ["email", "phone", "second_phone", "address"]
@@ -33,6 +33,11 @@
         "blocks": [{
           "title": "Документы",
           "fields": ["passport_series", "passport_number", "passport_issued"]
+        }, {
+          "title": "Законный представитель",
+          "fields": [
+            "present_last_name", "present_first_name", "present_patronymic",
+            "present_passport_series", "present_passport_number", "present_passport_issued"]
         }]
       }, {
         "size": 4,
@@ -46,8 +51,9 @@
       "buttons": [{
         "type": "submit",
         "settings": {
-          "title": "Добавление",
-          "background": "dark"
+          "title": "Сохранить",
+          "background": "dark",
+          "href": "clients"
         }
       }]
     }

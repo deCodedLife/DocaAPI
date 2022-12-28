@@ -31,8 +31,9 @@
       "buttons": [{
         "type": "submit",
         "settings": {
-          "title": "Добавление",
-          "background": "dark"
+          "title": "Сохранить",
+          "background": "dark",
+          "href": "serviceGroups"
         }
       }]
     }

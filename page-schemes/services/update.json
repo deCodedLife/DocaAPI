@@ -23,7 +23,7 @@
         "size": 2,
         "blocks": [{
           "title": "Основное",
-          "fields": ["title", "article", "category_id"]
+          "fields": ["title", "article", "category_id", "users_id"]
         }]
       }, {
         "size": 2,
@@ -43,8 +43,9 @@
       "buttons": [{
         "type": "submit",
         "settings": {
-          "title": "Редактирование",
-          "background": "dark"
+          "title": "Сохранить",
+          "background": "dark",
+          "href": "services"
         }
       }]
     }

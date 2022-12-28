@@ -6,42 +6,40 @@
     "type": "header",
     "size": 4,
     "settings": {
-      "description": "Филиалы - Редактирование",
-      "title": [":title"]
+      "title": ["Лог № ", ":id"],
+      "description": "Логи - Просмотр"
     },
     "components": {
       "buttons": []
     }
   }, {
     "title": "Форма",
-    "type": "form",
+    "type": "info",
     "size": 4,
     "settings": {
-      "object": "stores",
-      "command": "update",
+      "object": "logs",
       "areas": [{
         "size": 2,
         "blocks": [{
           "title": "Основное",
-          "fields": ["title"]
+          "fields": ["table_name", "row_id", "status","created_at"]
         }]
       }, {
         "size": 2,
         "blocks": [{
-          "title": "Расписание",
-          "fields": ["schedule_from", "schedule_to"]
+          "title": "Детали",
+          "fields": ["users_id","clients_id","ip"]
+        }]
+      }, {
+        "size": 4,
+        "blocks": [{
+          "title": "",
+          "fields": ["description"]
         }]
       }]
     },
     "components": {
-      "buttons": [{
-        "type": "submit",
-        "settings": {
-          "title": "Сохранить",
-          "background": "dark",
-          "href": "stores"
-        }
-      }]
+      "buttons": []
     }
   }]
 }
