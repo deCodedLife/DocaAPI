@@ -9,7 +9,7 @@
       "description": "Записи к врачам - Добавление",
       "title": ["Добавление записи к врачу"]
     },
-    "components": []
+    "components": {}
   }, {
     "title": "Форма",
     "type": "form",
@@ -39,6 +39,14 @@
     },
     "components": {
       "buttons": [{
+        "type": "add_to_form",
+        "settings": {
+          "title": "Добавить клиента",
+          "page": "clients/add",
+          "field": "clients_id",
+          "background": "dark"
+        }
+      },{
         "type": "submit",
         "settings": {
           "title": "Сохранить",
