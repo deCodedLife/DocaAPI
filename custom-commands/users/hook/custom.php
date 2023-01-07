@@ -17,7 +17,10 @@ $formFieldsUpdate = [];
  */
 if ( $requestData->patronymic ) {
 
-    $formFieldsUpdate[ "gender" ] = "W";
+    if ( mb_substr( $requestData->patronymic, -2 ) === "ич" )
+        $formFieldsUpdate[ "gender" ] = "M";
+    elseif ( mb_substr( $requestData->patronymic, -2 ) === "на" )
+        $formFieldsUpdate[ "gender" ] = "W";
 
 } // if. $requestData->patronymic
 
