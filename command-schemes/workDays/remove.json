@@ -1,0 +1,7 @@
+{
+  "title": "Удаление графика работ",
+  "type": "remove",
+  "object_scheme": "workDays",
+  "required_permissions": [],
+  "required_modules": []
+}

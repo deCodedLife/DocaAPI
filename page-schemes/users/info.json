@@ -22,10 +22,10 @@
         "size": 2,
         "blocks": [{
           "title": "Основное",
-          "fields": ["last_name", "first_name", "patronymic", "professions_id", "store_id", "birthday", "gender", "is_visible_in_schedule", "professions_id"]
+          "fields": ["last_name", "first_name", "patronymic", "birthday", "gender"]
         }, {
           "title": "Доступы",
-          "fields": ["role_id", "email", "password"]
+          "fields": ["role_id", "professions_id", "email", "password"]
         }]
       }, {
         "size": 2,
@@ -35,6 +35,9 @@
         }, {
           "title": "Контакты",
           "fields": ["phone", "second_phone", "address"]
+        }, {
+          "title": "",
+          "fields": ["store_id", "is_visible_in_schedule"]
         }]
       }, {
         "size": 4,

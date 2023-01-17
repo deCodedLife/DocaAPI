@@ -1,0 +1,28 @@
+{
+  "title": "Рабочие дни",
+  "properties": [
+    {
+      "title": "Начало рабочего дня",
+      "article": "event_from",
+      "type": "datetime",
+      "is_required": true,
+      "default": null
+    },
+    {
+      "title": "Окончание рабочего дня",
+      "article": "event_to",
+      "type": "datetime",
+      "is_required": true,
+      "default": null
+    },
+    {
+      "title": "ID Сотрудника",
+      "article": "user_id",
+      "type": "integer",
+      "is_required": true,
+      "default": null
+    }
+  ],
+  "rows_key": "",
+  "rows": []
+}

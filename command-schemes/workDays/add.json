@@ -1,0 +1,7 @@
+{
+  "title": "Добавление правила графика работ",
+  "type": "add",
+  "object_scheme": "workDays",
+  "required_permissions": [],
+  "required_modules": []
+}

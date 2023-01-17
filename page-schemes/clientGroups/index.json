@@ -23,7 +23,7 @@
       "buttons": [{
         "type": "href",
         "settings": {
-          "title": "Добавление группы клиентов",
+          "title": "Добавить группу",
           "background": "dark",
           "page": "clientGroups/add"
         }

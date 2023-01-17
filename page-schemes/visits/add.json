@@ -41,7 +41,7 @@
       "buttons": [{
         "type": "add_to_form",
         "settings": {
-          "title": "Добавить клиента",
+          "title": "Новый клиент",
           "page": "clients/add",
           "field": "clients_id",
           "background": "dark"

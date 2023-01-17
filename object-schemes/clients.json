@@ -3,8 +3,8 @@
   "table": "clients",
   "is_trash": true,
   "properties": [{
-    "title": "Имя",
-    "article": "first_name",
+    "title": "Фамилия",
+    "article": "last_name",
     "data_type": "string",
     "field_type": "string",
     "is_default_in_list": true,
@@ -12,9 +12,9 @@
     "is_autofill": true,
     "use_in_commands": ["add", "update"],
     "require_in_commands": ["add"]
-  }, {
-    "title": "Фамилия",
-    "article": "last_name",
+  },{
+    "title": "Имя",
+    "article": "first_name",
     "data_type": "string",
     "field_type": "string",
     "is_default_in_list": true,

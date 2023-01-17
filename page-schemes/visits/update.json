@@ -133,7 +133,7 @@
               "object": "logs",
               "filters": [
                 {
-                  "property": "client_id",
+                  "property": "clients_id",
                   "value": ":clients_id"
                 }
               ]
