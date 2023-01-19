@@ -87,7 +87,7 @@
     "is_default_in_list": true,
     "is_unique": false,
     "is_autofill": false,
-    "use_in_commands": ["add", "get"],
+    "use_in_commands": ["add", "get", "calendar"],
     "require_in_commands": [],
     "list_donor": {
       "table": "users",
