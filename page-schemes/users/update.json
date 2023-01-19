@@ -78,6 +78,30 @@
         }
       }]
     }, {
+      "title": "График работы",
+      "body": [{
+        "title": "График работы",
+        "type": "calendar",
+        "size": 4,
+        "settings": {
+          "object": "workDays",
+          "filters": [{
+            "property": "user_id",
+            "value": ":id"
+          }]
+        },
+        "components": {
+          "buttons": [{
+            "type": "add_to_form",
+            "settings": {
+              "title": "Добавить правило",
+              "page": "workDays/add",
+              "background": "dark"
+            }
+          }]
+        }
+      }]
+    }, {
       "title": "Логи",
       "body": [{
         "title": "Логи",

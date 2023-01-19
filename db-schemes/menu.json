@@ -86,15 +86,6 @@
     },
     {
       "id": 8,
-      "title": "Группы клиентов",
-      "href": "clientGroups",
-      "order_position": 102,
-      "parent_id": 2,
-      "icon": "garage",
-      "is_system": "Y"
-    },
-    {
-      "id": 9,
       "title": "Группы услуг",
       "href": "serviceGroups",
       "order_position": 103,
@@ -103,7 +94,7 @@
       "is_system": "Y"
     },
     {
-      "id": 10,
+      "id": 9,
       "title": "Кабинеты",
       "href": "cabinets",
       "order_position": 104,
@@ -112,7 +103,7 @@
       "is_system": "Y"
     },
     {
-      "id": 11,
+      "id": 10,
       "title": "Филиалы",
       "href": "stores",
       "order_position": 105,

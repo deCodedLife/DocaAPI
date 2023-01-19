@@ -80,7 +80,7 @@
     "is_autofill": false,
     "is_disabled": true
   }, {
-    "title": "Исполнители",
+    "title": "Сотрудники",
     "article": "users_id",
     "data_type": "array",
     "field_type": "list",

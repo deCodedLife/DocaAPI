@@ -6,8 +6,8 @@
     "type": "header",
     "size": 4,
     "settings": {
-      "description": "Записи к врачам - Добавление",
-      "title": ["Добавление записи к врачу"]
+      "description": "",
+      "title": ["Создание"]
     },
     "components": {}
   }, {
