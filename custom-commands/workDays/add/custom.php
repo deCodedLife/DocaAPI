@@ -107,7 +107,7 @@ while ( $currentScheduleDate <= $scheduleTo ) {
         ->values( [
             "event_from" => "$scheduleDate $requestData->event_from",
             "event_to" => "$scheduleDate $requestData->event_to",
-            "user_id" => $requestData->id
+            "user_id" => $requestData->user_id
         ] )
         ->execute();
 
