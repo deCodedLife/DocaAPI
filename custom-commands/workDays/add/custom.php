@@ -49,9 +49,6 @@ while ( $currentScheduleDate <= $scheduleTo ) {
 
     $scheduleDate = date( "Y-m-d", $currentScheduleDate );
 
-    $scheduleFrom = date( "H:i", $currentScheduleDate );
-    $scheduleTo = date( "H:i", $currentScheduleDate );
-
     $isContinue = false;
 
 
