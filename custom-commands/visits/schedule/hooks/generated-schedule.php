@@ -15,6 +15,11 @@ foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
          */
         $performerSchedule = $schedulePerformerDetail[ "schedule" ];
 
+        /**
+         * Обновленное расписание
+         */
+        $updatedSchedule = [];
+
 
         /**
          * Учет графика работ Исполнителя
@@ -25,8 +30,17 @@ foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
             /**
              * Игнорирование занятого времени
              */
-            if ( $performerEvent[ "status" ] !== "available" ) continue;
+            if ( $performerEvent[ "status" ] !== "available" ) {
 
+                $updatedSchedule[ $performerEvent[ "steps" ][ 0 ] ] = [
+                    "steps" => [ $performerEvent[ "steps" ][ 0 ], $performerEvent[ "steps" ][ 1 ] ],
+                    "event" => $performerEvent[ "event" ],
+                    "status" => $performerEvent[ "status" ]
+                ];
+
+                continue;
+
+            } // if. $performerEvent[ "status" ] !== "available"
 
             /**
              * Шаги в рабочем графике
@@ -71,66 +85,83 @@ foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
             } // if. count( $workedScheduleSteps ) < 1
 
 
-            /**
-             * Сжатие шагов в Расписании
-             */
-            $workedScheduleSteps = [
-                $workedScheduleSteps[ 0 ],
-                $workedScheduleSteps[ count( $workedScheduleSteps ) - 1 ]
-            ];
-
 
             /**
-             * Обновление блока "available" с учетом графика работы Сотрудника
+             * Удаление текущего блока.
+             * Далее вместо него будут созданы блоки со статусами "available" и "empty" с учетом
+             * графика работ Сотрудника
              */
-            $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ][ "schedule" ][ $performerEventKey ][ "steps" ] = $workedScheduleSteps;
+            unset( $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ][ "schedule" ][ $performerEventKey ] );
 
 
             /**
-             * Обновленное расписание с блоков типа "empty"
+             * Последний добавленный шаг.
+             * Используется для добавления блоков empty
              */
-
-            $updatedSchedule = [];
-
-            foreach ( $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ][ "schedule" ] as $scheduleBlock )
-                $updatedSchedule[ $scheduleBlock[ "steps" ][ 0 ] ] = $scheduleBlock;
-
+            $lastAddedStep = $performerEvent[ "steps" ][ 0 ];
 
             /**
-             * Добавление блоков типа "empty"
+             * Текущий статус.
+             * Используется для добавления блоков empty
              */
-
-            if ( $performerEvent[ "steps" ][ 0 ] < $workedScheduleSteps[ 0 ] ) {
-
-                $updatedSchedule[ $performerEvent[ "steps" ][ 0 ] ] = [
-                    "steps" => [
-                        $performerEvent[ "steps" ][ 0 ], $workedScheduleSteps[ 0 ] - 1
-                    ],
-                    "status" => "empty"
-                ];
-
-            } // if. $performerEvent[ "steps" ][ 0 ] < $workedScheduleSteps[ 0 ]
-
-            if ( $performerEvent[ "steps" ][ 1 ] > $workedScheduleSteps[ 1 ] ) {
-
-                $updatedSchedule[ $workedScheduleSteps[ 1 ] + 1 ] = [
-                    "steps" => [
-                        $workedScheduleSteps[ 1 ] + 1, $performerEvent[ "steps" ][ 1 ]
-                    ],
-                    "status" => "empty"
-                ];
-
-            } // if. $performerEvent[ "steps" ][ 1 ] > $workedScheduleSteps[ 1 ]
-
-            sort( $updatedSchedule );
-
+            $currentStatus = "empty";
+            if ( in_array( $performerEvent[ "steps" ][ 0 ], $workedScheduleSteps ) ) $scheduleBlockStepStatus = "available";
 
             /**
-             * Обновление расписания
+             * Обход шагов блока
              */
-            $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ][ "schedule" ] = $updatedSchedule;
+
+            for (
+                $scheduleBlockStepKey = $performerEvent[ "steps" ][ 0 ];
+                $scheduleBlockStepKey <= $performerEvent[ "steps" ][ 1 ];
+                $scheduleBlockStepKey++
+            ) {
+
+                /**
+                 * Проверка, входит ли шаг в график работы
+                 */
+                $scheduleBlockStepStatus = "empty";
+                if ( in_array( $scheduleBlockStepKey, $workedScheduleSteps ) ) $scheduleBlockStepStatus = "available";
+
+
+                if (
+                    (
+                        ( $scheduleBlockStepStatus !== $currentStatus ) &&
+                        ( $lastAddedStep < $scheduleBlockStepKey )
+                    ) ||
+                    ( $scheduleBlockStepKey >= $performerEvent[ "steps" ][ 1 ] )
+                ) {
+
+                    /**
+                     * Добавление блока
+                     */
+                    $updatedSchedule[ $lastAddedStep ] = [
+                        "steps" => [ $lastAddedStep, $scheduleBlockStepKey ],
+                        "status" => $currentStatus
+                    ];
+
+                    /**
+                     * Обновление последнего добавленного шага
+                     */
+                    $lastAddedStep = $scheduleBlockStepKey + 1;
+
+                    /**
+                     * Обновление текущего статуса
+                     */
+                    $currentStatus = $scheduleBlockStepStatus;
+
+                } // if. $scheduleBlockStepStatus !== $currentStatus
+
+            } // foreach. $updatedSchedule
 
         } // foreach. $performerSchedule
+
+
+        /**
+         * Обновление расписания с учетом графика работ
+         */
+        $updatedSchedule = array_values( $updatedSchedule );
+        if ( $updatedSchedule ) $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ][ "schedule" ] = $updatedSchedule;
 
     } // foreach. $scheduleDateDetail
 

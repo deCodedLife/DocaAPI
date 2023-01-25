@@ -1,0 +1,27 @@
+{
+  "required_permissions": [],
+  "required_modules": [],
+  "structure": [
+    {
+      "title": "Документы",
+      "type": "list",
+      "size": 4,
+      "required_permissions": [],
+      "required_modules": [],
+      "settings": {
+        "object": "documents"
+      },
+      "components": {
+        "buttons": [{
+          "type": "href",
+          "settings": {
+            "title": "Добавить документ",
+            "page": "documents/add",
+            "background": "dark"
+          }
+        }]
+      }
+    }
+  ],
+  "subpages": []
+}

@@ -1,0 +1,76 @@
+{
+  "title": "Задачи",
+  "table": "tasks",
+  "is_trash": true,
+  "properties": [{
+    "title": "Описание",
+    "article": "description",
+    "data_type": "string",
+    "field_type": "textarea",
+    "is_default_in_list": true,
+    "is_unique": false,
+    "is_autofill": true,
+    "use_in_commands": ["add", "update"],
+    "require_in_commands": ["add"]
+  },{
+    "title": "Статус",
+    "article": "status",
+    "data_type": "string",
+    "field_type": "list",
+    "is_default_in_list": true,
+    "is_unique": false,
+    "is_autofill": true,
+    "use_in_commands": ["add", "update", "get"],
+    "require_in_commands": [],
+    "custom_list": [{
+      "title": "Поставлена",
+      "value": "set"
+    }, {
+      "title": "Завершена",
+      "value": "ended"
+    }]
+  }, {
+    "title": "Автор",
+    "article": "author_id",
+    "data_type": "integer",
+    "field_type": "list",
+    "is_default_in_list": false,
+    "is_unique": false,
+    "is_autofill": true,
+    "use_in_commands": ["add", "update", "get"],
+    "require_in_commands": [],
+    "list_donor": {
+      "table": "users",
+      "properties_title": "last_name"
+    }
+  }, {
+    "title": "Исполнитель",
+    "article": "performer_id",
+    "data_type": "integer",
+    "field_type": "list",
+    "is_default_in_list": true,
+    "is_unique": false,
+    "is_autofill": true,
+    "use_in_commands": ["add", "update", "get"],
+    "require_in_commands": [],
+    "list_donor": {
+      "table": "users",
+      "properties_title": "last_name"
+    }
+  }, {
+    "title": "Тема",
+    "article": "taskGroup_id",
+    "data_type": "integer",
+    "field_type": "list",
+    "is_default_in_list": true,
+    "is_unique": false,
+    "is_autofill": true,
+    "use_in_commands": ["add", "update", "get"],
+    "require_in_commands": [],
+    "list_donor": {
+      "table": "taskGroups",
+      "properties_title": "title"
+    }
+  }],
+  "action_buttons": []
+}

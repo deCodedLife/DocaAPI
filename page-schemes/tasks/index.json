@@ -1,0 +1,44 @@
+{
+  "required_permissions": [],
+  "required_modules": [],
+  "structure": [
+    {
+      "title": "Задачи",
+      "type": "list",
+      "size": 4,
+      "required_permissions": [],
+      "required_modules": [],
+      "settings": {
+        "object": "tasks"
+      },
+      "components": {
+        "filters": [{
+          "title": "Тема",
+          "type": "list",
+          "required_permissions": [],
+          "required_modules": [],
+          "settings": {
+            "is_search": false,
+            "recipient_property": "taskGroup_id",
+            "donor_object": "taskGroups",
+            "donor_property_title": "title",
+            "donor_property_value": "id"
+          }
+        }],
+        "buttons": [
+          {
+            "type": "href",
+            "settings": {
+              "title": "Добавить задачу",
+              "page": "tasks/add",
+              "icon": "",
+              "background": "dark"
+            },
+            "required_permissions": [],
+            "required_modules": []
+          }
+        ]
+      }
+    }],
+  "subpages": []
+}

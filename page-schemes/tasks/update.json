@@ -1,0 +1,53 @@
+{
+  "required_modules": [],
+  "required_permissions": [],
+  "structure": [{
+    "title": "Шапка",
+    "type": "header",
+    "size": 4,
+    "settings": {
+      "description": "Задачи - Редактирование",
+      "title": ["№ ", ":id"]
+    },
+    "components": {
+      "buttons": []
+    }
+  }, {
+    "title": "Форма",
+    "type": "form",
+    "size": 4,
+    "settings": {
+      "object": "tasks",
+      "command": "update",
+      "areas": [{
+        "size": 2,
+        "blocks": [{
+          "title": "",
+          "fields": ["performer_id"]
+        }]
+      },{
+        "size": 2,
+        "blocks": [{
+          "title": "",
+          "fields": ["status", "taskGroup_id"]
+        }]
+      },{
+        "size": 4,
+        "blocks": [{
+          "title": "",
+          "fields": ["description"]
+        }]
+      }]
+    },
+    "components": {
+      "buttons": [{
+        "type": "submit",
+        "settings": {
+          "title": "Сохранить",
+          "background": "dark",
+          "href": "tasks"
+        }
+      }]
+    }
+  }]
+}
