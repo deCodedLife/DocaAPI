@@ -80,6 +80,14 @@
       "is_system": "Y"
     },
     {
+      "title": "Шаблоны документов",
+      "href": "documents",
+      "order_position": 5,
+      "parent_id": null,
+      "icon": "reading",
+      "is_system": "Y"
+    },
+    {
       "title": "Специальности",
       "href": "professions",
       "order_position": 101,
