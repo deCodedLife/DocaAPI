@@ -105,7 +105,8 @@ foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
              * Используется для добавления блоков empty
              */
             $currentStatus = "empty";
-            if ( in_array( $performerEvent[ "steps" ][ 0 ], $workedScheduleSteps ) ) $scheduleBlockStepStatus = "available";
+            if ( in_array( $performerEvent[ "steps" ][ 0 ], $workedScheduleSteps ) ) $currentStatus = "available";
+            
 
             /**
              * Обход шагов блока
