@@ -28,8 +28,8 @@ $storeData = $API->DB->from( "stores" )
 
 $isTimeCorrect = true;
 
-if ( strtotime( $requestData->start_at ) < strtotime( $storeData->schedule_from ) ) $isTimeCorrect = false;
-if ( strtotime( $requestData->end_at ) > strtotime( $storeData->schedule_to ) ) $isTimeCorrect = false;
+if ( strtotime( DateTime::createFromFormat( 'Y-m-d H:i:s', $requestData->start_at )->format('H:i:s') ) < strtotime( $storeData[ "schedule_from" ] ) ) $isTimeCorrect = false;
+if ( strtotime( DateTime::createFromFormat( 'Y-m-d H:i:s', $requestData->end_at )->format('H:i:s') ) > strtotime( $storeData[ "schedule_to" ] ) ) $isTimeCorrect = false;
 
 if ( !$isTimeCorrect ) $API->returnResponse( "Время посещения выходит за рамки графика работы филиала", 400 );
 

@@ -1,1 +1,0 @@
-{"title":"Типы документов","properties":[{"title":"Название","article":"title","type":"varchar(75)","default":null,"is_required":"N"},{"title":"Артикул","article":"article","type":"varchar(75)","default":null,"is_required":"Y"}],"rows_key":"id"}

@@ -1,22 +1,41 @@
 {
   "required_modules": [],
   "required_permissions": [],
-  "structure": [{
-    "title": "Шапка",
-    "type": "header",
-    "size": 4,
-    "settings": {
-      "description": "Шаблоны документов - Редактирование",
-      "title": [":title"]
+  "structure": [
+    {
+      "title": "Шапка",
+      "type": "header",
+      "size": 4,
+      "settings": {
+        "description": "Шаблоны документов - Редактирование",
+        "title": [
+          ":title"
+        ]
+      },
+      "components": {
+        "buttons": []
+      }
     },
-    "components": {
-      "buttons": []
+    {
+      "title": "Документы",
+      "type": "documents",
+      "size": 4,
+      "settings": {
+        "object": "documents",
+        "command": "update",
+        "data": {
+          "title": "Тестовый",
+          "structure": [
+            {
+              "block_position": 0,
+              "block_type": "text",
+              "settings": {
+                "document_body": "test"
+              }
+            }
+          ]
+        }
+      }
     }
-  }, {
-    "title": "Документы",
-    "type": "documents",
-    "size": 4,
-    "settings": {},
-    "components": {}
-  }]
+  ]
 }
