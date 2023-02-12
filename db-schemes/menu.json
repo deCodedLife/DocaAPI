@@ -88,6 +88,14 @@
       "is_system": "Y"
     },
     {
+      "title": "Касса",
+      "href": "payments",
+      "order_position": 6,
+      "parent_id": null,
+      "icon": "reading",
+      "is_system": "Y"
+    },
+    {
       "title": "Специальности",
       "href": "professions",
       "order_position": 101,

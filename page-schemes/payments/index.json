@@ -1,0 +1,1 @@
+{"required_modules":[],"required_permissions":[],"structure":[{"title":"Табы","type":"tabs","size":4,"settings":[{"title":"Журнал чеков","body":[{"title":"Список продаж","type":"list","size":4,"settings":{"object":"sales"},"components":[]}]}],"components":[]}]}
