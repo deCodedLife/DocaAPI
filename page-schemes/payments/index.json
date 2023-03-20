@@ -1,1 +1,185 @@
-{"required_modules":[],"required_permissions":[],"structure":[{"title":"Табы","type":"tabs","size":4,"settings":[{"title":"Журнал чеков","body":[{"title":"Список продаж","type":"list","size":4,"settings":{"object":"sales"},"components":[]}]}],"components":[]}]}
+{
+  "required_modules": [],
+  "required_permissions": [],
+  "structure": [
+    {
+      "title": "Табы",
+      "type": "tabs",
+      "size": 4,
+      "settings": [
+        {
+          "title": "Журнал чеков",
+          "body": [
+            {
+              "title": "Продажи",
+              "type": "header",
+              "size": 4,
+              "settings": {
+                "description": "",
+                "title": [
+                  "Продажи"
+                ]
+              },
+              "components": {
+                "buttons": []
+              }
+            },
+            {
+              "title": "Приход наличными",
+              "type": "analytic_widgets",
+              "size": 4,
+              "settings": {
+                "widgets_group": "sales_statistic",
+                "filters": [
+                  {
+                    "property": "cash",
+                    "value": "1"
+                  },
+                  {
+                    "property": "card",
+                    "value": "1"
+                  },
+                  {
+                    "property": "deposit",
+                    "value": "1"
+                  },
+                  {
+                    "property": "summary",
+                    "value": "1"
+                  }
+                ]
+              },
+              "components": []
+            },
+            {
+              "title": "Возврат",
+              "type": "header",
+              "size": 4,
+              "settings": {
+                "description": "",
+                "title": [
+                  "Возврат"
+                ]
+              },
+              "components": []
+            },
+            {
+              "title": "Приход наличными",
+              "type": "analytic_widgets",
+              "size": 4,
+              "settings": {
+                "widgets_group": "sales_return_statistic",
+                "filters": []
+              },
+              "components": []
+            }
+          ]
+        },
+        {
+          "title": "Приход средств в кассу",
+          "body": [
+            {
+              "title": "Список операций",
+              "type": "list",
+              "size": 4,
+              "settings": {
+                "object": "sales"
+              },
+              "components": {
+                "filters": [
+                  {
+                    "title": "Дата",
+                    "type": "date",
+                    "settings": {
+                      "recipient_property": "created_at"
+                    },
+                    "required_permissions": [],
+                    "required_modules": []
+                  },
+                  {
+                    "title": "Клиент",
+                    "type": "list",
+                    "settings": {
+                      "donor_object": "clients",
+                      "donor_property_title": "last_name",
+                      "donor_property_value": "id",
+                      "recipient_property": "clients"
+                    }
+                  },
+                  {
+                    "title": "Сотрудник",
+                    "type": "list",
+                    "settings": {
+                      "donor_object": "users",
+                      "donor_property_title": "last_name",
+                      "donor_property_value": "id",
+                      "recipient_property": "employee"
+                    }
+                  },
+                  {
+                    "title": "Филиал",
+                    "type": "list",
+                    "settings": {
+                      "donor_object": "stores",
+                      "donor_property_title": "title",
+                      "donor_property_value": "id",
+                      "recipient_property": "store_id"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "title": "Расход средств из кассы",
+          "body": []
+        },
+        {
+          "title": "Состояние кассы",
+          "body": [
+            {
+              "title": "Все операции",
+              "type": "list",
+              "size": 4,
+              "settings": {
+                "object": "cashbox_balance"
+              },
+              "components": []
+            }
+          ]
+        },
+        {
+          "title": "Действия",
+          "body": [
+            {
+              "title": "Кассы",
+              "type": "list",
+              "size": 4,
+              "settings": {
+                "object": "atol"
+              },
+              "components": {
+                "filters": [
+                  {
+                    "title": "Филиал",
+                    "type": "list",
+                    "settings": {
+                      "donor_object": "stores",
+                      "donor_property_title": "title",
+                      "donor_property_value": "id",
+                      "recipient_property": "store_id"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "components": {
+        "buttons": []
+      }
+    }
+  ]
+}

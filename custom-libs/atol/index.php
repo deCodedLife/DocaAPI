@@ -4,7 +4,13 @@
  * @file Интеграция с кассой Атол
  */
 
-namespace Atol;
+namespace Сashbox;
+
+require_once "product.php";
+require_once "payment.php";
+require_once "operator.php";
+
+
 
 define( "TAXATION_TYPES", [
     "osn",              // общая
@@ -14,97 +20,115 @@ define( "TAXATION_TYPES", [
     "patent"            // патентная система налогообложения
 ] );
 
+
+
 class Atol
 {
-    public IProduct $items;
     public IOperator $operator;
-    public IPayment $payments;
+    public array $items;
+    public array $payments;
     public string $taxationType;
     public float $total;
     public string $type;
-    public int $saleID;
+    public string $uuid;
+
+    public array $sales; // TODO: Убрать старый api в Atol_server
+    public string $sale_type;
+    public array $clientInfo;
+    public bool $electronically;
 
 
 
     /**
-     * Добавление продукта / услуги в чек
-     * @param IProduct $product
-     * @return void
+     * Конструктор класса
      */
-    public function addProduct( IProduct $product ): void
-    {
+    public function __construct() {
 
-        $this->items[] = $product;
+        $this->items = [];
+        $this->payments = [];
+        $this->operator = new IOperator;
+        $this->taxationType = "osn";
+        $this->total = 0;
+        $this->type = "sell";
+        $this->uuid = 0;
+        $this->sales = [];
+        $this->electronically = false;
+        $this->clientInfo = [];
 
-    }
+    } // function. __construct
 
 
-    
+
     /**
+     * Расчёт стоимости всех элементов
      * @return float
      */
     private function getItemsSummary(): float
     {
 
-        $summary = 0.0;
+        $summary = 0;
 
         foreach ( $this->items as $item )
-            $summary += $item->amount;
+            $summary += $item->amount ?? 0;
 
 
         return $summary;
-    }
+    } //  function. getItemsSummary
 
-
-    /**
-     * @return array
-     */
-    private function itemsToJSON(): array
-    {
-
-        $jsonItems = [];
-
-        foreach ( $this->items as $item )
-            $jsonItems[] = $item->ToJSON();
-
-        return $jsonItems;
-
-    }
 
 
     /**
      * Возвращает полный объект для печати чека
      * @return array
      */
-    public function ToJSON(): array
+    public function GetReciept()
     {
+        global $API;
 
         $barcode = new IProduct;
         $barcode->SetBarcode( "90311017", "EAN8", $this->getItemsSummary() );
 
-        $this->addProduct( $barcode );
+        $this->items[] = $barcode;
+        $this->total = $this->getItemsSummary();
+        $this->uuid =  $this->sale_type . "-id-" . $this->uuid ?? "0";
 
-        return [
+        $return = [
+            "sale_type" => $this->sale_type == "sellReturn" ? "return" : "sell",
+            "sales" => $this->sales,
+            "hash" => null,
+            "code_return" => "",
             "request" => [
-                "items" => $this->itemsToJSON(),
-                "operator" => $this->operator->ToJSON(),
-                "payments" => $this->payments->ToJSON(),
-                "taxationType" => $this->taxationType,
-                "total" => $this->getItemsSummary(),
-                "type" => $this->type
+                "callbacks" => [
+                    "resultUrl" => "http://127.0.0.1:80/receive",
+                ],
+                "request" => [
+                    "items" => $this->items,
+                    "operator" => $this->operator,
+                    "payments" => $this->payments,
+                    "taxationType" => $this->taxationType,
+                    "total" => $this->total,
+                    "type" => $this->sale_type
+                ],
+                "uuid" => $this->uuid
             ],
-            "uuid" => "sell-id-" . $this->saleID
         ];
-    }
+
+
+        if ( count( $this->clientInfo ) > 0 ) $return[ "request" ][ "request" ][ "clientInfo" ] = $this->clientInfo;
+        if ( $this->electronically ) $return[ "request" ][ "request" ][ "electronically" ] = $this->electronically;
+
+        return $return;
+
+    } // function. GetReciept
 
 
     /**
      * Задать форму налогообложения
      *
-     * @param string $type
+     * @param $type string
      * @return bool|string
      */
-    public function setTaxationType( string $type ): bool | string
+    public function setTaxationType( string $type )
     {
 
         if ( !in_array( $type, TAXATION_TYPES ) )
@@ -114,4 +138,5 @@ class Atol
         return true;
 
     } // public function setTaxationType
+
 }

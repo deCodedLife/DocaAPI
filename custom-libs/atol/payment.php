@@ -1,6 +1,6 @@
 <?php
 
-namespace Atol;
+namespace Сashbox;
 
 /**
  * Объект оплаты
@@ -13,8 +13,18 @@ namespace Atol;
  */
 class IPayment
 {
+    public string $type;
     public float $sum;
-    public string | int $type;
+
+
+
+    public function __construct( string $type, float $sum ) {
+
+        $this->sum = $sum;
+        $this->type = $type;
+
+    }
+
 
     public function ToJSON(): array
     {

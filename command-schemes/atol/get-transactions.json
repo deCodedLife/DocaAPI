@@ -1,0 +1,7 @@
+{
+  "title": "Получить транзакции",
+  "type": "get",
+  "object_scheme": "atol",
+  "modules": [],
+  "permissions": []
+}

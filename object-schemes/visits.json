@@ -77,8 +77,10 @@
     "field_type": "price",
     "is_default_in_list": true,
     "is_unique": false,
-    "is_autofill": false,
-    "is_disabled": true
+    "is_autofill": true,
+    "is_disabled": true,
+    "use_in_commands": ["hook", "add", "update"],
+    "require_in_commands": ["add"]
   }, {
     "title": "Сотрудники",
     "article": "users_id",
@@ -102,7 +104,7 @@
     },
     "is_disabled": false
   }, {
-    "title": "Клиенты",
+    "title": "Клиент",
     "article": "clients_id",
     "data_type": "array",
     "field_type": "list",
@@ -116,14 +118,14 @@
       "table": null,
       "properties_title": null
     },
+    "is_disabled": false,
     "join": {
       "connection_table": "visits_clients",
       "donor_table": "clients",
       "property_article": "last_name",
       "insert_property": "visit_id",
       "filter_property": "client_id"
-    },
-    "is_disabled": false
+    }
   }, {
     "title": "Услуги",
     "article": "services_id",
@@ -193,6 +195,17 @@
     "use_in_commands": ["schedule"],
     "require_in_commands": []
   }, {
+    "title": "Кол-во дней в диапазоне графика",
+    "article": "days_range",
+    "data_type": "integer",
+    "field_type": "integer",
+    "is_default_in_list": false,
+    "is_unique": false,
+    "is_autofill": false,
+    "is_disabled": true,
+    "use_in_commands": ["schedule"],
+    "require_in_commands": []
+  }, {
     "title": "Тип скидки",
     "article": "discount_type",
     "data_type": "string",
@@ -232,5 +245,14 @@
       "properties_title": "title"
     },
     "require_in_commands": []
+  }, {
+    "title": "Оплачено",
+    "article": "is_payed",
+    "data_type": "boolean",
+    "field_type": "checkbox",
+    "is_default_in_list": true,
+    "is_unique": false,
+    "is_autofill": false,
+    "use_in_commands": ["update"]
   }]
 }

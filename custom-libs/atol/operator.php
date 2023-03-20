@@ -1,6 +1,6 @@
 <?php
 
-namespace Atol;
+namespace Сashbox;
 
 /**
  * Оператора кассового аппарата
@@ -8,8 +8,8 @@ namespace Atol;
  *      "name": "Миннахматовна Э. Ц.",
  *      "vatin": "123654789507"
  * }
- * @var string $name  Имя Оператора
- * @var string $vatin ИНН Оператора
+ * @var $name   string  Имя Оператора
+ * @var $vatin  string  ИНН Оператора
  */
 class IOperator
 {

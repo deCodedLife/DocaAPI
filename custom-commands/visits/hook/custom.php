@@ -4,7 +4,7 @@
  * @file
  * Хуки на Запись к врачу
  */
-
+$formFieldsUpdate = [];
 
 
 /**
@@ -60,13 +60,17 @@ if ( $requestData->services_id ) {
      * Обновление полей формы
      */
 
-    $formFieldsUpdate[ "price" ] = $visitPrice;
+    $formFieldsUpdate[ "price" ] = [
+        "value" => $visitPrice
+    ];
 
-    $formFieldsUpdate[ "end_at" ] = date(
+    $formFieldsUpdate[ "end_at" ] = [
+        "value" => date(
         "Y-m-d H:i:s", strtotime(
             "+$visitTakeMinutes minutes", strtotime( $requestData->start_at )
+            )
         )
-    );
+    ];
 
 } // if. $requestData->services_id
 
