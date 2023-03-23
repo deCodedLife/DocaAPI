@@ -1,1 +1,1 @@
-{"title":"Получить список продаж","type":"get","object_scheme":"sales","modules":[],"permissions":[],"no_limit":false}
+{"title":"Получить список продаж","type":"get","object_scheme":"sales","required_modules":[],"required_permissions":[],"no_limit":false}

@@ -1,1 +1,1 @@
-{"title":"Акции","type":"get","object_scheme":"promotions","modules":[],"permissions":[],"no_limit":true}
+{"title":"Акции","type":"get","object_scheme":"promotions","required_modules":[],"required_permissions":[],"no_limit":true}

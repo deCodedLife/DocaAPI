@@ -11,22 +11,10 @@ require_once $API::$configs[ "paths" ][ "public_app" ] . "/custom-libs/discounts
  * @param Сashbox\IModifier $modifier
  * @return void
  */
-function writeModifier( int $promotion_id, Сashbox\IModifier $modifier, $is_test = false ): void
+function writeModifier( int $promotion_id, Сashbox\IModifier $modifier ): void
 {
 
     global $API;
-
-    if ( $is_test )
-        $API->returnResponse( json_encode( [
-            "promotion_id" => $promotion_id,
-            "type" => $modifier->Type,
-            "object_id" => $modifier->ObjectID,
-            "is_excluded" => $modifier->IsExcluded ? 'Y' : 'N',
-            "is_required" => $modifier->IsRequired ? 'Y' : 'N',
-            "is_group" => $modifier->IsGroup ? 'Y' : 'N',
-        ] ), 400 );
-
-    // {"promotion_id":39,"type":"target","object_id":24,"is_excluded":"N","is_required":"N","is_group":"N"}
 
     $API->DB->insertInto( "promotionObjects" )
         ->values( [
@@ -38,8 +26,6 @@ function writeModifier( int $promotion_id, Сashbox\IModifier $modifier, $is_tes
             "is_group" => $modifier->IsGroup ? 'Y' : 'N',
         ] )
         ->execute();
-
-
 
 }
 
@@ -63,33 +49,34 @@ $promotion_id = $API->DB->insertInto( "promotions" )
 
 
 
-foreach ( $requestData->services as $service )
+foreach ( $requestData->services as $key => $service )
     writeModifier(
         $promotion_id,
         new Сashbox\IModifier( $service )
     );
 
-$API->returnResponse( json_encode( new Cashbox\IModifier() ), 400 );
+
 
 foreach ( $requestData->servicesGroups as $serviceGroup )
     writeModifier(
         $promotion_id,
-        new Cashbox\IModifier( $serviceGroup, true ), true
+        new Сashbox\IModifier( $serviceGroup, true )
     );
-
 
 
 
 foreach ( $requestData->requiredServices as $service )
     writeModifier(
         $promotion_id,
-        new Cashbox\IModifier( $service, false, true )
+        new Сashbox\IModifier( $service, false, true )
     );
+
+
 
 foreach ( $requestData->requiredServicesGroups as $serviceGroup )
     writeModifier(
         $promotion_id,
-        new Cashbox\IModifier( $serviceGroup, true, true )
+        new Сashbox\IModifier( $serviceGroup, true, true )
     );
 
 
@@ -97,28 +84,25 @@ foreach ( $requestData->requiredServicesGroups as $serviceGroup )
 foreach ( $requestData->excludedServices as $service )
     writeModifier(
         $promotion_id,
-        new Cashbox\IModifier( $service, false, false, true )
+        new Сashbox\IModifier( $service, false, false, true )
     );
 
 foreach ( $requestData->excludedServicesGroups as $serviceGroup )
     writeModifier(
         $promotion_id,
-        new Cashbox\IModifier( $serviceGroup, true, false, true )
+        new Сashbox\IModifier( $serviceGroup, true, false, true )
     );
-
 
 
 
 foreach ( $requestData->clientsGroups as $clientGroup ) {
 
-    $clientModifier = new Cashbox\IModifier( $clientGroup );
-    $clientModifier->Type = OBJECTS_CATEGORIES[ 1 ];
+    $clientModifier = new Сashbox\IModifier( $clientGroup );
+    $clientModifier->Type = "clients";
 
     writeModifier( $promotion_id, $clientModifier );
 
 }
-
-
 
 
 $API->returnResponse();

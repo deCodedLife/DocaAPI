@@ -17,17 +17,29 @@ class Discounts
     public function __construct() {
 
         $this->DB = "promotions";
-        $this->ActiveItemsDB = "promotionsServices";
-        $this->ActiveGroupsDB =  "promotionsServicesGroups";
-        $this->RequiredItemsDB = "promotionsRequiredServices";
-        $this->ExcludedItemsDB = "promotionsExcludedServices";
-        $this->RequiredGroupsDB = "promotionsRequiredServicesGroups";
-        $this->ExcludedGroupsDB = "promotionsRequiredServicesGroups";
-        $this->NecessaryClientsGroupsDB = "promotionsClientsGroups";
+
+        foreach ( $this->GetActiveDiscounts() as $discount )
+            $this->getModifiers( "promotion_id",  $discount[ "id" ] );
 
     }
 
-//    private function getModifiers( $table,  )
+    private function getModifiers( $param, $promotion_id ) {
+
+        global $API;
+
+        $modifiers = $API->DB->from( $this->DB . "Objects" )
+            ->where( $param, $promotion_id );
+
+        foreach ( $modifiers as $modifier ) {
+            $this->DiscountModifiers[] = new IModifier(
+                $modifier[ "object_id" ],
+                $modifier[ "is_group" ] == 'Y',
+                $modifier[ "is_required" ] == 'Y',
+                $modifier[ "is_excluded" ] == 'Y'
+            );
+        }
+
+    }
 
 
     public function GetActiveDiscounts() : array {

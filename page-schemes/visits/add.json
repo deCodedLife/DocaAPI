@@ -39,11 +39,11 @@
     },
     "components": {
       "buttons": [{
-        "type": "add_to_form",
+        "type": "modal",
         "settings": {
           "title": "Новый клиент",
           "page": "clients/add",
-          "field": "clients_id",
+          "insert_to_field": "clients_id",
           "background": "dark"
         }
       },{

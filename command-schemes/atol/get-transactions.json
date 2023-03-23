@@ -2,6 +2,6 @@
   "title": "Получить транзакции",
   "type": "get",
   "object_scheme": "atol",
-  "modules": [],
-  "permissions": []
+  "required_modules": [],
+  "required_permissions": []
 }

@@ -41,6 +41,7 @@ class IModifier
 
         $this->Type = OBJECTS_CATEGORIES[ 0 ];
         $this->ObjectID = $objectID ?? 0;
+
         $this->IsGroup = $isGroup ?? false;
         $this->IsRequired = $isRequired ?? false;
         $this->IsExcluded = $isExcluded ?? false;

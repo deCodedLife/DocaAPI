@@ -35,7 +35,6 @@ $saleID = $API->DB->insertInto( "sales" )
     ->execute();
 
 
-
 /**
  *  Заполнение посещений транзакции
  */

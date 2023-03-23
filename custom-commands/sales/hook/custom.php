@@ -45,6 +45,14 @@ require ( $publicAppPath . '/custom-commands/sales/hook/' . 'calculate-price.php
 
 
 /**
+ * Учёт акций
+ */
+
+require ( $publicAppPath . '/custom-commands/sales/hook/' . 'calculate-promotions.php' );
+
+
+
+/**
  * Заполнение полей
  */
 

@@ -1,1 +1,1 @@
-{"title":"Добавить продажу","type":"add","object_scheme":"sales","modules":[],"permissions":[],"no_limit":false}
+{"title":"Добавить продажу","type":"add","object_scheme":"sales","required_modules":[],"required_permissions":[],"no_limit":false}

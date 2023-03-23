@@ -1,38 +1,19 @@
 <?php
 
-
-//mysqli_query( $API->DB_connection,  "DROP TABLE promotionsServices" );
-//mysqli_query( $API->DB_connection,  "DROP TABLE promotionsServicesGroups" );
-//mysqli_query( $API->DB_connection,  "DROP TABLE promotionsRequiredServicesGroups" );
-//mysqli_query( $API->DB_connection,  "DROP TABLE promotionsRequiredServices" );
-//mysqli_query( $API->DB_connection,  "DROP TABLE promotionsExcludedServices" );
-//mysqli_query( $API->DB_connection,  "DROP TABLE promotionsClientsGroups" );
-//mysqli_query( $API->DB_connection,  "DROP TABLE promotionsObjectsCategories" );
-
-//mysqli_query($API->DB_connection, "DELETE FROM promotions");
-//mysqli_query($API->DB_connection, "DELETE FROM promotionObjects");
-
-$API->returnResponse();
-
 require_once $API::$configs[ "paths" ][ "public_app" ] . "/custom-libs/discounts/index.php";
 
-$Discounts = new Сashbox\Discounts;
-$activePromitions = $Discounts->GetActiveDiscounts();
+$Discounts = new Сashbox\Discounts();
 
-$Modifier = new Сashbox\Modifier;
-$Modifier->Items = [ 2 ];
-$Modifier->Type = MODIFIER_TYPES[ 0 ];
-
-//$Modifier->Type = MODIFIER_TYPES[ 3 ];
+$API->returnResponse( $Discounts->GetActiveDiscounts(), 400 );
+//$activePromitions = $Discounts->GetActiveDiscounts();
+//
+//$Modifier = new Сashbox\Modifier;
+//$Modifier->Items = [ 2 ];
+//$Modifier->Type = MODIFIER_TYPES[ 0 ];
+//
+////$Modifier->Type = MODIFIER_TYPES[ 3 ];
 
 $API->returnResponse( $activePromitions );
-
-
-
-
-
-
-
 
 
 

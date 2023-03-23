@@ -1,1 +1,101 @@
-{"required_modules":[],"required_permissions":[],"structure":[{"title":"Шапка","type":"header","size":4,"settings":{"description":"Добавление акции","title":["Акции"]},"components":[]},{"title":"Форма","type":"form","size":4,"settings":{"object":"promotions","command":"add","areas":[{"size":2,"blocks":[{"title":"","fields":["title"]},{"title":"Условия","fields":["begin_at","end_at","min_order","value","promotion_type","type"]}]},{"size":2,"blocks":[{"title":"Участники","fields":["services","servicesGroups","requiredServices","requiredServicesGroups","clientsGroups","excludedServices","excludedServicesGroups"]}]},{"size":4,"blocks":[{"title":"","fields":["comment"]}]}]},"components":{"buttons":[{"type":"submit","settings":{"title":"Добавить","background":"dark","href":"promotions"}}]}}]}
+{
+  "required_modules": [],
+  "required_permissions": [],
+  "structure": [
+    {
+      "title": "Шапка",
+      "type": "header",
+      "size": 4,
+      "settings": {
+        "description": "Добавление акции",
+        "title": [
+          "Акции"
+        ]
+      },
+      "components": []
+    },
+    {
+      "title": "Форма",
+      "type": "form",
+      "size": 4,
+      "settings": {
+        "object": "promotions",
+        "command": "add",
+        "areas": [
+          {
+            "size": 2,
+            "blocks": [
+              {
+                "title": "",
+                "fields": [
+                  "title"
+                ]
+              },
+              {
+                "title": "Период",
+                "fields": [
+                  "begin_at",
+                  "end_at"
+                ]
+              },
+              {
+                "title": "Условия",
+                "fields": [
+                  "min_order",
+                  "requiredServices",
+                  "requiredServicesGroups",
+                  "excludedServices",
+                  "excludedServicesGroups",
+                  "clientsGroups"
+                ]
+              }
+            ]
+          },
+          {
+            "size": 2,
+            "blocks": [
+              {
+                "title": "Сумма скидки",
+                "fields": [
+                  "value",
+                  "promotion_type",
+                  "type"
+                ]
+              },
+              {
+                "title": "Услуги со скидкой",
+                "fields": [
+                  "services",
+                  "requiredServices"
+                ]
+              }
+            ]
+          },
+          {
+            "size": 4,
+            "blocks": [
+              {
+                "title": "",
+                "fields": [
+                  "comment"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "components": {
+        "buttons": [
+          {
+            "type": "submit",
+            "settings": {
+              "title": "Добавить",
+              "background": "dark",
+              "href": "promotions"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

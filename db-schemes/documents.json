@@ -1,0 +1,13 @@
+{
+  "title": "Документы",
+  "properties": [],
+  "rows_key": "article",
+  "rows": [
+    {
+      "title": "Договор на оказание медицинских услуг",
+      "article": "services_contract",
+      "object": "visits",
+      "is_system": "Y"
+    }
+  ]
+}

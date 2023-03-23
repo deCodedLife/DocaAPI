@@ -50,9 +50,9 @@
             "settings": {
               "title": "Печать",
               "background": "dark",
-              "object": "visits",
               "data": {
-                "id": ":id"
+                "document_article": "services_contract",
+                "row_id": ":id"
               }
             }
           },{
