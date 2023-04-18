@@ -29,7 +29,7 @@
         "size": 2,
         "blocks": [{
           "title": "",
-          "fields": ["taskGroup_id"]
+          "fields": ["deadline", "taskGroup_id"]
         }]
       },{
         "size": 4,

@@ -20,6 +20,7 @@
       "object": "services"
     },
     "components": {
+      "search": true,
       "filters": [
         {
           "title": "Категория",

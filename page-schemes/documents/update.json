@@ -23,18 +23,9 @@
       "settings": {
         "object": "documents",
         "command": "update",
-        "data": {
-          "title": "Тестовый",
-          "structure": [
-            {
-              "block_position": 0,
-              "block_type": "text",
-              "settings": {
-                "document_body": "test"
-              }
-            }
-          ]
-        }
+        "fields_list": [
+          "owner_id"
+        ]
       }
     }
   ]

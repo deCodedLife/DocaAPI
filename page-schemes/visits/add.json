@@ -33,7 +33,7 @@
           "fields": ["store_id", "cabinet_id"]
         }, {
           "title": "",
-          "fields": ["price", "discount_type", "discount_value"]
+          "fields": ["discount_type", "discount_value", "price"]
         }]
       }]
     },

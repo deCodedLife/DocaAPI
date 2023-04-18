@@ -23,7 +23,7 @@
         "size": 2,
         "blocks": [{
           "title": "Основное",
-          "fields": ["last_name", "first_name", "patronymic", "professions_id", "birthday", "store_id", "gender", "is_visible_in_schedule"]
+          "fields": ["avatar", "last_name", "first_name", "patronymic", "professions_id", "birthday", "store_id", "gender", "is_visible_in_schedule"]
         }, {
           "title": "Доступы",
           "fields": ["role_id", "email", "password"]

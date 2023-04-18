@@ -18,6 +18,7 @@
       "object": "users"
     },
     "components": {
+      "search": true,
       "filters": [{
         "title": "Роль",
         "type": "list",

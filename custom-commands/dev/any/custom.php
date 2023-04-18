@@ -1,10 +1,21 @@
 <?php
 
-require_once $API::$configs[ "paths" ][ "public_app" ] . "/custom-libs/discounts/index.php";
 
-$Discounts = new Сashbox\Discounts();
+//$API->DB->update( "serviceGroups" )
+//    ->set( "parent_id", null )
+//    ->where( "id", 14 )
+//    ->execute();
+////
+////$API->returnResponse();
+//
+//$API->returnResponse( "test" );
 
-$API->returnResponse( $Discounts->GetActiveDiscounts(), 400 );
+
+
+// $API->DB->delete( "promotionObjects" )
+	// ->where( "id", 121 )
+	// ->execute();/
+
 //$activePromitions = $Discounts->GetActiveDiscounts();
 //
 //$Modifier = new Сashbox\Modifier;
@@ -13,7 +24,7 @@ $API->returnResponse( $Discounts->GetActiveDiscounts(), 400 );
 //
 ////$Modifier->Type = MODIFIER_TYPES[ 3 ];
 
-$API->returnResponse( $activePromitions );
+//$API->returnResponse();
 
 
 
@@ -30,18 +41,23 @@ $API->returnResponse( $activePromitions );
 //mysqli_query($API->DB_connection, "UPDATE clients set bonuses = 100, deposit = 100");
 
 //mysqli_query($API->DB_connection, "DELETE FROM visits");
-//mysqli_query($API->DB_connection, "DELETE FROM salesVisits");
 //mysqli_query($API->DB_connection, "DELETE FROM sales;");
 //mysqli_query($API->DB_connection, "DELETE FROM salesServices;");
+//mysqli_query($API->DB_connection, "DELETE FROM salesVisits");
 
-//$API->DB->update( "sales" )
-//    ->set( [
-//        "status" => "waiting",
-//        "pay_type" => "sellReturn"
-//    ] )
-//    ->where( "id", 41 )
-//    ->execute();
+$API->DB->update( "sales" )
+    ->set( [
+        "status" => "done"
+    ] )
+    ->where( "id", 93 )
+    ->execute();
 
+$API->DB->update( "visits" )
+    ->set( "is_payed", 'Y' )
+    ->where( "id", 246 )
+    ->execute();
+
+//
 //$API->DB->delete( "salesServices" )
 //    ->where( "id", 22)
 //    ->execute();
@@ -55,10 +71,7 @@ $API->returnResponse( $activePromitions );
 //    ->execute();
 
 
-//$API->DB->update( "visits" )
-//    ->set( "is_payed", 'Y' )
-//    ->where( "id", 207 )
-//    ->execute();
+
 
 //$API->DB->update("sales")
 //    ->set

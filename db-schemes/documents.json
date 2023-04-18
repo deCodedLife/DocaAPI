@@ -1,6 +1,14 @@
 {
   "title": "Документы",
-  "properties": [],
+  "properties": [
+    {
+      "title": "Владелец",
+      "article": "owner_id",
+      "type": "int",
+      "is_required": false,
+      "default": null
+    }
+  ],
   "rows_key": "article",
   "rows": [
     {

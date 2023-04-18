@@ -1,0 +1,29 @@
+{
+  "title": "Документы",
+  "table": "documents",
+  "search": "",
+  "is_trash": true,
+  "properties": [
+    {
+      "title": "Владелец",
+      "article": "owner_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "settings": {
+        "is_multiply": false,
+        "is_search": false
+      },
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "required_permissions": [],
+      "required_modules": [],
+      "use_in_commands": [ "add", "update", "get" ],
+      "require_in_commands": [],
+      "list_donor": {
+        "table": "users",
+        "properties_title": "last_name"
+      }
+    }
+  ]
+}

@@ -1,1 +1,1 @@
-{"title":"Проданные услуги","properties":[{"title":"Продажа","article":"sale_id","type":"int","default":null,"is_required":"Y"},{"title":"Услуга","article":"service_id","type":"int","default":null,"is_required":"Y"}]}
+{"title":"Проданные услуги","properties":[{"title":"Продажа","article":"sale_id","type":"int","default":null,"is_required":"Y"},{"title":"Услуга","article":"service_id","type":"int","default":null,"is_required":"Y"},{"title":"Стоимость","article":"price","type":"float","default":null,"is_required":"Y"}]}

@@ -1,7 +1,7 @@
 <?php
 
 const OBJECTS_CATEGORIES = [
-    "target",
+    "services",
     "clients"
 ];
 
@@ -12,16 +12,16 @@ function sortObjects( $promotion, $type, $object ): array {
     if ( $object[ "is_group" ] == 'Y' ) $type .= "Groups";
 
     if ( $object[ "is_excluded" ] == 'Y' ) {
-        $promotion[ "excluded" . $type ][] = $object;
+        $promotion[ "excluded" . $type ][] = (int) $object[ "object_id" ];
         return $promotion;
     }
 
     if ( $object[ "is_required" ] == 'Y' ) {
-        $promotion[ "required" . $type ][] = $object;
+        $promotion[ "required" . $type ][] = (int) $object[ "object_id" ];
         return $promotion;
     }
 
-    $promotion[ lcfirst( $type ) ][] = $object;
+    $promotion[ lcfirst( $type ) ][] = (int) $object[ "object_id" ];
     return $promotion;
 
 }
@@ -33,16 +33,11 @@ foreach ( $response[ "data" ] as $key => $promotion ) {
     $promotionObjects = $API->DB->from( "promotionObjects" )
         ->where( "promotion_id", $promotion[ "id" ] );
 
+    $promotion[ "services" ] = [];
+
     foreach ( $promotionObjects as $promotionObject ) {
 
-
-
-        if ( $promotionObject[ "type" ] == OBJECTS_CATEGORIES[ 0 ] )
-            $promotion = sortObjects( $promotion, "Services", $promotionObject );
-
-        if ( $promotionObject[ "type" ] == OBJECTS_CATEGORIES[ 1 ] )
-            $promotion = sortObjects( $promotion, "Clients", $promotionObject );
-
+        $promotion = sortObjects( $promotion, ucfirst( $promotionObject[ "type" ] ), $promotionObject );
         $response[ "data" ][ $key ] = $promotion;
 
     }

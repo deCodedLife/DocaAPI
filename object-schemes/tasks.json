@@ -12,7 +12,35 @@
     "is_autofill": true,
     "use_in_commands": ["add", "update"],
     "require_in_commands": ["add"]
-  },{
+  },
+    {
+      "title": "Тема",
+      "article": "taskGroup_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": ["add", "update", "get"],
+      "require_in_commands": [],
+      "list_donor": {
+        "table": "taskGroups",
+        "properties_title": "title"
+      }
+    },
+    {
+      "title": "Срок выполнения",
+      "article": "deadline",
+      "data_type": "datetime",
+      "field_type": "datetime",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_hook": false,
+      "use_in_commands": ["add", "update"],
+      "require_in_commands": []
+    },
+    {
     "title": "Статус",
     "article": "status",
     "data_type": "string",
@@ -48,7 +76,7 @@
     "article": "performer_id",
     "data_type": "integer",
     "field_type": "list",
-    "is_default_in_list": true,
+    "is_default_in_list": false,
     "is_unique": false,
     "is_autofill": true,
     "use_in_commands": ["add", "update", "get"],
@@ -56,20 +84,6 @@
     "list_donor": {
       "table": "users",
       "properties_title": "last_name"
-    }
-  }, {
-    "title": "Тема",
-    "article": "taskGroup_id",
-    "data_type": "integer",
-    "field_type": "list",
-    "is_default_in_list": true,
-    "is_unique": false,
-    "is_autofill": true,
-    "use_in_commands": ["add", "update", "get"],
-    "require_in_commands": [],
-    "list_donor": {
-      "table": "taskGroups",
-      "properties_title": "title"
     }
   }],
   "action_buttons": []

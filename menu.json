@@ -1,0 +1,94 @@
+{
+  "top": [],
+  "side": [
+    {
+      "title": "Панель управления",
+      "href": "dashboard",
+      "children": [],
+      "icon": "garage"
+    },
+    {
+      "title": "Сотрудники",
+      "href": "users",
+      "children": [],
+      "icon": "user"
+    },
+    {
+      "title": "Клиенты",
+      "href": "clients",
+      "children": [],
+      "icon": "customers"
+    },
+    {
+      "title": "Услуги",
+      "href": "services",
+      "children": [],
+      "icon": "stethoscope"
+    },
+    {
+      "title": "Задачи",
+      "href": "tasks",
+      "children": [],
+      "icon": "schedule"
+    },
+    {
+      "title": "Акции",
+      "href": "promotions",
+      "children": [],
+      "icon": "reading"
+    },
+    {
+      "title": "Бонусы",
+      "href": "bonuses",
+      "children": [],
+      "icon": "reading"
+    },
+    {
+      "title": "Шаблоны документов",
+      "href": "documents",
+      "children": [],
+      "icon": "reading"
+    },
+    {
+      "title": "Касса",
+      "href": "payments",
+      "children": [],
+      "icon": "reading"
+    },
+    {
+      "title": "Настройки",
+      "href": "settings",
+      "children": [
+        {
+          "title": "Группы услуг",
+          "href": "serviceGroups"
+        },
+        {
+          "title": "Группы клиентов",
+          "href": "clientGroups"
+        },
+        {
+          "title": "Темы задач",
+          "href": "taskGroups"
+        },
+        {
+          "title": "Специальности",
+          "href": "professions"
+        },
+        {
+          "title": "Роли",
+          "href": "roles"
+        },
+        {
+          "title": "Кабинеты",
+          "href": "cabinets"
+        },
+        {
+          "title": "Филиалы",
+          "href": "stores"
+        }
+      ],
+      "icon": "gear"
+    }
+  ]
+}

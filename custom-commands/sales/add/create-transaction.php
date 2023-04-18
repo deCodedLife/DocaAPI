@@ -55,14 +55,16 @@ foreach ( $requestData->visits_ids as $visit ) {
 /**
  *  Заполнение услуг транзакции
  */
-
-foreach ( $requestData->pay_object as $service ) {
+foreach ( $requestData->services as $service ) {
 
     $API->DB->insertInto( "salesServices" )
         ->values( [
             "sale_id" => $saleID,
-            "service_id" => $service
+            "service_id" => (int) $service->id,
+            "price" => (float) $service->price
         ] )
         ->execute();
+
+
 
 } // foreach. $requestData->pay_object as $service

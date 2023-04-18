@@ -23,19 +23,7 @@
       "settings": {
         "object": "documents",
         "command": "add",
-        "data": {
-          "title": "Тестовый",
-          "type_id": 2,
-          "structure": [
-            {
-              "block_position": 0,
-              "block_type": "text",
-              "settings": {
-                "document_body": "test"
-              }
-            }
-          ]
-        }
+        "fields_list": [ "owner_id" ]
       }
     }
   ]

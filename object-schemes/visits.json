@@ -26,6 +26,63 @@
     "use_in_commands": ["add", "update", "schedule"],
     "require_in_commands": ["add"]
   }, {
+    "title": "Сотрудники",
+    "article": "users_id",
+    "data_type": "array",
+    "field_type": "list",
+    "is_default_in_list": true,
+    "is_unique": false,
+    "is_autofill": true,
+    "use_in_commands": ["add", "update", "get", "schedule"],
+    "require_in_commands": ["add"],
+    "list_donor": {
+      "table": null,
+      "properties_title": null
+    },
+    "join": {
+      "connection_table": "visits_users",
+      "donor_table": "users",
+      "property_article": "last_name",
+      "insert_property": "visit_id",
+      "filter_property": "user_id"
+    },
+    "is_disabled": false
+  }, {
+    "title": "Услуги",
+    "article": "services_id",
+    "data_type": "array",
+    "field_type": "list",
+    "is_default_in_list": true,
+    "is_unique": false,
+    "is_autofill": true,
+    "search": "services",
+    "joined_field": "users_id",
+    "is_hook": true,
+    "use_in_commands": ["add", "update", "hook"],
+    "require_in_commands": ["add"],
+    "list_donor": {
+      "table": null,
+      "properties_title": null
+    },
+    "join": {
+      "connection_table": "visits_services",
+      "donor_table": "services",
+      "property_article": "title",
+      "insert_property": "visit_id",
+      "filter_property": "service_id"
+    }
+  }, {
+    "title": "Стоимость",
+    "article": "price",
+    "data_type": "float",
+    "field_type": "price",
+    "is_default_in_list": true,
+    "is_unique": false,
+    "is_autofill": true,
+    "is_disabled": true,
+    "use_in_commands": ["hook", "add", "update"],
+    "require_in_commands": ["add"]
+  }, {
     "title": "Статус",
     "article": "status",
     "data_type": "string",
@@ -46,7 +103,7 @@
     "article": "store_id",
     "data_type": "integer",
     "field_type": "list",
-    "is_default_in_list": true,
+    "is_default_in_list": false,
     "is_unique": false,
     "is_autofill": true,
     "use_in_commands": ["add", "update", "get", "schedule"],
@@ -61,7 +118,7 @@
     "data_type": "integer",
     "field_type": "list",
     "joined_field": "store_id",
-    "is_default_in_list": true,
+    "is_default_in_list": false,
     "is_unique": false,
     "is_autofill": true,
     "use_in_commands": ["add", "update"],
@@ -70,39 +127,6 @@
       "table": "cabinets",
       "properties_title": "title"
     }
-  }, {
-    "title": "Стоимость",
-    "article": "price",
-    "data_type": "float",
-    "field_type": "price",
-    "is_default_in_list": true,
-    "is_unique": false,
-    "is_autofill": true,
-    "is_disabled": true,
-    "use_in_commands": ["hook", "add", "update"],
-    "require_in_commands": ["add"]
-  }, {
-    "title": "Сотрудники",
-    "article": "users_id",
-    "data_type": "array",
-    "field_type": "list",
-    "is_default_in_list": false,
-    "is_unique": false,
-    "is_autofill": true,
-    "use_in_commands": ["add", "update", "get", "schedule"],
-    "require_in_commands": ["add"],
-    "list_donor": {
-      "table": null,
-      "properties_title": null
-    },
-    "join": {
-      "connection_table": "visits_users",
-      "donor_table": "users",
-      "property_article": "last_name",
-      "insert_property": "visit_id",
-      "filter_property": "user_id"
-    },
-    "is_disabled": false
   }, {
     "title": "Клиент",
     "article": "clients_id",
@@ -125,30 +149,6 @@
       "property_article": "last_name",
       "insert_property": "visit_id",
       "filter_property": "client_id"
-    }
-  }, {
-    "title": "Услуги",
-    "article": "services_id",
-    "data_type": "array",
-    "field_type": "list",
-    "is_default_in_list": false,
-    "is_unique": false,
-    "is_autofill": true,
-    "search": "services",
-    "joined_field": "users_id",
-    "is_hook": true,
-    "use_in_commands": ["add", "update", "hook"],
-    "require_in_commands": ["add"],
-    "list_donor": {
-      "table": null,
-      "properties_title": null
-    },
-    "join": {
-      "connection_table": "visits_services",
-      "donor_table": "services",
-      "property_article": "title",
-      "insert_property": "visit_id",
-      "filter_property": "service_id"
     }
   }, {
     "title": "Артикул исполнителя",
@@ -250,7 +250,7 @@
     "article": "is_payed",
     "data_type": "boolean",
     "field_type": "checkbox",
-    "is_default_in_list": true,
+    "is_default_in_list": false,
     "is_unique": false,
     "is_autofill": false,
     "use_in_commands": ["update"]

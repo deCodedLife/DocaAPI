@@ -61,6 +61,10 @@ foreach ( $saleVisits as $visit )
 foreach ( $saleServices as $service )
     $formFieldsUpdate[ "pay_object" ][ "value" ][] = $service[ "id" ];
 
+$formFieldsUpdate[ "services" ][ "value" ] = $saleServices;
+
+
+
 $formFieldsUpdate[ "cash_sum" ][ "value" ] = max( $cash_sum, 0 );
 $formFieldsUpdate[ "card_sum" ][ "value" ] = max( $card_sum, 0 );
 $formFieldsUpdate[ "summary" ][ "value" ] = $saleSummary;

@@ -15,7 +15,7 @@
     "title": "Расписание",
     "type": "schedule",
     "size": 4,
-    "required_permissions": ["manager_schedule"],
+    "required_permissions": [ "manager_schedule" ],
     "required_modules": [],
     "settings": {
       "object": "visits",

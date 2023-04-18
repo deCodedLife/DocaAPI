@@ -59,21 +59,16 @@ $servicesPrice = 0;
 $difference = 0;
 $services = [];
 
+foreach ( $API->DB->from( "salesServices" )->where( "sale_id", $processedSale[ "id" ] ) as $service ) {
 
-foreach ( $saleVisits as $saleVisit ) {
+    $details = $API->DB->from( "services" )
+        ->where( "id", $service[ "service_id" ] )
+        ->fetch();
 
+    $details[ "price" ] = $service[ "price" ];
+    $difference += $service[ "price" ];
 
-    $visitServices = $API->DB->from( "services" )
-        ->innerJoin( "visits_services ON visits_services.service_id = services.id" )
-        ->where( [
-            "visits_services.visit_id" => $saleVisit[ "visit_id" ]
-        ] );
-
-
-    foreach ( $visitServices as $service ) {
-        $difference += $service[ "price" ];
-        $services[] = $service;
-    }
+    $services[] = $details;
 
 }
 

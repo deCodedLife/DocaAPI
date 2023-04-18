@@ -37,6 +37,13 @@
       "default": null
     },
     {
+      "title": "Срок выполнения",
+      "article": "deadline",
+      "type": "datetime",
+      "is_required": false,
+      "default": null
+    },
+    {
       "title": "Дата и время создания",
       "article": "created_at",
       "type": "datetime",

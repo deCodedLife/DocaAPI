@@ -29,31 +29,10 @@ $paymentsSummary =
     $requestData->cash_sum;
 
 
-foreach ( $requestData->visits_ids as $visit_id ) {
-
-    $visitDetails = $API->DB->from( "visits" )
-        ->innerJoin( "visits_services ON visits_services.visit_id = visits.id" )
-        ->where( "visits.id", $visit_id )
-        ->limit( 1 )
-        ->fetch();
-
-
-
-    $visitPrice = $visitDetails[ "price" ];
-
-    if ( $visitDetails[ "discount_type" ] == "fixed" ) $visitPrice -= $visitDetails[ "discount_value" ];
-    if ( $visitDetails[ "discount_type" ] == "percent" ) $visitPrice -= ($visitPrice / 100) * $visitDetails[ "discount_value" ];
-
-    $visitPrice = max( $visitPrice, 0 );
-    $saleSummary += $visitPrice;
-
-} // foreach. $requestData->visits_ids as $visit_id
-
-
 
 /**
  * Валидация итоговой суммы
  */
 
-if ( $paymentsSummary != $saleSummary )
+if ( $paymentsSummary != $requestData->summary )
     $API->returnResponse( "Сумма всех способов оплаты не совпадает с итоговой суммой посещения", 400 );

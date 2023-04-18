@@ -17,6 +17,43 @@
     "settings": [{
       "title": "Основная информация",
       "body": [{
+        "title": "Форма клиента",
+        "type": "form",
+        "size": 4,
+        "settings": {
+          "object": "clients",
+          "command": "get",
+          "areas": [{
+            "size": 2,
+            "blocks": [{
+              "title": "Основное",
+              "fields": ["last_name", "first_name", "patronymic", "gender", "birthday"]
+            }, {
+              "title": "Контакты",
+              "fields": ["phone", "second_phone", "email", "address", "client_groups"]
+            }]
+          }, {
+            "size": 2,
+            "blocks": [{
+              "title": "Документы",
+              "fields": ["passport_series", "passport_number", "passport_issued", "is_representative"]
+            }, {
+              "title": "Законный представитель",
+              "fields": ["present_last_name", "present_first_name", "present_patronymic", "present_passport_series", "present_passport_number", "present_passport_issued"]
+            }]
+          }, {
+            "size": 4,
+            "blocks": [{
+              "title": "",
+              "fields": ["comment"]
+            }]
+          }]
+        },
+        "components": {}
+      }]
+    },{
+      "title": "Посещение",
+      "body": [{
         "title": "Форма",
         "type": "form",
         "size": 4,
@@ -39,7 +76,7 @@
               "fields": ["store_id", "cabinet_id"]
             }, {
               "title": "",
-              "fields": ["price", "discount_type", "discount_value"]
+              "fields": ["discount_type", "discount_value", "price"]
             }]
           }]
         },
@@ -52,10 +89,24 @@
               "background": "dark",
               "data": {
                 "document_article": "services_contract",
+                "is_edit": true,
                 "row_id": ":id"
               }
             }
-          },{
+          },
+            {
+              "type": "print",
+              "required_permissions": [],
+              "settings": {
+                "title": "Печать документов",
+                "background": "dark",
+                "data": {
+                  "is_edit": true,
+                  "row_id": ":id"
+                }
+              }
+            },
+            {
             "type": "script",
             "required_permissions": ["manager_schedule"],
             "settings": {

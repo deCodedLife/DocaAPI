@@ -5,11 +5,10 @@
  * Получение продажи, связанной с посещением
  */
 
-$saleDetails =  $API->DB->from( "salesVisits" )
+$saleDetails = $API->DB->from( "salesVisits" )
     ->where( "visit_id", $pageDetail[ "row_detail" ][ "id" ] )
     ->limit( 1 )
     ->fetch();
-
 
 
 /**
