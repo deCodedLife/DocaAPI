@@ -37,7 +37,7 @@
       "is_unique": false,
       "is_autofill": true,
       "is_hook": false,
-      "use_in_commands": ["add", "update"],
+      "use_in_commands": ["add", "update", "get"],
       "require_in_commands": []
     },
     {
@@ -65,7 +65,7 @@
     "is_default_in_list": false,
     "is_unique": false,
     "is_autofill": true,
-    "use_in_commands": ["add", "update", "get"],
+    "use_in_commands": ["add", "get"],
     "require_in_commands": [],
     "list_donor": {
       "table": "users",

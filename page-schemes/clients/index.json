@@ -19,6 +19,16 @@
     },
     "components": {
       "search": true,
+      "filters": [{
+        "title": "Дата",
+        "type": "date",
+        "required_permissions": [],
+        "required_modules": [],
+        "settings": {
+          "is_search": false,
+          "recipient_property": "birthday"
+        }
+      }],
       "buttons": [{
         "type": "href",
         "settings": {

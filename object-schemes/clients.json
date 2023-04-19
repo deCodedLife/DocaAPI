@@ -50,7 +50,7 @@
     "is_default_in_list": true,
     "is_unique": false,
     "is_autofill": true,
-    "use_in_commands": ["add", "update"]
+    "use_in_commands": ["add", "update", "get"]
   }, {
     "title": "Телефон",
     "article": "phone",

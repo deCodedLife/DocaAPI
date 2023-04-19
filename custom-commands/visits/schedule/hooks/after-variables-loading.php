@@ -42,3 +42,16 @@ $currentStep = $workdayStart;
  * Конец рабочего дня
  */
 $workdayEnd = strtotime( $storeDetail[ "schedule_to" ] );
+
+
+/**
+ * Увеличение диапазона графика для специальностей
+ */
+
+if ( $requestData->profession_id ) {
+
+    $requestData->end_at = date(
+        "Y-m-d", strtotime( "+30 days", strtotime( $requestData->start_at ) )
+    );
+
+} // if. $requestData->profession_id

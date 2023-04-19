@@ -17,6 +17,14 @@ switch ( $event[ "status" ][ "value" ] ) {
 
 
 /**
+ * Определение иконки Записи
+ */
+
+if ( $event[ "is_payed" ] === "Y" ) $event[ "icons" ][] = "shopping-basket";
+if ( $event[ "is_repeat" ] === "Y" ) $event[ "icons" ][] = "customers";
+
+
+/**
  * Получение детальной информации о пациенте
  */
 $clientDetail = $API->DB->from( "clients" )

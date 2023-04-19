@@ -184,6 +184,17 @@
     "use_in_commands": ["schedule"],
     "require_in_commands": ["schedule"]
   }, {
+    "title": "Комментарий",
+    "article": "comment",
+    "data_type": "string",
+    "field_type": "textarea",
+    "is_default_in_list": false,
+    "is_unique": false,
+    "is_autofill": true,
+    "is_disabled": false,
+    "use_in_commands": ["add", "update"],
+    "require_in_commands": []
+  }, {
     "title": "Шаг",
     "article": "step",
     "data_type": "integer",
@@ -209,7 +220,7 @@
     "title": "Тип скидки",
     "article": "discount_type",
     "data_type": "string",
-    "field_type": "list",
+    "field_type": "radio",
     "is_default_in_list": false,
     "is_unique": false,
     "is_autofill": true,

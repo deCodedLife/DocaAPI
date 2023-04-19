@@ -32,6 +32,15 @@
           "donor_property_value": "id"
         }
       }, {
+        "title": "Специальность",
+        "type": "list",
+        "settings": {
+          "donor_object": "professions",
+          "donor_property_title": "title",
+          "donor_property_value": "id",
+          "recipient_property": "professions_id"
+        }
+      }, {
         "title": "Филиал",
         "type": "list",
         "required_permissions": [],

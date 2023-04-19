@@ -56,7 +56,7 @@
     "is_autofill": true,
     "is_disabled": false,
     "is_hook": false,
-    "use_in_commands": ["add", "update"],
+    "use_in_commands": ["add", "update", "get"],
     "join": {
       "connection_table": "users_professions",
       "donor_table": "professions",

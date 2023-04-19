@@ -96,7 +96,7 @@
       "title": "Логи",
       "body": [{
         "title": "Логи",
-        "type": "logs",
+        "type": "list",
         "size": 4,
         "settings": {
           "object": "logs",
@@ -105,7 +105,17 @@
             "value": ":id"
           }]
         },
-        "components": []
+        "components": {
+          "filters": [{
+            "title": "Дата",
+            "type": "date",
+            "required_permissions": [],
+            "required_modules": [],
+            "settings": {
+              "recipient_property": "created_at"
+            }
+          }]
+        }
       }]
     }]
   }]
