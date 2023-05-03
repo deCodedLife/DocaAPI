@@ -42,7 +42,6 @@ $clients = $API->DB->from( "visits_clients" )
     ->fetch();
 
 
-
 /**
  * Заполнение полей
  */
