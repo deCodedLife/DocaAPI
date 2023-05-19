@@ -20,8 +20,8 @@ switch ( $event[ "status" ][ "value" ] ) {
  * Определение иконки Записи
  */
 
-if ( $event[ "is_payed" ] === "Y" ) $event[ "icons" ][] = "shopping-basket";
-if ( $event[ "is_repeat" ] === "Y" ) $event[ "icons" ][] = "customers";
+if ( $event[ "is_payed" ] ) $event[ "icons" ][] = "shopping-basket";
+if ( $event[ "is_repeat" ] ) $event[ "icons" ][] = "customers";
 
 
 /**

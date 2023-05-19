@@ -1,0 +1,1 @@
+{"title":"Причины отмены посещения","properties":[{"title":"Причина","article":"title","type":"varchar(255)","default":null,"is_required":"Y"}]}

@@ -1,0 +1,1 @@
+{"title":"Типы расходов","properties":[{"title":"Заголовок","article":"title","type":"varchar(15)","default":null,"is_required":"Y"}]}

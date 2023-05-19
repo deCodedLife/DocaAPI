@@ -25,6 +25,8 @@
       "row_href": "visits/add"
     },
     "components": {
+
+      "buttons": [],
       "filters": [{
         "title": "Дата",
         "type": "date",
@@ -78,8 +80,7 @@
           "donor_property_title": "last_name",
           "donor_property_value": "id"
         }
-      }],
-      "buttons": []
+      }]
     }
   }],
   "subpages": []

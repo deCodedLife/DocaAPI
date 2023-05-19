@@ -36,8 +36,9 @@
 
 //mysqli_query(
 //    $API->DB_connection,
-//    "DROP TABLE sales_visits"
+//    "DROP TABLE servicesGroups"
 //);
+//exit(200);
 //mysqli_query($API->DB_connection, "UPDATE clients set bonuses = 100, deposit = 100");
 
 //mysqli_query($API->DB_connection, "DELETE FROM visits");

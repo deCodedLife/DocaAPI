@@ -67,6 +67,12 @@
     "default": "0",
     "is_required": "N"
   }, {
+    "title": "Причина отмены",
+    "article": "reason_id",
+    "type": "int",
+    "default": null,
+    "is_required": "N"
+  }, {
     "title": "Оплачено",
     "article": "is_payed",
     "type": "char(1)",

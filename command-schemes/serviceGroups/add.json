@@ -1,7 +1,1 @@
-{
-  "title": "Добавление",
-  "type": "add",
-  "object_scheme": "serviceGroups",
-  "required_permissions": [],
-  "required_modules": []
-}
+{"title":"Добавить группу услуг","type":"add","object_scheme":"serviceGroups","modules":[],"permissions":[],"no_limit":true}

@@ -86,6 +86,6 @@ if ( $visitDetails[ "is_payed" ] == "Y" || ( $saleDetails && $saleDetails[ "stat
                   ->where( "visit_id", $pageDetail[ "row_id" ] ) as $visitService )
         $formFieldValues[ "pay_object" ][] = $visitService[ "service_id" ];
 
-} //if. $visitDetails[ "is_payed" ] == "Y" || ( $saleDetails && $saleDetails[ "status" ] != "error" )
+} // if. $visitDetails[ "is_payed" ] == "Y" || ( $saleDetails && $saleDetails[ "status" ] != "error" )
 
 $formFieldValues[ "pay_type" ] = "sell";

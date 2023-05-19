@@ -1,7 +1,1 @@
-{
-  "title": "Редактирование",
-  "type": "update",
-  "object_scheme": "serviceGroups",
-  "required_permissions": [],
-  "required_modules": []
-}
+{"title":"Изменить группу услуг","type":"update","object_scheme":"serviceGroups","modules":[],"permissions":[],"no_limit":true}

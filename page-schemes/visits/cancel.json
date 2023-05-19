@@ -1,0 +1,30 @@
+{
+  "required_modules": [],
+  "required_permissions": [],
+  "structure": [{
+    "title": "Шапка",
+    "type": "header",
+    "size": 4,
+    "settings": {
+      "title": "Отмена посещения",
+      "description": "Укажите причину"
+    },
+    "components": []
+  }, {
+    "title": "Форма отмены",
+    "type": "form",
+    "size": 4,
+    "settings": {
+      "object": "visits",
+      "command": "update",
+      "areas": [{
+        "size": 4,
+        "blocks": [{
+          "title": "",
+          "fields": ["reason_id"]
+        }]
+      }]
+    },
+    "components": {}
+  }]
+}

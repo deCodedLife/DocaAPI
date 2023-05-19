@@ -26,6 +26,12 @@
       "icon": "stethoscope"
     },
     {
+      "title": "Товары",
+      "href": "products",
+      "children": [],
+      "icon": "reading"
+    },
+    {
       "title": "Задачи",
       "href": "tasks",
       "children": [],
@@ -50,6 +56,12 @@
       "icon": "reading"
     },
     {
+      "title": "Расходы",
+      "href": "expenses",
+      "children": [],
+      "icon": "reading"
+    },
+    {
       "title": "Касса",
       "href": "payments",
       "children": [],
@@ -64,6 +76,10 @@
           "href": "serviceGroups"
         },
         {
+          "title": "Рекламные каналы",
+          "href": "advertise"
+        },
+        {
           "title": "Группы клиентов",
           "href": "clientGroups"
         },
@@ -72,8 +88,16 @@
           "href": "taskGroups"
         },
         {
+          "title": "Категории расходников",
+          "href": "сategoriesСonsumables"
+        },
+        {
           "title": "Специальности",
           "href": "professions"
+        },
+        {
+          "title": "Носимое оборудование",
+          "href": "wearableEquipment"
         },
         {
           "title": "Роли",
@@ -86,6 +110,34 @@
         {
           "title": "Филиалы",
           "href": "stores"
+        },
+        {
+          "title": "Типы расходов",
+          "href": "expensTypes"
+        },
+        {
+          "title": "Группы расходников",
+          "href": "consumableGroups"
+        },
+        {
+          "title": "Группы товаров",
+          "href": "productGroups"
+        },
+        {
+          "title": "Типы товаров",
+          "href": "productTypes"
+        },
+        {
+          "title": "Категории товаров",
+          "href": "productCategories"
+        },
+        {
+          "title": "Причины отмены посещений",
+          "href": "cancelReasons"
+        },
+        {
+          "title": "Поставщики",
+          "href": "providers"
         }
       ],
       "icon": "gear"

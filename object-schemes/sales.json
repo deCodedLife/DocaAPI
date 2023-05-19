@@ -193,7 +193,7 @@
     "title": "Способ оплаты",
     "article": "pay_method",
     "data_type": "string",
-    "field_type": "list",
+    "field_type": "radio",
     "is_default_in_list": true,
     "is_unique": false,
     "is_autofill": true,
@@ -281,19 +281,15 @@
     "is_autofill": true,
     "use_in_commands": ["add", "hook"]
   }, {
-    "title": "Услуги (техническое поле)",
-    "article": "services",
-    "data_type": "array",
-    "field_type": "list",
+    "title": "Информация об услугах",
+    "article": "services_info",
+    "data_type": "string",
+    "field_type": "info_strings",
     "is_default_in_list": false,
     "is_unique": false,
-    "is_autofill": true,
-    "list_donor": {
-      "table": "services",
-      "properties_title": "title"
-    },
-    "is_visible": false,
-    "use_in_commands": ["add", "hook"]
+    "is_autofill": false,
+    "use_in_commands": [],
+    "require_in_commands": []
   }],
   "action_buttons": [{
     "type": "href",
