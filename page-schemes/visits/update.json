@@ -125,7 +125,7 @@
               "title": "",
               "fields": ["services_info", "pay_method", "cash_sum", "card_sum", "summary"]
             }]
-          },{
+          }, {
             "size": 2,
             "blocks": [{
               "title": "",
@@ -188,8 +188,8 @@
               "icon": "",
               "page": "tasks/add",
               "context": {
-                "form": "client_id",
-                "row_id": ":id"
+                "form": "clients",
+                "row_id": ":clients_id"
               }
             }
           }]

@@ -1,1 +1,47 @@
-{"required_modules":[],"required_permissions":[],"structure":[{"title":"Шапка","type":"header","size":4,"settings":{"description":"Услуги","title":["Услуги"]},"components":{"buttons":[]}},{"title":"Список","type":"list","size":4,"settings":{"object":"services"},"components":{"search":true,"filters":[{"title":"Категория","type":"list","required_permissions":[],"required_modules":[],"settings":{"is_search":false,"recipient_property":"category_id","donor_object":"serviceGroups","donor_property_title":"title","donor_property_value":"id"}}],"buttons":[{"type":"href","settings":{"title":"Добавление услуги","background":"dark","page":"services/add"}}]}}]}
+{
+    "required_modules": [],
+    "required_permissions": [],
+    "structure": [{
+        "title": "Шапка",
+        "type": "header",
+        "size": 4,
+        "settings": {
+            "description": "Услуги",
+            "title": ["Услуги"]
+        },
+        "components": {
+            "buttons": []
+        }
+    }, {
+        "title": "Список",
+        "type": "list",
+        "size": 4,
+        "settings": {
+            "object": "services"
+        },
+        "components": {
+            "search": true,
+            "filters": [{
+                "title": "Категория",
+                "type": "list",
+                "required_permissions": [],
+                "required_modules": [],
+                "settings": {
+                    "is_search": false,
+                    "recipient_property": "category_id",
+                    "donor_object": "serviceGroups",
+                    "donor_property_title": "title",
+                    "donor_property_value": "id"
+                }
+            }],
+            "buttons": [{
+                "type": "href",
+                "settings": {
+                    "title": "Добавление услуги",
+                    "background": "dark",
+                    "page": "services/add"
+                }
+            }]
+        }
+    }]
+}

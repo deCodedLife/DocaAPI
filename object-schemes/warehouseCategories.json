@@ -1,0 +1,1 @@
+{"title":"Категории расходников","table":"warehouseCategories","is_trash":false,"properties":[{"title":"Название","article":"title","data_type":"string","field_type":"string","is_default_in_list":true,"is_unique":true,"is_autofill":true,"use_in_commands":["update","get","add"],"require_in_commands":["add"]}]}

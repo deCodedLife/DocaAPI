@@ -1,0 +1,1 @@
+{"required_modules":[],"required_permissions":[],"structure":[{"title":"Заголовок","type":"header","size":4,"settings":{"description":"Список бонусов","title":["Бонусы"]},"components":[]},{"title":"Список","type":"list","size":4,"settings":{"object":"bonus"},"components":{"buttons":[{"type":"href","settings":{"title":"Добавить бонус","background":"dark","page":"bonus/add"}}]}}]}

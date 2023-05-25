@@ -32,6 +32,12 @@
       "icon": "reading"
     },
     {
+      "title": "Склады",
+      "href": "warehouse",
+      "children": [],
+      "icon": "stethoscope"
+    },
+    {
       "title": "Задачи",
       "href": "tasks",
       "children": [],
@@ -45,7 +51,7 @@
     },
     {
       "title": "Бонусы",
-      "href": "bonuses",
+      "href": "bonus",
       "children": [],
       "icon": "reading"
     },
@@ -89,7 +95,7 @@
         },
         {
           "title": "Категории расходников",
-          "href": "сategoriesСonsumables"
+          "href": "warehouseCategories"
         },
         {
           "title": "Специальности",

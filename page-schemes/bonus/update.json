@@ -1,0 +1,96 @@
+{
+  "required_modules": [],
+  "required_permissions": [],
+  "structure": [
+    {
+      "title": "Шапка",
+      "type": "header",
+      "size": 4,
+      "settings": {
+        "description": "Редактирование бонуса",
+        "title": [
+          ":title"
+        ]
+      },
+      "components": []
+    },
+    {
+      "title": "Форма",
+      "type": "form",
+      "size": 4,
+      "settings": {
+        "object": "bonus",
+        "command": "update",
+        "areas": [
+          {
+            "size": 2,
+            "blocks": [
+              {
+                "title": "",
+                "fields": [
+                  "title"
+                ]
+              },
+              {
+                "title": "Период",
+                "fields": [
+                  "start",
+                  "end"
+                ]
+              },
+              {
+                "title": "Условия",
+                "fields": [
+                  "minSumScore",
+                  "bonusCount",
+                  "bonusType",
+                  "minSumBy",
+                  "cashback",
+                  "works"
+                ]
+              }
+            ]
+          },
+          {
+            "size": 2,
+            "blocks": [
+              {
+                "title": "Участники",
+                "fields": [
+                  "excludedServices",
+                  "excludedServicesGroups",
+                  "requiredServices",
+                  "requiredServicesGroups",
+                  "clientsGroups"
+                ]
+              }
+            ]
+          },
+          {
+            "size": 4,
+            "blocks": [
+              {
+                "title": "",
+                "fields": [
+                  "comment"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "components": {
+        "buttons": [
+          {
+            "type": "submit",
+            "settings": {
+              "title": "Сохранить",
+              "background": "dark",
+              "href": "bonus"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
