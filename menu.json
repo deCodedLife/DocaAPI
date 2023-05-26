@@ -38,6 +38,12 @@
       "icon": "stethoscope"
     },
     {
+      "title": "Справочники",
+      "href": "references",
+      "children": [],
+      "icon": "stethoscope"
+    },
+    {
       "title": "Задачи",
       "href": "tasks",
       "children": [],
