@@ -88,3 +88,4 @@ foreach ( $requestData->clients_id as $clientId ) {
  * Отправка события об обновлении расписания
  */
 $API->addEvent( "schedule" );
+$API->addEvent( "day_planning" );

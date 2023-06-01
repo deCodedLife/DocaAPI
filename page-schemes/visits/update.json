@@ -39,7 +39,7 @@
               "fields": ["store_id", "cabinet_id"]
             }, {
               "title": "",
-              "fields": ["discount_type", "discount_value", "price"]
+              "fields": ["discount_value", "price"]
             }]
           }]
         },
@@ -267,6 +267,123 @@
           }]
         }
       }]
-    }]
+    }, {
+      "title": "Бонусы",
+      "body": [
+          {
+              "title": "Форма",
+              "type": "form",
+              "size": 4,
+              "settings": {
+                  "object": "clients",
+                  "command": "update",
+                  "areas": [
+                      {
+                          "size": 4,
+                          "blocks": [
+                              {
+                                  "title": "",
+                                  "fields": [
+                                      "bonuses"
+                                  ]
+                              }
+                          ]
+                      }
+                  ]
+              },
+              "components": {
+                  "buttons": [
+                      {
+                          "type": "modal",
+                          "settings": {
+                              "title": "Пополнить",
+                              "background": "dark",
+                              "page": "clients/bonus",
+                              "context": {
+                                "form": "bonus",
+                                "row_id": ":clients_id"
+                              }
+                          }
+                          
+                      }
+                  ]
+              }
+          },
+          {
+              "title": "Список операций",
+              "type": "list",
+              "size": 4,
+              "settings": {
+                  "object": "bonusHistory",
+                  "filters": [
+                      {
+                          "property": "client_id",
+                          "value": ":clients_id"
+                      }
+                  ]
+              },
+              "components": []
+          }
+      ]
+  },
+  {
+      "title": "Депозит",
+      "body": [
+          {
+              "title": "Форма",
+              "type": "form",
+              "size": 4,
+              "settings": {
+                  "object": "clients",
+                  "command": "update",
+                  "areas": [
+                      {
+                          "size": 4,
+                          "blocks": [
+                              {
+                                  "title": "",
+                                  "fields": [
+                                      "deposit"
+                                  ]
+                              }
+                          ]
+                      }
+                  ]
+              },
+              "components": {
+                  "buttons": [
+                      {
+                          "type": "modal",
+                          "settings": {
+                              "title": "Пополнить",
+                              "page": "clients/deposit",
+                              "background": "dark",
+                              "context": {
+                                "form": "deposit",
+                                "row_id": ":clients_id"
+                              }
+                          }
+                      }
+                  ]
+              }
+          },
+          {
+              "title": "Список операций",
+              "type": "list",
+              "size": 4,
+              "settings": {
+                  "object": "depositHistory",
+                  "filters": [
+                      {
+                          "property": "client_id",
+                          "value": ":clients_id"
+                      }
+                  ]
+              },
+              "components": []
+          }
+      ]
+  }
+  ]
   }]
 }

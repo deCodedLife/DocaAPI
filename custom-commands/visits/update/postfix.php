@@ -15,3 +15,4 @@ if ( $requestData->id && $requestData->reason_id ) $API->DB->update( "visits" )
  * Отправка события об обновлении расписания
  */
 $API->addEvent( "schedule" );
+$API->addEvent( "day_planning" );

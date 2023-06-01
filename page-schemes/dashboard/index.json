@@ -3,14 +3,17 @@
   "required_modules": [],
   "structure": [{
     "title": "Расписание",
-    "type": "list",
+    "type": "day_planning",
     "size": 4,
     "required_permissions": ["doctor_schedule"],
     "required_modules": [],
     "settings": {
-      "object": "visits"
+      "object": "visits",
+      "time_from_property": "start_at",
+      "time_to_property": "end_at",
+      "links_property": "clients_id"
     },
-    "components": []
+    "components": {}
   }, {
     "title": "Расписание",
     "type": "schedule",
@@ -25,7 +28,6 @@
       "row_href": "visits/add"
     },
     "components": {
-
       "buttons": [],
       "filters": [{
         "title": "Дата",

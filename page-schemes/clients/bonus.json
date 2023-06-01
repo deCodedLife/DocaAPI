@@ -1,0 +1,1 @@
+{"required_modules":[],"required_permissions":[],"structure":[{"title":"Форма бонусов","type":"form","size":4,"settings":{"object":"clients","command":"update","areas":[{"size":4,"blocks":[{"title":"","fields":["bonuses_replenishment"]}]}]},"components":{"buttons":[{"type":"submit","settings":{"href":"clients","background":"dark","title":"Пополнить"}}]}}]}

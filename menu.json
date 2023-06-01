@@ -39,7 +39,19 @@
     },
     {
       "title": "Справочники",
-      "href": "references",
+      "href": "handbook",
+      "children": [],
+      "icon": "stethoscope"
+    },
+    {
+      "title": "Закупки",
+      "href": "purchases",
+      "children": [],
+      "icon": "stethoscope"
+    },
+    {
+      "title": "Отчеты",
+      "href": "reports",
       "children": [],
       "icon": "stethoscope"
     },
@@ -86,6 +98,10 @@
         {
           "title": "Группы услуг",
           "href": "serviceGroups"
+        },
+        {
+          "title": "Типы справочников",
+          "href": "handbookTypes"
         },
         {
           "title": "Рекламные каналы",

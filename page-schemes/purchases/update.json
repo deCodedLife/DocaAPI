@@ -1,0 +1,57 @@
+{
+    "required_modules": [],
+    "required_permissions": [],
+    "structure": [
+        {
+            "title": "Шапка",
+            "type": "header",
+            "size": 4,
+            "settings": {
+                "description": "Редактирование",
+                "title": [
+                    "Закупки"
+                ]
+            },
+            "components": []
+        },
+        {
+            "title": "форма",
+            "type": "form",
+            "size": 4,
+            "settings": {
+                "object": "purchases",
+                "command": "update",
+                "areas": [
+                    {
+                        "size": 4,
+                        "blocks": [
+                            {
+                                "title": "Основная информация",
+                                "fields": [
+                                    "provider_id",
+                                    "store_id",
+                                    "title",
+                                    "price",
+                                    "diliveryPrice",
+                                    "created_at"
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            "components": {
+                "buttons": [
+                    {
+                        "type": "submit",
+                        "settings": {
+                            "title": "Изменить",
+                            "background": "dark",
+                            "href": "purchases"
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

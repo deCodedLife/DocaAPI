@@ -1,0 +1,1 @@
+{"required_modules":[],"required_permissions":[],"structure":[{"title":"Шапка","type":"header","size":4,"settings":{"title":["Отчеты"]},"components":{"buttons":[{"type":"href","settings":{"title":"Добавить","page":"reports/add","background":"dark"}}]}},{"title":"Список","type":"list","size":4,"settings":{"object":"reports"},"components":[]}]}

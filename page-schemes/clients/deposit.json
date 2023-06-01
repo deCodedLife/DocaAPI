@@ -1,0 +1,40 @@
+{
+  "required_modules": [],
+  "required_permissions": [],
+  "structure": [
+    {
+      "title": "Форма депозита",
+      "type": "form",
+      "size": 4,
+      "settings": {
+        "object": "clients",
+        "command": "update",
+        "areas": [
+          {
+            "size": 4,
+            "blocks": [
+              {
+                "title": "",
+                "fields": [
+                  "deposit_replenishment"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "components": {
+        "buttons": [
+          {
+            "type": "submit",
+            "settings": {
+              "href": "clients",
+              "background": "dark",
+              "title": "Пополнить"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

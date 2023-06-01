@@ -13,3 +13,4 @@ $API->DB->update( "visits" )
     ->execute();
 
 $API->addEvent( "schedule" );
+$API->addEvent( "day_planning" );
