@@ -1,389 +1,478 @@
 {
-  "required_modules": [],
-  "required_permissions": [],
-  "structure": [{
-    "title": "Шапка",
-    "type": "header",
-    "size": 4,
-    "settings": {
-      "description": "Записи к врачам - Редактирование",
-      "title": ["Запись № ", ":id"]
-    },
-    "components": []
-  }, {
-    "title": "Табы",
-    "type": "tabs",
-    "size": 4,
-    "settings": [{
-      "title": "Посещение",
-      "body": [{
-        "title": "Форма",
-        "type": "form",
-        "size": 4,
-        "settings": {
-          "object": "visits",
-          "command": "update",
-          "areas": [{
-            "size": 2,
-            "blocks": [{
-              "title": "",
-              "fields": ["start_at", "end_at", "status"]
-            }, {
-              "title": "",
-              "fields": ["users_id", "clients_id", "services_id"]
-            }]
-          }, {
-            "size": 2,
-            "blocks": [{
-              "title": "",
-              "fields": ["store_id", "cabinet_id"]
-            }, {
-              "title": "",
-              "fields": ["discount_value", "price"]
-            }]
-          }]
-        },
-        "components": {
-          "buttons": [{
-            "type": "print",
-            "required_permissions": [],
-            "settings": {
-              "title": "Печать",
-              "background": "dark",
-              "data": {
-                "document_article": "services_contract",
-                "is_edit": true,
-                "row_id": ":id"
-              }
-            }
-          }, {
-            "type": "print",
-            "required_permissions": [],
-            "settings": {
-              "title": "Печать документов",
-              "background": "dark",
-              "data": {
-                "save_to": {
-                  "object": "visitReports",
-                  "properties": {
-                    "client_id": ":clients_id"
-                  }
-                },
-                "is_edit": true,
-                "row_id": ":id"
-              }
-            }
-          }, {
-            "type": "modal",
-            "required_permissions": ["manager_schedule"],
-            "settings": {
-              "title": "Отменить",
-              "background": "dark",
-              "page": "visits/cancel",
-              "close_previous_modal": true,
-              "modal_size": "sm",
-              "context": {
-                "form": "visits",
-                "row_id": ":id"
-              }
-            }
-          }, {
-            "type": "script",
-            "required_permissions": ["manager_schedule"],
-            "settings": {
-              "title": "Завершить",
-              "background": "dark",
-              "object": "visits",
-              "command": "check-success",
-              "data": {
-                "id": ":id"
-              }
-            }
-          }, {
-            "type": "submit",
-            "required_permissions": ["manager_schedule"],
-            "settings": {
-              "title": "Сохранить",
-              "background": "dark",
-              "href": ""
-            }
-          }]
-        }
-      }]
-    }, {
-      "title": "Оплата",
-      "body": [{
-        "title": "Форма оплаты",
-        "type": "form",
-        "size": 4,
-        "settings": {
-          "object": "sales",
-          "command": "add",
-          "areas": [{
-            "size": 2,
-            "blocks": [{
-              "title": "",
-              "fields": ["services_info", "pay_method", "cash_sum", "card_sum", "summary"]
-            }]
-          }, {
-            "size": 2,
-            "blocks": [{
-              "title": "",
-              "fields": ["store_id", "bonus_sum", "deposit_sum", "online_receipt", "is_combined", "client_id", "pay_type"]
-            }]
-          }]
-        },
-        "components": {
-          "buttons": [{
-            "type": "submit",
-            "settings": {
-              "title": "Оплатить",
-              "background": "dark",
-              "href": "dashboard"
-            }
-          }]
-        }
-      }]
-    }, {
-      "title": "Основная информация",
-      "body": [{
-        "title": "Форма клиента",
-        "type": "form",
-        "size": 4,
-        "settings": {
-          "object": "clients",
-          "command": "get",
-          "areas": [{
-            "size": 2,
-            "blocks": [{
-              "title": "Основное",
-              "fields": ["last_name", "first_name", "patronymic", "gender", "birthday"]
-            }, {
-              "title": "Контакты",
-              "fields": ["phone", "second_phone", "email", "address", "client_groups"]
-            }]
-          }, {
-            "size": 2,
-            "blocks": [{
-              "title": "Документы",
-              "fields": ["passport_series", "passport_number", "passport_issued", "is_representative"]
-            }, {
-              "title": "Законный представитель",
-              "fields": ["present_last_name", "present_first_name", "present_patronymic", "present_passport_series", "present_passport_number", "present_passport_issued"]
-            }]
-          }, {
+    "required_modules": [],
+    "required_permissions": [],
+    "structure": [
+        {
+            "title": "Шапка",
+            "type": "header",
             "size": 4,
-            "blocks": [{
-              "title": "",
-              "fields": ["comment"]
-            }]
-          }]
-        },
-        "components": {
-          "buttons": [{
-            "type": "modal",
             "settings": {
-              "title": "Добавить задачу",
-              "background": "dark",
-              "icon": "",
-              "page": "tasks/add",
-              "context": {
-                "form": "clients",
-                "row_id": ":clients_id"
-              }
-            }
-          }]
+                "description": "Записи к врачам - Редактирование",
+                "title": [
+                    "Запись № ",
+                    ":id"
+                ]
+            },
+            "components": []
+        },
+        {
+            "title": "Табы",
+            "type": "tabs",
+            "size": 4,
+            "settings": [
+                {
+                    "title": "Посещение",
+                    "body": [
+                        {
+                            "title": "Форма",
+                            "type": "form",
+                            "size": 4,
+                            "settings": {
+                                "object": "visits",
+                                "command": "update",
+                                "areas": [
+                                    {
+                                        "size": 2,
+                                        "blocks": [
+                                            {
+                                                "title": "",
+                                                "fields": [
+                                                    "start_at",
+                                                    "end_at",
+                                                    "status"
+                                                ]
+                                            },
+                                            {
+                                                "title": "",
+                                                "fields": [
+                                                    "users_id",
+                                                    "clients_id",
+                                                    "services_id"
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "size": 2,
+                                        "blocks": [
+                                            {
+                                                "title": "",
+                                                "fields": [
+                                                    "store_id",
+                                                    "cabinet_id"
+                                                ]
+                                            },
+                                            {
+                                                "title": "",
+                                                "fields": [
+                                                    "discount_value",
+                                                    "price"
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            "components": {
+                                "buttons": [
+                                    {
+                                        "type": "print",
+                                        "required_permissions": [],
+                                        "settings": {
+                                            "title": "Печать",
+                                            "background": "dark",
+                                            "data": {
+                                                "document_article": "services_contract",
+                                                "is_edit": true,
+                                                "row_id": ":id"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "type": "print",
+                                        "required_permissions": [],
+                                        "settings": {
+                                            "title": "Печать документов",
+                                            "background": "dark",
+                                            "data": {
+                                                "save_to": {
+                                                    "object": "visitReports",
+                                                    "properties": {
+                                                        "client_id": ":clients_id"
+                                                    }
+                                                },
+                                                "is_edit": true,
+                                                "row_id": ":id"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "type": "modal",
+                                        "required_permissions": [
+                                            "manager_schedule"
+                                        ],
+                                        "settings": {
+                                            "title": "Отменить",
+                                            "background": "dark",
+                                            "page": "visits/cancel",
+                                            "close_previous_modal": true,
+                                            "modal_size": "sm",
+                                            "context": {
+                                                "form": "visits",
+                                                "row_id": ":id"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "type": "script",
+                                        "required_permissions": [
+                                            "manager_schedule"
+                                        ],
+                                        "settings": {
+                                            "title": "Завершить",
+                                            "background": "dark",
+                                            "object": "visits",
+                                            "command": "check-success",
+                                            "data": {
+                                                "id": ":id"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "type": "submit",
+                                        "required_permissions": [
+                                            "manager_schedule"
+                                        ],
+                                        "settings": {
+                                            "title": "Сохранить",
+                                            "background": "dark",
+                                            "href": ""
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "title": "Оплата",
+                    "body": [
+                        {
+                            "title": "Форма оплаты",
+                            "type": "form",
+                            "size": 4,
+                            "settings": {
+                                "object": "sales",
+                                "command": "add",
+                                "areas": [
+                                    {
+                                        "size": 2,
+                                        "blocks": [
+                                            {
+                                                "title": "",
+                                                "fields": [
+                                                    "services_info",
+                                                    "cash_sum",
+                                                    "card_sum",
+                                                    "summary",
+                                                    "pay_method"
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "size": 2,
+                                        "blocks": [
+                                            {
+                                                "title": "",
+                                                "fields": [
+                                                    "store_id",
+                                                    "bonus_sum",
+                                                    "deposit_sum",
+                                                    "online_receipt",
+                                                    "is_combined",
+                                                    "client_id",
+                                                    "pay_type"
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            "components": {
+                                "buttons": [
+                                    {
+                                        "type": "submit",
+                                        "settings": {
+                                            "title": "Оплатить",
+                                            "background": "dark",
+                                            "href": "dashboard"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "title": "Основная информация",
+                    "body": [
+                        {
+                            "title": "Форма клиента",
+                            "type": "form",
+                            "size": 4,
+                            "settings": {
+                                "object": "clients",
+                                "command": "get",
+                                "areas": [
+                                    {
+                                        "size": 2,
+                                        "blocks": [
+                                            {
+                                                "title": "Основное",
+                                                "fields": [
+                                                    "last_name",
+                                                    "first_name",
+                                                    "patronymic",
+                                                    "gender",
+                                                    "birthday"
+                                                ]
+                                            },
+                                            {
+                                                "title": "Контакты",
+                                                "fields": [
+                                                    "phone",
+                                                    "second_phone",
+                                                    "email",
+                                                    "address",
+                                                    "client_groups"
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "size": 2,
+                                        "blocks": [
+                                            {
+                                                "title": "Документы",
+                                                "fields": [
+                                                    "passport_series",
+                                                    "passport_number",
+                                                    "passport_issued",
+                                                    "is_representative"
+                                                ]
+                                            },
+                                            {
+                                                "title": "Законный представитель",
+                                                "fields": [
+                                                    "present_last_name",
+                                                    "present_first_name",
+                                                    "present_patronymic",
+                                                    "present_passport_series",
+                                                    "present_passport_number",
+                                                    "present_passport_issued"
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "size": 4,
+                                        "blocks": [
+                                            {
+                                                "title": "",
+                                                "fields": [
+                                                    "comment"
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            "components": {
+                                "buttons": [
+                                    {
+                                        "type": "modal",
+                                        "settings": {
+                                            "title": "Добавить задачу",
+                                            "background": "dark",
+                                            "icon": "",
+                                            "page": "tasks/add",
+                                            "context": {
+                                                "form": "clients",
+                                                "row_id": ":clients_id"
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "title": "Мед карта",
+                    "body": [
+                        {
+                            "title": "Мед карта",
+                            "type": "accordion",
+                            "size": 4,
+                            "settings": {
+                                "object": "visitReports",
+                                "property_title": "title",
+                                "property_body": "body",
+                                "filters": [
+                                    {
+                                        "property": "client_id",
+                                        "value": ":clients_id"
+                                    }
+                                ]
+                            },
+                            "components": []
+                        }
+                    ]
+                },
+                {
+                    "title": "История посещений",
+                    "body": [
+                        {
+                            "title": "История посещений",
+                            "type": "list",
+                            "size": 4,
+                            "settings": {
+                                "object": "visits",
+                                "filters": [
+                                    {
+                                        "property": "clients_id",
+                                        "value": ":clients_id"
+                                    }
+                                ]
+                            },
+                            "components": []
+                        }
+                    ]
+                },
+                {
+                    "title": "Статистика",
+                    "body": [
+                        {
+                            "title": "Статистика клиентов",
+                            "type": "analytic_widgets",
+                            "size": 4,
+                            "settings": {
+                                "widgets_group": "client_statistic",
+                                "filters": [
+                                    {
+                                        "property": "client_id",
+                                        "value": ":clients_id"
+                                    }
+                                ]
+                            },
+                            "components": []
+                        }
+                    ]
+                },
+                {
+                    "title": "Логи",
+                    "body": [
+                        {
+                            "title": "Логи",
+                            "type": "logs",
+                            "size": 4,
+                            "settings": {
+                                "object": "logs",
+                                "filters": [
+                                    {
+                                        "property": "clients_id",
+                                        "value": ":clients_id"
+                                    }
+                                ]
+                            },
+                            "components": {
+                                "filters": [
+                                    {
+                                        "title": "Дата",
+                                        "type": "date",
+                                        "required_permissions": [],
+                                        "required_modules": [],
+                                        "settings": {
+                                            "recipient_property": "created_at"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "title": "Бонусы",
+                    "body": [
+                        {
+                            "title": "Список операций",
+                            "type": "list",
+                            "size": 4,
+                            "settings": {
+                                "object": "bonusHistory",
+                                "filters": [
+                                    {
+                                        "property": "client_id",
+                                        "value": ":clients_id"
+                                    }
+                                ]
+                            },
+                            "components": {
+                                "buttons": [
+                                    {
+                                        "type": "modal",
+                                        "settings": {
+                                            "title": "Пополнить",
+                                            "background": "dark",
+                                            "page": "clients/bonus",
+                                            "context": {
+                                                "form": "bonus",
+                                                "row_id": ":clients_id"
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "title": "Депозит",
+                    "body": [
+                        {
+                            "title": "Список операций",
+                            "type": "list",
+                            "size": 4,
+                            "settings": {
+                                "object": "depositHistory",
+                                "filters": [
+                                    {
+                                        "property": "client_id",
+                                        "value": ":clients_id"
+                                    }
+                                ]
+                            },
+                            "components": {
+                                "buttons": [
+                                    {
+                                        "type": "modal",
+                                        "settings": {
+                                            "title": "Пополнить",
+                                            "page": "clients/deposit",
+                                            "background": "dark",
+                                            "context": {
+                                                "form": "deposit",
+                                                "row_id": ":clients_id"
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
         }
-      }]
-    }, {
-      "title": "Мед карта",
-      "body": [{
-        "title": "Мед карта",
-        "type": "accordion",
-        "size": 4,
-        "settings": {
-          "object": "visitReports",
-          "property_title": "title",
-          "property_body": "body",
-          "filters": [{
-            "property": "client_id",
-            "value": ":clients_id"
-          }]
-        },
-        "components": []
-      }]
-    }, {
-      "title": "История посещений",
-      "body": [{
-        "title": "История посещений",
-        "type": "list",
-        "size": 4,
-        "settings": {
-          "object": "visits",
-          "filters": [{
-            "property": "clients_id",
-            "value": ":clients_id"
-          }]
-        },
-        "components": []
-      }]
-    }, {
-      "title": "Статистика",
-      "body": [{
-        "title": "Статистика клиентов",
-        "type": "analytic_widgets",
-        "size": 4,
-        "settings": {
-          "widgets_group": "client_statistic",
-          "filters": [{
-            "property": "client_id",
-            "value": ":clients_id"
-          }]
-        },
-        "components": []
-      }]
-    }, {
-      "title": "Логи",
-      "body": [{
-        "title": "Логи",
-        "type": "logs",
-        "size": 4,
-        "settings": {
-          "object": "logs",
-          "filters": [{
-            "property": "clients_id",
-            "value": ":clients_id"
-          }]
-        },
-        "components": {
-          "filters": [{
-            "title": "Дата",
-            "type": "date",
-            "required_permissions": [],
-            "required_modules": [],
-            "settings": {
-              "recipient_property": "created_at"
-            }
-          }]
-        }
-      }]
-    }, {
-      "title": "Бонусы",
-      "body": [
-          {
-              "title": "Форма",
-              "type": "form",
-              "size": 4,
-              "settings": {
-                  "object": "clients",
-                  "command": "update",
-                  "areas": [
-                      {
-                          "size": 4,
-                          "blocks": [
-                              {
-                                  "title": "",
-                                  "fields": [
-                                      "bonuses"
-                                  ]
-                              }
-                          ]
-                      }
-                  ]
-              },
-              "components": {
-                  "buttons": [
-                      {
-                          "type": "modal",
-                          "settings": {
-                              "title": "Пополнить",
-                              "background": "dark",
-                              "page": "clients/bonus",
-                              "context": {
-                                "form": "bonus",
-                                "row_id": ":clients_id"
-                              }
-                          }
-                          
-                      }
-                  ]
-              }
-          },
-          {
-              "title": "Список операций",
-              "type": "list",
-              "size": 4,
-              "settings": {
-                  "object": "bonusHistory",
-                  "filters": [
-                      {
-                          "property": "client_id",
-                          "value": ":clients_id"
-                      }
-                  ]
-              },
-              "components": []
-          }
-      ]
-  },
-  {
-      "title": "Депозит",
-      "body": [
-          {
-              "title": "Форма",
-              "type": "form",
-              "size": 4,
-              "settings": {
-                  "object": "clients",
-                  "command": "update",
-                  "areas": [
-                      {
-                          "size": 4,
-                          "blocks": [
-                              {
-                                  "title": "",
-                                  "fields": [
-                                      "deposit"
-                                  ]
-                              }
-                          ]
-                      }
-                  ]
-              },
-              "components": {
-                  "buttons": [
-                      {
-                          "type": "modal",
-                          "settings": {
-                              "title": "Пополнить",
-                              "page": "clients/deposit",
-                              "background": "dark",
-                              "context": {
-                                "form": "deposit",
-                                "row_id": ":clients_id"
-                              }
-                          }
-                      }
-                  ]
-              }
-          },
-          {
-              "title": "Список операций",
-              "type": "list",
-              "size": 4,
-              "settings": {
-                  "object": "depositHistory",
-                  "filters": [
-                      {
-                          "property": "client_id",
-                          "value": ":clients_id"
-                      }
-                  ]
-              },
-              "components": []
-          }
-      ]
-  }
-  ]
-  }]
+    ]
 }

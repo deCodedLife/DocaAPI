@@ -9,6 +9,9 @@
       "settings": {
         "object": "clients",
         "command": "update",
+        "data": {
+          "id": ":id"
+        },
         "areas": [
           {
             "size": 4,

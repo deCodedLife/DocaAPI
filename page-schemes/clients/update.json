@@ -209,7 +209,7 @@
                                 "filters": [
                                     {
                                         "property": "client_id",
-                                        "value": ":clients_id"
+                                        "value": ":id"
                                     }
                                 ]
                             },
@@ -333,7 +333,11 @@
                             "type": "logs",
                             "size": 4,
                             "settings": {
-                                "object": "logs"
+                                "object": "logs",
+                                "filters": [{
+                                    "property": "clients_id",
+                                    "value": ":id"
+                                }]
                             },
                             "components": {
                                 "filters": [

@@ -28,13 +28,13 @@
                             {
                                 "title": "Основная информация",
                                 "fields": [
-                                    "provider_id",
+                                    "created_at",
                                     "store_id",
+                                    "provider_id",
                                     "purchasType",
-                                    "title",
-                                    "price",
+                                    "purchasesProducts",
                                     "diliveryPrice",
-                                    "created_at"
+                                    "price"
                                 ]
                             }
                         ]

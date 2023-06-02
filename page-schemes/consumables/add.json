@@ -7,34 +7,34 @@
             "type": "header",
             "size": 4,
             "settings": {
-                "description": "Редактирование",
+                "description": "Список складов",
                 "title": [
-                    "Закупки"
+                    "Склады - добавление"
                 ]
             },
-            "components": []
+            "components": {
+                "buttons": []
+            }
         },
         {
-            "title": "форма",
+            "title": "Форма",
             "type": "form",
             "size": 4,
             "settings": {
-                "object": "purchases",
-                "command": "update",
+                "object": "consumables",
+                "command": "add",
                 "areas": [
                     {
                         "size": 4,
                         "blocks": [
                             {
-                                "title": "Основная информация",
+                                "title": "Основное",
                                 "fields": [
-                                    "created_at",
-                                    "store_id",
-                                    "provider_id",
-                                    "purchasType",
-                                    "purchasesProducts",
-                                    "diliveryPrice",
-                                    "price"
+                                    "title",
+                                    "category_id",
+                                    "cost",
+                                    "is_multiple",
+                                    "minCount"
                                 ]
                             }
                         ]
@@ -46,9 +46,9 @@
                     {
                         "type": "submit",
                         "settings": {
-                            "title": "Изменить",
-                            "background": "dark",
-                            "href": "purchases"
+                            "title": "Сохранить",
+                            "href": "consumables",
+                            "background": "dark"
                         }
                     }
                 ]

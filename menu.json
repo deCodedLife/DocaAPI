@@ -33,7 +33,7 @@
     },
     {
       "title": "Склады",
-      "href": "warehouse",
+      "href": "consumables",
       "children": [],
       "icon": "stethoscope"
     },
@@ -117,7 +117,7 @@
         },
         {
           "title": "Категории расходников",
-          "href": "warehouseCategories"
+          "href": "consumableCategories"
         },
         {
           "title": "Специальности",

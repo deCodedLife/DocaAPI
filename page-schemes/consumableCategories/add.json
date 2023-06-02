@@ -7,34 +7,41 @@
             "type": "header",
             "size": 4,
             "settings": {
-                "description": "Редактирование",
+                "description": "Добавление",
                 "title": [
-                    "Закупки"
+                    "Категории расходников"
                 ]
             },
-            "components": []
+            "components": {
+                "buttons": [
+                    {
+                        "type": "href",
+                        "settings": {
+                            "title": "Добавить",
+                            "page": [
+                                "сategoriesСonsumables/add"
+                            ],
+                            "background": "dark"
+                        }
+                    }
+                ]
+            }
         },
         {
-            "title": "форма",
+            "title": "Форма",
             "type": "form",
             "size": 4,
             "settings": {
-                "object": "purchases",
-                "command": "update",
+                "object": "consumableCategories",
+                "command": "add",
                 "areas": [
                     {
-                        "size": 4,
+                        "size": null,
                         "blocks": [
                             {
-                                "title": "Основная информация",
+                                "title": "",
                                 "fields": [
-                                    "created_at",
-                                    "store_id",
-                                    "provider_id",
-                                    "purchasType",
-                                    "purchasesProducts",
-                                    "diliveryPrice",
-                                    "price"
+                                    "title"
                                 ]
                             }
                         ]
@@ -46,9 +53,9 @@
                     {
                         "type": "submit",
                         "settings": {
-                            "title": "Изменить",
+                            "title": "Добавить",
                             "background": "dark",
-                            "href": "purchases"
+                            "href": "consumableCategories"
                         }
                     }
                 ]

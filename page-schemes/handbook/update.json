@@ -1,1 +1,76 @@
-{"required_modules":[],"required_permissions":[],"structure":[{"title":"Шапка","type":"header","size":4,"settings":{"description":"Cправочники - Редактирование","title":[":title"]},"components":{"buttons":[]}},{"title":"Форма","type":"form","size":4,"settings":{"object":"handbook","command":"update","areas":[{"size":4,"blocks":[{"title":"Основная информация","fields":["title","code","description","type_id"]}]}]},"components":{"buttons":[{"type":"submit","settings":{"title":"Сохранить","href":"handbook"}}]}}]}
+{
+  "required_modules": [],
+  "required_permissions": [],
+  "structure": [
+    {
+      "title": "Шапка",
+      "type": "header",
+      "size": 4,
+      "settings": {
+        "description": "Cправочники - Редактирование",
+        "title": [
+          ":title"
+        ]
+      },
+      "components": {
+        "buttons": []
+      }
+    },
+    {
+      "title": "Форма",
+      "type": "form",
+      "size": 4,
+      "settings": {
+        "object": "handbook",
+        "command": "update",
+        "areas": [
+          {
+            "size": 2,
+            "blocks": [
+              {
+                "title": "",
+                "fields": [
+                  "title",
+                  "code"
+                ]
+              }
+            ]
+          },
+          {
+            "size": 2,
+            "blocks": [
+              {
+                "title": "",
+                "fields": [
+                  "type_id"
+                ]
+              }
+            ]
+          },
+          {
+            "size": 4,
+            "blocks": [
+              {
+                "title": "",
+                "fields": [
+                  "description"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "components": {
+        "buttons": [
+          {
+            "type": "submit",
+            "settings": {
+              "title": "Сохранить",
+              "href": "handbook"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
