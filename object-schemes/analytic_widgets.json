@@ -26,8 +26,8 @@
       "is_default_in_list": true,
       "is_unique": false,
       "is_autofill": true,
-      "use_in_commands": ["client_statistic"],
-      "require_in_commands": ["client_statistic"],
+      "use_in_commands": ["client_statistic", "deposit_statistic", "bonus_statistic"],
+      "require_in_commands": ["client_statistic", "deposit_statistic", "bonus_statistic"],
       "list_donor": {
         "table": "clients",
         "properties_title": "last_name"

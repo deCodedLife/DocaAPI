@@ -11,6 +11,7 @@
       "object": "visits",
       "time_from_property": "start_at",
       "time_to_property": "end_at",
+      "status_property": "status",
       "links_property": "clients_id"
     },
     "components": {}

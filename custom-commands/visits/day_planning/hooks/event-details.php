@@ -4,7 +4,7 @@
  * Фильтр по врачу
  */
 
-// $isContinue = true;
+$isContinue = true;
 
 $visitUsers = $API->DB->from("visits_users")
     ->where("visit_id", $event["id"]);
@@ -57,6 +57,27 @@ foreach ($visitClients as $visitClient) {
     ];
 
 } // foreach. $visitClients
+
+
+/**
+ * Определение цвета
+ */
+
+switch ( $event[ "status" ] ) {
+
+    case "planning":
+        $eventDetails[ "color" ] = "primary";
+        $eventDetails[ "description" ] = "Запланировано";
+        break;
+
+    case "ended":
+        $eventDetails[ "color" ] = "success";
+        $eventDetails[ "description" ] = "Завершено";
+        break;
+
+} // switch. $event[ "status" ]
+
+$eventDetails[ "test" ] = $event;
 
 
 /**
