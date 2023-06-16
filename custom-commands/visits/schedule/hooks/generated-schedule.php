@@ -137,14 +137,26 @@ foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
                      * Добавление блока
                      */
                     $updatedSchedule[ $lastAddedStep ] = [
-                        "steps" => [ $lastAddedStep, $scheduleBlockStepKey ],
+                        "steps" => [ $lastAddedStep, $scheduleBlockStepKey - 1 ],
                         "status" => $currentStatus
                     ];
+
+
+                    /**
+                     * Заглушка.
+                     * Если блок последний, и после него идет блок другого типа - то фиксируем его
+                     */
+                    if ( $performerEvent[ "steps" ][ 1 ] == $scheduleBlockStepKey )
+                        $updatedSchedule[ $scheduleBlockStepKey ] = [
+                            "steps" => [ $scheduleBlockStepKey, $scheduleBlockStepKey ],
+                            "status" => $scheduleBlockStepStatus
+                        ];
+
 
                     /**
                      * Обновление последнего добавленного шага
                      */
-                    $lastAddedStep = $scheduleBlockStepKey + 1;
+                    $lastAddedStep = $scheduleBlockStepKey;
 
                     /**
                      * Обновление текущего статуса

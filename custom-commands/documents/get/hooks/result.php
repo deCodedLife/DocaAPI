@@ -4,7 +4,7 @@
  * Получение общих документов
  */
 
-if ( $requestData->context == "print" ) {
+if ( $requestData->context->block == "print" ) {
 
     $publicDocuments = $API->DB->from( "documents" )
         ->where( [
@@ -19,4 +19,4 @@ if ( $requestData->context == "print" ) {
 
     } // foreach. $publicDocuments
 
-} // if. $requestData->context == "print"
+} // if. $requestData->context->block == "print"

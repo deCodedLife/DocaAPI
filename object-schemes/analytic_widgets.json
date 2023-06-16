@@ -19,6 +19,68 @@
       }
     },
     {
+      "title": "Дата начала",
+      "article": "start_at",
+      "data_type": "date",
+      "field_type": "date",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": ["sum_all_services","daily_report"]
+    },
+    {
+      "title": "Дата конца",
+      "article": "end_at",
+      "data_type": "date",
+      "field_type": "date",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": ["sum_all_services","daily_report"]
+    },
+    {
+      "title": "Филиал",
+      "article": "store_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": ["sum_all_services","daily_report"],
+      "list_donor": {
+        "table": "stores",
+        "properties_title": "title"
+      }
+    },
+    {
+      "title": "Услуга",
+      "article": "services_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": ["sum_all_services"],
+      "list_donor": {
+        "table": "services",
+        "properties_title": "title"
+      }
+    },
+    {
+      "title": "Категория услуг",
+      "article": "serviceGroup_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": ["sum_all_services"],
+      "list_donor": {
+        "table": "serviceGroups",
+        "properties_title": "title"
+      }
+    },
+    {
       "title": "Клиент",
       "article": "client_id",
       "data_type": "integer",
@@ -33,6 +95,6 @@
         "properties_title": "last_name"
       }
     }
-    
+
   ]
 }

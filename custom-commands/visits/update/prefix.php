@@ -9,8 +9,8 @@
  */
 
 $sqlTimeCondition = "(
-    ( start_at >= '$requestData->start_at' and start_at < '$requestData->end_at' ) OR 
-    ( end_at > '$requestData->start_at' and end_at < '$requestData->end_at' ) OR 
+    ( start_at >= '$requestData->start_at' and start_at < '$requestData->end_at' ) OR
+    ( end_at > '$requestData->start_at' and end_at < '$requestData->end_at' ) OR
     ( start_at < '$requestData->start_at' and end_at > '$requestData->end_at' )
 )";
 

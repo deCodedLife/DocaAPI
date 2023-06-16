@@ -2,7 +2,6 @@
 
 $formFieldsUpdate = [];
 
-
 if ( $cash_sum > $amountOfPhysicalPayments ) $cash_sum = $amountOfPhysicalPayments;
 if ( $card_sum > $amountOfPhysicalPayments ) $card_sum = $amountOfPhysicalPayments;
 
@@ -48,11 +47,6 @@ if ( $requestData->pay_method == "cash" ) {
 $clientDetails = $API->DB->from( "clients" )
     ->where( "id", $requestData->client_id )
     ->fetch();
-
-
-
-$formFieldsUpdate[ "deposit_sum" ][ "description" ] = "Депозит клиента: " . $clientDetails[ "deposit" ];
-$formFieldsUpdate[ "bonus_sum" ][ "description" ] = "Бонусы клиента: " . $clientDetails[ "bonuses" ];
 
 
 foreach ( $saleVisits as $visit )

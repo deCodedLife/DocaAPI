@@ -76,68 +76,31 @@
           ]
         },
         {
-          "title": "Приход средств в кассу",
+          "title": "Операции по кассе",
           "body": [
             {
-              "title": "Список операций",
+              "title": "Список",
               "type": "list",
               "size": 4,
               "settings": {
                 "object": "sales"
               },
-              "components": {
-                "filters": [
-                  {
-                    "title": "Дата",
-                    "type": "date",
-                    "settings": {
-                      "recipient_property": "created_at"
-                    },
-                    "required_permissions": [],
-                    "required_modules": []
-                  },
-                  {
-                    "title": "Клиент",
-                    "type": "list",
-                    "settings": {
-                      "donor_object": "clients",
-                      "donor_property_title": "last_name",
-                      "donor_property_value": "id",
-                      "recipient_property": "clients"
-                    }
-                  },
-                  {
-                    "title": "Сотрудник",
-                    "type": "list",
-                    "settings": {
-                      "donor_object": "users",
-                      "donor_property_title": "last_name",
-                      "donor_property_value": "id",
-                      "recipient_property": "employee"
-                    }
-                  },
-                  {
-                    "title": "Филиал",
-                    "type": "list",
-                    "settings": {
-                      "donor_object": "stores",
-                      "donor_property_title": "title",
-                      "donor_property_value": "id",
-                      "recipient_property": "store_id"
-                    }
-                  }
-                ]
-              }
+              "components": []
             }
           ]
         },
         {
-          "title": "Расход средств из кассы",
-          "body": []
-        },
-        {
           "title": "Состояние кассы",
           "body": [
+            {
+              "title": "Касса",
+              "type": "analytic_widgets",
+              "size": 4,
+              "settings": {
+                "widgets_group": "cashbox"
+              },
+              "components": []
+            },
             {
               "title": "Все операции",
               "type": "list",

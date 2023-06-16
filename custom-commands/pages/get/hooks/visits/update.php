@@ -10,13 +10,13 @@ $saleDetails = $API->DB->from( "salesVisits" )
     ->limit( 1 )
     ->fetch();
 
-
 /**
  * Отключение возможности оплатить посещения, после оплаты
  */
 
 if ( $pageDetail[ "row_detail" ][ "status" ]->value === "ended" || $saleDetails )
-    $pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "components" ][ "buttons" ] = [];
+    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 2 ]);
+    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 3 ]);
 
 if ( $pageDetail[ "row_detail" ][ "is_payed" ] || $saleDetails )
-    $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "components" ][ "buttons" ] = [];
+    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 0 ]);

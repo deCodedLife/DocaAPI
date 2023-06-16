@@ -169,26 +169,6 @@
                     ]
                 },
                 {
-                    "title": "Логи",
-                    "body": [
-                        {
-                            "title": "Логи",
-                            "type": "logs",
-                            "size": 4,
-                            "settings": {
-                                "object": "logs",
-                                "filters": [
-                                    {
-                                        "property": "users_id",
-                                        "value": ":id"
-                                    }
-                                ]
-                            },
-                            "components": []
-                        }
-                    ]
-                },
-                {
                     "title": "Зарплата",
                     "body": [
                         {
@@ -204,7 +184,8 @@
                                                 "title": "",
                                                 "fields": [
                                                     "salary",
-                                                    "is_percent"
+                                                    "is_percent",
+                                                    "services_user_percents"
                                                 ]
                                             }
                                         ]
@@ -225,13 +206,18 @@
                                     }
                                 ]
                             }
-                        },
+                        }
+                    ]
+                },
+                {
+                    "title": "Логи",
+                    "body": [
                         {
-                            "title": "Список услуг сотруднка",
-                            "type": "list",
+                            "title": "Логи",
+                            "type": "logs",
                             "size": 4,
                             "settings": {
-                                "object": "services",
+                                "object": "logs",
                                 "filters": [
                                     {
                                         "property": "users_id",

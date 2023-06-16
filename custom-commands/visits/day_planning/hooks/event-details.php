@@ -84,11 +84,56 @@ $eventDetails[ "test" ] = $event;
  * Добавление кнопок
  */
 
-$eventDetails[ "buttons" ][] = [
+$eventDetails[ "buttons" ][0] = [
     "type" => "script",
+    "settings" => [
+        "title" => "Принять пациента",
+        "background" => "dark",
+        "icon"=>"stethoscope",
+        "object" => "visits",
+        "command" => "accept-patient",
+        "data" => [
+            "id" => $event["id"]
+        ]
+    ]
+];
+$eventDetails[ "buttons" ][1] = [
+    "type" => "script",
+    "settings" => [
+        "title" => "Принять повторно",
+        "background" => "dark",
+        "icon"=>"stethoscope",
+        "object" => "visits",
+        "command" => "accept-again",
+        "data" => [
+            "id" => $event["id"]
+        ]
+    ]
+];
+
+$eventDetails[ "buttons" ][2] = [
+    "type"=>"print",
+    "settings"=> [
+        "title"=>"Печатать",
+        "background"=>"dark",
+        "icon"=>"print",
+        "data" => [
+            "document_article" => "services_contract",
+            "is_edit" => true,
+            "row_id" => $event["id"]
+        ]
+    ]
+];
+
+$eventDetails[ "buttons" ][3] = [
+    "type" => "script",
+    "required_permissions"=> [
+        "manager_schedule"
+    ],
     "settings" => [
         "title" => "Завершить",
         "background" => "dark",
+        "icon"=>"door",
         "object" => "visits",
         "command" => "check-success",
         "data" => [

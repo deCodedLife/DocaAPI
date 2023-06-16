@@ -1,6 +1,6 @@
 <?php
 
-if ( $requestData->context === "list" ) {
+if ( $requestData->context->block === "list" ) {
 
     $returnSales = [];
 
@@ -40,6 +40,5 @@ if ( $requestData->context === "list" ) {
      * Обновление списка пользователей
      */
     $response[ "data" ] = $returnSales;
-
 
 }

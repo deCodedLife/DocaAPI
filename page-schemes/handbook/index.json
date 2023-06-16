@@ -1,56 +1,56 @@
 {
-    "required_modules": [],
-    "required_permissions": [],
-    "structure": [
-        {
-            "title": "Шапка",
-            "type": "header",
-            "size": 4,
-            "settings": {
-                "description": "Cправочники ",
-                "title": [
-                    "Cправочники "
-                ]
-            },
-            "components": {
-                "buttons": []
-            }
-        },
-        {
-            "title": "Список",
+  "required_modules": [],
+  "required_permissions": [],
+  "structure": [
+    {
+      "title": "Шапка",
+      "type": "header",
+      "size": 4,
+      "settings": {
+        "description": "Cправочники ",
+        "title": [
+          "Cправочники "
+        ]
+      },
+      "components": {
+        "buttons": []
+      }
+    },
+    {
+      "title": "Список",
+      "type": "list",
+      "size": 4,
+      "settings": {
+        "object": "handbook"
+      },
+      "components": {
+        "search": false,
+        "filters": [
+          {
+            "title": "Справочник",
             "type": "list",
-            "size": 4,
+            "required_permissions": [],
+            "required_modules": [],
             "settings": {
-                "object": "handbook"
-            },
-            "components": {
-                "search": false,
-                "filters": [
-                    {
-                        "title": "Справочник",
-                        "type": "list",
-                        "required_permissions": [],
-                        "required_modules": [],
-                        "settings": {
-                            "is_search": false,
-                            "recipient_property": "handbookTypes_id",
-                            "donor_object": "handbookTypes",
-                            "donor_property_title": "title",
-                            "donor_property_value": "id"
-                        }
-                    }
-                ],
-                "buttons": [
-                    {
-                        "type": "href",
-                        "settings": {
-                            "title": "Добавление справачника",
-                            "background": "dark",
-                            "page": "handbook/add"
-                        }
-                    }
-                ]
+              "is_search": false,
+              "recipient_property": "type_id",
+              "donor_object": "handbookTypes",
+              "donor_property_title": "title",
+              "donor_property_value": "id"
             }
-        }
-    ]
+          }
+        ],
+        "buttons": [
+          {
+            "type": "href",
+            "settings": {
+              "title": "Добавление справачника",
+              "background": "dark",
+              "page": "handbook/add"
+            }
+          }
+        ]
+      }
+    }
+  ]
 }

@@ -1,1 +1,97 @@
-{"title":"Товары","table":" products","is_trash":false,"properties":[{"title":"Название","article":"title","data_type":"string","field_type":"string","is_default_in_list":true,"is_unique":false,"is_autofill":true,"is_in_search":true,"require_in_commands":["add"],"use_in_commands":["update","get","remove","add"]},{"title":"Категория","article":"category_id","data_type":"integer","field_type":"list","is_default_in_list":true,"is_unique":false,"is_autofill":true,"is_in_search":true,"list_donor":{"table":"productCategories","properties_title":"title"},"use_in_commands":["update","remove","get","add"]},{"title":"Цена ","article":"price","data_type":"float","field_type":"price","is_default_in_list":true,"is_unique":false,"is_autofill":true,"is_in_search":false,"use_in_commands":["update","get","add"],"require_in_commands":["add"]},{"title":"Себестоимость ","article":"cost","data_type":"float","field_type":"price","is_default_in_list":true,"is_unique":false,"is_autofill":true,"is_in_search":false,"use_in_commands":["get","update","add"],"require_in_commands":["add"]},{"title":"Минимальное количество","article":"minCount","data_type":"integer","field_type":"integer","is_default_in_list":true,"is_unique":false,"is_autofill":true,"use_in_commands":["update","get","add"]}]}
+{
+  "title": "Товары",
+  "table": " products",
+  "is_trash": false,
+  "properties": [
+    {
+      "title": "Название",
+      "article": "title",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_in_search": true,
+      "require_in_commands": [
+        "add"
+      ],
+      "use_in_commands": [
+        "update",
+        "get",
+        "remove",
+        "add"
+      ]
+    },
+    {
+      "title": "Категория",
+      "article": "category_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_in_search": true,
+      "list_donor": {
+        "table": "productCategories",
+        "properties_title": "title"
+      },
+      "use_in_commands": [
+        "update",
+        "remove",
+        "get",
+        "add"
+      ]
+    },
+    {
+      "title": "Цена ",
+      "article": "price",
+      "data_type": "float",
+      "field_type": "price",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_in_search": false,
+      "use_in_commands": [
+        "update",
+        "get",
+        "add"
+      ],
+      "require_in_commands": [
+        "add"
+      ]
+    },
+    {
+      "title": "Себестоимость ",
+      "article": "cost",
+      "data_type": "float",
+      "field_type": "price",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_in_search": false,
+      "use_in_commands": [
+        "get",
+        "update",
+        "add"
+      ],
+      "require_in_commands": [
+        "add"
+      ]
+    },
+    {
+      "title": "Минимальное количество",
+      "article": "minCount",
+      "annotation": "При достижении этого кол-ва, будет отправлено предупреждение ответственным сотрудникам",
+      "data_type": "integer",
+      "field_type": "integer",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "update",
+        "get",
+        "add"
+      ]
+    }
+  ]
+}

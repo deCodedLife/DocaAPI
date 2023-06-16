@@ -6,11 +6,11 @@
 switch ( $event[ "status" ][ "value" ] ) {
 
     case "planning":
-        $event[ "color" ] = "danger";
+        $event[ "color" ] = "primary";
         break;
 
     case "ended":
-        $event[ "color" ] = "info";
+        $event[ "color" ] = "success";
         break;
 
 } // switch. $event[ "status" ][ "value" ]

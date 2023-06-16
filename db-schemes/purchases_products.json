@@ -1,21 +1,40 @@
 {
-    "title": "Услуги - Сотрудники",
-    "properties": [
-      {
-        "title": "ID закупки",
-        "article": "service_id",
-        "type": "int",
-        "is_required": true,
-        "default": null
-      },
-      {
-        "title": "ID сотрудника",
-        "article": "user_id",
-        "type": "int",
-        "is_required": true,
-        "default": null
-      }
-    ],
-    "rows_key": "",
-    "rows": []
-  }
+  "title": "Закупки - Товары",
+  "properties": [
+    {
+      "title": "Закупка",
+      "article": "row_id",
+      "type": "int",
+      "default": null,
+      "is_required": "Y"
+    },
+    {
+      "title": "Услуга",
+      "article": "product_id",
+      "type": "int",
+      "default": null,
+      "is_required": "Y"
+    },
+    {
+      "title": "Количество",
+      "article": "count",
+      "type": "int",
+      "default": 1,
+      "is_required": "Y"
+    },
+    {
+      "title": "Стоимость",
+      "article": "price",
+      "type": "float",
+      "default": 0,
+      "is_required": "N"
+    },
+    {
+      "title": "Стоимость (шт.)",
+      "article": "priceOnce",
+      "type": "float",
+      "default": 0,
+      "is_required": "N"
+    }
+  ]
+}

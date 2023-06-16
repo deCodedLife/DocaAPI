@@ -1,6 +1,6 @@
 <?php
 
-$API->DB->insertInto( "servicesCost" )
+if ( $requestData->price ) $API->DB->insertInto( "servicesCost" )
     ->values( [
         "service_id" => $requestData->id,
         "price" => $requestData->price

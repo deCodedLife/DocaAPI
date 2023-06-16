@@ -6,7 +6,6 @@ const OBJECTS_CATEGORIES = [
 ];
 
 
-
 function sortObjects( $promotion, $type, $object ): array {
 
     if ( $object[ "is_group" ] == 'Y' ) $type .= "Groups";
@@ -44,7 +43,7 @@ foreach ( $response[ "data" ] as $key => $promotion ) {
 
 }
 
-if ( $requestData->context === "list" ) {
+if ( $requestData->context->block === "list" ) {
 
     $returnPromotions = [];
 
@@ -60,4 +59,4 @@ if ( $requestData->context === "list" ) {
 
     $response[ "data" ] = $returnPromotions;
 
-}
+} // if. $requestData->context->block === "list"

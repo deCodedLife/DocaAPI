@@ -1,0 +1,40 @@
+{
+  "title": "История звонков",
+  "properties": [
+    {
+      "title": "Сотрудник",
+      "article": "user_id",
+      "type": "int",
+      "default": null,
+      "is_required": "Y"
+    },
+    {
+      "title": "Клиент",
+      "article": "client_id",
+      "type": "int",
+      "default": null,
+      "is_required": "N"
+    },
+    {
+      "title": "Продолжительность звонка (сек)",
+      "article": "duration",
+      "type": "int",
+      "default": null,
+      "is_required": "N"
+    },
+    {
+      "title": "Запись звонка",
+      "article": "record",
+      "type": "varchar(255)",
+      "default": "",
+      "is_required": "N"
+    },
+    {
+      "title": "Дата и время инициализации звонка",
+      "article": "created_at",
+      "type": "datetime",
+      "default": "CURRENT_TIMESTAMP",
+      "is_required": "Y"
+    }
+  ]
+}

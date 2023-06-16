@@ -59,7 +59,7 @@ if ( $requestData->services_id ) {
     /**
      * Обновление полей формы
      */
-
+    
     $formFieldsUpdate[ "price" ] = [
         "value" => $visitPrice
     ];

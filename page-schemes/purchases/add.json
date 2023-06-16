@@ -31,9 +31,10 @@
                                     "created_at",
                                     "store_id",
                                     "provider_id",
-                                    "purchasType",
-                                    "purchasesProducts",
-                                    "diliveryPrice",
+                                    "purchaseType",
+                                    "purchases_products",
+                                    "purchases_consumables",
+                                    "deliveryPrice",
                                     "price"
                                 ]
                             }

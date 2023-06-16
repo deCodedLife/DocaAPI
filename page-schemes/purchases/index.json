@@ -1,1 +1,38 @@
-{"required_modules":[],"required_permissions":[],"structure":[{"title":"Шапка","type":"header","size":4,"settings":{"description":"Редактирование","title":["Закупки",":id"]},"components":[]},{"title":"Список","type":"list","size":4,"settings":{"object":"purchases"},"components":{"buttons":[{"type":"href","settings":{"title":"Добавить закупку","page":"purchases/add"}}]}}]}
+{
+  "required_modules": [],
+  "required_permissions": [],
+  "structure": [
+    {
+      "title": "Шапка",
+      "type": "header",
+      "size": 4,
+      "settings": {
+        "description": "Редактирование",
+        "title": [
+          "Закупки",
+          ":id"
+        ]
+      },
+      "components": []
+    },
+    {
+      "title": "Список",
+      "type": "list",
+      "size": 4,
+      "settings": {
+        "object": "purchases"
+      },
+      "components": {
+        "buttons": [
+          {
+            "type": "href",
+            "settings": {
+              "title": "Добавить закупку",
+              "page": "purchases/add"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
