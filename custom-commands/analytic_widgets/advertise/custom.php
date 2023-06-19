@@ -15,10 +15,6 @@ if ( $requestData->start_at ) $filter[ "end_at >= ?" ] = $requestData->start_at 
 if ( $requestData->end_at ) $filter[ "end_at <= ?" ] = $requestData->end_at . " 23:59:59";
 if ( $requestData->store_id ) $filter[ "store_id" ] = $requestData->store_id;
 
-//$filter[ "is_payed" ] = 'Y';
-$filter[ "is_active" ] = 'Y';
-
-//$API->returnResponse( $requestData->store_id, 500 );
 
 /**
 * Статистика клиента
@@ -44,17 +40,45 @@ $companyStatistic = [
 $companyVisits = $API->DB->from( "visits" )
     ->where( $filter );
 
+
 /**
-* Формирование графика посещений
-*/
+ * Формирование графика посещений
+ */
 
-foreach ( $companyVisits as $userVisit ) {
+if ( $requestData->advertise_id ) {
 
-    $companyStatistic[ "visits_count" ]++;
-    $companyStatistic[ "visits_sum" ] += (float) $userVisit[ "price" ];
+    foreach ($companyVisits as $visit) {
 
-} // foreach. $userVisits
+        $visitsClients = $API->DB->from( "visits_clients" )
+            ->where( "visit_id", $visit[ "id" ] );
 
+        foreach ( $visitsClients as $visitClient ) {
+
+            $client = $API->DB->from( "clients" )
+                ->where( "id", $visitClient [ "client_id" ] );
+
+            if ( $client[ "advertise_id" ] == $requestData->advertise_id ) {
+
+                $companyStatistic[ "visits_count" ]++;
+                $companyStatistic[ "visits_sum" ] += (float) $visit[ "price" ];
+
+            }
+
+        }
+
+    }
+
+} else {
+
+    foreach ( $companyVisits as $visit ) {
+
+        $companyStatistic[ "visits_count" ]++;
+        $companyStatistic[ "visits_sum" ] += (float) $visit[ "price" ];
+
+    } // foreach. $userVisits
+
+
+}
 
 
 $API->returnResponse(

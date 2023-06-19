@@ -26,7 +26,7 @@
       "is_default_in_list": true,
       "is_unique": false,
       "is_autofill": true,
-      "use_in_commands": ["sum_all_services","daily_report"]
+      "use_in_commands": ["sum_all_services","daily_report", "advertise"]
     },
     {
       "title": "Дата конца",
@@ -36,7 +36,7 @@
       "is_default_in_list": true,
       "is_unique": false,
       "is_autofill": true,
-      "use_in_commands": ["sum_all_services","daily_report"]
+      "use_in_commands": ["sum_all_services","daily_report", "advertise"]
     },
     {
       "title": "Филиал",
@@ -46,7 +46,7 @@
       "is_default_in_list": true,
       "is_unique": false,
       "is_autofill": true,
-      "use_in_commands": ["sum_all_services","daily_report"],
+      "use_in_commands": ["sum_all_services","daily_report", "advertise"],
       "list_donor": {
         "table": "stores",
         "properties_title": "title"
@@ -63,6 +63,20 @@
       "use_in_commands": ["sum_all_services"],
       "list_donor": {
         "table": "services",
+        "properties_title": "title"
+      }
+    },
+    {
+      "title": "Рекламный канал",
+      "article": "advertise_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": ["advertise"],
+      "list_donor": {
+        "table": "advertise",
         "properties_title": "title"
       }
     },

@@ -157,7 +157,7 @@
         {
           "title": "Продажа услуг по сотрудникам",
           "body": [
-            {
+              {
               "title": "Виджет - сумма всех услуг",
               "type": "analytic_widgets",
               "size": 4,
@@ -366,11 +366,11 @@
           "title": "Рекламные источники",
           "body": [
             {
-              "title": "Список",
-              "type": "list",
+              "title": "Виджет - сумма всех услуг",
+              "type": "analytic_widgets",
               "size": 4,
               "settings": {
-                "object": "advertise"
+                "widgets_group": "advertise"
               },
               "components": {
                 "filters": [
@@ -422,6 +422,15 @@
                   }
                 ]
               }
+            },
+            {
+              "title": "Список",
+              "type": "list",
+              "size": 4,
+              "settings": {
+                "object": "advertiseClients",
+                "linked_filter": "analytic_widgets_advertise"
+              }
             }
           ]
         },
@@ -445,11 +454,11 @@
               "type": "list",
               "size": 4,
               "settings": {
-                "object": "visits",
+                "object": "visitsCancelled",
                 "filters": [
                   {
                     "property": "is_active",
-                    "value": "N"
+                    "value": "false"
                   }
                 ]
               },

@@ -145,7 +145,7 @@ $API->returnResponse(
             "detail" => []
         ],
         [
-            "value" => $companyStatistic[ "visits_sum" ] + $companyStatistic['products_sum'],
+            "value" => $companyStatistic[ "visits_sum" ] + $companyStatistic[ "products_sum" ],
             "description" => "Поступления",
             "icon" => "",
             "prefix" => "₽",

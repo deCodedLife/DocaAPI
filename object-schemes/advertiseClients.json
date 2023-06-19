@@ -1,0 +1,82 @@
+{
+  "title": "Рекламный канал",
+  "table": "advertise",
+  "is_trash": false,
+  "properties": [
+    {
+      "title": "Рекламный канал",
+      "article": "title",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": true,
+      "is_unique": true,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add",
+        "update",
+        "get",
+        "remove"
+      ]
+    },
+    {
+      "title": "Филиал",
+      "article": "store_id",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": false,
+      "is_unique": true,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add",
+        "update",
+        "get",
+        "remove"
+      ]
+    },
+    {
+      "title": "Новых клиентов",
+      "article": "clientsCount",
+      "data_type": "integer",
+      "field_type": "integer",
+      "is_default_in_list": true,
+      "is_unique": true,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add",
+        "update",
+        "get",
+        "remove"
+      ]
+    },
+    {
+      "title": "Кол-во посещений",
+      "article": "visitsCount",
+      "data_type": "integer",
+      "field_type": "integer",
+      "is_default_in_list": true,
+      "is_unique": true,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add",
+        "update",
+        "get",
+        "remove"
+      ]
+    },
+    {
+      "title": "Сумма",
+      "article": "title",
+      "data_type": "float",
+      "field_type": "price",
+      "is_default_in_list": true,
+      "is_unique": true,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add",
+        "update",
+        "get",
+        "remove"
+      ]
+    }
+  ]
+}
