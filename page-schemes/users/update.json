@@ -65,7 +65,8 @@
                                                     "first_name",
                                                     "patronymic",
                                                     "birthday",
-                                                    "gender"
+                                                    "gender",
+                                                    "domru_login"
                                                 ]
                                             },
                                             {
@@ -206,6 +207,27 @@
                                     }
                                 ]
                             }
+                        }
+                    ]
+                },
+                {
+                    "title": "История звонков",
+                    "is_counter": true,
+                    "body": [
+                        {
+                            "title": "История звонков",
+                            "type": "list",
+                            "size": 4,
+                            "settings": {
+                                "object": "callHistory",
+                                "filters": [
+                                    {
+                                        "property": "user_id",
+                                        "value": ":id"
+                                    }
+                                ]
+                            },
+                            "components": []
                         }
                     ]
                 },

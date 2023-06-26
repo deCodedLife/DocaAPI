@@ -8,31 +8,18 @@
 class IPCallsDomRu {
 
     /**
-     * Модуль базы данных
-     */
-    private $DB = null;
-
-    /**
      * Настройки IP телефонии
      */
     private $settings = null;
 
-
-
     function __construct ( $ipCallsSettings ) {
-
-        /**
-         * Подключение базы данных
-         */
-        $this->DB = new DB;
 
         /**
          * Подключение настроек IP телефонии
          */
         $this->settings = $ipCallsSettings;
 
-    } // function __construct
-
+    } // function. __construct
 
 
     /**
@@ -46,7 +33,7 @@ class IPCallsDomRu {
 
         return file_get_contents( $queryUrl );
 
-    } // function getAccounts
+    } // function. getAccounts
 
     /**
      * История
@@ -61,7 +48,7 @@ class IPCallsDomRu {
 
         return file_get_contents( $queryUrl );
 
-    } // function getHistory
+    } // function. getHistory
 
     /**
      * Инициализация звонка
@@ -86,8 +73,16 @@ class IPCallsDomRu {
 
         return $queryUrl;
 
-    } // function makeCall
+    } // function. makeCall
 
-} // class Services
+} // class. Services
 
-$IPCallsDomRu = new IPCallsDomRu( $ipCallsSettings );
+
+$settings = $API->DB->from( "settings" )
+    ->where( [
+        "id" => 1
+    ] )
+    ->limit( 1 )
+    ->fetch();
+
+$IPCallsDomRu = new IPCallsDomRu( $settings );

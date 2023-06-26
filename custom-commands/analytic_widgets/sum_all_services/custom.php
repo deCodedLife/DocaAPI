@@ -6,60 +6,78 @@
 */
 
 /**
- * Получение фильтров
- */
-
-$filter = [];
-
-if ( $requestData->start_at ) $filter[ "end_at >= ?" ] = $requestData->start_at . " 00:00:00";
-if ( $requestData->end_at ) $filter[ "end_at <= ?" ] = $requestData->end_at . " 23:59:59";
-if ( $requestData->store_id ) $filter[ "store_id" ] = $requestData->store_id;
-
-//$filter[ "is_payed" ] = 'Y';
-$filter[ "is_active" ] = 'Y';
-
-//$API->returnResponse( $requestData->store_id, 500 );
-
-/**
 * Статистика клиента
 */
 $companyStatistic = [
 
     /**
-    * Количество посещений
-    */
-    "visits_count" => 0,
-
-    /**
-    * Сумма посещений
-    */
+     * Сумма посещений
+     */
     "visits_sum" => 0,
 
 ];
 
+$filter = [];
+$servicesFilter = [];
+$usersFilter = [];
+if ( $requestData->start_at ) $filter[ "date >= ?" ] = $requestData->start_at . " 00:00:00";
+if ( $requestData->end_at ) $filter[ "date <= ?" ] = $requestData->end_at . " 23:59:59";
+if ( $requestData->store_id ) $filter[ "store_id" ] = $requestData->store_id;
+if ( $requestData->category_id ) $servicesFilter[ "category_id" ] = $requestData->category_id;
+if ( $requestData->id ) $servicesFilter[ "id" ] = $requestData->id;
+if ( $requestData->user_id ) $usersFilter[ "id" ] = $requestData->user_id;
 
-/**
-* Получение посещений
-*/
-$companyVisits = $API->DB->from( "visits" )
+$servicesFilter[ "is_active" ] = "Y";
+
+$companyVisitsServices = $API->DB->from( "visits_services" )
     ->where( $filter );
 
+$services = $API->DB->from( "services" )
+    ->where( $servicesFilter );
+
+$returnVisits = [];
+
+foreach ( $services as $service ) {
+
+    $count = 0;
+
+    foreach ( $companyVisitsServices as $companyVisitsService ) {
+
+        if ( $companyVisitsService[ "service_id" ] == $service[ "id" ]) {
+
+            $count++;
+
+        }
+
+    }
+
+    $returnVisits[] = [
+        "id" => $service[ "id" ],
+        "title" => $service[ "title" ],
+        "count" => $count,
+        "date" => $service[ "date" ],
+        "store_id" => $service[ "store_id" ],
+        "category_id" => $service[ "category_id" ],
+        "sum" => $service[ "price" ] * $count
+    ];
+
+}
+
 /**
-* Формирование графика посещений
-*/
+ * Формирование графика посещений
+ */
 
-foreach ( $companyVisits as $userVisit ) {
+foreach ( $returnVisits as $serviceReport ) {
 
-    $companyStatistic[ "visits_count" ]++;
-    $companyStatistic[ "visits_sum" ] += (float) $userVisit[ "price" ];
+    $companyStatistic[ "visits_sum" ] += $serviceReport[ "sum" ];
 
-} // foreach. $userVisits
-
+} // foreach. $returnVisits
 
 
 $API->returnResponse(
 
     [
+
         [
             "value" => $companyStatistic["visits_sum"],
             "description" => "Прибыль",

@@ -6,7 +6,6 @@
     {
       "title": "Дата удаления",
       "article": "cancelledDate",
-      "article_modifier": ">= ?",
       "data_type": "datetime",
       "field_type": "datetime",
       "is_default_in_list": true,
@@ -15,21 +14,68 @@
       "use_in_commands": [
         "add",
         "update",
-        "get"
+        "get",
+        "remove"
       ]
     },
     {
-      "title": "Оператор",
-      "article": "operator",
-      "data_type": "integer",
-      "field_type": "integer",
+      "title": "Дата (от)",
+      "article": "cancelledDate_start",
+      "data_type": "date",
+      "field_type": "date",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add",
+        "update",
+        "get",
+        "remove"
+      ]
+    },
+    {
+      "title": "Дата (до)",
+      "article": "cancelledDate_end",
+      "data_type": "date",
+      "field_type": "date",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add",
+        "update",
+        "get",
+        "remove"
+      ]
+    },
+    {
+      "title": "Дата удаления",
+      "article": "cancelledDate",
+      "data_type": "datetime",
+      "field_type": "datetime",
       "is_default_in_list": true,
       "is_unique": false,
       "is_autofill": true,
       "use_in_commands": [
         "add",
         "update",
-        "get"
+        "get",
+        "remove"
+      ]
+    },
+    {
+      "title": "Оператор",
+      "article": "operator",
+      "data_type": "array",
+      "field_type": "list",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add",
+        "update",
+        "get",
+        "remove"
       ],
       "list_donor": {
         "table": "users",
@@ -62,13 +108,11 @@
       "is_default_in_list": true,
       "is_unique": false,
       "is_autofill": true,
+      "is_hook": true,
       "use_in_commands": [
         "add",
         "update",
         "get"
-      ],
-      "require_in_commands": [
-        "add"
       ],
       "list_donor": {
         "table": null,
@@ -129,9 +173,6 @@
         "update",
         "get"
       ],
-      "require_in_commands": [
-        "add"
-      ],
       "list_donor": {
         "table": "services",
         "properties_title": "title"
@@ -190,7 +231,7 @@
     {
       "title": "Причина отмены",
       "article": "reason_id",
-      "data_type": "integer",
+      "data_type": "array",
       "field_type": "list",
       "is_default_in_list": true,
       "is_unique": false,
@@ -199,7 +240,8 @@
       "on_change_submit": true,
       "use_in_commands": [
         "update",
-        "get"
+        "get",
+        "remove"
       ],
       "list_donor": {
         "table": "cancelReasons",

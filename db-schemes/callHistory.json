@@ -2,11 +2,25 @@
   "title": "История звонков",
   "properties": [
     {
+      "title": "ID звонка",
+      "article": "api_id",
+      "type": "varchar(255)",
+      "default": null,
+      "is_required": "N"
+    },
+    {
+      "title": "Статус",
+      "article": "status",
+      "type": "varchar(15)",
+      "default": null,
+      "is_required": "N"
+    },
+    {
       "title": "Сотрудник",
       "article": "user_id",
       "type": "int",
       "default": null,
-      "is_required": "Y"
+      "is_required": "N"
     },
     {
       "title": "Клиент",
@@ -16,8 +30,22 @@
       "is_required": "N"
     },
     {
+      "title": "Телефон клиента",
+      "article": "client_phone",
+      "type": "varchar(25)",
+      "default": null,
+      "is_required": "N"
+    },
+    {
+      "title": "Продолжительность ожидания (сек)",
+      "article": "wait_duration",
+      "type": "int",
+      "default": null,
+      "is_required": "N"
+    },
+    {
       "title": "Продолжительность звонка (сек)",
-      "article": "duration",
+      "article": "call_duration",
       "type": "int",
       "default": null,
       "is_required": "N"

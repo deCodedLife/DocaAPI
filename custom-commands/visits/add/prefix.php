@@ -94,3 +94,31 @@ foreach ( $existingVisits as $existingVisit ) {
         } // if. in_array( $visitClient[ "client_id" ], $requestData->client_id
 
 } // foreach. $existingVisits
+
+
+/**
+ * Формирование талона
+ */
+
+$serviceDetail = $API->DB->from( "services" )
+    ->where( "id", $requestData->services_id[ 0 ] )
+    ->limit( 1 )
+    ->fetch();
+
+$requestData->talon = mb_strtoupper(
+    mb_substr( $serviceDetail[ "title" ], 0, 1 )
+) . " ";
+
+$lastVisitDetail = $API->DB->from( "visits" )
+    ->select( null )->select( "id" )
+    ->orderBy( "id desc" )
+    ->limit( 1 )
+    ->fetch();
+
+$talonNumber = $lastVisitDetail[ "id" ];
+if ( $talonNumber < 100 ) $talonNumber += 100;
+
+$talonNumber = (string) $talonNumber;
+$talonNumber = substr( $talonNumber, -3 );
+
+$requestData->talon .= $talonNumber;

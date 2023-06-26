@@ -11,8 +11,12 @@
       "is_default_in_list": true,
       "is_unique": false,
       "is_autofill": true,
-      "use_in_commands": ["user_visits"],
-      "require_in_commands": ["user_visits"],
+      "use_in_commands": [
+        "user_visits",
+        "sales_statistic",
+        "sum_all_services",
+        "visit_clients"
+      ],
       "list_donor": {
         "table": "users",
         "properties_title": "last_name"
@@ -26,7 +30,14 @@
       "is_default_in_list": true,
       "is_unique": false,
       "is_autofill": true,
-      "use_in_commands": ["sum_all_services","daily_report", "advertise"]
+      "use_in_commands": [
+        "sum_all_services",
+        "daily_report",
+        "advertise",
+        "clients",
+        "sales_statistic",
+        "visit_clients"
+      ]
     },
     {
       "title": "Дата конца",
@@ -36,7 +47,66 @@
       "is_default_in_list": true,
       "is_unique": false,
       "is_autofill": true,
-      "use_in_commands": ["sum_all_services","daily_report", "advertise"]
+      "use_in_commands": [
+        "sum_all_services",
+        "daily_report",
+        "advertise",
+        "clients",
+        "sales_statistic",
+        "visit_clients"
+      ]
+    },
+    {
+      "title": "Возраст (от)",
+      "article": "start_ear",
+      "data_type": "date",
+      "field_type": "date",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "clients"
+      ]
+    },
+    {
+      "title": "ID",
+      "article": "id",
+      "data_type": "integer",
+      "field_type": "integer",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "sum_all_services"
+      ]
+    },
+    {
+      "title": "Категория",
+      "article": "category_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "sum_all_services"
+      ],
+      "list_donor": {
+        "table": "serviceGroups",
+        "properties_title": "title"
+      }
+    },
+    {
+      "title": "Возраст (до)",
+      "article": "end_ear",
+      "data_type": "date",
+      "field_type": "date",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "clients"
+      ]
     },
     {
       "title": "Филиал",
@@ -46,7 +116,13 @@
       "is_default_in_list": true,
       "is_unique": false,
       "is_autofill": true,
-      "use_in_commands": ["sum_all_services","daily_report", "advertise"],
+      "use_in_commands": [
+        "sum_all_services",
+        "daily_report",
+        "advertise",
+        "clients",
+        "sales_statistic"
+      ],
       "list_donor": {
         "table": "stores",
         "properties_title": "title"
@@ -60,7 +136,9 @@
       "is_default_in_list": true,
       "is_unique": false,
       "is_autofill": true,
-      "use_in_commands": ["sum_all_services"],
+      "use_in_commands": [
+        "sum_all_services"
+      ],
       "list_donor": {
         "table": "services",
         "properties_title": "title"
@@ -74,7 +152,9 @@
       "is_default_in_list": true,
       "is_unique": false,
       "is_autofill": true,
-      "use_in_commands": ["advertise"],
+      "use_in_commands": [
+        "advertise"
+      ],
       "list_donor": {
         "table": "advertise",
         "properties_title": "title"
@@ -88,7 +168,9 @@
       "is_default_in_list": true,
       "is_unique": false,
       "is_autofill": true,
-      "use_in_commands": ["sum_all_services"],
+      "use_in_commands": [
+        "sum_all_services"
+      ],
       "list_donor": {
         "table": "serviceGroups",
         "properties_title": "title"
@@ -102,13 +184,37 @@
       "is_default_in_list": true,
       "is_unique": false,
       "is_autofill": true,
-      "use_in_commands": ["client_statistic", "deposit_statistic", "bonus_statistic"],
-      "require_in_commands": ["client_statistic", "deposit_statistic", "bonus_statistic"],
+      "use_in_commands": [
+        "client_statistic",
+        "deposit_statistic",
+        "bonus_statistic",
+        "sales_statistic"
+      ],
+      "require_in_commands": [
+        "client_statistic",
+        "deposit_statistic",
+        "bonus_statistic"
+      ],
       "list_donor": {
         "table": "clients",
         "properties_title": "last_name"
       }
+    },
+    {
+      "title": "Тип оплаты",
+      "article": "payment_type",
+      "data_type": "string",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "sales_statistic"
+      ],
+      "list_donor": {
+        "table": "payment_types",
+        "properties_title": "title"
+      }
     }
-
   ]
 }

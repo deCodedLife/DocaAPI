@@ -4,6 +4,50 @@
   "is_trash": false,
   "properties": [
     {
+      "title": "ID звонка",
+      "article": "api_id",
+      "data_type": "integer",
+      "field_type": "integer",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add"
+      ],
+      "require_in_commands": []
+    },
+    {
+      "title": "Статус",
+      "article": "status",
+      "data_type": "string",
+      "field_type": "list",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add"
+      ],
+      "require_in_commands": [],
+      "custom_list": [
+        {
+          "title": "Пропущено",
+          "value": "missed"
+        },
+        {
+          "title": "Исходящий",
+          "value": "out"
+        },
+        {
+          "title": "Входящий",
+          "value": "in"
+        },
+        {
+          "title": "Нет ответа",
+          "value": "noanswer"
+        }
+      ]
+    },
+    {
       "title": "Сотрудник",
       "article": "user_id",
       "data_type": "integer",
@@ -13,11 +57,9 @@
       "is_autofill": true,
       "use_in_commands": [
         "add",
-        "update"
+        "get"
       ],
-      "require_in_commands": [
-        "add"
-      ],
+      "require_in_commands": [],
       "list_donor": {
         "table": "users",
         "properties_title": "last_name"
@@ -33,7 +75,7 @@
       "is_autofill": true,
       "use_in_commands": [
         "add",
-        "update"
+        "get"
       ],
       "require_in_commands": [
         "add"
@@ -52,21 +94,19 @@
       "is_unique": false,
       "is_autofill": true,
       "use_in_commands": [
-        "add",
-        "update"
+        "add"
       ]
     },
     {
       "title": "Запись",
       "article": "record",
       "data_type": "string",
-      "field_type": "string",
+      "field_type": "audio_player",
       "is_default_in_list": true,
       "is_unique": false,
       "is_autofill": true,
       "use_in_commands": [
-        "add",
-        "update"
+        "add"
       ]
     },
     {

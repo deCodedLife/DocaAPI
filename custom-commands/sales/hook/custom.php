@@ -19,7 +19,7 @@ $is_return = $API->DB->from( "visits" )
     ->fetch()[ "is_payed" ] == 'Y';
 
 
-
+$API->returnResponse( "test error", 500 );
 /**
  * Получение списка посещений (в том числе совмещённых)
  */

@@ -6,7 +6,9 @@
  */
 
 $API->DB->update( "visits" )
-    ->set( "is_active", "N" )
+    ->set( [
+        "is_active" => "N"
+    ] )
     ->where( [
         "id" => $requestData->id
     ] )

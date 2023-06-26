@@ -60,6 +60,7 @@ $eventDescription = [ $eventClient, $eventTime ];
 /**
  * Заполнение детальной информации о Записи к врачу
  */
+
 $eventDetails = [
     [
         "icon" => "schedule",
@@ -86,5 +87,10 @@ $eventDetails = [
     [
         "icon" => "stethoscope",
         "value" => $eventServices
+    ],
+    [
+        "icon" => "",
+        "value" => $event[ "price" ] . "₽"
     ]
+
 ];

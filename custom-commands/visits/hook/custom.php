@@ -6,11 +6,10 @@
  */
 $formFieldsUpdate = [];
 
-
 /**
  * Расчет стоимости и времени выполнения Записи
  */
-if ( $requestData->services_id ) {
+if ( $requestData->services_id && $requestData->users_id ) {
 
     /**
      * Стоимость Записи
@@ -42,16 +41,49 @@ if ( $requestData->services_id ) {
             ->limit( 1 )
             ->fetch();
 
+        /**
+         * Получение информации о сотруднике
+         */
+        $serviceUser = $API->DB->from( "workingTime" )
+            ->where(
+                [
+                    "row_id" => $serviceId,
+                    "user_id" => $requestData->users_id[0]
+                ]
+            )
+            ->limit( 1 )
+            ->fetch();
+        
 
         /**
          * Обновление стоимости Записи
          */
-        $visitPrice += (float) $serviceDetail[ "price" ];
+
+        if ( $serviceUser ) {
+
+            $visitPrice += (float) $serviceUser[ "price" ];
+
+
+        } else {
+
+            $visitPrice += (float) $serviceDetail[ "price" ];
+
+        }
+
 
         /**
          * Обновление времени выполнения Записи
          */
-        $visitTakeMinutes += (int) $serviceDetail[ "take_minutes" ];
+
+        if ( $serviceUser ) {
+
+            $visitTakeMinutes += (int) $serviceUser[ "time" ];
+
+        } else {
+
+            $visitTakeMinutes += (int) $serviceDetail[ "take_minutes" ];
+
+        }
 
     } // foreach. $requestData->services_id
 
@@ -59,7 +91,7 @@ if ( $requestData->services_id ) {
     /**
      * Обновление полей формы
      */
-    
+
     $formFieldsUpdate[ "price" ] = [
         "value" => $visitPrice
     ];
@@ -72,7 +104,7 @@ if ( $requestData->services_id ) {
         )
     ];
 
-} // if. $requestData->services_id
+} // if. $requestData->services_id && $requestData->users_id
 
 
 $API->returnResponse( $formFieldsUpdate );

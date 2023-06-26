@@ -96,6 +96,10 @@
       "href": "settings",
       "children": [
         {
+          "title": "Основное",
+          "href": "settings"
+        },
+        {
           "title": "Группы услуг",
           "href": "serviceGroups"
         },

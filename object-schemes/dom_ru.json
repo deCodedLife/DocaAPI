@@ -1,0 +1,97 @@
+{
+  "title": "Телефония ДомРу",
+  "table": "",
+  "is_trash": false,
+  "properties": [
+    {
+      "title": "Команда",
+      "article": "cmd",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "events"
+      ],
+      "require_in_commands": []
+    },
+    {
+      "title": "Сотрудник",
+      "article": "user_id",
+      "data_type": "integer",
+      "field_type": "integer",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "get_income_calls",
+        "close_modal"
+      ],
+      "require_in_commands": [
+        "get_income_calls",
+        "close_modal"
+      ]
+    },
+    {
+      "title": "Логин ДомРу",
+      "article": "user",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "events",
+        "make_call"
+      ],
+      "require_in_commands": [
+        "make_call"
+      ]
+    },
+    {
+      "title": "Статус",
+      "article": "type",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "events"
+      ],
+      "require_in_commands": []
+    },
+    {
+      "title": "Телефон клиента",
+      "article": "phone",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "events",
+        "make_call",
+        "close_modal"
+      ],
+      "require_in_commands": [
+        "make_call",
+        "close_modal"
+      ]
+    },
+    {
+      "title": "Телефон сотрудника",
+      "article": "diversion",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "events"
+      ],
+      "require_in_commands": []
+    }
+  ]
+}

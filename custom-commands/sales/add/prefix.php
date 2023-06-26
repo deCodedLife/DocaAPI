@@ -2,8 +2,6 @@
 
 $publicAppPath = $API::$configs[ "paths" ][ "public_app" ];
 
-$formFieldValues[ "services_info" ] = $requestData->context->row_id;
-
 
 /**
  * Проверка корректности введённых значений

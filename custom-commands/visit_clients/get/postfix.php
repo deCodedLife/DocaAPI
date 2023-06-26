@@ -11,62 +11,49 @@ if ( $requestData->context->block === "list" ) {
      * Сформированный список
      */
     $filter = [];
-
-    if ( $requestData->start_at ) $filter[ "start_at >= ?" ] = $requestData->start_at . " 00:00:00";
-    if ( $requestData->end_at ) $filter[ "end_at <= ?" ] = $requestData->end_at . " 23:59:59";
+    $servicesFilter = [];
+    if ( $requestData->start_at ) $filter[ "date >= ?" ] = $requestData->start_at . " 00:00:00";
+    if ( $requestData->end_at ) $filter[ "date <= ?" ] = $requestData->end_at . " 23:59:59";
     if ( $requestData->store_id ) $filter[ "store_id" ] = $requestData->store_id;
+    if ( $requestData->category_id ) $servicesFilter[ "category_id" ] = $requestData->category_id;
+    if ( $requestData->users_id ) $filterUsers[ "users_id" ] = $requestData->users_id;
 
-    $returnVisits = [ ];
+    $servicesFilter[ "is_active" ] = "Y";
 
-    $visitsСlients = $API->DB->from( "visits_clients" );
+    $companyVisitsServices = $API->DB->from( "visits_services" )
+        ->where( $filter );
 
-    foreach ( $response[ "data" ] as $visit ) {
+    $services = $API->DB->from( "services" )
+        ->where( $servicesFilter );
 
-        $user_id = 0;
+    $returnVisits = [];
 
-        foreach ( $visitsСlients as $visitСlient ) {
+    foreach ( $services as $service ) {
 
-            if ( $visitСlient[ "visit_id" ] == $visit[ "id" ]) {
+        $count = 0;
 
-                $user_id = $visitСlient[ "client_id" ];
+        foreach ( $companyVisitsServices as $companyVisitsService ) {
+
+            if ( $companyVisitsService[ "service_id" ] == $service[ "id" ]) {
+
+                $count++;
 
             }
 
         }
 
-        $user = $API->DB->from( "clients" )
-            ->where( "id", $user_id )
-            ->limit( 1 )
-            ->fetch( );
-
-        $visitsServices = $API->DB->from( "visits_services" )
-            ->where( "visit_id", $visit[ "id" ] );
-
-        $services = [ ];
-
-        foreach ($visitsServices as $visitsService) {
-
-            $service = $API->DB->from( "services" )
-                ->where( "id", $visitsService["service_id"] )
-                ->limit( 1 )
-                ->fetch( );
-            $services = [ "title" => $service[ "title" ] ];
-
-        }
-
         $returnVisits[] = [
-            "client_id" => $user_id,
-            "fio" => $user[ "last_name" ] . " " .$user[ "first_name" ] . " " . $user[ "patronymic" ],
-            "services" => $services,
-            "price" => $visit[ "price" ],
-            "start_at" => $visit[ "start_at" ],
-            "end_at" => $visit[ "end_at"],
-            "store_id" => $visit[ "store_id"]
+            "id" => $service[ "id" ],
+            "title" => $service[ "title" ],
+            "count" => $count,
+            "date" => $service[ "date" ],
+            "store_id" => $service[ "store_id" ],
+            "category_id" => $service[ "category_id" ],
+            "sum" => $service[ "price" ] * $count
         ];
 
     }
 
     $response[ "data" ] = $returnVisits;
-
 
 } // if. $requestData->context->block === "list"

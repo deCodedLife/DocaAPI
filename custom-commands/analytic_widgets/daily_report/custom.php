@@ -1,10 +1,8 @@
 <?php
 
-
 /**
 * Суточный отчет
 */
-
 
 /**
  * Получение фильтров
@@ -12,7 +10,6 @@
 
 $filter = [];
 $expensesFilter = [];
-
 /**
  * Получение начала и конца текущего дня
  */
@@ -22,6 +19,8 @@ if ( $requestData->store_id ) $filter[ "store_id" ] = $requestData->store_id;
 if ( $requestData->store_id ) $expensesFilter[ "store_id" ] = $requestData->store_id;
 if ( $requestData->start_at ) $expensesFilter[ "date >= ?" ] = $requestData->start_at . " 00:00:00";
 if ( $requestData->end_at ) $expensesFilter[ "date <= ?" ] = $requestData->end_at . " 23:59:59";
+
+
 
 /**
  * function. num_word() for declension of nouns after the numeral
@@ -131,6 +130,7 @@ $API->returnResponse(
 
     [
         [
+            "size" => 1,
             "value" => num_word( $companyStatistic[ "visits_count" ], [ 'посещение', 'посещения', 'посещений' ]),
             "description" => "всего",
             "icon" => "",
@@ -145,6 +145,7 @@ $API->returnResponse(
             "detail" => []
         ],
         [
+            "size" => 1,
             "value" => $companyStatistic[ "visits_sum" ] + $companyStatistic[ "products_sum" ],
             "description" => "Поступления",
             "icon" => "",
@@ -159,6 +160,7 @@ $API->returnResponse(
             "detail" => []
         ],
         [
+            "size" => 1,
             "value" => $companyStatistic[ "expenses_sum" ],
             "description" => "Расход",
             "icon" => "",
@@ -173,6 +175,7 @@ $API->returnResponse(
             "detail" => []
         ],
         [
+            "size" => 1,
             "value" =>$companyStatistic[ "visits_sum" ] + $companyStatistic['products_sum'] - $companyStatistic[ "expenses_sum" ],
             "description" => "Итог",
             "icon" => "",

@@ -46,6 +46,8 @@ $clients = $API->DB->from( "visits_clients" )
  * Заполнение полей
  */
 
+
+
 if ( $visitDetails[ "is_payed" ] == "Y" || ( $saleDetails && $saleDetails[ "status" ] != "error" ) ) {
 
     $formFieldValues =
@@ -77,7 +79,8 @@ if ( $visitDetails[ "is_payed" ] == "Y" || ( $saleDetails && $saleDetails[ "stat
         "pay_method" => "cash",
         "visits_ids" => [ $pageDetail[ "row_id" ] ],
         "store_id" => (int) $userDetails[ "store_id" ],
-        "client_id" => $clients[ "client_id" ]
+        "client_id" => $clients[ "client_id" ],
+        "online_receipt" => true
     ];
 
     $formFieldValues[ "summary" ] = $paymentSummary;

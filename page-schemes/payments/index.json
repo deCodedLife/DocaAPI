@@ -49,29 +49,64 @@
                   }
                 ]
               },
-              "components": []
-            },
-            {
-              "title": "Возврат",
-              "type": "header",
-              "size": 4,
-              "settings": {
-                "description": "",
-                "title": [
-                  "Возврат"
+              "components": {
+                "filters": [
+                  {
+                    "title": "Дата (от)",
+                    "type": "date",
+                    "settings": {
+                      "recipient_property": "start_at"
+                    }
+                  },
+                  {
+                    "title": "Дата (до)",
+                    "type": "date",
+                    "settings": {
+                      "recipient_property": "end_at"
+                    }
+                  },
+                  {
+                    "title": "Филлиал",
+                    "settings": {
+                      "recipient_property": "store_id",
+                      "donor_object": "stores",
+                      "donor_property_title": "title",
+                      "donor_property_value": "id"
+                    },
+                    "type": "list"
+                  },
+                  {
+                    "title": "Тип операции",
+                    "settings": {
+                      "recipient_property": "payment_type",
+                      "donor_object": "payment_types",
+                      "donor_property_title": "title",
+                      "donor_property_value": "article"
+                    },
+                    "type": "list"
+                  },
+                  {
+                    "title": "Клиент",
+                    "settings": {
+                      "recipient_property": "client_id",
+                      "donor_object": "clients",
+                      "donor_property_title": "last_name",
+                      "donor_property_value": "id"
+                    },
+                    "type": "list"
+                  },
+                  {
+                    "title": "Оператор",
+                    "settings": {
+                      "recipient_property": "user_id",
+                      "donor_object": "users",
+                      "donor_property_title": "last_name",
+                      "donor_property_value": "id"
+                    },
+                    "type": "list"
+                  }
                 ]
-              },
-              "components": []
-            },
-            {
-              "title": "Приход наличными",
-              "type": "analytic_widgets",
-              "size": 4,
-              "settings": {
-                "widgets_group": "sales_return_statistic",
-                "filters": []
-              },
-              "components": []
+              }
             }
           ]
         },
@@ -85,7 +120,64 @@
               "settings": {
                 "object": "sales"
               },
-              "components": []
+              "components": {
+                "filters": [
+                  {
+                    "title": "Дата (от)",
+                    "type": "date",
+                    "settings": {
+                      "recipient_property": "starts_at"
+                    }
+                  },
+                  {
+                    "title": "Дата (до)",
+                    "type": "date",
+                    "settings": {
+                      "recipient_property": "ends_at"
+                    }
+                  },
+                  {
+                    "title": "Клиент",
+                    "settings": {
+                      "donor_object": "clients",
+                      "donor_property_title": "last_name",
+                      "donor_property_value": "id",
+                      "recipient_property": "client_id"
+                    },
+                    "type": "list"
+                  },
+                  {
+                    "title": "Тип операции",
+                    "type": "list",
+                    "settings": {
+                      "donor_object": "sale_types",
+                      "donor_property_title": "title",
+                      "donor_property_value": "article",
+                      "recipient_property": "sale_type"
+                    }
+                  },
+                  {
+                    "title": "Тип оплаты",
+                    "type": "list",
+                    "settings": {
+                      "donor_object": "payment_types",
+                      "donor_property_title": "title",
+                      "donor_property_value": "article",
+                      "recipient_property": "pay_method"
+                    }
+                  },
+                  {
+                    "title": "Филиал",
+                    "type": "list",
+                    "settings": {
+                      "donor_object": "stores",
+                      "donor_property_title": "title",
+                      "donor_property_value": "id",
+                      "recipient_property": "store_id"
+                    }
+                  }
+                ]
+              }
             }
           ]
         },

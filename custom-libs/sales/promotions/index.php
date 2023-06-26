@@ -2,7 +2,7 @@
 
 
 
-namespace Сashbox;
+namespace Sales;
 
 require_once "modifiers.php";
 require_once "subject.php";
@@ -203,7 +203,7 @@ class Discount
                     ) as $group
                 ) {
 
-                    $sorted[] = new IModifier(
+                    $sorted[] = new Modifier(
                         $group,
                         $modifier->Type,
                         $modifier->IsGroup,
@@ -240,7 +240,7 @@ class Discount
 
         foreach ( $modifiers as $modifier ) {
 
-            $this->DiscountModifiers[] = new IModifier(
+            $this->DiscountModifiers[] = new Modifier(
                 $modifier[ "object_id" ],
                 $modifier[ "type" ],
                 $modifier[ "is_group" ] == 'Y',

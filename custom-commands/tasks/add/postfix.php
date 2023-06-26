@@ -3,4 +3,4 @@
 /**
  * Уведомление о добавлении Задачи
  */
-$API->addNotification( "tasks", "Добавлена задача", $requestData->description );
+$API->addNotification( "system_alerts", "Новая задача", "Перейдите в раздел задач", "info", $requestData->performer_id );

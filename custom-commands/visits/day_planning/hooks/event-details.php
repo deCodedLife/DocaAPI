@@ -70,6 +70,11 @@ switch ( $event[ "status" ] ) {
         $eventDetails[ "description" ] = "Запланировано";
         break;
 
+    case "process":
+        $eventDetails[ "color" ] = "warning";
+        $eventDetails[ "description" ] = "На приеме";
+        break;
+
     case "ended":
         $eventDetails[ "color" ] = "success";
         $eventDetails[ "description" ] = "Завершено";
@@ -77,14 +82,12 @@ switch ( $event[ "status" ] ) {
 
 } // switch. $event[ "status" ]
 
-$eventDetails[ "test" ] = $event;
-
 
 /**
  * Добавление кнопок
  */
 
-$eventDetails[ "buttons" ][0] = [
+if ( $event[ "status" ] == "planning" ) $eventDetails[ "buttons" ][] = [
     "type" => "script",
     "settings" => [
         "title" => "Принять пациента",
@@ -93,11 +96,12 @@ $eventDetails[ "buttons" ][0] = [
         "object" => "visits",
         "command" => "accept-patient",
         "data" => [
-            "id" => $event["id"]
+            "id" => $event[ "id" ]
         ]
     ]
 ];
-$eventDetails[ "buttons" ][1] = [
+
+if ( $event[ "status" ] == "process" ) $eventDetails[ "buttons" ][] = [
     "type" => "script",
     "settings" => [
         "title" => "Принять повторно",
@@ -106,12 +110,12 @@ $eventDetails[ "buttons" ][1] = [
         "object" => "visits",
         "command" => "accept-again",
         "data" => [
-            "id" => $event["id"]
+            "id" => $event[ "id" ]
         ]
     ]
 ];
 
-$eventDetails[ "buttons" ][2] = [
+if ( $event[ "status" ] == "process" ) $eventDetails[ "buttons" ][] = [
     "type"=>"print",
     "settings"=> [
         "title"=>"Печатать",
@@ -120,12 +124,12 @@ $eventDetails[ "buttons" ][2] = [
         "data" => [
             "document_article" => "services_contract",
             "is_edit" => true,
-            "row_id" => $event["id"]
+            "row_id" => $event[ "id" ]
         ]
     ]
 ];
 
-$eventDetails[ "buttons" ][3] = [
+if ( $event[ "status" ] == "process" ) $eventDetails[ "buttons" ][] = [
     "type" => "script",
     "required_permissions"=> [
         "manager_schedule"
@@ -137,7 +141,7 @@ $eventDetails[ "buttons" ][3] = [
         "object" => "visits",
         "command" => "check-success",
         "data" => [
-            "id" => $event["id"]
+            "id" => $event[ "id" ]
         ]
     ]
 ];

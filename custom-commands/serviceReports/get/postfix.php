@@ -6,22 +6,28 @@
 
 
 if ( $requestData->context->block === "list" ) {
+
     /**
      * Сформированный список
      */
     $filter = [];
+    $servicesFilter = [];
     if ( $requestData->start_at ) $filter[ "date >= ?" ] = $requestData->start_at . " 00:00:00";
     if ( $requestData->end_at ) $filter[ "date <= ?" ] = $requestData->end_at . " 23:59:59";
     if ( $requestData->store_id ) $filter[ "store_id" ] = $requestData->store_id;
-    if ( $requestData->category_id ) $filter[ "category_id" ] = $requestData->category_id;
-    if ( $requestData->service_id ) $filter[ "service_id" ] = $requestData->service_id;
+    if ( $requestData->category_id ) $servicesFilter[ "category_id" ] = $requestData->category_id;
+    if ( $requestData->id ) $servicesFilter[ "id" ] = $requestData->id;
+    $servicesFilter[ "is_active" ] = "Y";
 
     $companyVisitsServices = $API->DB->from( "visits_services" )
         ->where( $filter );
 
+    $services = $API->DB->from( "services" )
+        ->where( $servicesFilter );
+
     $returnVisits = [];
 
-    foreach ( $response[ "data" ] as $service ) {
+    foreach ( $services as $service ) {
 
         $count = 0;
 

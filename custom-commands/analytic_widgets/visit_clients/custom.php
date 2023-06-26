@@ -15,14 +15,6 @@ $filter = [];
 /**
  * Получение начала и конца текущего дня
  */
-if ( $requestData->start_at ) $filter[ "end_at >= ?" ] = $requestData->start_at . " 00:00:00";
-if ( $requestData->end_at ) $filter[ "end_at <= ?" ] = $requestData->end_at . " 23:59:59";
-if ( $requestData->store_id ) $filter[ "store_id" ] = $requestData->store_id;
-
-/**
- * function. num_word() for declension of nouns after the numeral
- */
-
 
 $companyStatistic = [
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace Сashbox;
+namespace Sales;
 
 
 
-class IModifier
+class Modifier
 {
 
     public string $Type;

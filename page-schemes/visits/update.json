@@ -351,6 +351,27 @@
           ]
         },
         {
+          "title": "История звонков",
+          "is_counter": true,
+          "body": [
+            {
+              "title": "История звонков",
+              "type": "list",
+              "size": 4,
+              "settings": {
+                "object": "callHistory",
+                "filters": [
+                  {
+                    "property": "client_id",
+                    "value": ":clients_id"
+                  }
+                ]
+              },
+              "components": []
+            }
+          ]
+        },
+        {
           "title": "Статистика",
           "body": [
             {

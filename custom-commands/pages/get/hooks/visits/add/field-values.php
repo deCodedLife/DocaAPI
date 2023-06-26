@@ -11,5 +11,5 @@ $userDetails = $API->DB->from( "users" )
 if ( !$userDetails[ "store_id" ] ) $userDetails[ "store_id" ] = 1;
 
 $formFieldValues = [
-    "store_id" => (int) $userDetails[ "store_id" ]
+    "store_id" => (int) $userDetails[ "store_id" ],
 ];

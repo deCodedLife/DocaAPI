@@ -120,7 +120,7 @@
                     "required_modules": [],
                     "settings": {
                       "is_search": false,
-                      "recipient_property": "services_id",
+                      "recipient_property": "id",
                       "donor_object": "services",
                       "donor_property_title": "title",
                       "donor_property_value": "id"
@@ -211,19 +211,6 @@
                       "donor_property_title": "last_name",
                       "donor_property_value": "id"
                     }
-                  },
-                  {
-                    "title": "Услуга",
-                    "type": "list",
-                    "required_permissions": [],
-                    "required_modules": [],
-                    "settings": {
-                      "is_search": false,
-                      "recipient_property": "services_id",
-                      "donor_object": "services",
-                      "donor_property_title": "title",
-                      "donor_property_value": "id"
-                    }
                   }
                 ]
               }
@@ -233,7 +220,7 @@
               "type": "list",
               "size": 4,
               "settings": {
-                "object": "serviceReports",
+                "object": "usersSeriveces",
                 "linked_filter": "analytic_widgets_sum_all_services"
               },
               "components": []
@@ -331,7 +318,7 @@
                     "required_modules": [],
                     "settings": {
                       "is_search": false,
-                      "recipient_property": "begin_at_from"
+                      "recipient_property": "begin_at"
                     }
                   },
                   {
@@ -341,7 +328,7 @@
                     "required_modules": [],
                     "settings": {
                       "is_search": false,
-                      "recipient_property": "begin_at_to"
+                      "recipient_property": "end_at"
                     }
                   },
                   {
@@ -443,7 +430,71 @@
         {
           "title": "Клиетны",
           "body": [
-
+            {
+              "title": "Виджет - Новые клиенты",
+              "type": "analytic_widgets",
+              "size": 4,
+              "settings": {
+                "widgets_group": "clients"
+              },
+              "components": {
+                "filters": [
+                  {
+                    "title": "Дата регистрации (от)",
+                    "type": "date",
+                    "required_permissions": [],
+                    "required_modules": [],
+                    "settings": {
+                      "is_search": false,
+                      "recipient_property": "start_at"
+                    }
+                  },
+                  {
+                    "title": "Дата регистрации (до)",
+                    "type": "date",
+                    "required_permissions": [],
+                    "required_modules": [],
+                    "settings": {
+                      "is_search": false,
+                      "recipient_property": "end_at"
+                    }
+                  },
+                  {
+                    "title": "Дата рождения (от)",
+                    "type": "date",
+                    "required_permissions": [],
+                    "required_modules": [],
+                    "settings": {
+                      "is_search": false,
+                      "recipient_property": "start_ear"
+                    }
+                  },
+                  {
+                    "title": "Дата рождения (до)",
+                    "type": "date",
+                    "required_permissions": [],
+                    "required_modules": [],
+                    "settings": {
+                      "is_search": false,
+                      "recipient_property": "end_ear"
+                    }
+                  },
+                  {
+                    "title": "Филиал",
+                    "type": "list",
+                    "required_permissions": [],
+                    "required_modules": [],
+                    "settings": {
+                      "is_search": false,
+                      "recipient_property": "store_id",
+                      "donor_object": "stores",
+                      "donor_property_title": "title",
+                      "donor_property_value": "id"
+                    }
+                  }
+                ]
+              }
+            }
           ]
         },
         {
@@ -454,13 +505,7 @@
               "type": "list",
               "size": 4,
               "settings": {
-                "object": "visitsCancelled",
-                "filters": [
-                  {
-                    "property": "is_active",
-                    "value": "false"
-                  }
-                ]
+                "object": "visitsCancelled"
               },
               "components": {
                 "filters": [
@@ -471,7 +516,7 @@
                     "required_modules": [],
                     "settings": {
                       "is_search": false,
-                      "recipient_property": "start_at"
+                      "recipient_property": "cancelledDate_start"
                     }
                   },
                   {
@@ -481,7 +526,7 @@
                     "required_modules": [],
                     "settings": {
                       "is_search": false,
-                      "recipient_property": "end_at"
+                      "recipient_property": "cancelledDate_end"
                     }
                   },
                   {
