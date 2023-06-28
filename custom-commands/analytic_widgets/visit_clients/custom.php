@@ -1,20 +1,16 @@
 <?php
-
-
 /**
 * Суточный отчет
 */
-
 
 /**
  * Получение фильтров
  */
 
 $filter = [];
-
-/**
- * Получение начала и конца текущего дня
- */
+if ( $requestData->start_at ) $filter[ "start_at >= ?" ] = $requestData->start_at . " 00:00:00";
+if ( $requestData->end_at ) $filter[ "start_at <= ?" ] = $requestData->end_at . " 23:59:59";
+if ( $requestData->store_id ) $filter[ "store_id" ] = $requestData->store_id;
 
 $companyStatistic = [
 
@@ -45,8 +41,7 @@ $companyVisits = $API->DB->from( "visits" )
 /**
 * Получение слуг с процентами
 */
-$servicesUserPercents = $API->DB->from( "services_user_percents" )
-    ->where( $filter );
+$servicesUserPercents = $API->DB->from( "services_user_percents" );
 
 
 /**

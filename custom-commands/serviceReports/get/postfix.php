@@ -8,10 +8,11 @@
 if ( $requestData->context->block === "list" ) {
 
     /**
-     * Сформированный список
+     * Формирование фильтров
      */
     $filter = [];
     $servicesFilter = [];
+
     if ( $requestData->start_at ) $filter[ "date >= ?" ] = $requestData->start_at . " 00:00:00";
     if ( $requestData->end_at ) $filter[ "date <= ?" ] = $requestData->end_at . " 23:59:59";
     if ( $requestData->store_id ) $filter[ "store_id" ] = $requestData->store_id;
@@ -19,12 +20,21 @@ if ( $requestData->context->block === "list" ) {
     if ( $requestData->id ) $servicesFilter[ "id" ] = $requestData->id;
     $servicesFilter[ "is_active" ] = "Y";
 
+    /**
+     * Список услуг в посещении
+     */
     $companyVisitsServices = $API->DB->from( "visits_services" )
         ->where( $filter );
 
+    /**
+     * Список услуг
+     */
     $services = $API->DB->from( "services" )
         ->where( $servicesFilter );
 
+    /**
+     * Сформированный список
+     */
     $returnVisits = [];
 
     foreach ( $services as $service ) {

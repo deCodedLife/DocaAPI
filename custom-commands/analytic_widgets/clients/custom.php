@@ -2,8 +2,8 @@
 
 
 /**
-* Клиенты
-*/
+ * Клиенты
+ */
 
 $companyStatistic = [
 
@@ -24,9 +24,19 @@ $companyStatistic = [
 
 ];
 
+/**
+ * Фильтр клиентов
+ */
 $clientsFilter = [];
+
+/**
+ * Фильтр посещений
+ */
 $visitsFilter = [];
 
+/**
+ * Фильтр принудительная фильтрация по активнойсти
+ */
 $clientsFilter[ "is_active" ] = "Y";
 $visitsFilter [ "is_active" ] = "Y";
 
@@ -58,14 +68,21 @@ if ( $requestData->store_id ) {
 
 }
 
-
+/**
+ * Получение списка клиентов
+ */
 $clients = $API->DB->from( "clients" )
     ->where( $clientsFilter );
 
+/**
+ * Получение списка посещений
+ */
 $visits = $API->DB->from( "visits" )
     ->where( $visitsFilter );
 
-
+/**
+ * Подсчет значений для виджета
+ */
 foreach ( $visits as $visit ) {
 
     $companyStatistic[ "visits_count" ]++;

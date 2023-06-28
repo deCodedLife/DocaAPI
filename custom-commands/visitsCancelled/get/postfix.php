@@ -4,6 +4,9 @@
  * Формирование списка отмененных посещений
  */
 
+/**
+ * Формирование фильтра
+ */
 $filter = [];
 $filter[ "is_active" ] = "N";
 if ( $requestData->cancelledDate_start ) $filter[ "cancelledDate >= ?" ] = $requestData->cancelledDate_start . " 00:00:00";
@@ -11,6 +14,9 @@ if ( $requestData->cancelledDate_end ) $filter[ "cancelledDate <= ?" ] = $reques
 if ( $requestData->store_id ) $filter[ "store_id" ] = $requestData->store_id;
 if ( $requestData->reason_id ) $filter[ "reason_id" ] = $requestData->reason_id;
 
+/**
+ * Список посещений
+ */
 $visits = $API->DB->from( "visits" )
     ->where( $filter );
 
@@ -90,7 +96,7 @@ foreach ( $visits as $visit ) {
      */
     $visits_clients = $API->DB->from( "visits_clients" )
         ->where( "visit_id",  $visit[ "id" ]);
-
+    
     $clients = [];
 
     foreach ( $visits_clients as $visit_clients ) {
@@ -138,6 +144,7 @@ foreach ( $visits as $visit ) {
 }
 
 $response[ "data" ] = $returnVisits;
+
 $response[ "detail" ] = [
     "pages_count" => ceil(count( $response[ "data" ] ) / $requestData->limit )  ,
     "rows_count" => $requestData->limit

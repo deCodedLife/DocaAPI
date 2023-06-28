@@ -40,7 +40,7 @@ if ( !$clientDetail ) $clientDetail[ "id" ] = null;
 $API->DB->insertInto( "callHistory" )
     ->values( [
         "api_id" => 0,
-        "status" => $requestData->type,
+        "status" => "INCOMING",
         "user_id" => $employeeDetail[ "id" ],
         "client_id" => $clientDetail[ "id" ],
         "client_phone" => $requestData->phone

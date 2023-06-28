@@ -1,15 +1,10 @@
 <?php
 
 $publicAppPath = $API::$configs[ "paths" ][ "public_app" ];
-require_once ( $publicAppPath . '/custom-libs/sales/' . 'business_logic.php' );
+//require_once ( $publicAppPath . '/custom-libs/sales/business_logic.php' );
+require_once ( $publicAppPath . "/custom-libs/sales/init.php" );
 
-$Doca = new Doca(
-    [ 216 ]
-);
-
-$API->returnResponse( $Doca );
-
-exit(200);
+$API->returnResponse();
 
 // $API->DB->delete( "promotionObjects" )
 	// ->where( "id", 121 )

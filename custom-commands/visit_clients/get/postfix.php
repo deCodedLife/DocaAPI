@@ -1,55 +1,82 @@
 <?php
 
 /**
- * Формирование списка пользователей
+ * Формирование списка клиентов посещавшие специалистов
  */
-
 
 if ( $requestData->context->block === "list" ) {
 
     /**
      * Сформированный список
      */
-    $filter = [];
-    $servicesFilter = [];
-    if ( $requestData->start_at ) $filter[ "date >= ?" ] = $requestData->start_at . " 00:00:00";
-    if ( $requestData->end_at ) $filter[ "date <= ?" ] = $requestData->end_at . " 23:59:59";
-    if ( $requestData->store_id ) $filter[ "store_id" ] = $requestData->store_id;
-    if ( $requestData->category_id ) $servicesFilter[ "category_id" ] = $requestData->category_id;
-    if ( $requestData->users_id ) $filterUsers[ "users_id" ] = $requestData->users_id;
-
-    $servicesFilter[ "is_active" ] = "Y";
-
-    $companyVisitsServices = $API->DB->from( "visits_services" )
-        ->where( $filter );
-
-    $services = $API->DB->from( "services" )
-        ->where( $servicesFilter );
-
     $returnVisits = [];
 
-    foreach ( $services as $service ) {
+    foreach (  $response[ "data" ] as $visit ) {
 
-        $count = 0;
+        /**
+         * Получение услуг из заявки
+         */
+        $visits_services = $API->DB->from( "visits_services" )
+            ->where( "visit_id",  $visit[ "id" ]);
 
-        foreach ( $companyVisitsServices as $companyVisitsService ) {
+        /**
+         * Масив услуг
+         */
+        $services = [];
 
-            if ( $companyVisitsService[ "service_id" ] == $service[ "id" ]) {
+        foreach ( $visits_services as $visit_services ) {
 
-                $count++;
+            $service = $API->DB->from( "services" )
+                ->where( "id",  $visit_services[ "service_id"] )
+                ->limit( 1 )
+                ->fetch();
 
-            }
+            $services[] = [
+
+                "title" => $service[ "title" ],
+                "value" => (int)$visit_services[ "service_id" ]
+
+            ];
+
+        }
+
+
+        /**
+         * Получение клиентов из заявки
+         */
+        $visits_clients = $API->DB->from( "visits_clients" )
+            ->where( "visit_id",  $visit[ "id" ]);
+
+        /**
+         * Масив клиентов
+         */
+        $clients = [];
+
+        foreach ( $visits_clients as $visit_clients ) {
+
+            $client = $API->DB->from( "clients" )
+                ->where( "id",  $visit_clients[ "client_id"] )
+                ->limit( 1 )
+                ->fetch();
+
+            $clients[] = [
+
+                "fio" => $client[ "last_name" ] . " " . $client[ "first_name" ] . " " . $client[ "patronymic" ],
+                "id" => (int)$visit_clients[ "client_id" ]
+
+            ];
 
         }
 
         $returnVisits[] = [
-            "id" => $service[ "id" ],
-            "title" => $service[ "title" ],
-            "count" => $count,
-            "date" => $service[ "date" ],
-            "store_id" => $service[ "store_id" ],
-            "category_id" => $service[ "category_id" ],
-            "sum" => $service[ "price" ] * $count
+
+            "client_id" => $clients[ 0 ][ "id" ],
+            "fio" => $clients[ 0 ][ "fio" ],
+            "end_at" => $visit[ "end_at" ],
+            "price" => $visit[ "price" ],
+            "services_id" => $services,
+            "start_at" => $visit[ "start_at" ]
+
         ];
 
     }

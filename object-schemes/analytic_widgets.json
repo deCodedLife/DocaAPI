@@ -121,7 +121,8 @@
         "daily_report",
         "advertise",
         "clients",
-        "sales_statistic"
+        "sales_statistic",
+        "visit_clients"
       ],
       "list_donor": {
         "table": "stores",

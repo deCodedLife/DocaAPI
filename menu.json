@@ -44,6 +44,12 @@
       "icon": "stethoscope"
     },
     {
+      "title": "Электронная очередь",
+      "href": "queue",
+      "children": [],
+      "icon": "stethoscope"
+    },
+    {
       "title": "Закупки",
       "href": "purchases",
       "children": [],

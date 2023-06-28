@@ -5,7 +5,7 @@
  */
 mysqli_query(
     $API->DB_connection,
-    "CREATE TABLE IF NOT EXISTS SALES_types(
+    "CREATE TABLE IF NOT EXISTS salesTypes(
         id INTEGER NOT NULL AUTO_INCREMENT COMMENT 'ID объекта',
         title VARCHAR(255) NOT NULL COMMENT 'Название',
         article VARCHAR(50) NOT NULL COMMENT 'Артикул',
@@ -15,7 +15,17 @@ mysqli_query(
 
 mysqli_query(
     $API->DB_connection,
-    "CREATE TABLE IF NOT EXISTS SALES_methods(
+    "DELETE FROM salesTypes"
+);
+
+mysqli_query(
+    $API->DB_connection,
+    "INSERT INTO salesTypes (title, article) VALUES ('Наличные', 'cash'), ('Безналичные', 'card'), ('Раздельная', 'parts')"
+);
+
+mysqli_query(
+    $API->DB_connection,
+    "CREATE TABLE IF NOT EXISTS salesMethods(
         id INTEGER NOT NULL AUTO_INCREMENT COMMENT 'ID объекта',
         title VARCHAR(255) NOT NULL COMMENT 'Название',
         article VARCHAR(50) NOT NULL COMMENT 'Артикул',
@@ -23,10 +33,21 @@ mysqli_query(
     )"
 );
 
+mysqli_query(
+    $API->DB_connection,
+    "DELETE FROM salesMethods"
+);
 
 mysqli_query(
     $API->DB_connection,
-    "CREATE TABLE IF NOT EXISTS SALES_list (
+    "INSERT INTO salesMethods (title, article) VALUES ('Продажа', 'sell'), ('Возврат', 'sellReturn'), ('Пополнение депозита', 'deposit')"
+);
+
+//$API->returnResponse( "WTF?" );
+
+mysqli_query(
+    $API->DB_connection,
+    "CREATE TABLE IF NOT EXISTS salesList (
         id INTEGER NOT NULL AUTO_INCREMENT COMMENT 'ID объекта',
         status VARCHAR(15) NOT NULL DEFAULT 'waiting' COMMENT 'Статус оплаты',
         client_id INTEGER NOT NULL COMMENT 'ID клиента',
@@ -49,7 +70,7 @@ mysqli_query(
 
 mysqli_query(
     $API->DB_connection,
-    "CREATE TABLE IF NOT EXISTS SALES_productTypes(
+    "CREATE TABLE IF NOT EXISTS salesProductTypes(
         id INTEGER NOT NULL AUTO_INCREMENT COMMENT 'ID объекта',
         title VARCHAR(255) NOT NULL COMMENT 'Название',
         article VARCHAR(50) NOT NULL COMMENT 'Артикул',
@@ -59,7 +80,17 @@ mysqli_query(
 
 mysqli_query(
     $API->DB_connection,
-    "CREATE TABLE IF NOT EXISTS SALES_productList (
+    "DELETE FROM salesProductTypes"
+);
+
+mysqli_query(
+    $API->DB_connection,
+    "INSERT INTO salesProductTypes (tittle, article) VALUES ('Услуга', 'service'), ('Товар', 'product')"
+);
+
+mysqli_query(
+    $API->DB_connection,
+    "CREATE TABLE IF NOT EXISTS salesProductList (
         id INTEGER NOT NULL AUTO_INCREMENT COMMENT 'ID объекта',
         title VARCHAR(255) NOT NULL COMMENT 'Название',
         type VARCHAR(75) NOT NULL COMMENT 'Тип товара',
