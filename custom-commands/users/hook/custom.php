@@ -25,4 +25,19 @@ if ( $requestData->patronymic ) {
 } // if. $requestData->patronymic
 
 
+/**
+ * Блок "Процент от продаж услуг"
+ */
+
+if ( $requestData->is_percent == "Y" ) {
+
+    $formFieldsUpdate[ "services_user_percents" ][ "is_visible" ] = true;
+
+} else {
+
+    $formFieldsUpdate[ "services_user_percents" ][ "is_visible" ] = false;
+
+} // if. $requestData->is_percent == "Y"
+
+
 $API->returnResponse( $formFieldsUpdate );

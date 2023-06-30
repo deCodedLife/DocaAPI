@@ -48,10 +48,27 @@ if ( $requestData->context->block === "list" ) {
     $returnPromotions = [];
 
     /**
-     * Формирование списка пользователей
+     * Формирование списка акций
      */
     foreach ( $response[ "data" ] as $promotion ) {
 
+        /**
+         * Детальная информация
+         */
+        $detailPromotion = $API->DB->from( "promotions" )
+            ->where( "id", $promotion[ "id" ] )
+            ->limit( 1 )
+            ->fetch();
+
+        if ( $detailPromotion[ "promotion_type" ] == "percent" ) {
+
+            $promotion[ "value" ] =  $promotion[ "value" ] . "%";
+
+        } else if ( $detailPromotion[ "promotion_type" ] == "fixed" ) {
+
+            $promotion[ "value" ] =  $promotion[ "value" ] . "₽";
+
+        }
         $promotion[ "period" ] = "c " . ($promotion[ "begin_at" ] ?? "-") . " по " . ($promotion[ "end_at" ] ?? "-");
         $returnPromotions[] = $promotion;
 

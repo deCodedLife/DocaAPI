@@ -36,7 +36,9 @@
         "advertise",
         "clients",
         "sales_statistic",
-        "visit_clients"
+        "visit_clients",
+        "client_statistic"
+
       ]
     },
     {
@@ -53,7 +55,8 @@
         "advertise",
         "clients",
         "sales_statistic",
-        "visit_clients"
+        "visit_clients",
+        "client_statistic"
       ]
     },
     {

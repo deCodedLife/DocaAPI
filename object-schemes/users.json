@@ -347,9 +347,11 @@
       "is_default_in_list": false,
       "is_unique": false,
       "is_autofill": true,
+      "is_hook": true,
       "use_in_commands": [
         "update",
-        "add"
+        "add",
+        "hook"
       ]
     },
     {
@@ -360,7 +362,7 @@
       "is_default_in_list": false,
       "is_unique": false,
       "is_autofill": true,
-      "is_visible": true,
+      "is_visible": false,
       "is_hook": true,
       "use_in_commands": [
         "add",

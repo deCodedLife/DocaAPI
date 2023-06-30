@@ -154,66 +154,7 @@
             }
           ]
         },
-        {
-          "title": "Оплата",
-          "body": [
-            {
-              "title": "Форма оплаты",
-              "type": "form",
-              "size": 4,
-              "settings": {
-                "object": "sales",
-                "command": "add",
-                "areas": [
-                  {
-                    "size": 2,
-                    "blocks": [
-                      {
-                        "title": "",
-                        "fields": [
-                          "services_info",
-                          "cash_sum",
-                          "card_sum",
-                          "summary",
-                          "pay_method"
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "size": 2,
-                    "blocks": [
-                      {
-                        "title": "",
-                        "fields": [
-                          "store_id",
-                          "bonus_sum",
-                          "deposit_sum",
-                          "online_receipt",
-                          "is_combined",
-                          "client_id",
-                          "pay_type"
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              },
-              "components": {
-                "buttons": [
-                  {
-                    "type": "submit",
-                    "settings": {
-                      "title": "Оплатить",
-                      "background": "dark",
-                      "href": "dashboard"
-                    }
-                  }
-                ]
-              }
-            }
-          ]
-        },
+        
         {
           "title": "Основная информация",
           "body": [
@@ -438,7 +379,6 @@
                   }
                 ]
               }
-
             }
           ]
         },
@@ -489,7 +429,6 @@
                   }
                 ]
               }
-
             }
           ]
         },

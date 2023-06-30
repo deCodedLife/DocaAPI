@@ -44,6 +44,24 @@ foreach ( $visits as $visit ) {
 
 
     /**
+     * Формирование пути к файлу озвучки
+     */
+
+    if ( !is_dir( $API::$configs[ "paths" ][ "company_uploads" ] ) )
+        mkdir( $API::$configs[ "paths" ][ "company_uploads" ] );
+
+    $talonFilePath = $API::$configs[ "paths" ][ "company_uploads" ] . "/talons";
+    if ( !is_dir( $talonFilePath ) ) mkdir( $talonFilePath );
+
+
+    /**
+     * Формирование названия файла озвучки
+     */
+    $talonFileName = str_replace( " ", "", $visit[ "talon" ] );
+    $talonFileName = $talonFileName . "-" . $cabinetDetail[ "id" ];
+
+
+    /**
      * Озвучка
      */
 
@@ -65,20 +83,6 @@ foreach ( $visits as $visit ) {
 
         $synthText = substr( $visit[ "talon" ], 0, 2 ) . "," . substr( $visit[ "talon" ], 2 );
         $synthText = "Пациент $synthText, пройдите в кабинет " . $cabinetDetail[ "title" ];
-
-        $talonFileName = str_replace( " ", "", $visit[ "talon" ] );
-        $talonFileName = $talonFileName . "-" . $cabinetDetail[ "id" ];
-
-
-        /**
-         * Формирование пути к файлу озвучки
-         */
-
-        if ( !is_dir( $API::$configs[ "paths" ][ "company_uploads" ] ) )
-            mkdir( $API::$configs[ "paths" ][ "company_uploads" ] );
-
-        $talonFilePath = $API::$configs[ "paths" ][ "company_uploads" ] . "/talons";
-        if ( !is_dir( $talonFilePath ) ) mkdir( $talonFilePath );
 
 
         if ( !file_exists( "$talonFilePath/$talonFileName.wav" ) ) {
@@ -103,15 +107,57 @@ foreach ( $visits as $visit ) {
 
 
         $voice = substr( $talonFilePath, strpos( $talonFilePath, "/uploads" ) );
-        $voice .= "/$talonFileName.raw";
+        $voice .= "/$talonFileName.wav";
 
     } // if. !$isAlert
 
 
+    $voice = substr( $talonFilePath, strpos( $talonFilePath, "/uploads" ) );
+    $voice .= "/$talonFileName.wav";
+
+    if ( !file_exists( "$talonFilePath/$talonFileName.wav" ) )
+        $voice = null;
+
+
+    /**
+     * Получение врача
+     */
+
+    $doctorDetail = $API->DB->from( "visits_users" )
+        ->where( "visit_id", $visit[ "id" ] )
+        ->limit( 1 )
+        ->fetch();
+
+    $doctorDetail = $API->DB->from( "users" )
+        ->where( "id", $doctorDetail[ "user_id" ] )
+        ->limit( 1 )
+        ->fetch();
+
+
+    /**
+     * Получение специальности врача
+     */
+
+    $doctorProfession = $API->DB->from( "users_professions" )
+        ->where( "user_id", $doctorDetail[ "id" ] )
+        ->limit( 1 )
+        ->fetch();
+
+    $doctorProfession = $API->DB->from( "professions" )
+        ->where( "id", $doctorProfession[ "profession_id" ] )
+        ->limit( 1 )
+        ->fetch();
+
+
     $resultVisits[] = [
+        "id" => $visit[ "id" ],
         "is_alert" => $isAlert,
         "talon" => $visit[ "talon" ],
         "cabinet" => $cabinetDetail[ "title" ],
+        "detail" => [
+            $doctorProfession[ "title" ],
+            $doctorDetail[ "last_name" ] . " " . $doctorDetail[ "first_name" ] . " " . $doctorDetail[ "patronymic" ]
+        ],
         "voice" => $voice
     ];
 

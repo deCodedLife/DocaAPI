@@ -2,6 +2,22 @@
 
 $publicAppPath = $API::$configs[ "paths" ][ "public_app" ];
 //require_once ( $publicAppPath . '/custom-libs/sales/business_logic.php' );
+
+//$newTables = [
+//  "salesTypes",
+//  "salesMethods",
+//  "salesList",
+//  "salesProductTypes",
+//  "salesProductList"
+//];
+//
+//foreach ( $newTables as $table ) {
+//    mysqli_query(
+//        $API->DB_connection,
+//        "DROP TABLE $table"
+//    );
+//}
+
 require_once ( $publicAppPath . "/custom-libs/sales/init.php" );
 
 $API->returnResponse();

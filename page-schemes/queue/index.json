@@ -11,7 +11,23 @@
       "settings": {
         "object": "visits"
       },
-      "components": {}
+      "components": {
+        "filters": [
+          {
+            "title": "Филиал",
+            "type": "list",
+            "required_permissions": [],
+            "required_modules": [],
+            "settings": {
+              "is_search": false,
+              "recipient_property": "store_id",
+              "donor_object": "stores",
+              "donor_property_title": "title",
+              "donor_property_value": "id"
+            }
+          }
+        ]
+      }
     }],
   "subpages": []
 }

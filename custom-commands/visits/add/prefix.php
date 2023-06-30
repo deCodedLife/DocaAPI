@@ -1,12 +1,37 @@
 <?php
 
+function translit ( $value ) {
+
+    $converter = array(
+        'а' => 'a',    'б' => 'b',    'в' => 'v',    'г' => 'g',    'д' => 'd',
+        'е' => 'e',    'ё' => 'e',    'ж' => 'zh',   'з' => 'z',    'и' => 'i',
+        'й' => 'y',    'к' => 'k',    'л' => 'l',    'м' => 'm',    'н' => 'n',
+        'о' => 'o',    'п' => 'p',    'р' => 'r',    'с' => 's',    'т' => 't',
+        'у' => 'u',    'ф' => 'f',    'х' => 'h',    'ц' => 'c',    'ч' => 'ch',
+        'ш' => 'sh',   'щ' => 'sch',  'ь' => '',     'ы' => 'y',    'ъ' => '',
+        'э' => 'e',    'ю' => 'yu',   'я' => 'ya',
+
+        'А' => 'A',    'Б' => 'B',    'В' => 'V',    'Г' => 'G',    'Д' => 'D',
+        'Е' => 'E',    'Ё' => 'E',    'Ж' => 'Zh',   'З' => 'Z',    'И' => 'I',
+        'Й' => 'Y',    'К' => 'K',    'Л' => 'L',    'М' => 'M',    'Н' => 'N',
+        'О' => 'O',    'П' => 'P',    'Р' => 'R',    'С' => 'S',    'Т' => 'T',
+        'У' => 'U',    'Ф' => 'F',    'Х' => 'H',    'Ц' => 'C',    'Ч' => 'Ch',
+        'Ш' => 'Sh',   'Щ' => 'Sch',  'Ь' => '',     'Ы' => 'Y',    'Ъ' => '',
+        'Э' => 'E',    'Ю' => 'Yu',   'Я' => 'Ya',
+    );
+
+    return strtr( $value, $converter );
+
+} // function. translit
+
+
 /**
  * Получение Записей за указанный период
  */
 
 $sqlTimeCondition = "(
-    ( start_at >= '$requestData->start_at' and start_at < '$requestData->end_at' ) OR 
-    ( end_at > '$requestData->start_at' and end_at < '$requestData->end_at' ) OR 
+    ( start_at >= '$requestData->start_at' and start_at < '$requestData->end_at' ) OR
+    ( end_at > '$requestData->start_at' and end_at < '$requestData->end_at' ) OR
     ( start_at < '$requestData->start_at' and end_at > '$requestData->end_at' )
 )";
 
@@ -34,6 +59,65 @@ if ( strtotime( DateTime::createFromFormat( 'Y-m-d H:i:s', $requestData->end_at 
 if ( !$isTimeCorrect ) $API->returnResponse( "Время посещения выходит за рамки графика работы филиала", 400 );
 
 
+/**
+ * Проверка указания второго Сотрудника
+ */
+
+/**
+ * Обход услуг
+ */
+foreach ( $requestData->services_id as $serviceId ) {
+
+    /**
+     * Получение детальной информации об услуге
+     */
+    $serviceDetail = $API->DB->from( "services" )
+        ->where( "id", $serviceId )
+        ->limit( 1 )
+        ->fetch();
+
+    /**
+     * Получение вторых исполнителей
+     */
+    $services_second_users = $API->DB->from("services_second_users")
+        ->where("service_id", $serviceId);
+
+    /**
+     * Нет необходимости указывать второго исполнителя?
+     */
+    $specifySecondEmployee = true;
+
+    foreach ($services_second_users as $secondUser) {
+
+
+        if ($secondUser) {
+
+            $specifySecondEmployee = false;
+
+            foreach ($requestData->users_id as $userId) {
+
+                if ($userId == $secondUser["user_id"]) {
+
+                    $specifySecondEmployee = true;
+
+                }
+
+            }
+
+        } else {
+
+            $specifySecondEmployee = true;
+
+        }
+
+    }
+
+    if ($specifySecondEmployee == false) {
+
+        $API->returnResponse("Укажите второго сотрудника для услуги " . $serviceDetail[ "title" ], 400);
+
+    }
+}
 
 /**
  * Расчет свободности Исполнителей, Клиентов и Кабинетов
@@ -106,7 +190,7 @@ $serviceDetail = $API->DB->from( "services" )
     ->fetch();
 
 $requestData->talon = mb_strtoupper(
-    mb_substr( $serviceDetail[ "title" ], 0, 1 )
+    mb_substr( translit( $serviceDetail[ "title" ] ), 0, 1 )
 ) . " ";
 
 $lastVisitDetail = $API->DB->from( "visits" )

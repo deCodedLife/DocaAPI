@@ -53,7 +53,7 @@ if ( $requestData->services_id && $requestData->users_id ) {
             )
             ->limit( 1 )
             ->fetch();
-        
+
 
         /**
          * Обновление стоимости Записи
