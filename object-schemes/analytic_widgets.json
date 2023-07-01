@@ -15,7 +15,8 @@
         "user_visits",
         "sales_statistic",
         "sum_all_services",
-        "visit_clients"
+        "visit_clients",
+        "salary_info"
       ],
       "list_donor": {
         "table": "users",

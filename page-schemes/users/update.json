@@ -211,6 +211,45 @@
                     ]
                 },
                 {
+                    "title": "Детальная информация по зарплате",
+                    "body": [
+                        {
+                            "title": "Виджет информации о зарплате",
+                            "type": "analytic_widgets",
+                            "size": 4,
+                            "settings": {
+                                "widgets_group": "salary_info",
+                                "filters": [
+                                    {
+                                        "property": "user_id",
+                                        "value": ":id"
+                                    }
+                                ]
+                            },
+                            "components": []
+                        },
+                        {
+                            "title": "Список транзакций",
+                            "type": "list",
+                            "size": 4,
+                            "settings": {
+                                "object": "visits",
+                                "filters": [
+                                    {
+                                        "property": "user_id",
+                                        "value": ":id"
+                                    },
+                                    {
+                                        "property": "status",
+                                        "value": "ended"
+                                    }
+                                ]
+                            },
+                            "components": {}
+                        }
+                    ]
+                },
+                {
                     "title": "История звонков",
                     "is_counter": true,
                     "body": [
