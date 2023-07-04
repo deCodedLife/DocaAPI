@@ -1,1 +1,39 @@
-{"required_permissions":[],"required_modules":[],"structure":[{"title":"Шапка","type":"header","size":4,"settings":{"description":"Шаблоны документов","title":["Шаблоны документов"]},"components":[]},{"title":"Список","type":"list","size":4,"settings":{"object":"documents"},"components":{"buttons":[{"type":"href","settings":{"title":"Добавить документ","background":"dark","page":"documents/add"}}]}}],"subpages":[]}
+{
+  "required_permissions": [],
+  "required_modules": [],
+  "structure": [
+    {
+      "title": "Шапка",
+      "type": "header",
+      "size": 4,
+      "settings": {
+        "description": "Шаблоны документов",
+        "title": [
+          "Шаблоны документов"
+        ]
+      },
+      "components": []
+    },
+    {
+      "title": "Список",
+      "type": "list",
+      "size": 4,
+      "settings": {
+        "object": "documents"
+      },
+      "components": {
+        "buttons": [
+          {
+            "type": "href",
+            "settings": {
+              "title": "Добавить документ",
+              "background": "dark",
+              "page": "documents/add"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "subpages": []
+}

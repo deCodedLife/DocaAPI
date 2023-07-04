@@ -10,8 +10,14 @@ switch ( $event[ "status" ][ "value" ] ) {
         break;
 
     case "ended":
-        $event[ "color" ] = "success";
+        $event[ "color" ] = "danger";
         break;
+
+    case "process":
+        $event[ "color" ] = "warning";
+        break;
+
+
 
 } // switch. $event[ "status" ][ "value" ]
 

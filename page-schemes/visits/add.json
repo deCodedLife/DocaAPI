@@ -24,7 +24,7 @@
           "fields": ["start_at", "end_at"]
         }, {
           "title": "",
-          "fields": ["users_id", "clients_id", "services_id"]
+          "fields": ["users_id", "clients_id", "clients_info", "services_id"]
         }]
       }, {
         "size": 2,

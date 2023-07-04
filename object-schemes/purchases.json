@@ -188,6 +188,17 @@
             }
           },
           {
+            "title": "Филиал",
+            "article": "store_id",
+            "data_type": "integer",
+            "field_type": "list",
+            "is_visible": false,
+            "list_donor": {
+              "table": "stores",
+              "properties_title": "title"
+            }
+          },
+          {
             "title": "Количество",
             "article": "count",
             "data_type": "integer",

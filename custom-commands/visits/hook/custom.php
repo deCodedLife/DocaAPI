@@ -92,6 +92,8 @@ if ( $requestData->services_id && $requestData->users_id ) {
      * Обновление полей формы
      */
 
+
+
     $formFieldsUpdate[ "price" ] = [
         "value" => $visitPrice
     ];
@@ -106,5 +108,35 @@ if ( $requestData->services_id && $requestData->users_id ) {
 
 } // if. $requestData->services_id && $requestData->users_id
 
+if ( $requestData->clients_id ) {
+
+    $clientsInfo = [];
+
+    foreach ($requestData->clients_id as $clientId) {
+
+        $clientDetail = $API->DB->from( "clients" )
+            ->where("id", $clientId)
+            ->limit(1)
+            ->fetch();
+
+        $phoneFormat = "+" . sprintf("%s (%s) %s-%s-%s",
+                substr($clientDetail [ "phone" ], 0, 1),
+                substr($clientDetail [ "phone" ], 1, 3),
+                substr($clientDetail [ "phone" ], 4, 3),
+                substr($clientDetail [ "phone" ], 7, 2),
+                substr($clientDetail [ "phone" ], 9)
+            );
+
+        $clientsInfo[] = $clientDetail[ "last_name" ] . " " . $clientDetail[ "first_name" ] . " " . $clientDetail[ "patronymic" ] . ", " . $phoneFormat;
+
+    }
+
+    $formFieldsUpdate[ "clients_info" ] = [ "is_visible" => true, "value" => $clientsInfo ];
+
+} else {
+
+    $formFieldsUpdate[ "clients_info" ] = [ "is_visible" => false ];
+
+}
 
 $API->returnResponse( $formFieldsUpdate );

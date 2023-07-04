@@ -7,27 +7,54 @@
 $publicAppPath = $API::$configs[ "paths" ][ "public_app" ];
 $libPath = $publicAppPath . "/custom-libs/sales";
 
-//require_once ( "./database/salesActions.php" );
-//require_once ( "./database/salesPayMethods.php" );
-//require_once ( "./database/salesProductTypes.php" );
-//require_once ( "./database/salesProductsList.php" );
-//require_once ( "./database/salesList.php" );
+require_once ( "./database/salesActions.php" );
+require_once ( "./database/salesPayMethods.php" );
+require_once ( "./database/salesProductTypes.php" );
+require_once ( "./database/salesProductsList.php" );
+require_once ( "./database/salesList.php" );
+
+
 
 /**
- * Копирование объектов
+ * Копирование схем объектов
  */
 
-function moveFiles( $filesList, $from, $destination ) {
+function moveFiles( $from, $to ) {
 
-    foreach ( $filesList as $file )
-        copy( $from . $file, $destination . $file);
+    /**
+     * Получение списка файлов в папке
+     */
+    $files = array_diff( scandir( $from ), [ "..", "." ] );
 
-}
+    foreach ( $files as $file ) {
 
-$objectsList = array_diff( scandir( $libPath . "/object-schemes" ), [ "..", "." ] );
-moveFiles( $objectsList, $libPath . "/object-schemes/", $publicAppPath . "/object-schemes/" );
+        $filePath = $from . DIRECTORY_SEPARATOR . $file;
 
-$commandsList =  array_diff( scandir( $libPath . "/command-schemes" ), [ "..", "." ] );
-moveFiles( $commandsList, $libPath . "/command-schemes/", $publicAppPath . "/command-schemes/" );
+        /**
+         * Рекурсивный вызов функции, если это папка
+         */
+        if ( is_dir( $filePath ) ) {
+
+            moveFiles( $filePath, $to . DIRECTORY_SEPARATOR . $file );
+            continue;
+
+        }
+
+        /**
+         * Копирование файла
+         */
+        $pathInfo = pathinfo( $to . DIRECTORY_SEPARATOR . $file );
+
+        if ( !file_exists( $pathInfo[ 'dirname' ] ) )
+            mkdir( $pathInfo[ 'dirname' ], 0777, true );
+
+        copy( $filePath, $to . DIRECTORY_SEPARATOR . $file );
+
+    }
+
+} // function moveFiles( $root, $from, $to ): array {
 
 
+
+moveFiles( "$libPath/object-schemes", "$publicAppPath/object-schemes" );
+moveFiles( "$libPath/command-schemes", "$publicAppPath/command-schemes" );

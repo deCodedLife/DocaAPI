@@ -140,8 +140,9 @@ foreach ( $existingVisits as $existingVisit ) {
         ->where( "visit_id", $existingVisit[ "id" ] );
 
     foreach ( $visitUsers as $visitUser )
-        if ( in_array( $visitUser[ "user_id" ], $requestData->users_id ) ) {
 
+        if ( in_array( $visitUser[ "user_id" ], $requestData->users_id ) ) {
+            
             /**
              * Получение детальной информации о Сотруднике
              */

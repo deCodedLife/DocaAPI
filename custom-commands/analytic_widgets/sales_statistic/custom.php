@@ -26,7 +26,7 @@ if ( $requestData->end_at )   $dateTo   = $requestData->end_at;
 $filter = [
     "created_at >= ?" => $dateFrom,
     "created_at <= ?" => $dateTo,
-    "not pay_type = ?" => "sellReturn",
+    "not action = ?" => "sellReturn",
     "status" => "done"
 ];
 
@@ -43,9 +43,7 @@ if ( $requestData->store_id ) $filter[ "store_id = ?" ] = $requestData->store_id
 /**
  * Получение продаж
  */
-$sales =  $API->DB->from( "sales" )
-    ->where( $filter );
-
+$salesList = $API->DB->from( "salesList" )->where( $filter ) ?? [];
 
 
 /**
@@ -63,32 +61,34 @@ $report[ "Возврат безналичными" ] = 0;
 /**
  * Подсчёт значений графиков
  */
-foreach ( $sales as $sale ) {
+foreach ( $salesList as $sale ) {
 
-    $report[ "Аванс" ] += (float) $sale[ "deposit_sum" ];
-    $report[ "Наличными" ] += (float) $sale[ "cash_sum" ];
-    $report[ "Безналичными" ] += (float) $sale[ "card_sum" ];
-    $report[ "Итого" ] += (float) $sale[ "deposit_sum" ] + (float) $sale[ "cash_sum" ] + (float) $sale[ "card_sum" ];
+    $API->returnResponse( json_encode( $sale ), 500 );
 
-}
+    $report[ "Аванс" ] += (float) $sale[ "sum_deposit" ];
+    $report[ "Наличными" ] += (float) $sale[ "sum_cash" ];
+    $report[ "Безналичными" ] += (float) $sale[ "sum_card" ];
+    $report[ "Итого" ] += (float) $sale[ "sum_deposit" ] + (float) $sale[ "sum_cash" ] + (float) $sale[ "sum_card" ];
+
+} // foreach ( $salesList as $sale ) {
+
+
 
 /**
  * Получение списка возвратов
  */
-unset( $filter[ "not pay_type = ?" ] );
-$filter[ "pay_type = ?" ] = "sellReturn";
-
-$sales =  $API->DB->from( "sales" )
-    ->where( $filter );
+unset( $filter[ "not action = ?" ] );
+$filter[ "action = ?" ] = "sellReturn";
+$salesList =  $API->DB->from( "salesList" )->where( $filter );
 
 
 /**
  * Подсчёт значений возвратов
  */
-foreach ( $sales as $sale ) {
+foreach ( $salesList as $sale ) {
 
-    $report[ "Возврат наличными" ] += (float) $sale[ "cash_sum" ];
-    $report[ "Возврат безналичными" ] += (float) $sale[ "card_sum" ];
+    $report[ "Возврат наличными" ] += (float) $sale[ "sum_cash" ];
+    $report[ "Возврат безналичными" ] += (float) $sale[ "sum_card" ];
 
 }
 
@@ -112,6 +112,5 @@ foreach ( $report as $key => $item ) {
         ]
     ];
 }
-
 
 $API->returnResponse( $statistic );

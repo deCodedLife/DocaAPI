@@ -16,10 +16,9 @@ $incomeBalance = $API->DB->from( "cashboxBalances" )
     ->limit( 1 )
     ->fetch();
 
-
 $payments = mysqli_query(
     $API->DB_connection,
-    "SELECT * FROM sales WHERE pay_type = \"sell\""
+    "SELECT * FROM salesList WHERE action = 'sell'"
 );
 
 $summary = 0;

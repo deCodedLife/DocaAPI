@@ -79,7 +79,7 @@
                     "title": "Тип операции",
                     "settings": {
                       "recipient_property": "payment_type",
-                      "donor_object": "payment_types",
+                      "donor_object": "salePayMethods",
                       "donor_property_title": "title",
                       "donor_property_value": "article"
                     },
@@ -118,7 +118,7 @@
               "type": "list",
               "size": 4,
               "settings": {
-                "object": "sales"
+                "object": "salesList"
               },
               "components": {
                 "filters": [
@@ -150,7 +150,7 @@
                     "title": "Тип операции",
                     "type": "list",
                     "settings": {
-                      "donor_object": "sale_types",
+                      "donor_object": "salePayMethods",
                       "donor_property_title": "title",
                       "donor_property_value": "article",
                       "recipient_property": "sale_type"
@@ -160,7 +160,7 @@
                     "title": "Тип оплаты",
                     "type": "list",
                     "settings": {
-                      "donor_object": "payment_types",
+                      "donor_object": "saleActions",
                       "donor_property_title": "title",
                       "donor_property_value": "article",
                       "recipient_property": "pay_method"

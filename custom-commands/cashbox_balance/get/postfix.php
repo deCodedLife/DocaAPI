@@ -1,19 +1,36 @@
 <?php
 
-$payments = $API->DB->from( "sales" )
-    ->where( "is_active", 'Y' );
+//$API->returnResponse( json_encode($requestData), 500 );
 
+$today = new DateTime();
+
+/**
+ * Получение списка продаж
+ */
+$payments = $API->DB->from( "salesList" )
+    ->where( [
+        "created_at >= ?" => $today->format( "Y-m-d" ) . " 00:00:00",
+        "created_at <= ?" => $today->format( "Y-m-d" ) . " 23:59:59"
+    ] );
+
+
+/**
+ * Если возвращаемый тип - список
+ */
 if ( $requestData->context->block === "list" ) {
 
     $listData = [];
 
+    /**
+     * Обход всех продаж
+     */
     foreach ( $payments as $payment ) {
 
         $listItem = [];
         $listItem[ "date" ] = $payment[ "created_at" ];
 
-        if ( $payment[ "pay_type" ] === "sell" ) $listItem[ "operation_type" ] = "Продажа";
-        if ( $payment[ "pay_type" ] === "sellReturn" ) $listItem[ "operation_type" ] = "Возврат";
+        if ( $payment[ "action" ] === "sell" ) $listItem[ "operation_type" ] = "Продажа";
+        if ( $payment[ "action" ] === "sellReturn" ) $listItem[ "operation_type" ] = "Возврат";
 
         $listItem[ "client_id" ] = $payment[ "client_id" ];
 
@@ -35,14 +52,10 @@ if ( $requestData->context->block === "list" ) {
         ) );
 
         $listItem[ "operator" ] = $employee[ "last_name" ];
-//        {"id":"92","employee":"1","pay_type":"sell","bonus_sum":"0","deposit_sum":"0","card_sum":"0","cash_sum":"26","status":"waiting","error":null,"terminal_code":null,"":"2023-04-06 21:58:03","store_id":"1","is_activ
-
-//        $API->returnResponse( json_encode($payment), 500 );
-
         $listData[] = $listItem;
 
-    }
+    } // foreach ( $payments as $payment )
 
     $response[ "data" ] = $listData;
 
-}
+} // if ( $requestData->context->block === "list" )

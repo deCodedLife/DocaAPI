@@ -18,6 +18,78 @@
       "is_in_search": true
     },
     {
+      "title": "Товары и услуги",
+      "article": "products",
+      "data_type": "array",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "get",
+        "add",
+        "return",
+        "update",
+        "hook"
+      ],
+      "require_in_commands": [
+        "add",
+        "return"
+      ],
+      "is_hook": true,
+      "list_donor": {
+        "table": "services",
+        "properties_title": "title"
+      }
+    },
+    {
+      "title": "Посещения",
+      "article": "visits_ids",
+      "data_type": "array",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_in_search": true,
+      "use_in_commands": [
+        "hook",
+        "add",
+        "return",
+        "update"
+      ],
+      "require_in_commands": [],
+      "join": {
+        "connection_table": "saleVisits",
+        "donor_table": "visits",
+        "property_article": "start_at",
+        "insert_property": "sale_id",
+        "filter_property": "visit_id"
+      },
+      "is_hook": true,
+      "is_visible": false
+    },
+    {
+      "title": "ID посещения",
+      "article": "visit_id",
+      "data_type": "integer",
+      "field_type": "integer",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add",
+        "update",
+        "hook",
+        "get"
+      ],
+      "is_hook": true,
+      "require_in_commands": [
+        "add",
+        "return"
+      ],
+      "is_visible": false
+    },
+    {
       "title": "Клиент",
       "article": "client_id",
       "data_type": "integer",
@@ -177,12 +249,11 @@
       "is_visible": false
     },
     {
-      "title": "Стоимость посещения",
-      "article": "sun_cash",
+      "title": "Наличными",
+      "article": "sum_cash",
       "data_type": "float",
       "field_type": "price",
       "is_default_in_list": false,
-      "is_disabled": true,
       "is_unique": false,
       "is_autofill": true,
       "use_in_commands": [

@@ -5,6 +5,7 @@ mysqli_query(
     "CREATE TABLE IF NOT EXISTS salesList (
         id INTEGER NOT NULL AUTO_INCREMENT COMMENT 'ID объекта',
         status VARCHAR(15) NOT NULL DEFAULT 'waiting' COMMENT 'Статус оплаты',
+        visit_id INTEGER NULL COMMENT 'ID посещения',
         client_id INTEGER NOT NULL COMMENT 'ID клиента',
         store_id INTEGER NOT NULL COMMENT 'ID филиала',
         employee_id INTEGER NOT NULL COMMENT 'ID сотрудника',
