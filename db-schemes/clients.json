@@ -177,6 +177,13 @@
       "is_required": "N"
     },
     {
+      "title": "Подписан договор",
+      "article": "is_contract",
+      "type": "char(1)",
+      "default": "N",
+      "is_required": "N"
+    },
+    {
       "title": "Рекламный канал",
       "article": "advertise_id",
       "type": "int",

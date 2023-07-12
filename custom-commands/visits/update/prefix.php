@@ -20,6 +20,274 @@ $existingVisits = mysqli_query(
     "SELECT id, cabinet_id FROM visits WHERE $sqlTimeCondition AND is_active = 'Y'"
 );
 
+if ( !$requestData->reason_id ) {
+    /**
+     * Пустое поле усуг
+     */
+    if ( $requestData->services_id === [] ) {
+
+        $API->returnResponse("Укажите услугу", 400);
+
+        /**
+         * Услуги не изменялись
+         */
+    } elseif ( !$requestData->services_id ) {
+
+        /**
+         * Получение услуг посещения
+         */
+        $visits_services = $API->DB->from( "visits_services" )
+            ->where( "visit_id", $requestData->id );
+
+        /**
+         * Обход услуг
+         */
+        foreach ( $visits_services as $visit_service ) {
+
+            /**
+             * Получение расходников для услуги
+             */
+            $services_consumables = $API->DB->from( "services_consumables" )
+                ->where( "row_id", $visit_service[ "service_id" ] );
+
+            foreach ( $services_consumables as $service_consumable ) {
+
+                $allConsumables[$service_consumable[ "consumable_id" ]][ "count" ] += $service_consumable["count"];
+
+            }
+
+            /**
+             * Получение детальной информации об услуге
+             */
+            $serviceDetail = $API->DB->from("services")
+                ->where("id", $visit_service["service_id"])
+                ->limit(1)
+                ->fetch();
+
+            /**
+             * Пустое поле сотрудники
+             */
+            if ($requestData->users_id === []) {
+
+                $API->returnResponse("Укажите сотрудника", 400);
+
+                /**
+                 * Сотрудники изменялись
+                 */
+            } elseif ( $requestData->users_id && $requestData->users_id !== [] ) {
+
+                /**
+                 * Получение вторых исполнителей услуги
+                 */
+                $services_second_users = $API->DB->from("services_second_users")
+                    ->where("service_id", $visit_service["service_id"]);
+
+                /**
+                 * Нет необходимости указывать второго исполнителя?
+                 */
+                $specifySecondEmployee = true;
+
+                /**
+                 * Обход вторых исполнителей
+                 */
+                foreach ($services_second_users as $secondUser) {
+
+                    if ($secondUser) {
+
+                        $specifySecondEmployee = false;
+
+                        foreach ($requestData->users_id as $service_user) {
+
+                            if ($service_user == $secondUser["user_id"]) {
+
+                                $specifySecondEmployee = true;
+
+                            }
+
+                        }
+
+                    } else {
+
+                        $specifySecondEmployee = true;
+
+                    }
+
+                }
+
+                if ($specifySecondEmployee == false) {
+
+                    $API->returnResponse("Укажите второго сотрудника для услуги " . $serviceDetail["title"], 400);
+
+                }
+
+            }
+
+        }
+
+        /**
+         * Услуги изменялись
+         */
+    } else {
+
+        /**
+         * Обход услуг
+         */
+        foreach ($requestData->services_id as $serviceId) {
+
+            /**
+             * Получение расходников для услуги
+             */
+            $services_consumables = $API->DB->from("services_consumables")
+                ->where("row_id", $serviceId);
+
+            foreach ($services_consumables as $service_consumable) {
+
+                $allConsumables[$service_consumable["consumable_id"]]["count"] += $service_consumable["count"];
+
+            }
+
+            /**
+             * Получение детальной информации об услуге
+             */
+            $serviceDetail = $API->DB->from("services")
+                ->where("id", $serviceId)
+                ->limit(1)
+                ->fetch();
+
+            /**
+             * Пустое поле сотрудники
+             */
+            if ($requestData->users_id === []) {
+
+                $API->returnResponse("Укажите сотрудника", 400);
+
+                /**
+                 * Сотрудники не изменялись
+                 */
+            } elseif (!$requestData->users_id) {
+
+                /**
+                 * Получение сотрудников
+                 */
+                $services_users = $API->DB->from("services_users")
+                    ->where("service_id", $serviceId);
+
+                /**
+                 * Получение вторых исполнителей услуги
+                 */
+                $services_second_users = $API->DB->from("services_second_users")
+                    ->where("service_id", $serviceId);
+
+                /**
+                 * Нет необходимости указывать второго исполнителя?
+                 */
+                $specifySecondEmployee = true;
+
+
+                /**
+                 * Обход вторых исполнителей
+                 */
+                foreach ($services_second_users as $secondUser) {
+
+                    if ($secondUser) {
+
+                        foreach ($services_users as $service_user) {
+
+                            if ($service_user["user_id"] == $secondUser["user_id"]) {
+
+                                $specifySecondEmployee = true;
+
+                            }
+
+                        }
+
+                    } else {
+
+                        $specifySecondEmployee = true;
+
+                    }
+
+                }
+
+                if ($specifySecondEmployee == false) {
+
+                    $API->returnResponse("Укажите второго сотрудника для услуги " . $serviceDetail["title"], 400);
+
+                }
+
+                /**
+                 * Сотрудники  изменялись
+                 */
+            } else {
+
+                /**
+                 * Получение вторых исполнителей услуги
+                 */
+                $services_second_users = $API->DB->from("services_second_users")
+                    ->where("service_id", $serviceId);
+
+                /**
+                 * Нет необходимости указывать второго исполнителя?
+                 */
+                $specifySecondEmployee = true;
+
+                /**
+                 * Обход вторых исполнителей
+                 */
+                foreach ($services_second_users as $secondUser) {
+
+                    if ($secondUser) {
+
+                        $specifySecondEmployee = false;
+
+                        foreach ($requestData->users_id as $service_user) {
+
+                            if ($service_user == $secondUser["user_id"]) {
+
+                                $specifySecondEmployee = true;
+
+                            }
+
+                        }
+
+                    } else {
+
+                        $specifySecondEmployee = true;
+
+                    }
+
+                }
+
+                if ($specifySecondEmployee == false) {
+
+                    $API->returnResponse("Укажите второго сотрудника для услуги " . $serviceDetail["title"], 400);
+
+                }
+
+            }
+
+        }
+
+    }
+
+    foreach ($allConsumables as $consumable_id => $consumable) {
+
+        $warehouse = $API->DB->from("warehouses")
+            ->where([
+                "store_id" => $requestData->store_id,
+                "consumable_id" => $consumable_id
+            ])
+            ->limit(1)
+            ->fetch();
+
+        if ($warehouse && $consumable["count"] > $warehouse["count"]) {
+
+            $API->returnResponse("Недостаточно расходников", 400);
+
+        }
+
+    }
+}
 
 /**
  * Обработка полученных Записей

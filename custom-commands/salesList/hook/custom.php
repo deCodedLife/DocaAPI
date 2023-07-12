@@ -7,10 +7,13 @@
 $publicAppPath = $API::$configs[ "paths" ][ "public_app" ];
 require_once ( $publicAppPath . '/custom-libs/sales/business_logic.php' );
 
+$Doca = new Doca();
+$formFieldsUpdate = $Doca->Hook();
+
 //$saleVisits = $requestData->visits_ids;
 //$saleServices = [];
 //$allServices= [];
-$formFieldsUpdate[ "products" ][ "value" ][] = 2;
+//$formFieldsUpdate[ "products" ][ "value" ][] = 2;
 //$cash_sum = $requestData->cash_sum;
 //$card_sum = $requestData->card_sum;
 

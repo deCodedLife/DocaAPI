@@ -9,5 +9,3 @@ if ( $requestData->context->block === "day_planning" ) {
     $requestData->users_id = $API::$userDetail->id;
 
 } // if. $requestData->context->block === "day_planning"
-
-

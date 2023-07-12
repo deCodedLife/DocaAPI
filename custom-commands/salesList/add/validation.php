@@ -9,10 +9,10 @@ $clientDetails = $API->DB->from( "clients" )
     ->where( "id", $requestData->client_id )
     ->fetch();
 
-if ( $requestData->deposit_sum > $clientDetails[ "deposit" ] )
+if ( $requestData->sum_deposit > $clientDetails[ "deposit" ] )
     $API->returnResponse( "Недостаточно средств на депозитном счёте клиента", 400 );
 
-if ( $requestData->bonus_sum > $clientDetails[ "bonuses" ] )
+if ( $requestData->sum_bonus > $clientDetails[ "bonuses" ] )
     $API->returnResponse( "Недостаточно средств на бонусном счёте клиента", 400 );
 
 
@@ -23,10 +23,10 @@ if ( $requestData->bonus_sum > $clientDetails[ "bonuses" ] )
 
 $saleSummary = 0;
 $paymentsSummary =
-    $requestData->deposit_sum +
-    $requestData->bonus_sum +
-    $requestData->card_sum +
-    $requestData->cash_sum;
+    $requestData->sum_deposit +
+    $requestData->sum_bonus +
+    $requestData->sum_card +
+    $requestData->sum_cash;
 
 
 

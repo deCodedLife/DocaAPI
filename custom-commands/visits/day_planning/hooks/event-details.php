@@ -58,7 +58,6 @@ foreach ($visitClients as $visitClient) {
 
 } // foreach. $visitClients
 
-
 /**
  * Определение цвета
  */

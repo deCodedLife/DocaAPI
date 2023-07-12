@@ -34,3 +34,7 @@ if ( $requestData->clients_id ) {
     $response[ "data" ] = $filteredEvents;
 
 } // if. $requestData->clients_id
+
+
+
+

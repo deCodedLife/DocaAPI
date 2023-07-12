@@ -220,7 +220,7 @@
               "type": "list",
               "size": 4,
               "settings": {
-                "object": "usersSeriveces",
+                "object": "userServices",
                 "linked_filter": "analytic_widgets_sum_all_services"
               },
               "components": []

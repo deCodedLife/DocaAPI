@@ -69,7 +69,7 @@ if ( $requestData->purchases_consumables ) {
         $purchaseCost += $consumable->price;
         $consumable->priceOnce = $consumable->price / $consumable->count;
 
-        $formFieldsUpdate[ "consumables_products" ][ "value" ][ $consumableKey ] = $consumable;
+        $formFieldsUpdate[ "purchases_consumables" ][ "value" ][ $consumableKey ] = $consumable;
 
     } // foreach. $requestData->purchases_consumables
 

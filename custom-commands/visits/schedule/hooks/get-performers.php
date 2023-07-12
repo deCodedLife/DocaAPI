@@ -1,5 +1,6 @@
 <?php
 
+
 /**
  * Фильтр по Сотруднику
  */
@@ -26,7 +27,6 @@ if ( $requestData->users_id ) {
     $performersRows = $filteredUsers;
 
 } // if. $requestData->users_id
-
 
 /**
  * Фильтр по Специальности
@@ -67,4 +67,3 @@ if ( $requestData->profession_id ) {
     $performersRows = $filteredUsers;
 
 } // if. $requestData->profession_id
-

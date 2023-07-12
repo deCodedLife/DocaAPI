@@ -45,35 +45,35 @@ foreach ( $response[ "data" ] as $key => $promotion ) {
 
 if ( $requestData->context->block === "list" ) {
 
-    $returnPromotions = [];
-
     /**
-     * Формирование списка акций
+     * Подстановка периода и типа акции
      */
-    foreach ( $response[ "data" ] as $promotion ) {
+
+    $returnRows = [];
+
+    foreach ( $response[ "data" ] as $row ) {
 
         /**
          * Детальная информация
          */
         $detailPromotion = $API->DB->from( "promotions" )
-            ->where( "id", $promotion[ "id" ] )
+            ->where( "id", $row[ "id" ] )
             ->limit( 1 )
             ->fetch();
 
-        if ( $detailPromotion[ "promotion_type" ] == "percent" ) {
 
-            $promotion[ "value" ] =  $promotion[ "value" ] . "%";
+        $row[ "period" ] = "c " . ( $row[ "begin_at" ] ?? "-" ) . " по " . ( $row[ "end_at" ] ?? "-" );
 
-        } else if ( $detailPromotion[ "promotion_type" ] == "fixed" ) {
+        if ( $detailPromotion[ "promotion_type" ] == "percent" )
+            $row[ "value" ] =  $row[ "value" ] . "%";
+        else if ( $row[ "promotion_type" ] == "fixed" )
+            $row[ "value" ] =  $row[ "value" ] . "₽";
 
-            $promotion[ "value" ] =  $promotion[ "value" ] . "₽";
 
-        }
-        $promotion[ "period" ] = "c " . ($promotion[ "begin_at" ] ?? "-") . " по " . ($promotion[ "end_at" ] ?? "-");
-        $returnPromotions[] = $promotion;
+        $returnRows[] = $row;
 
-    }
+    } // foreach. $response[ "data" ]
 
-    $response[ "data" ] = $returnPromotions;
+    $response[ "data" ] = $returnRows;
 
 } // if. $requestData->context->block === "list"

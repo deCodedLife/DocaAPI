@@ -1,68 +1,87 @@
 <?php
 
 /**
- * Формирование списка посещений
+ * @file
+ * Список "продажа услуг
  */
 
+/**
+ * Сформированный список
+ */
+$returnVisits = [];
 
-if ( $requestData->context->block === "list" ) {
+/**
+ * Фильтр Услуг
+ */
+$servicesFilter = [];
 
-    /**
-     * Формирование фильтров
-     */
-    $filter = [];
-    $servicesFilter = [];
+/**
+ * Фильтр Продаж
+ */
+$salesFilter = [];
 
-    if ( $requestData->start_at ) $filter[ "date >= ?" ] = $requestData->start_at . " 00:00:00";
-    if ( $requestData->end_at ) $filter[ "date <= ?" ] = $requestData->end_at . " 23:59:59";
-    if ( $requestData->store_id ) $filter[ "store_id" ] = $requestData->store_id;
-    if ( $requestData->category_id ) $servicesFilter[ "category_id" ] = $requestData->category_id;
-    if ( $requestData->id ) $servicesFilter[ "id" ] = $requestData->id;
-    $servicesFilter[ "is_active" ] = "Y";
+/**
+ * Формирование фильтров
+ */
+$salesFilter[ "status" ] = "done";
+$salesFilter[ "type" ] = "service";
+$salesFilter[ "action" ] = "sell";
+if ( $requestData->start_at ) $salesFilter[ "created_at >= ?" ] = $requestData->start_at . " 00:00:00";
+if ( $requestData->end_at ) $salesFilter[ "created_at <= ?" ] = $requestData->end_at . " 23:59:59";
+if ( $requestData->store_id ) $salesFilter[ "store_id" ] = $requestData->store_id;
 
-    /**
-     * Список услуг в посещении
-     */
-    $companyVisitsServices = $API->DB->from( "visits_services" )
-        ->where( $filter );
 
-    /**
-     * Список услуг
-     */
-    $services = $API->DB->from( "services" )
-        ->where( $servicesFilter );
+$servicesFilter[ "is_active" ] = "Y";
+if ( $requestData->id ) $servicesFilter[ "id" ] = $requestData->id;
+if ( $requestData->category_id ) $servicesFilter[ "category_id" ] = $requestData->category_id;
 
-    /**
-     * Сформированный список
-     */
-    $returnVisits = [];
+/**
+ * Список услуг
+ */
+$services = $API->DB->from( "services" )
+    ->where( $servicesFilter );
 
-    foreach ( $services as $service ) {
 
-        $count = 0;
+/**
+ * Получение продаж
+ */
 
-        foreach ( $companyVisitsServices as $companyVisitsService ) {
+$salesList = $API->DB->from( "salesList" )
+    ->leftJoin( "salesProductsList ON salesProductsList.sale_id = salesList.id" )
+    ->select( null )->select( [
+        "salesList.id",
+        "salesProductsList.product_id",
+        "salesProductsList.cost",
+        "salesProductsList.amount"
+    ] )
+    ->where( $salesFilter )
+    ->orderBy( "salesList.created_at desc" )
+    ->limit( 0 );
 
-            if ( $companyVisitsService[ "service_id" ] == $service[ "id" ]) {
+foreach ( $services as $service ) {
 
-                $count++;
+    $count = 0;
+    $sum = 0;
 
-            }
+    foreach ( $salesList as $sale ) {
+
+        if ( $sale[ "product_id" ] == $service[ "id" ]) {
+
+            $count += $sale[ "amount" ];
+            $sum += $sale[ "amount" ] * $sale[ "cost" ];
 
         }
 
-        $returnVisits[] = [
-            "id" => $service[ "id" ],
-            "title" => $service[ "title" ],
-            "count" => $count,
-            "date" => $service[ "date" ],
-            "store_id" => $service[ "store_id" ],
-            "category_id" => $service[ "category_id" ],
-            "sum" => $service[ "price" ] * $count
-        ];
-
     }
 
-    $response[ "data" ] = $returnVisits;
+    $returnVisits[] = [
+        "id" => $service[ "id" ],
+        "title" => $service[ "title" ],
+        "count" => $count,
+        "date" => $service[ "date" ],
+        "sum" => $sum
+    ];
 
-} // if. $requestData->context->block === "list"
+}
+
+$response[ "data" ] = $returnVisits;

@@ -1,10 +1,12 @@
 <?php
+
 $client = $API->DB->from( "clients" )
     ->where( "id", $requestData->id )
     ->limit( 1 )
     ->fetch();
 
 $user = $API::$userDetail;
+
 
 /**
  * Бонусы - пополнение
@@ -27,7 +29,13 @@ if ($requestData->bonuses_replenishment) {
         "replenished" => $requestData->bonuses_replenishment
     ] )
     ->execute();
-    $API->returnResponse($API::$userDetail);
+
+
+    /**
+     * Отправка события
+     */
+    $API->addEvent( "bonusHistory" );
+
 }
 
 /**
@@ -51,4 +59,11 @@ if ($requestData->deposit_replenishment) {
             "replenished" => $requestData->deposit_replenishment
         ] )
         ->execute();
+
+
+    /**
+     * Отправка события
+     */
+    $API->addEvent( "depositHistory" );
+
 }

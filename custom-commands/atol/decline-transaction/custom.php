@@ -6,7 +6,7 @@
  * Изменение статуса оплаты
  */
 
-$API->DB->update( "sales" )
+$API->DB->update( "salesList" )
     ->set( [
         "status" => $requestData->status,
         "error" => $requestData->description

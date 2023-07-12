@@ -64,6 +64,11 @@ if ( !$isTimeCorrect ) $API->returnResponse( "Время посещения вы
  */
 
 /**
+ * Расходники посещения
+ */
+$allConsumables = [];
+
+/**
  * Обход услуг
  */
 foreach ( $requestData->services_id as $serviceId ) {
@@ -117,7 +122,45 @@ foreach ( $requestData->services_id as $serviceId ) {
         $API->returnResponse("Укажите второго сотрудника для услуги " . $serviceDetail[ "title" ], 400);
 
     }
+
+    /**
+     * Получение расходников для услуги
+     */
+    $services_consumables = $API->DB->from( "services_consumables" )
+        ->where( "row_id", $serviceId );
+
+
+    foreach ( $services_consumables as $service_consumable ) {
+
+        $allConsumables[ $service_consumable[ "consumable_id" ] ][ "count" ] +=  $service_consumable[ "count" ];
+
+    }
+
 }
+
+
+
+foreach ( $allConsumables as $consumable_id => $consumable ) {
+
+    $warehouse = $API->DB->from( "warehouses" )
+            ->where( [
+                "store_id" => $requestData->store_id,
+                "consumable_id" => $consumable_id
+            ] )
+            ->limit( 1 )
+            ->fetch();
+
+    if ( $consumable[ "count" ] > $warehouse[ "count" ] ) {
+        
+        $API->returnResponse("Недостаточно расходников", 400);
+
+    }
+
+}
+
+
+
+
 
 /**
  * Расчет свободности Исполнителей, Клиентов и Кабинетов
@@ -142,7 +185,7 @@ foreach ( $existingVisits as $existingVisit ) {
     foreach ( $visitUsers as $visitUser )
 
         if ( in_array( $visitUser[ "user_id" ], $requestData->users_id ) ) {
-            
+
             /**
              * Получение детальной информации о Сотруднике
              */

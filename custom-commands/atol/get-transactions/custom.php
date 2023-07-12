@@ -1,6 +1,7 @@
 <?php
 
 require_once $API::$configs[ "paths" ][ "public_app" ] . "/custom-libs/atol/index.php";
+ini_set( 'display_errors', 1 );
 ini_set( 'serialize_precision', -1 );
 
 
@@ -20,18 +21,16 @@ $cashboxStore = $API->DB->from( "atolCashboxes" )
 
 
 
-$processedSale = $API->DB->from( "sales" )
+$processedSale = $API->DB->from( "salesList" )
     ->where( [
         "store_id", $cashboxStore,
         "status" => "waiting",
-        "is_active" => "Y",
         "created_at > ?" => date('Y-m-d') . " 00:00:00"
     ] )
     ->orderBy( "id DESC" )
     ->limit( 1 )
     ->fetch();
 if ( !$processedSale ) $API->returnResponse( [] );
-
 
 
 if ( $processedSale[ "online_receipt" ] === "Y" ) {
@@ -59,20 +58,20 @@ $servicesPrice = 0;
 $difference = 0;
 $services = [];
 
-foreach ( $API->DB->from( "salesServices" )->where( "sale_id", $processedSale[ "id" ] ) as $service ) {
+foreach ( $API->DB->from( "salesProductsList" )->where( "sale_id", $processedSale[ "id" ] ) as $service ) {
 
     $details = $API->DB->from( "services" )
-        ->where( "id", $service[ "service_id" ] )
+        ->where( "id", $service[ "product_id" ] )
         ->fetch();
 
-    $details[ "price" ] = $service[ "price" ];
-    $difference += $service[ "price" ];
+    $details[ "price" ] = $service[ "cost" ];
+    $difference += $service[ "cost" ];
 
     $services[] = $details;
 
 }
 
-$summary = $processedSale[ "summary" ] - $processedSale[ "bonus_sum" ];
+$summary = $processedSale[ "summary" ] - $processedSale[ "sum_bonus" ];
 $discountPerProduct = $summary / $difference;
 
 
@@ -94,9 +93,9 @@ foreach ( $services as $service ) {
 
 
 
-if ( $processedSale[ "deposit_sum" ] ) $AtolReciept->payments[] = new Сashbox\IPayment( "2", $processedSale[ "deposit_sum" ] );
-if ( $processedSale[ "card_sum" ] ) $AtolReciept->payments[] = new Сashbox\IPayment( "1", $processedSale[ "card_sum" ] );
-if ( $processedSale[ "cash_sum" ] ) $AtolReciept->payments[] = new Сashbox\IPayment( "cash", $processedSale[ "cash_sum" ] );
+if ( $processedSale[ "sum_deposit" ] ) $AtolReciept->payments[] = new Сashbox\IPayment( "2", $processedSale[ "sum_deposit" ] );
+if ( $processedSale[ "sum_card" ] ) $AtolReciept->payments[] = new Сashbox\IPayment( "1", $processedSale[ "sum_card" ] );
+if ( $processedSale[ "sum_cash" ] ) $AtolReciept->payments[] = new Сashbox\IPayment( "cash", $processedSale[ "sum_cash" ] );
 
 
 
@@ -104,6 +103,6 @@ $AtolReciept->taxationType = "usnIncomeOutcome";
 $AtolReciept->uuid = $processedSale[ "id" ];
 
 $AtolReciept->sales = [ (int) $processedSale[ "id" ] ];
-$AtolReciept->sale_type = $processedSale[ "pay_type" ];
+$AtolReciept->sale_type = $processedSale[ "action" ];
 
 $API->returnResponse( $AtolReciept->GetReciept() );

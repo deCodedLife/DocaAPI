@@ -18,27 +18,6 @@
       "is_in_search": true
     },
     {
-      "title": "ID посещения",
-      "article": "visit_id",
-      "data_type": "integer",
-      "field_type": "integer",
-      "is_default_in_list": false,
-      "is_unique": false,
-      "is_autofill": true,
-      "use_in_commands": [
-        "add",
-        "update",
-        "hook",
-        "get"
-      ],
-      "is_hook": true,
-      "require_in_commands": [
-        "add",
-        "return"
-      ],
-      "is_visible": false
-    },
-    {
       "title": "Клиент",
       "article": "client_id",
       "data_type": "integer",

@@ -1,24 +1,97 @@
 <?php
-
 /**
-* Суточный отчет
-*/
-
-/**
- * Получение фильтров
+ * @file
+ * Отчет "Суточный отчет
  */
-$filter = [];
+
+/**
+ * Детальная информация об отчете
+ */
+
+$reportStatistic = [
+
+    /**
+     * Количество посещений
+     */
+    "visits_count" => 0,
+
+    /**
+     * Сумма поступлений
+     */
+    "visits_sum" => 0,
+
+
+    /**
+     * Сумма расходов
+     */
+    "expenses_sum" => 0,
+];
+
+
+/**
+ * Фильтр продаж
+ */
+$salesFilter = [];
+
+/**
+ * Фильтр расходников
+ */
 $expensesFilter = [];
 
 /**
- * Получение начала и конца текущего дня
+ * Формирование фильтров
  */
-if ( $requestData->start_at ) $filter[ "end_at >= ?" ] = $requestData->start_at . " 00:00:00";
-if ( $requestData->end_at ) $filter[ "end_at <= ?" ] = $requestData->end_at . " 23:59:59";
-if ( $requestData->store_id ) $filter[ "store_id" ] = $requestData->store_id;
+$salesFilter[ "status" ] = "done";
+$salesFilter[ "action" ] = "sell";
+if ( $requestData->start_at ) $salesFilter[ "created_at >= ?" ] = $requestData->start_at . " 00:00:00";
+if ( $requestData->end_at ) $salesFilter[ "created_at <= ?" ] = $requestData->end_at . " 23:59:59";
+if ( $requestData->store_id ) $salesFilter[ "store_id" ] = $requestData->store_id;
+
+
 if ( $requestData->store_id ) $expensesFilter[ "store_id" ] = $requestData->store_id;
 if ( $requestData->start_at ) $expensesFilter[ "date >= ?" ] = $requestData->start_at . " 00:00:00";
 if ( $requestData->end_at ) $expensesFilter[ "date <= ?" ] = $requestData->end_at . " 23:59:59";
+
+
+/**
+* Получение продаж
+*/
+
+$salesList = $API->DB->from( "salesList" )
+    ->leftJoin( "saleVisits ON saleVisits.sale_id = salesList.id" )
+    ->select( null )->select( [ "saleVisits.visit_id", "salesList.summary"  ] )
+    ->where( $salesFilter )
+    ->orderBy( "salesList.created_at desc" )
+    ->limit( 0 );
+
+/**
+ * Получение расходов
+ */
+
+$expenses = $API->DB->from( "expenses" )
+    ->where( $expensesFilter );
+
+
+/**
+ * Обработка продаж
+ */
+
+foreach ( $salesList as $sale ) {
+
+   if ( $sale[ "visit_id"] != null ) $reportStatistic[ "visits_count" ]++;
+   $reportStatistic[ "visits_sum" ] += $sale[ "summary" ];
+
+} // foreach. $salesList
+
+/**
+ * Обработка расходов
+ */
+
+foreach ( $expenses as $expense ) {
+
+    $reportStatistic[ "expenses_sum" ] += (float) $expense[ "price" ];
+
+} // foreach. $expenses
 
 
 
@@ -52,86 +125,15 @@ function num_word( $value, $words, $show = true ) {
     }
 
     return $out;
-}
 
-/**
-* Статистика компании
-*/
-
-$companyStatistic = [
-
-    /**
-    * Количество посещений
-    */
-    "visits_count" => 0,
-
-    /**
-    * Сумма посещений
-    */
-    "visits_sum" => 0,
-
-    /**
-     * Сумма продаж товаров
-     */
-    "products_sum" => 0,
-
-    /**
-     * Сумма расходов
-     */
-    "expenses_sum" => 0,
-];
-
-
-/**
-* Получение посещений
-*/
-
-$companyVisits = $API->DB->from( "visits" )
-    ->where( $filter );
-
-
-/**
-* Формирование графика посещений
-*/
-
-foreach ( $companyVisits as $userVisit ) {
-
-$companyStatistic[ "visits_count" ]++;
-$companyStatistic[ "visits_sum" ] += (float) $userVisit[ "price" ];
-
-} // foreach. $companyVisits
-
-
-/**
- * Получение продаж товаров ( доделать после реализации функционала продаж товара через раздел касса )
- */
-
-
-
-/**
- * Получение расходов
- */
-
-$companyExpenses = $API->DB->from( "expenses" )
-    ->where( $expensesFilter );
-
-/**
- * Формирование суммы расходов
- */
-
-foreach ( $companyExpenses as $expens ) {
-
-    $companyStatistic[ "expenses_sum" ] += (float) $expens[ "price" ];
-
-} // foreach. $companyExpenses
-
+} // function num_word.
 
 $API->returnResponse(
 
     [
         [
             "size" => 1,
-            "value" => num_word( $companyStatistic[ "visits_count" ], [ 'посещение', 'посещения', 'посещений' ]),
+            "value" => num_word( $reportStatistic[ "visits_count" ], [ 'посещение', 'посещения', 'посещений' ]),
             "description" => "всего",
             "icon" => "",
             "prefix" => "",
@@ -146,7 +148,7 @@ $API->returnResponse(
         ],
         [
             "size" => 1,
-            "value" => $companyStatistic[ "visits_sum" ] + $companyStatistic[ "products_sum" ],
+            "value" => $reportStatistic[ "visits_sum" ],
             "description" => "Поступления",
             "icon" => "",
             "prefix" => "₽",
@@ -161,7 +163,7 @@ $API->returnResponse(
         ],
         [
             "size" => 1,
-            "value" => $companyStatistic[ "expenses_sum" ],
+            "value" => $reportStatistic[ "expenses_sum" ],
             "description" => "Расход",
             "icon" => "",
             "prefix" => "₽",
@@ -176,7 +178,7 @@ $API->returnResponse(
         ],
         [
             "size" => 1,
-            "value" =>$companyStatistic[ "visits_sum" ] + $companyStatistic['products_sum'] - $companyStatistic[ "expenses_sum" ],
+            "value" =>$reportStatistic[ "visits_sum" ] - $reportStatistic[ "expenses_sum" ],
             "description" => "Итог",
             "icon" => "",
             "prefix" => "₽",

@@ -5,7 +5,7 @@ $clientsInfo = [];
 $clients = $API->DB->from( "visits_clients" )
     ->where( "visit_id", $pageDetail[ "row_id" ] );
 
-foreach ($clients as $client) {
+foreach ( $clients as $client ) {
 
     $clientDetail = $API->DB->from( "clients" )
         ->where("id", $client [ "client_id" ])
@@ -22,7 +22,7 @@ foreach ($clients as $client) {
 
     $clientsInfo[] = $clientDetail[ "last_name" ] . " " . $clientDetail[ "first_name" ] . " " . $clientDetail[ "patronymic" ] . ", " . $phoneFormat;
 
-}
+} // foreach. $clients
 
 $formFieldValues[ "clients_info" ] = [ "is_visible" => true, "value" => $clientsInfo ];
 
@@ -101,3 +101,10 @@ if ( $pageDetail[ "row_detail" ][ "status" ]->value === "paidfor" ) {
 
 }
 
+
+/**
+ * Кнопка "Печать договора"
+ */
+
+if ( $clientDetail[ "is_contract" ] == "Y" )
+    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 2 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 0 ] );

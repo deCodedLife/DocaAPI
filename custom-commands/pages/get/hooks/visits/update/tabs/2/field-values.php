@@ -4,7 +4,7 @@
  * Получение информации о клиенте
  */
 $clientDetails = $API->DB->from( "clients" )
-    ->where( "id", $pageDetail[ "row_detail" ][ "clients_id" ][ 0 ]->value )
+    ->where( "id", $pageDetail[ "row_detail" ][ "clients_id" ] )
     ->limit( 1 )
     ->fetch();
 

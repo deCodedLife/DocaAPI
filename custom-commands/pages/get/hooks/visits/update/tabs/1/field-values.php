@@ -16,11 +16,11 @@ foreach ( $visitServices as $service ) {
         ->limit( 1 )
         ->fetch();
 
-    $servicesInfo[] = $serviceDetails[ "title" ];
+    $servicesInfo[] = $serviceDetails[ "id" ];
 
 } // foreach. $visitServices
 
-$generatedTab[ "settings" ][ "areas" ][ 0 ][ "blocks" ][ 0 ][ "fields" ][ 0 ][ "value" ] = $servicesInfo;
+$generatedTab[ "settings" ][ "areas" ][ 0 ][ "blocks" ][ 0 ][ "fields" ][ 1 ][ "value" ] = $servicesInfo;
 
 
 /**

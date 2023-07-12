@@ -48,7 +48,7 @@ $clients = $API->DB->from( "visits_clients" )
 
 
 
-if ( $visitDetails[ "is_payed" ] == "Y" || ( $saleDetails && $saleDetails[ "status" ] != "error" ) ) {
+if ( $visitDetails[ "is_payed" ] == "B" || ( $saleDetails && $saleDetails[ "status" ] != "error" ) ) {
 
     $formFieldValues =
         $API->DB->from( "salesList" )
@@ -93,9 +93,6 @@ if ( $visitDetails[ "is_payed" ] == "Y" || ( $saleDetails && $saleDetails[ "stat
     $services = $API->DB->from( "visits_services" )
         ->where( "visit_id", $pageDetail[ "row_id" ] );
 
-    foreach ( $services as $visitService )
-        $formFieldValues[ "products" ][] = $visitService[ "service_id" ];
-
 } // if. $visitDetails[ "is_payed" ] == "Y" || ( $saleDetails && $saleDetails[ "status" ] != "error" )
 
-$formFieldValues[ "pay_type" ] = "sell";
+$formFieldValues[ "action" ] = "sell";

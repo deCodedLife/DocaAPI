@@ -27,7 +27,7 @@ switch ( $event[ "status" ][ "value" ] ) {
  */
 
 if ( $event[ "is_payed" ] ) $event[ "icons" ][] = "shopping-basket";
-if ( $event[ "is_repeat" ] ) $event[ "icons" ][] = "customers";
+if ( $event[ "is_earlier" ] ) $event[ "icons" ][] = "time";
 
 
 /**

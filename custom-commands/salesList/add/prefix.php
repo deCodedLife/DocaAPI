@@ -1,5 +1,6 @@
 <?php
 
+ini_set( 'display_errors', 1 );
 $publicAppPath = $API::$configs[ "paths" ][ "public_app" ];
 
 
@@ -7,13 +8,13 @@ $publicAppPath = $API::$configs[ "paths" ][ "public_app" ];
  * Проверка корректности введённых значений
  */
 
-if ( $requestData->pay_type == "sell" )
-    require ( $publicAppPath . "/custom-commands/sales/add/validation.php" );
+if ( $requestData->action == "sell" )
+    require ( $publicAppPath . "/custom-commands/salesList/add/validation.php" );
 
 
 /**
  * Создание транзакции
  */
-require ( $publicAppPath . "/custom-commands/sales/add/create-transaction.php" );
+require ( $publicAppPath . "/custom-commands/salesList/add/create-transaction.php" );
 
 $API->returnResponse();

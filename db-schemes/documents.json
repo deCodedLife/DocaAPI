@@ -2,18 +2,30 @@
   "title": "Документы",
   "properties": [
     {
-      "title": "Владелец",
-      "article": "owner_id",
-      "type": "int",
+      "title": "Общий документ",
+      "article": "is_general",
+      "type": "char(1)",
       "is_required": false,
-      "default": null
+      "default": "N"
     }
   ],
   "rows_key": "article",
   "rows": [
     {
+      "title": "Талон",
+      "article": "talon",
+      "object": "visits",
+      "is_system": "Y"
+    },
+    {
       "title": "Договор на оказание медицинских услуг",
       "article": "services_contract",
+      "object": "visits",
+      "is_system": "Y"
+    },
+    {
+      "title": "Акт выполненных работ",
+      "article": "act_work_complete",
       "object": "visits",
       "is_system": "Y"
     }

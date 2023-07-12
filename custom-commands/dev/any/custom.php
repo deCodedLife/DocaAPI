@@ -2,10 +2,21 @@
 
 $publicAppPath = $API::$configs[ "paths" ][ "public_app" ];
 
-require_once ( $publicAppPath . '/custom-libs/sales/business_logic.php' );
+//require_once ( $publicAppPath . '/custom-libs/sales/business_logic.php' );
 //require_once ( $publicAppPath . "/custom-libs/sales/install.php" );
 
-$Doca = new Doca();
+//mysqli_query(
+//    $API->DB_connection,
+//    "DELETE FROM salesProductsList"
+//);
+
+mysqli_query(
+    $API->DB_connection,
+    "UPDATE visits set is_active = 'N' where id = 334"
+);
+
+//$Doca = new Doca();
+//$Doca->Hook();
 
 $API->returnResponse( "WTF?" );
 

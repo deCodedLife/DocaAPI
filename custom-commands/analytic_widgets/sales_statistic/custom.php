@@ -62,9 +62,7 @@ $report[ "Возврат безналичными" ] = 0;
  * Подсчёт значений графиков
  */
 foreach ( $salesList as $sale ) {
-
-    $API->returnResponse( json_encode( $sale ), 500 );
-
+    
     $report[ "Аванс" ] += (float) $sale[ "sum_deposit" ];
     $report[ "Наличными" ] += (float) $sale[ "sum_cash" ];
     $report[ "Безналичными" ] += (float) $sale[ "sum_card" ];

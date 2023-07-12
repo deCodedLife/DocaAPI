@@ -6,16 +6,49 @@
 
 if ( $requestData->context->block == "print" ) {
 
+    $response[ "data" ] = [];
+
     $publicDocuments = $API->DB->from( "documents" )
-        ->where( [
-            "owner_id" => null
-        ] );
+        ->where( "is_active", "Y" );
+
+    $documents_users = $API->DB->from( "documents_users" )
+        ->where( "user_id", (int)$API::$userDetail->id );
+
+
 
     foreach ( $publicDocuments as $publicDocument ) {
 
-        $publicDocument[ "id" ] = (int) $publicDocument[ "id" ];
+        if ( $publicDocument[ "is_general" ] == "Y" ) {
 
-        $response[ "data" ][] = $publicDocument;
+            $publicDocument[ "id" ] = (int) $publicDocument[ "id" ];
+
+            $response[ "data" ][] = $publicDocument;
+
+        } else {
+
+
+            $output = false;
+
+            foreach ( $documents_users as $document_user ) {
+
+                if ( $document_user[ "document_id" ] == $publicDocument[ "id" ] ) {
+
+                    $output = true;
+
+                }
+
+            }
+            if ( $output == true ) {
+
+                $publicDocument[ "id" ] = (int) $publicDocument[ "id" ];
+
+                $response[ "data" ][] = $publicDocument;
+
+            }
+
+        }
+
+
 
     } // foreach. $publicDocuments
 

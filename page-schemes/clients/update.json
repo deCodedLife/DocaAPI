@@ -107,6 +107,25 @@
               "components": {
                 "buttons": [
                   {
+                    "type": "print",
+                    "settings": {
+                      "title": "Печать договора",
+                      "background": "dark",
+                      "data": {
+                        "save_to": {
+                          "object": "clientContracts",
+                          "properties": {
+                            "row_id": ":id"
+                          }
+                        },
+                        "is_edit": true,
+                        "document_article": "services_contract",
+                        "scheme_name": "clients",
+                        "row_id": ":id"
+                      }
+                    }
+                  },
+                  {
                     "type": "submit",
                     "settings": {
                       "title": "Сохранить",
@@ -288,38 +307,19 @@
           "title": "Бонусы",
           "body": [
             {
-              "title": "Форма",
-              "type": "form",
+              "title": "Статистика бонусов",
+              "type": "analytic_widgets",
               "size": 4,
               "settings": {
-                "object": "clients",
-                "command": "update",
-                "areas": [
+                "widgets_group": "bonus_statistic",
+                "filters": [
                   {
-                    "size": 4,
-                    "blocks": [
-                      {
-                        "title": "",
-                        "fields": [
-                          "bonuses"
-                        ]
-                      }
-                    ]
+                    "property": "client_id",
+                    "value": ":id"
                   }
                 ]
               },
-              "components": {
-                "buttons": [
-                  {
-                    "type": "modal",
-                    "settings": {
-                      "title": "Пополнить",
-                      "background": "dark",
-                      "page": "clients/bonus"
-                    }
-                  }
-                ]
-              }
+              "components": []
             },
             {
               "title": "Список операций",
@@ -334,13 +334,44 @@
                   }
                 ]
               },
-              "components": []
+              "components": {
+                "buttons": [
+                  {
+                    "type": "modal",
+                    "settings": {
+                      "title": "Пополнить",
+                      "background": "dark",
+                      "page": "clients/bonus",
+                      "context": {
+                        "form": "bonus",
+                        "row_id": ":id"
+                      }
+                    }
+                  }
+                ]
+              }
             }
           ]
         },
         {
           "title": "Депозит",
           "body": [
+            {
+              "title": "Статистика депозита",
+              "type": "analytic_widgets",
+              "size": 4,
+              "hook": "depositHistory",
+              "settings": {
+                "widgets_group": "deposit_statistic",
+                "filters": [
+                  {
+                    "property": "client_id",
+                    "value": ":id"
+                  }
+                ]
+              },
+              "components": []
+            },
             {
               "title": "Форма",
               "type": "form",

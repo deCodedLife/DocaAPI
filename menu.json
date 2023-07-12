@@ -32,7 +32,7 @@
       "icon": "reading"
     },
     {
-      "title": "Склады",
+      "title": "Склад",
       "href": "consumables",
       "children": [],
       "icon": "stethoscope"

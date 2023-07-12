@@ -43,6 +43,45 @@
       }
     },
     {
+      "title": "Тип скидки",
+      "article": "discount_type",
+      "data_type": "string",
+      "field_type": "radio",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_variable": false,
+      "use_in_commands": [
+        "add",
+        "update",
+        "hook"
+      ],
+      "custom_list": [
+        {
+          "title": "Фиксированная",
+          "value": "fixed"
+        },
+        {
+          "title": "Процент",
+          "value": "percent"
+        }
+      ]
+    },
+    {
+      "title": "Сумма скидки",
+      "article": "discount_value",
+      "data_type": "float",
+      "field_type": "integer",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_variable": false,
+      "use_in_commands": [
+        "add",
+        "update"
+      ]
+    },
+    {
       "title": "Посещения",
       "article": "visits_ids",
       "data_type": "array",
@@ -50,7 +89,7 @@
       "is_default_in_list": false,
       "is_unique": false,
       "is_autofill": true,
-      "is_in_search": true,
+      "is_in_search": false,
       "use_in_commands": [
         "hook",
         "add",
@@ -65,28 +104,6 @@
         "insert_property": "sale_id",
         "filter_property": "visit_id"
       },
-      "is_hook": true,
-      "is_visible": false
-    },
-    {
-      "title": "ID посещения",
-      "article": "visit_id",
-      "data_type": "integer",
-      "field_type": "integer",
-      "is_default_in_list": false,
-      "is_unique": false,
-      "is_autofill": true,
-      "use_in_commands": [
-        "add",
-        "update",
-        "hook",
-        "get"
-      ],
-      "is_hook": true,
-      "require_in_commands": [
-        "add",
-        "return"
-      ],
       "is_visible": false
     },
     {

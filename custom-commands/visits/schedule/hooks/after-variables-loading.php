@@ -55,3 +55,10 @@ if ( $requestData->profession_id || $requestData->users_id ) {
     );
 
 } // if. $requestData->profession_id || $requestData->users_id
+
+
+
+/**
+ * Отключение фильтрации по тем кто не хочет раньше
+ */
+if ( $requestData->is_earlier == "N" ) unset( $requestData->is_earlier );

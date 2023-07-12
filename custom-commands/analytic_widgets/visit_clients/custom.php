@@ -53,7 +53,7 @@ foreach ( $companyVisits as $userVisit ) {
         ->where( "visit_id", $userVisit["id"] )
         ->limit( 1 )
         ->fetch( );
-    $companyStatistic[ "clients_ids" ][] = $visit_client['client_id'];
+    $companyStatistic[ "clients_ids" ][] = $visit_client[ "client_id" ];
     $companyStatistic[ "visits_sum" ] += (float) $userVisit[ "price" ];
 
 } // foreach. $userVisits

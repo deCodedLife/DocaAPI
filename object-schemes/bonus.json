@@ -18,11 +18,22 @@
             ]
         },
         {
+            "title": "Срок действия",
+            "article": "period",
+            "data_type": "string",
+            "field_type": "string",
+            "is_default_in_list": true,
+            "is_unique": false,
+            "is_autofill": false,
+            "use_in_commands": [],
+            "require_in_commands": []
+        },
+        {
             "title": "Начало",
             "article": "start",
             "data_type": "date",
             "field_type": "date",
-            "is_default_in_list": true,
+            "is_default_in_list": false,
             "is_unique": false,
             "is_autofill": true,
             "use_in_commands": [
@@ -36,7 +47,7 @@
             "article": "end",
             "data_type": "date",
             "field_type": "date",
-            "is_default_in_list": true,
+            "is_default_in_list": false,
             "is_unique": false,
             "is_autofill": true,
             "use_in_commands": [

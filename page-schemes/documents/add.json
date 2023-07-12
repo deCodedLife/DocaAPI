@@ -23,7 +23,10 @@
       "settings": {
         "object": "documents",
         "command": "add",
-        "fields_list": [ "owner_id" ]
+        "fields_list": [
+          "owners_id",
+          "is_general"
+        ]
       }
     }
   ]

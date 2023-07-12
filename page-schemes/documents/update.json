@@ -24,7 +24,8 @@
         "object": "documents",
         "command": "update",
         "fields_list": [
-          "owner_id"
+          "owners_id",
+          "is_general"
         ]
       }
     }

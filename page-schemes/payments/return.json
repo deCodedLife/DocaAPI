@@ -6,19 +6,19 @@
     "type": "form",
     "size": 4,
     "settings": {
-      "object": "sales",
+      "object": "salesList",
       "command": "add",
       "areas": [{
         "size": 2,
         "blocks": [{
           "title": "",
-          "fields": ["visits_ids", "pay_object", "pay_method", "cash_sum", "card_sum", "summary"]
+          "fields": ["visits_ids", "products", "pay_method", "sum_cash", "sum_card", "summary"]
         }]
       }, {
         "size": 2,
         "blocks": [{
           "title": "",
-          "fields": ["store_id", "bonus_sum", "deposit_sum", "return_bonuses", "return_deposit", "online_receipt", "client_id", "terminal_code", "pay_type"]
+          "fields": ["store_id", "sum_bonus", "sum_deposit", "return_bonuses", "return_deposit", "online_receipt", "client_id", "terminal_code", "action"]
         }]
       }]
     },
