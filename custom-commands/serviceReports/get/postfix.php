@@ -8,7 +8,7 @@
 /**
  * Сформированный список
  */
-$returnVisits = [];
+$returnServices = [];
 
 /**
  * Фильтр Услуг
@@ -36,11 +36,11 @@ if ( $requestData->id ) $servicesFilter[ "id" ] = $requestData->id;
 if ( $requestData->category_id ) $servicesFilter[ "category_id" ] = $requestData->category_id;
 
 /**
- * Список услуг
+ * Получение услуг
  */
+
 $services = $API->DB->from( "services" )
     ->where( $servicesFilter );
-
 
 /**
  * Получение продаж
@@ -60,28 +60,48 @@ $salesList = $API->DB->from( "salesList" )
 
 foreach ( $services as $service ) {
 
+    /**
+     * Колличество услуги в продажах
+     */
     $count = 0;
+
+    /**
+     * Сумма услуги в продажах
+     */
     $sum = 0;
 
+    /**
+     * Обход Продаж
+     */
     foreach ( $salesList as $sale ) {
 
-        if ( $sale[ "product_id" ] == $service[ "id" ]) {
+        /**
+         * Проверка наличия услуги в продажах
+         */
+        if ( $sale[ "product_id" ] == $service[ "id" ] ) {
 
             $count += $sale[ "amount" ];
             $sum += $sale[ "amount" ] * $sale[ "cost" ];
 
-        }
+        } //  if ( $sale[ "product_id" ] == $service[ "id" ])
 
-    }
+    } // foreach .$salesList
 
-    $returnVisits[] = [
-        "id" => $service[ "id" ],
-        "title" => $service[ "title" ],
-        "count" => $count,
-        "date" => $service[ "date" ],
-        "sum" => $sum
-    ];
+    /**
+     * Проверка на наличие услуги в продажах
+     */
+    if ( $count != 0 ) {
 
-}
+        $returnServices[] = [
+            "id" => $service[ "id" ],
+            "title" => $service[ "title" ],
+            "count" => $count,
+            "date" => $service[ "date" ],
+            "sum" => $sum
+        ];
 
-$response[ "data" ] = $returnVisits;
+    } // if ( $count != 0 )
+
+} // foreach .$services
+
+$response[ "data" ] = $returnServices;

@@ -48,7 +48,8 @@ $eventTime =
 /**
  * Получение пациента
  */
-$eventClient = "№ ${clientDetail[ "id" ]} ${clientDetail[ "last_name" ]} ${clientDetail[ "first_name" ]} ${clientDetail[ "patronymic" ]}";
+$eventClient = "№ " . $clientDetail[ "id" ] . " " . $clientDetail[ "last_name" ] . " " . mb_substr( $clientDetail[ "first_name" ], 0, 1, "UTF-8" ) . ". " . mb_substr( $clientDetail[ "patronymic" ], 0, 1, "UTF-8") . ".";
+$eventClientDetails = "№ " . $clientDetail[ "id" ] . " " . $clientDetail[ "last_name" ] . " " . $clientDetail[ "first_name" ] . " " . $clientDetail[ "patronymic" ];
 
 /**
  * Получение услуг
@@ -74,7 +75,7 @@ $eventDetails = [
     ],
     [
         "icon" => "customers",
-        "value" => $eventClient
+        "value" => $eventClientDetails
     ],
     [
         "icon" => "conversation",

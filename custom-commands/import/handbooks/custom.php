@@ -99,8 +99,6 @@ function handbooksImport ( $page ) {
 
     foreach ( $handbooks->data as $handbook ) {
 
-        $API->returnResponse( $handbook );
-
         /**
          * Проверка дублей
          */
@@ -140,4 +138,4 @@ function handbooksImport ( $page ) {
 
 // handbookGroupsImport( 0 );
 
-for ( $i = 3234; $i <= 23492; $i++ ) handbooksImport( $i );
+for ( $i = 5500; $i <= 23492; $i++ ) handbooksImport( $i );

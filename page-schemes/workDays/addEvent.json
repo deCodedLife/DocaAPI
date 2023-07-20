@@ -1,0 +1,60 @@
+{
+  "required_modules": [],
+  "required_permissions": [],
+  "structure": [
+    {
+      "title": "Форма",
+      "type": "form",
+      "size": 4,
+      "settings": {
+        "object": "workDays",
+        "command": "addEvent",
+        "areas": [
+          {
+            "size": 2,
+            "blocks": [
+              {
+                "title": "",
+                "fields": [
+                  "start_from",
+                  "start_to"
+                ]
+              },
+              {
+                "title": "",
+                "fields": [
+                  "event_from",
+                  "event_to"
+                ]
+              }
+            ]
+          },
+          {
+            "size": 2,
+            "blocks": [
+              {
+                "title": "",
+                "fields": [
+                  "store_id",
+                  "cabinet_id",
+                  "is_weekend"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "components": {
+        "buttons": [
+          {
+            "type": "submit",
+            "settings": {
+              "title": "Сохранить",
+              "background": "dark"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

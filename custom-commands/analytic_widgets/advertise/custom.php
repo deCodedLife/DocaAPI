@@ -1,51 +1,41 @@
 <?php
-
 /**
- * Отчет рекламные источники
+ * @file
+ * Отчет "ректамные источники
  */
 
 /**
  * Статистика клиента
  */
-$companyStatistic = [
+$advertiseStatistic = [
 
     /**
-     * Сумма посещений
+     * Прибыль
      */
-    "visits_sum" => 0,
+    "cacheFlow" => 0,
 
 ];
 
+/**
+ * Получение списка статистики рекламных источников
+ */
 $advertises = $API->sendRequest( "advertiseClients", "get", $requestData );
 
+/**
+ * Обод спискка
+ */
+foreach ( $advertises as $advertise ) {
 
-if ( $requestData->advertise_id ) {
-
-    foreach ( $advertises as $advertise ) {
-
-        if ( $advertise->id == $requestData->advertise_id ) {
-
-            $companyStatistic["visits_sum"] += $advertise->price;
-
-        }
-
-    }
-
-} else {
-
-    foreach ( $advertises as $advertise ) {
-
-        $companyStatistic["visits_sum"] += $advertise->price;
-
-    }
+    $advertiseStatistic[ "cacheFlow" ] += $advertise->price;
 
 }
+
 
 $API->returnResponse(
 
     [
         [
-            "value" => $companyStatistic["visits_sum"],
+            "value" => $advertiseStatistic[ "cacheFlow" ],
             "description" => "Прибыль",
             "icon" => "",
             "prefix" => "₽",

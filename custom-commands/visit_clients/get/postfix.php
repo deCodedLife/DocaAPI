@@ -1,28 +1,56 @@
 <?php
-
 /**
+ * @file
  * Формирование списка клиентов посещавшие специалистов
  */
 
-if ( $requestData->context->block === "list" ) {
+if ( $requestData->user_id ) {
 
     /**
      * Сформированный список
      */
     $returnVisits = [];
 
-    foreach (  $response[ "data" ] as $visit ) {
+    /**
+     * Фильтр посещений
+     */
+
+    $visitsFilter = [];
+    if ( $requestData->start_at ) $visitsFilter[ "start_at >= ?" ] = $requestData->start_at . " 00:00:00";
+    if ( $requestData->end_at ) $visitsFilter[ "start_at <= ?" ] = $requestData->end_at . " 23:59:59";
+    if ( $requestData->store_id ) $visitsFilter[ "store_id" ] = $requestData->store_id;
+    if ( $requestData->user_id ) $visitsFilter[ "visits_users.user_id" ] = $requestData->user_id;
+    $visitsFilter[ "is_payed" ] = "Y" ;
+
+
+    /**
+     * Получение посещений Сотрудника
+     */
+    $visits = $API->DB->from( "visits" )
+        ->leftJoin( "visits_users ON visits_users.visit_id = visits.id" )
+        ->select( null )->select( [ "visits.id", "visits_users.user_id", "visits.start_at",  "visits.end_at", "visits.is_active", "visits.price" , "visits.status" ] )
+        ->where( $visitsFilter )
+        ->orderBy( "visits.start_at desc" )
+        ->limit( 0 );
+
+
+    /**
+     * Масив клиентов
+     */
+    $clients = [];
+
+    /**
+     * Масив услуг
+     */
+    $services = [];
+
+    foreach (  $visits as $visit ) {
 
         /**
          * Получение услуг из заявки
          */
         $visits_services = $API->DB->from( "visits_services" )
             ->where( "visit_id",  $visit[ "id" ]);
-
-        /**
-         * Масив услуг
-         */
-        $services = [];
 
         foreach ( $visits_services as $visit_services ) {
 
@@ -47,11 +75,6 @@ if ( $requestData->context->block === "list" ) {
         $visits_clients = $API->DB->from( "visits_clients" )
             ->where( "visit_id",  $visit[ "id" ]);
 
-        /**
-         * Масив клиентов
-         */
-        $clients = [];
-
         foreach ( $visits_clients as $visit_clients ) {
 
             $client = $API->DB->from( "clients" )
@@ -69,12 +92,13 @@ if ( $requestData->context->block === "list" ) {
         }
 
         $returnVisits[] = [
-
+            "user_id" => $visit[ "user_id" ],
+            "id" => $visit[ "id" ],
             "client_id" => $clients[ 0 ][ "id" ],
             "fio" => $clients[ 0 ][ "fio" ],
-            "end_at" => $visit[ "end_at" ],
-            "price" => $visit[ "price" ],
             "services_id" => $services,
+            "price" => $visit[ "price" ],
+            "end_at" => $visit[ "end_at" ],
             "start_at" => $visit[ "start_at" ]
 
         ];
@@ -83,4 +107,9 @@ if ( $requestData->context->block === "list" ) {
 
     $response[ "data" ] = $returnVisits;
 
-} // if. $requestData->context->block === "list"
+} else {
+
+    $response[ "data" ] = [];
+
+}
+

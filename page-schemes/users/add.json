@@ -36,7 +36,7 @@
                   "patronymic",
                   "professions_id",
                   "birthday",
-                  "store_id",
+                  "stores_id",
                   "gender",
                   "domru_login",
                   "is_visible_in_schedule",

@@ -59,9 +59,10 @@ foreach ( $salesList as $sale ) {
         ->limit( 1 )
         ->fetch();
 
+    /**
+     * Проверка наличия фильтра
+     */
     if ( $requestData->category_id && $requestData->category_id != null ) {
-
-
 
         if ( $service[ "category_id" ] == $requestData->category_id) {
 
@@ -73,15 +74,9 @@ foreach ( $salesList as $sale ) {
 
         $reportStatistic[ "services_sum" ] += $sale[ "amount" ] * $sale[ "cost" ];
 
-    }
+    } // if ( $requestData->category_id && $requestData->category_id != null )
 
-}
-
-
-
-
-
-
+} // foreach .$salesList
 
 $API->returnResponse(
 

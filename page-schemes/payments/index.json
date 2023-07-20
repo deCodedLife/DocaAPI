@@ -107,6 +107,72 @@
                   }
                 ]
               }
+            },
+            {
+              "title": "Список",
+              "type": "list",
+              "size": 4,
+              "settings": {
+                "object": "salesList"
+              },
+              "components": {
+                "filters": [
+                  {
+                    "title": "Дата (от)",
+                    "type": "date",
+                    "settings": {
+                      "recipient_property": "starts_at"
+                    }
+                  },
+                  {
+                    "title": "Дата (до)",
+                    "type": "date",
+                    "settings": {
+                      "recipient_property": "ends_at"
+                    }
+                  },
+                  {
+                    "title": "Клиент",
+                    "settings": {
+                      "donor_object": "clients",
+                      "donor_property_title": "last_name",
+                      "donor_property_value": "id",
+                      "recipient_property": "client_id"
+                    },
+                    "type": "list"
+                  },
+                  {
+                    "title": "Тип операции",
+                    "type": "list",
+                    "settings": {
+                      "donor_object": "salePayMethods",
+                      "donor_property_title": "title",
+                      "donor_property_value": "article",
+                      "recipient_property": "sale_type"
+                    }
+                  },
+                  {
+                    "title": "Тип оплаты",
+                    "type": "list",
+                    "settings": {
+                      "donor_object": "saleActions",
+                      "donor_property_title": "title",
+                      "donor_property_value": "article",
+                      "recipient_property": "pay_method"
+                    }
+                  },
+                  {
+                    "title": "Филиал",
+                    "type": "list",
+                    "settings": {
+                      "donor_object": "stores",
+                      "donor_property_title": "title",
+                      "donor_property_value": "id",
+                      "recipient_property": "store_id"
+                    }
+                  }
+                ]
+              }
             }
           ]
         },

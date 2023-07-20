@@ -7,7 +7,6 @@ $client = $API->DB->from( "clients" )
 
 $user = $API::$userDetail;
 
-
 /**
  * Бонусы - пополнение
  */

@@ -36,7 +36,7 @@ foreach ( $userVisits as $userVisit ) {
     $visitDate = date( "Y-m-d", strtotime( $userVisit[ "start_at" ] ) );
     $userVisitsGraph[ $visitDate ]++;
 
-} // foreqch. $userVisits
+} // foreach. $userVisits
 
 function num_word ( $value, $words, $show = true ) { // function. num_word() for declension of nouns after the numeral
 

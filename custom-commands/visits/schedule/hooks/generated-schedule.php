@@ -9,7 +9,7 @@ foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
      * Обход Исполнителей в расписании за текущую дату
      */
     foreach ( $scheduleDateDetail as $schedulePerformerKey => $schedulePerformerDetail ) {
-
+        
         /**
          * Расписание Исполнителя на текущую дату
          */
@@ -19,6 +19,7 @@ foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
          * Обновленное расписание
          */
         $updatedSchedule = [];
+
 
 
         /**
@@ -85,7 +86,6 @@ foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
             } // if. count( $workedScheduleSteps ) < 1
 
 
-
             /**
              * Удаление текущего блока.
              * Далее вместо него будут созданы блоки со статусами "available" и "empty" с учетом
@@ -106,7 +106,7 @@ foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
              */
             $currentStatus = "empty";
             if ( in_array( $performerEvent[ "steps" ][ 0 ], $workedScheduleSteps ) ) $currentStatus = "available";
-            
+
 
             /**
              * Обход шагов блока
@@ -167,14 +167,14 @@ foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
 
             } // foreach. $updatedSchedule
 
+
+            /**
+             * Обновление расписания с учетом графика работ
+             */
+            $updatedSchedule = array_values( $updatedSchedule );
+            if ( $updatedSchedule ) $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ][ "schedule" ] = $updatedSchedule;
+
         } // foreach. $performerSchedule
-
-
-        /**
-         * Обновление расписания с учетом графика работ
-         */
-        $updatedSchedule = array_values( $updatedSchedule );
-        if ( $updatedSchedule ) $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ][ "schedule" ] = $updatedSchedule;
 
     } // foreach. $scheduleDateDetail
 

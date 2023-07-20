@@ -22,6 +22,12 @@ foreach ( $performersDetail as $performerId => $performerDetail ) {
     foreach ( $performerWorkSchedule as $scheduleEvent ) {
 
         /**
+         * Игнорирование выходных
+         */
+        if ( $scheduleEvent[ "is_weekend" ] == "Y" ) continue;
+
+
+        /**
          * Получение даты графика работы
          */
 

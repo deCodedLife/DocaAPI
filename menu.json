@@ -8,6 +8,13 @@
       "icon": "garage"
     },
     {
+      "title": "Расписание",
+      "href": "managerSchedule",
+      "required_permissions": [ "manager_schedule" ],
+      "children": [],
+      "icon": "stethoscope"
+    },
+    {
       "title": "Сотрудники",
       "href": "users",
       "children": [],
@@ -82,12 +89,6 @@
     {
       "title": "Шаблоны документов",
       "href": "documents",
-      "children": [],
-      "icon": "reading"
-    },
-    {
-      "title": "Расходы",
-      "href": "expenses",
       "children": [],
       "icon": "reading"
     },

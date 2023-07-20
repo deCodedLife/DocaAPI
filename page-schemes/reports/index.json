@@ -157,12 +157,12 @@
         {
           "title": "Продажа услуг по сотрудникам",
           "body": [
-              {
+            {
               "title": "Виджет - сумма всех услуг",
               "type": "analytic_widgets",
               "size": 4,
               "settings": {
-                "widgets_group": "sum_all_services"
+                "widgets_group": "userServices"
               },
               "components": {
                 "filters": [
@@ -221,7 +221,7 @@
               "size": 4,
               "settings": {
                 "object": "userServices",
-                "linked_filter": "analytic_widgets_sum_all_services"
+                "linked_filter": "analytic_widgets_userServices"
               },
               "components": []
             }
@@ -401,7 +401,7 @@
                     "required_modules": [],
                     "settings": {
                       "is_search": false,
-                      "recipient_property": "advertise_id",
+                      "recipient_property": "id",
                       "donor_object": "advertise",
                       "donor_property_title": "title",
                       "donor_property_value": "id"
@@ -424,11 +424,21 @@
         {
           "title": "Геолокация клиентов",
           "body": [
-
+            {
+              "type": "yandex_map",
+              "size": 4,
+              "settings": {
+                "object": "clientsMap",
+                "filters": []
+              },
+              "components": {
+                "filters": []
+              }
+            }
           ]
         },
         {
-          "title": "Клиетны",
+          "title": "Клиенты",
           "body": [
             {
               "title": "Виджет - Новые клиенты",

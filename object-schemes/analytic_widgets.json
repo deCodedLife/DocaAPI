@@ -14,7 +14,7 @@
       "use_in_commands": [
         "user_visits",
         "sales_statistic",
-        "sum_all_services",
+        "userServices",
         "visit_clients",
         "salary_info"
       ],
@@ -33,6 +33,7 @@
       "is_autofill": true,
       "use_in_commands": [
         "sum_all_services",
+        "userServices",
         "daily_report",
         "advertise",
         "clients",
@@ -52,6 +53,7 @@
       "is_autofill": true,
       "use_in_commands": [
         "sum_all_services",
+        "userServices",
         "daily_report",
         "advertise",
         "clients",
@@ -81,7 +83,8 @@
       "is_unique": false,
       "is_autofill": true,
       "use_in_commands": [
-        "sum_all_services"
+        "sum_all_services",
+        "userServices"
       ]
     },
     {
@@ -122,6 +125,7 @@
       "is_autofill": true,
       "use_in_commands": [
         "sum_all_services",
+        "userServices",
         "daily_report",
         "advertise",
         "clients",

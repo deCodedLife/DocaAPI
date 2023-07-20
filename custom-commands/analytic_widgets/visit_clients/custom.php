@@ -1,84 +1,114 @@
 <?php
 /**
-* Суточный отчет
-*/
-
-/**
- * Получение фильтров
+ * @file
+ * Отчет "Клиенты посещавшие специалистов
  */
 
-$filter = [];
-if ( $requestData->start_at ) $filter[ "start_at >= ?" ] = $requestData->start_at . " 00:00:00";
-if ( $requestData->end_at ) $filter[ "start_at <= ?" ] = $requestData->end_at . " 23:59:59";
-if ( $requestData->store_id ) $filter[ "store_id" ] = $requestData->store_id;
-
-$companyStatistic = [
+/**
+ * Детальная информация об отчете
+ */
+$reportStatistic = [
 
     /**
-     * Количество клиентов
-     */
-    "clients_count" => 0,
-
-    /**
-     * Сумма посещений
+     * Сумма продаж
      */
     "visits_sum" => 0,
 
     /**
-     * Сумма слуг с процентами
+     * Сумма продаж
      */
     "services_user_percents" => 0,
+
+    /**
+     * Сумма продаж
+     */
+    "clients_count" => 0,
 
 ];
 
 /**
- * Получение посещений
+ * Получение списка посещений
  */
-$companyVisits = $API->DB->from( "visits" )
-    ->where( $filter );
-
+$visitsClients = $API->sendRequest( "visit_clients", "get", $requestData );
 
 /**
-* Получение слуг с процентами
-*/
-$servicesUserPercents = $API->DB->from( "services_user_percents" );
-
-
-/**
- * Формирование графика посещений
+ * Обрабботка списка
  */
+foreach ( $visitsClients as $visitsClient ) {
 
-foreach ( $companyVisits as $userVisit ) {
-    $visit_client = $API->DB->from( "visits_clients" )
-        ->where( "visit_id", $userVisit["id"] )
-        ->limit( 1 )
-        ->fetch( );
-    $companyStatistic[ "clients_ids" ][] = $visit_client[ "client_id" ];
-    $companyStatistic[ "visits_sum" ] += (float) $userVisit[ "price" ];
-
-} // foreach. $userVisits
-
-foreach ( $servicesUserPercents as $serviceUserPercents ) {
+    $reportStatistic[ "visits_sum" ] += $visitsClient->price;
+    $reportStatistic[ "clients_count" ]++;
 
     /**
-     * Получение услуг
+     * Обход услуг в посещении
      */
-    $service = $API->DB->from( "services" )
-        ->where( "id", $serviceUserPercents["service_id"] )
-        ->limit( 1 )
-        ->fetch( );
-    $companyStatistic[ "services_user_percents" ]  += (float) $service[ "price" ];
+    foreach ( $visitsClient->services_id as $visitService ) {
 
-} // foreach. $userVisits
+        /**
+         * Получение услуг сотрудника с процентом от продаж
+         */
+        $servicesUserPercents = $API->DB->from( "services_user_percents" )
+            ->where( [
+                "service_id" => $visitService->value,
+                "row_id" => $visitsClient->user_id,
+                "created_at <=?" => $visitsClient->start_at
+            ] )
+            ->limit( 1 )
+            ->fetch();
+
+        /**
+         * Обход услуг сотрудника с процентом от продаж
+         */
+        if ( $servicesUserPercents &&  $servicesUserPercents[ "percent" ] != 0 ) {
+
+            /**
+             * Получение продажи посещения
+             */
+            $saleVisits = $API->DB->from( "saleVisits" )
+                ->where( [
+                    "visit_id" => $visitsClient->id,
+                ] );
+
+            foreach ( $saleVisits as $saleVisit ) {
+
+                /**
+                 * Получение услуг в продаже
+                 */
+                $salesProductsList = $API->DB->from( "salesProductsList" )
+                    ->where( [
+                        "sale_id" => $saleVisit[ "sale_id" ],
+                        "product_id" => $visitService->value
+                    ] )
+                    ->limit( 1 )
+                    ->fetch();
 
 
-$companyStatistic[ "clients_count" ] = count(array_unique($companyStatistic[ "clients_ids" ]));
+                /**
+                 * Подсчет суммы продаж с %
+                 */
+                $reportStatistic[ "services_user_percents" ] += $salesProductsList[ "cost" ];
+
+            } // foreach .$saleVisits
+
+        } else if ( $servicesUserPercents && $servicesUserPercents[ "fix_sum" ] != 0 ) {
+
+            /**
+             * Подсчет суммы продаж если фикс
+             */
+            $reportStatistic["services_user_percents"] += $servicesUserPercents[ "fix_sum" ];
+
+        } // if ( $servicesUserPercents &&  $servicesUserPercents[ "percent" ] != 0 )
+
+    }
+
+} // foreach .$userServices
+
 
 $API->returnResponse(
 
     [
         [
-            "value" => $companyStatistic["visits_sum"],
+            "value" => $reportStatistic["visits_sum"],
             "description" => "Сумма продаж",
             "icon" => "",
             "prefix" => "₽",
@@ -92,7 +122,7 @@ $API->returnResponse(
             "detail" => []
         ],
         [
-            "value" => $companyStatistic["services_user_percents"],
+            "value" => $reportStatistic["services_user_percents"],
             "description" => "Сумма продаж с  %",
             "icon" => "",
             "prefix" => "₽",
@@ -106,7 +136,7 @@ $API->returnResponse(
             "detail" => []
         ],
         [
-            "value" => $companyStatistic[ "clients_count" ],
+            "value" => $reportStatistic[ "clients_count" ],
             "description" => "Количество клиентов",
             "icon" => "",
             "prefix" => "",

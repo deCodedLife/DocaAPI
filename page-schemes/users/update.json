@@ -29,6 +29,54 @@
             "size": 4,
             "settings": [
                 {
+                    "title": "График работы",
+                    "body": [
+                        {
+                            "title": "График работы",
+                            "type": "calendar",
+                            "size": 4,
+                            "settings": {
+                                "object": "workDays",
+                                "filters": [
+                                    {
+                                        "property": "user_id",
+                                        "value": ":id"
+                                    }
+                                ],
+                                "event_page": "workDays/addEvent"
+                            },
+                            "components": {
+                                "buttons": [
+                                    {
+                                        "type": "add_to_form",
+                                        "settings": {
+                                            "title": "Добавить правило",
+                                            "page": "workDays/add",
+                                            "background": "dark"
+                                        }
+                                    }
+
+                                ],
+                                "filters": [
+                                    {
+                                        "title": "Филиал",
+                                        "type": "list",
+                                        "required_permissions": [],
+                                        "required_modules": [],
+                                        "settings": {
+                                            "is_search": false,
+                                            "recipient_property": "store_id",
+                                            "donor_object": "stores",
+                                            "donor_property_title": "title",
+                                            "donor_property_value": "id"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
                     "title": "Основная информация",
                     "body": [
                         {
@@ -104,7 +152,7 @@
                                             {
                                                 "title": "",
                                                 "fields": [
-                                                    "store_id",
+                                                    "stores_id",
                                                     "is_visible_in_schedule"
                                                 ]
                                             }
@@ -131,37 +179,6 @@
                                             "title": "Сохранить",
                                             "background": "dark",
                                             "href": "users"
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    ]
-                },
-                {
-                    "title": "График работы",
-                    "body": [
-                        {
-                            "title": "График работы",
-                            "type": "calendar",
-                            "size": 4,
-                            "settings": {
-                                "object": "workDays",
-                                "filters": [
-                                    {
-                                        "property": "user_id",
-                                        "value": ":id"
-                                    }
-                                ]
-                            },
-                            "components": {
-                                "buttons": [
-                                    {
-                                        "type": "add_to_form",
-                                        "settings": {
-                                            "title": "Добавить правило",
-                                            "page": "workDays/add",
-                                            "background": "dark"
                                         }
                                     }
                                 ]

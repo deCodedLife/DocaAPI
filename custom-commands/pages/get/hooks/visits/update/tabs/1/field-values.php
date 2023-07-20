@@ -40,3 +40,4 @@ $client = $API->DB->from( "clients" )
 
 $generatedTab[ "settings" ][ "areas" ][ 1 ][ "blocks" ][ 0 ][ "fields" ][ 1 ][ "description" ] = "Ваш баланс: " . $client["deposit"] . " бонусов";
 $generatedTab[ "settings" ][ "areas" ][ 1 ][ "blocks" ][ 0 ][ "fields" ][ 2 ][ "description" ] = "Ваш баланс: " . $client["bonuses"] . " ₽";
+

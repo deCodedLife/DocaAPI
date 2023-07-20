@@ -96,6 +96,7 @@ foreach ( $salesList as $sale ) {
  */
 foreach ( $report as $key => $item ) {
     $statistic[] = [
+        "size" => 1,
         "value" => round($item, 2),
         "description" => $key,
         "icon" => "",

@@ -32,17 +32,3 @@ $clientDetail = $API->DB->from( "clients" )
     ->fetch();
 
 if ( !$clientDetail ) $clientDetail[ "id" ] = null;
-
-
-/**
- * Сохранение события
- */
-$API->DB->insertInto( "callHistory" )
-    ->values( [
-        "api_id" => 0,
-        "status" => "INCOMING",
-        "user_id" => $employeeDetail[ "id" ],
-        "client_id" => $clientDetail[ "id" ],
-        "client_phone" => $requestData->phone
-    ] )
-    ->execute();
