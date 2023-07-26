@@ -333,20 +333,22 @@
                     "property": "client_id",
                     "value": ":id"
                   }
-                ]
+                ],
+                "is_edit": false
               },
               "components": {
                 "buttons": [
                   {
                     "type": "modal",
                     "settings": {
-                      "title": "Пополнить",
+                      "title": "Изменить",
                       "background": "dark",
                       "page": "clients/bonus",
                       "context": {
                         "form": "bonus",
                         "row_id": ":id"
-                      }
+                      },
+                      "modal_size": "lg"
                     }
                   }
                 ]
@@ -361,7 +363,6 @@
               "title": "Статистика депозита",
               "type": "analytic_widgets",
               "size": 4,
-              "hook": "depositHistory",
               "settings": {
                 "widgets_group": "deposit_statistic",
                 "filters": [
@@ -374,25 +375,22 @@
               "components": []
             },
             {
-              "title": "Форма",
-              "type": "form",
+              "title": "Список операций",
+              "type": "list",
               "size": 4,
               "settings": {
-                "object": "clients",
-                "command": "update",
-                "areas": [
+                "object": "salesList",
+                "filters": [
                   {
-                    "size": 4,
-                    "blocks": [
-                      {
-                        "title": "",
-                        "fields": [
-                          "deposit"
-                        ]
-                      }
-                    ]
+                    "property": "client_id",
+                    "value": ":id"
+                  },
+                  {
+                    "property": "action",
+                    "value": "deposit"
                   }
-                ]
+                ],
+                "is_edit": false
               },
               "components": {
                 "buttons": [
@@ -400,31 +398,17 @@
                     "type": "modal",
                     "settings": {
                       "title": "Пополнить",
-                      "page": "clients/deposit/:id",
                       "background": "dark",
-                      "modal_size": "lg",
+                      "page": "clients/deposit",
                       "context": {
-                        "client_id": ":id"
-                      }
+                        "form": "deposit",
+                        "row_id": ":id"
+                      },
+                      "modal_size": "lg"
                     }
                   }
                 ]
               }
-            },
-            {
-              "title": "Список операций",
-              "type": "list",
-              "size": 4,
-              "settings": {
-                "object": "depositHistory",
-                "filters": [
-                  {
-                    "property": "client_id",
-                    "value": ":id"
-                  }
-                ]
-              },
-              "components": []
             }
           ]
         },

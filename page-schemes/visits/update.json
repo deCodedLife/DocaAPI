@@ -177,7 +177,7 @@
                         "title": "",
                         "fields": [
                           "visits_ids",
-                          "products",
+                          "doca_services",
                           "pay_method",
                           "action",
                           "sum_cash",
@@ -430,7 +430,6 @@
               "title": "Статистика бонусов",
               "type": "analytic_widgets",
               "size": 4,
-              "hook": "bonusHistory",
               "settings": {
                 "widgets_group": "bonus_statistic",
                 "filters": [
@@ -453,14 +452,15 @@
                     "property": "client_id",
                     "value": ":clients_id"
                   }
-                ]
+                ],
+                "is_edit": false
               },
               "components": {
                 "buttons": [
                   {
                     "type": "modal",
                     "settings": {
-                      "title": "Пополнить",
+                      "title": "Изменить",
                       "background": "dark",
                       "page": "clients/bonus",
                       "context": {
@@ -481,7 +481,6 @@
               "title": "Статистика депозитов",
               "type": "analytic_widgets",
               "size": 4,
-              "hook": "depositHistory",
               "settings": {
                 "widgets_group": "deposit_statistic",
                 "filters": [
@@ -498,13 +497,18 @@
               "type": "list",
               "size": 4,
               "settings": {
-                "object": "depositHistory",
+                "object": "salesList",
                 "filters": [
                   {
                     "property": "client_id",
                     "value": ":clients_id"
+                  },
+                  {
+                    "property": "action",
+                    "value": "deposit"
                   }
-                ]
+                ],
+                "is_edit": false
               },
               "components": {
                 "buttons": [

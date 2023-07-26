@@ -1,24 +1,46 @@
 <?php
 
-$publicAppPath = $API::$configs[ "paths" ][ "public_app" ];
+
+$API->returnResponse( "NYAAAAAA" );
+
+header('X-Accel-Buffering: no');
+header( "Content-Type: text/event-stream" );
+header('Cache-Control: no-store');
+
+session_start();
+ob_end_flush();
+ob_start();
+
+$testData = [
+    "cashboxID" => 200,
+    "task" => [
+        "test" => 100
+    ]
+];
+
+$i = 0;
+
+while ( true ) {
+
+    if ( connection_aborted() ) break;
+    echo json_encode( $testData );
+    echo "\n\n";
+
+    ob_flush();
+    flush();
+
+    sleep( 1 );
+
+}
+
+exit();
+
+
+
+//$publicAppPath = $API::$configs[ "paths" ][ "public_app" ];
 
 //require_once ( $publicAppPath . '/custom-libs/sales/business_logic.php' );
 //require_once ( $publicAppPath . "/custom-libs/sales/install.php" );
-
-//mysqli_query(
-//    $API->DB_connection,
-//    "DELETE FROM salesProductsList"
-//);
-
-mysqli_query(
-    $API->DB_connection,
-    "UPDATE visits set is_active = 'N' where id = 334"
-);
-
-//$Doca = new Doca();
-//$Doca->Hook();
-
-$API->returnResponse( "WTF?" );
 
 // $API->DB->delete( "promotionObjects" )
 	// ->where( "id", 121 )

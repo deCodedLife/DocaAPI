@@ -137,7 +137,8 @@
       "list_donor": {
         "table": "users",
         "properties_title": "last_name"
-      }
+      },
+      "is_visible": false
     },
     {
       "title": "Нет приема",
@@ -156,6 +157,7 @@
       "title": "Филиал",
       "article": "store_id",
       "data_type": "integer",
+      "joined_field": "user_id",
       "field_type": "list",
       "is_default_in_list": false,
       "is_unique": false,
@@ -172,8 +174,8 @@
       "is_hook": true,
       "is_visible": true,
       "list_donor": {
-        "table": "stores",
-        "properties_title": "title"
+        "table": "users_stores",
+        "properties_title": "store_id"
       }
     },
     {
@@ -181,6 +183,7 @@
       "article": "cabinet_id",
       "data_type": "integer",
       "field_type": "list",
+      "joined_field": "store_id",
       "is_default_in_list": false,
       "is_unique": false,
       "is_autofill": true,
@@ -190,18 +193,11 @@
         "addEvent",
         "hook"
       ],
-      "require_in_commands": [
-        "add"
-      ],
       "is_hook": true,
       "is_visible": false,
       "list_donor": {
         "table": "cabinets",
-        "properties_title": "title",
-        "filters": {
-          "property": "store_id",
-          "value": ":store_id"
-        }
+        "properties_title": "title"
       }
     }
   ]

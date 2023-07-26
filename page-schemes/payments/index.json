@@ -29,25 +29,7 @@
               "type": "analytic_widgets",
               "size": 4,
               "settings": {
-                "widgets_group": "sales_statistic",
-                "filters": [
-                  {
-                    "property": "cash",
-                    "value": "1"
-                  },
-                  {
-                    "property": "card",
-                    "value": "1"
-                  },
-                  {
-                    "property": "deposit",
-                    "value": "1"
-                  },
-                  {
-                    "property": "summary",
-                    "value": "1"
-                  }
-                ]
+                "widgets_group": "sales_statistic"
               },
               "components": {
                 "filters": [
@@ -109,11 +91,17 @@
               }
             },
             {
-              "title": "Список",
+              "title": "Продажи",
               "type": "list",
               "size": 4,
               "settings": {
-                "object": "salesList"
+                "object": "salesList",
+                "filters": [
+                  {
+                    "property": "action",
+                    "value": "sell"
+                  }
+                ]
               },
               "components": {
                 "filters": [
@@ -187,6 +175,21 @@
                 "object": "salesList"
               },
               "components": {
+                "buttons": [
+                  {
+                    "type": "modal",
+                    "settings": {
+                      "title": "Новая продажа",
+                      "background": "dark",
+                      "page": "clients/deposit",
+                      "context": {
+                        "form": "deposit",
+                        "row_id": ":id"
+                      },
+                      "modal_size": "lg"
+                    }
+                  }
+                ],
                 "filters": [
                   {
                     "title": "Дата (от)",

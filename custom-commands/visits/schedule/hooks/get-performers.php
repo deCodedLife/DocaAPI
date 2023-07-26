@@ -67,3 +67,4 @@ if ( $requestData->profession_id ) {
     $performersRows = $filteredUsers;
 
 } // if. $requestData->profession_id
+

@@ -19,6 +19,7 @@
               {
                 "title": "",
                 "fields": [
+                  "bonus_action",
                   "bonuses_replenishment"
                 ]
               }

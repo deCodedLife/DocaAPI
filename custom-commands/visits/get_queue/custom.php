@@ -23,12 +23,13 @@ $visits = $API->DB->from( "visits" )
     ->orderBy( "start_at asc" )
     ->limit( 5 );
 
-
 /**
  * Формирование списка посещений
  */
 
 foreach ( $visits as $visit ) {
+    $API->returnResponse(date( "Y-m-d" ) . " 00:00:00");
+
 
     $cabinetDetail = $API->DB->from( "cabinets" )
         ->where( "id", $visit[ "cabinet_id" ] )

@@ -12,5 +12,4 @@ if ( $requestData->store_id ) {
 
 }
 
-
 $API->returnResponse( $formFieldsUpdate );

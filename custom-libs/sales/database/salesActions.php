@@ -18,5 +18,5 @@ mysqli_query(
 
 mysqli_query(
     $API->DB_connection,
-    "INSERT INTO saleActions (title, article) VALUES ('Продажа', 'sell'), ('Возврат', 'sellReturn'), ('Пополнение депозита', 'deposit')"
+    "INSERT INTO saleActions (title, article) VALUES ('Продажа', 'sell'), ('Возврат', 'sellReturn'), ('Пополнение депозита', 'deposit'), ('Расход', 'expense')"
 );

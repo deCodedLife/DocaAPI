@@ -64,6 +64,22 @@ foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
                         ( $stepKey >= $workScheduleStepFromKey ) && ( $stepKey <= $workScheduleStepToKey )
                     ) $workedScheduleSteps[] = $stepKey;
 
+
+                /**
+                 * Указание кабинета сотрудника
+                 */
+                if ( $performerWorkSchedule[ "cabinet_id" ] ) {
+
+                    $cabinetDetail = $API->DB->from( "cabinets" )
+                        ->where( "id", $performerWorkSchedule[ "cabinet_id" ] )
+                        ->limit( 1 )
+                        ->fetch();
+
+
+                    $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ][ "performer_title" ] .= " [Каб. " . $cabinetDetail[ "title" ] . "]";
+
+                } // if. $performerWorkSchedule[ "cabinet_id" ]
+
             } // foreach. $performersWorkSchedule[ $schedulePerformerKey ][ $scheduleDateKey ]
 
 

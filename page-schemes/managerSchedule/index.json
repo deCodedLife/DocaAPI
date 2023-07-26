@@ -3,68 +3,11 @@
   "required_permissions": [],
   "structure": [
     {
-      "title": "Шапка",
-      "type": "header",
-      "size": 4,
-      "settings": {
-        "description": "Расписание менеджеров",
-        "title": [
-          "Расписание менеджеров"
-        ]
-      },
-      "components": []
-    },
-    {
-      "title": "Виджеты",
-      "type": "analytic_widgets",
-      "size": 4,
-      "settings": {
-        "widgets_group": "daily_report"
-      },
-      "components": {
-        "filters": [
-          {
-            "title": "Дата (от)",
-            "type": "date",
-            "required_permissions": [],
-            "required_modules": [],
-            "settings": {
-              "is_search": false,
-              "recipient_property": "start_at"
-            }
-          },
-          {
-            "title": "Дата (до)",
-            "type": "date",
-            "required_permissions": [],
-            "required_modules": [],
-            "settings": {
-              "is_search": false,
-              "recipient_property": "end_at"
-            }
-          },
-          {
-            "title": "Филиал",
-            "type": "list",
-            "required_permissions": [],
-            "required_modules": [],
-            "settings": {
-              "is_search": false,
-              "recipient_property": "store_id",
-              "donor_object": "stores",
-              "donor_property_title": "title",
-              "donor_property_value": "id"
-            }
-          }
-        ]
-      }
-    },
-    {
       "title": "Расписание",
       "type": "schedule",
       "size": 4,
       "required_permissions": [
-        "manager_schedule"
+        "director_schedule"
       ],
       "required_modules": [],
       "settings": {
@@ -110,6 +53,16 @@
               "donor_object": "users",
               "donor_property_title": "last_name",
               "donor_property_value": "id"
+            }
+          },
+          {
+            "title": "Специальность",
+            "type": "list",
+            "settings": {
+              "donor_object": "professions",
+              "donor_property_title": "title",
+              "donor_property_value": "id",
+              "recipient_property": "profession_id"
             }
           },
           {

@@ -10,7 +10,7 @@
     {
       "title": "Расписание",
       "href": "managerSchedule",
-      "required_permissions": [ "manager_schedule" ],
+      "required_permissions": [ "director_schedule" ],
       "children": [],
       "icon": "stethoscope"
     },

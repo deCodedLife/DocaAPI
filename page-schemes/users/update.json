@@ -43,19 +43,28 @@
                                         "value": ":id"
                                     }
                                 ],
-                                "event_page": "workDays/addEvent"
+                                "event_page": "workDays/addEvent",
+                                "context": {
+                                    "form": "users",
+                                    "row_id": ":id"
+                                }
                             },
                             "components": {
                                 "buttons": [
                                     {
-                                        "type": "add_to_form",
+                                        "type": "modal",
                                         "settings": {
                                             "title": "Добавить правило",
+                                            "background": "dark",
                                             "page": "workDays/add",
-                                            "background": "dark"
+                                            "close_previous_modal": true,
+                                            "modal_size": "xl",
+                                            "context": {
+                                                "form": "users",
+                                                "row_id": ":id"
+                                            }
                                         }
                                     }
-
                                 ],
                                 "filters": [
                                     {

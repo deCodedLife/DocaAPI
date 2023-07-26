@@ -17,4 +17,4 @@ if ( $requestData->action == "sell" )
  */
 require ( $publicAppPath . "/custom-commands/salesList/add/create-transaction.php" );
 
-$API->returnResponse();
+$API->returnResponse( true );

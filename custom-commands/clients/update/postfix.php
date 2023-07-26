@@ -11,11 +11,14 @@ $user = $API::$userDetail;
  * Бонусы - пополнение
  */
 
-if ($requestData->bonuses_replenishment) {
+if ( $requestData->bonuses_replenishment ) {
+
+    $changeValue = $requestData->bonuses_replenishment;
+    if ( $requestData->bonus_action === "decrease" ) $changeValue = -$changeValue;
 
     $API->DB->update( "clients" )
     ->set( [
-        "bonuses" => $client['bonuses'] + $requestData->bonuses_replenishment
+        "bonuses" => $client['bonuses'] + $changeValue
     ] )
     ->where( "id", $requestData->id )
     ->execute();
@@ -25,7 +28,7 @@ if ($requestData->bonuses_replenishment) {
     ->values( [
         "user_id" => $user->id,
         "client_id" => $requestData->id,
-        "replenished" => $requestData->bonuses_replenishment
+        "replenished" => $changeValue
     ] )
     ->execute();
 
@@ -35,7 +38,7 @@ if ($requestData->bonuses_replenishment) {
      */
     $API->addEvent( "bonusHistory" );
 
-}
+} // if ( $requestData->bonuses_replenishment )
 
 /**
  * Депозит
@@ -66,3 +69,5 @@ if ($requestData->deposit_replenishment) {
     $API->addEvent( "depositHistory" );
 
 }
+
+$API->returnResponse( true );

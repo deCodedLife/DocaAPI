@@ -35,7 +35,8 @@ foreach ( $performersDetail as $performerId => $performerDetail ) {
 
         $performersWorkSchedule[ $performerId ][ $scheduleEventDate ][] = [
             "from" => date( "H:i", strtotime( $scheduleEvent[ "event_from" ] ) ),
-            "to" => date( "H:i", strtotime( $scheduleEvent[ "event_to" ] ) )
+            "to" => date( "H:i", strtotime( $scheduleEvent[ "event_to" ] ) ),
+            "cabinet_id" => $scheduleEvent[ "cabinet_id" ]
         ];
 
 

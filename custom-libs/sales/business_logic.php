@@ -1,444 +1,296 @@
 <?php
 
 ini_set( 'display_errors', 1 );
+global $API, $requestData;
 
-require_once "index.php";
-require_once "promotions/index.php";
+
+require_once ( "classes/Doca.php" );
+require_once ( "variables.php" );
+require_once ( "index.php" );
+require_once ( "promotions/index.php" );
 
 use Sales\Sales;
 use Sales\Product;
 use Sales\Discount;
 use Sales\Subject;
 use Sales\Modifier;
+use Sales\SALES_VARIABLES;
 
-class Doca
-{
-    private array $visits;
-    private bool $isReturn;
-    private array $saleVisits;
-    private array $saleServices;
-    private array $allServices;
-    private float $saleSummary;
-    private float $sum_cash;
-    private float $sum_card;
+$allVisits = [];
+$saleVisits = [];
+$allServices = [];
+$saleServices = [];
+$saleSummary  = 0;
+$isReturn = false;
+$sum_card = 0;
+$sum_cash = 0;
+$isReturn = $requestData->action ?? 'sell' === "sellReturn";
 
-    private static function getVisitDetails( $visitID ) {
 
-        global $API;
-        return $API->DB->from( "visits" )
-            ->where( "id", $visitID )
-            ->fetch();
+/**
+ * Получение списка посещений
+ */
+$Doca->getVisits( $allVisits, $saleVisits, $isReturn );
+$Doca->getServices( $allVisits, $allServices, $saleServices );
 
-    } // function. getVisitDetails $visitID
+require_once ( 'index.php' );
 
-    private static function getServiceDetails( $serviceID ) {
+/**
+ * Если тип операции - "возврат", тогда собирается информация только о
+ * прикреплённых к данной операции услугах
+ */
 
-        global $API;
-        return $API->DB->from( "services" )
-            ->where( "id", $serviceID )
-            ->fetch();
+if ( $isReturn ) {
 
-    } // function. getServiceDetails $serviceID
+    $saleServices = [];
 
-    private function getVisits() {
+    $soldSales = $API->DB->from( $SALES_VARIABLES::$DB_SALES_PRODUCTS_LIST )
+        ->where( [
+            "sale_id" => $requestData->id,
+            "type" => "service"
+        ]);
 
-        global $API, $requestData;
+    foreach ( $requestData->pay_object as $index => $saleID ) {
 
-        /**
-         * Формирование списка комбинированных посещений
-         */
+        $details = $Doca->getServiceDetails( $saleID );
 
-        if ( $requestData->is_combined == 'Y' ) {
+        foreach ( $soldSales as $soldSale ) {
 
-            /**
-             * Получение всех, неоплаченных клиентом, посещений
-             */
+            if ( $saleID != $soldSale[ "service_id" ] ) continue;
+            $details[ "price" ] = $soldSale[ "price" ];
 
-            $combinedVisits = $API->DB->from( "visits" )
-                ->innerJoin( "visits_clients ON visits_clients.visit_id = visits.id" )
-                ->where( [
-                    "visits.store_id" => (int) $requestData->store_id,
-                    "visits_clients.client_id" => $requestData->client_id,
-                    "visits.is_active" => "Y",
-                    "visits.is_payed" => "N"
-                ] );
+        }
 
-            foreach ( $combinedVisits as $combinedVisit )
-                $this->visits[] = $this->getVisitDetails( $combinedVisit[ "id" ] );
+        $saleServices[] = $details;
 
-        } else {
-
-            foreach ( !$this->isReturn ? [ $requestData->id ] : $requestData->visits_ids as $visit_id )
-                $this->visits[] = $this->getVisitDetails( $visit_id );
-
-            foreach ( $this->visits as $visit )
-                $this->saleVisits[] = $visit[ "id" ];
-
-        } // if. $requestData->is_combined == 'Y'
-
-    } // private function getVisits() {
-
-    public function __construct( ) {
-        global $API, $requestData;
-        $this->saleVisits = $requestData->visits_ids;
-        $this->allServices = [];
-        $this->saleServices = [];
-        $this->visits = [];
-        $this->isReturn = false;
-        $this->saleSummary = 0;
-        $this->sum_cash = $requestData->sum_cash;
-        $this->sum_card = $requestData->sum_card;
     }
+
+    foreach ( $allServices as $index => $sale ) {
+
+        foreach ( $soldSales as $soldSale ) {
+
+            if ( $sale[ "id" ] != $soldSale[ "service_id" ] ) continue;
+            $sale[ "price" ] = $soldSale[ "price" ];
+            $allServices[ $index ] = $sale;
+
+        }
+
+    }
+
+} // if isReturn
+
+
+
+/**
+ * Получение итоговой суммы продажи
+ */
+
+foreach ( $allVisits as $visit ) {
+
+    $visitPrice = $visit[ "price" ];
+
+    if ( $requestData->discount_type === "fixed"   ) $visitPrice -= $requestData->discount_value;
+    if ( $requestData->discount_type === "percent" ) $visitPrice -= ($visitPrice / 100) * $requestData->discount_value;
+
+    $visitPrice = max( $visitPrice, 0 );
+    $saleSummary += $visitPrice;
+
+} // foreach. $saleVisits as $visit
+
+if ( $isReturn ) {
+
+    $saleDetails = $API->DB->from( $SALES_VARIABLES::$DB_SALES_PRODUCTS_LIST )
+        ->where( "id", $requestData->id )
+        ->fetch();
+
+    $saleSummary = $saleDetails[ "summary" ];
+
+} // if ( $isReturn )
+
+
+
+/**
+ * Получение скидок
+ */
+foreach ( Discount::GetActiveDiscounts( $SALES_VARIABLES::$DB_PROMOTIONS ) as $discount ) {
+
+    // При возврате не считаем скидки
+    if ( $isReturn ) continue;
+
+
+
+    $servicesGroups = [];
+    $Discount->GetModifiers( "promotion_id", $discount[ "id" ] );
+
+
 
     /**
-     * @return array
+     * Добавляем услуги как участников акции
      */
-    public function Hook() {
+    foreach ( $allServices as $service ) {
 
-        global $API, $requestData;
-        $this->getVisits();
+        $Discount->Subjects[] = new Subject(
+            "services",
+            $service[ "id" ],
+            $service[ "price" ],
+            Discount::getGroups( $service[ "category_id" ], "serviceGroups" )
+        );
 
-        $this->isReturn = $API->DB->from( "visits" )
-                ->where( "id", $this->saleVisits[ 0 ] )
-                ->limit( 1 )
-                ->fetch()[ "is_payed" ] == 'Y';
-
-        foreach ( $this->visits as $visit ) {
-
-            $Discount = new Discount();
-
-            if ( $visit[ "discount_value" ] != 0 ) {
-
-                $this->Discount->DiscountModifiers[] = new Modifier();
-
-            }
-        }
-
-        /**
-         * Получение информации обо всех услугах в посещениях
-         */
-        foreach ( $this->visits as $visit ) {
-
-            $visitServices = $API->DB->from( "visits_services" )
-                ->where( "visit_id", $visit[ "id" ] );
-
-            foreach ( $visitServices as $visitService ) {
-                $this->saleServices[] = $this->getServiceDetails( $visitService["service_id"] );
-                $this->allServices[] = end( $this->saleServices );
-            }
-
-        } // foreach. $saleVisits as $saleVisit
+    } // foreach $allServices as $service
 
 
 
-        /**
-         * Если тип операции - "возврат", тогда собирается информация только о
-         * прикреплённых к данной операции услугах
-         */
+    /**
+     * Не забываем про клиентов
+     */
+    foreach ( $API->DB->from( "clientsGroupsAssaciation" )->where( "client_id", $requestData->client_id ) as $group )
+        $clientGroups[] = $group[ "clientGroup_id" ];
 
-        if ( $this->isReturn ) {
+    $Discount->Subjects[] = new Subject(
+        "clients",
+        $requestData->client_id,
+        0,
+        $clientGroups ?? []
+    );
 
-            $this->saleServices = [];
 
-            $soldSales = $API->DB->from( "saleProductsList" )
-                ->where( [
-                    "sale_id" => $requestData->id,
-                    "type" => "service"
-                ]);
 
-            foreach ( $requestData->pay_object as $index => $saleID ) {
+    /**
+     * Смотрим, подходит акция под наши условия
+     */
+    if ( !$Discount->IsValid() ) continue;
+    $newSubjects = $Discount->Apply( $discount[ "id" ] );
+    $discountSum = 0;
 
-                $details = $this->getServiceDetails( $saleID );
+    foreach ( $newSubjects as $subject ) {
 
-                foreach ( $soldSales as $soldSale ) {
+        foreach ( $allServices as $index => $service ) {
 
-                    if ( $saleID != $soldSale[ "service_id" ] ) continue;
-                    $details[ "price" ] = $soldSale[ "price" ];
+            if (
+                $subject->Type == "services" &&
+                $service[ "id" ] == $subject->ID &&
+                $service[ "price" ] != $subject->Price
+            ) {
 
-                }
+                $discountSum -= $subject->Price - $service[ "price" ];
+                $service[ "price" ] = $service[ "price" ] - $discountSum;
+                $allServices[ $index ] = $service;
 
-                $this->saleServices[] = $details;
+                // May cause error in sale return case
+                $saleServices[ $index ] = $service;
 
             }
 
-            foreach ( $this->allServices as $index => $sale ) {
+        } //  foreach ( $allServices as $index => $service ) {
 
-                foreach ( $soldSales as $soldSale ) {
+    } // foreach ( $newSubjects as $subject )
 
-                    if ( $sale[ "id" ] != $soldSale[ "service_id" ] ) continue;
-                    $sale[ "price" ] = $soldSale[ "price" ];
-                    $this->allServices[ $index ] = $sale;
 
-                }
+    $saleSummary -= $discountSum;
 
-            }
+} // foreach. Discount::GetActiveDiscounts( "promotions" ) as $discount
 
-        } // if. $this->isReturn
+$saleSummary = max( $saleSummary, 0 );
 
+/**
+ * Вычет депозита и бонусов для расчёта сумм налички и карты
+ */
 
+$amountOfPhysicalPayments = 0;
+$amountOfPhysicalPayments = $saleSummary - ( $requestData->sum_bonus + $requestData->sum_deposit );
 
-        /**
-         * Получение итоговой суммы продажи
-         */
+$saleServicesPrice = 0;
+$allServicesPrice = 0;
 
-        foreach ( $this->visits as $visit ) {
+/**
+ * Подсчёт стоимости посещения без скидок
+ */
 
-            $visitPrice = $visit[ "price" ];
+foreach ( $allServices as $service )
+    $allServicesPrice += $service[ "price" ];
 
-            if ( $visit[ "discount_type" ] == "fixed"   ) $visitPrice -= $visit[ "discount_value" ];
-            if ( $visit[ "discount_type" ] == "percent" ) $visitPrice -= ($visitPrice / 100) * $visit[ "discount_value" ];
+foreach ( $saleServices as $service )
+    $saleServicesPrice += $service[ "price" ];
 
-            $visitPrice = max( $visitPrice, 0 );
-            $this->saleSummary += $visitPrice;
 
-        } // foreach. $saleVisits as $visit
 
-        if ( $this->isReturn ) {
+/**
+ * Нахождение скидки для товаров по формуле (стоимость со скидками / стоимость без скидок)
+ */
 
-            $saleDetails = $API->DB->from( "sales" )
-                ->where( "id", $requestData->id )
-                ->fetch();
+$discountPerProduct = $amountOfPhysicalPayments / $allServicesPrice;
 
-            $this->saleSummary = $saleDetails[ "summary" ];
 
-        }
 
-        foreach ( Discount::GetActiveDiscounts( "promotions" ) as $discount ) {
+/**
+ * Нахождение суммы для налички и карты с учётом скидок
+ */
 
-            // При возврате не считаем скидки
-            if ( $this->isReturn ) continue;
+$amountOfPhysicalPayments = $saleServicesPrice * $discountPerProduct;
+$amountOfPhysicalPayments = round( $amountOfPhysicalPayments, 2 );
 
+$saleSummary = $amountOfPhysicalPayments;
 
 
-            $servicesGroups = [];
-            $Discount->GetModifiers( "promotion_id", $discount[ "id" ] );
+if ( $isReturn ) {
 
+    $saleServicesPrice = 0;
+    $allServicesPrice = 0;
 
+    /**
+     * Подсчёт стоимости посещения без скидок
+     */
 
-            /**
-             * Добавляем услуги как участников акции
-             */
-            foreach ( $this->allServices as $service ) {
+    foreach ( $allServices as $service )
+        $allServicesPrice += $service[ "price" ];
 
-                $Discount->Subjects[] = new Subject(
-                    "services",
-                    $service[ "id" ],
-                    $service[ "price" ],
-                    Discount::getGroups( $service[ "category_id" ], "serviceGroups" )
-                );
+    foreach ( $saleServices as $service )
+        $saleServicesPrice += $service[ "price" ];
 
-            } // foreach $allServices as $service
 
 
+    /**
+     * Нахождение скидки для товаров по формуле (стоимость со скидками / стоимость без скидок)
+     */
 
-            /**
-             * Не забываем про клиентов
-             */
-            foreach ( $API->DB->from( "clientsGroupsAssaciation" )->where( "client_id", $requestData->client_id ) as $group )
-                $clientGroups[] = $group[ "clientGroup_id" ];
+    $discountPerProduct = $amountOfPhysicalPayments / $allServicesPrice;
 
-            $Discount->Subjects[] = new Subject(
-                "clients",
-                $requestData->client_id,
-                0,
-                $clientGroups ?? []
-            );
 
 
+    /**
+     * Нахождение суммы для налички и карты с учётом скидок
+     */
 
-            /**
-             * Смотрим, подходит акция под наши условия
-             */
-            if ( !$Discount->IsValid() ) continue;
-            $newSubjects = $Discount->Apply( $discount[ "id" ] );
-            $discountSum = 0;
+    $amountOfPhysicalPayments = $saleServicesPrice * $discountPerProduct;
+    $amountOfPhysicalPayments = round( $amountOfPhysicalPayments, 2 );
 
-            foreach ( $newSubjects as $subject ) {
+    $saleSummary = $amountOfPhysicalPayments;
 
-                foreach ( $this->allServices as $index => $service ) {
+    if ( $requestData->return_bonuses == "Y" ) $saleSummary += $requestData->sum_bonus;
+    if ( $requestData->return_deposit == "Y" ) $saleSummary += $requestData->sum_deposit;
 
-                    if (  $subject->Type == "services" && $service[ "id" ] == $subject->ID && $service[ "price" ] != $subject->Price ) {
+} // if. isReturn
 
-                        $discountSum -= $subject->Price - $service[ "price" ];
-                        $service[ "price" ] = $service[ "price" ] - $discountSum;
-                        $this->allServices[ $index ] = $service;
+if ( $sum_cash > $amountOfPhysicalPayments ) $sum_cash = $amountOfPhysicalPayments;
+if ( $sum_card > $amountOfPhysicalPayments ) $sum_card = $amountOfPhysicalPayments;
 
-                        // May cause error in sale return case
-                        $this->saleServices[ $index ] = $service;
+foreach ( $this->visits as $visit )
+    $formFieldsUpdate[ "visits_ids" ][ "value" ][] = $visit[ "id" ];
 
-                    }
-
-                }
-
-            }
-
-
-
-            $this->saleSummary -= $discountSum;
-
-        } // foreach. Discount::GetActiveDiscounts( "promotions" ) as $discount
-
-        $saleSummary = max( $this->saleSummary, 0 );
-
-        /**
-         * Вычет депозита и бонусов для расчёта сумм налички и карты
-         */
-
-        $amountOfPhysicalPayments = 0;
-        $amountOfPhysicalPayments = $this->saleSummary - ( $requestData->sum_bonus + $requestData->sum_deposit );
-
-        $saleServicesPrice = 0;
-        $allServicesPrice = 0;
-
-        /**
-         * Подсчёт стоимости посещения без скидок
-         */
-
-        foreach ( $this->allServices as $service )
-            $allServicesPrice += $service[ "price" ];
-
-        foreach ( $this->saleServices as $service )
-            $saleServicesPrice += $service[ "price" ];
-
-
-
-        /**
-         * Нахождение скидки для товаров по формуле (стоимость со скидками / стоимость без скидок)
-         */
-
-        $discountPerProduct = $amountOfPhysicalPayments / $allServicesPrice;
-
-
-
-        /**
-         * Нахождение суммы для налички и карты с учётом скидок
-         */
-
-        $amountOfPhysicalPayments = $saleServicesPrice * $discountPerProduct;
-        $amountOfPhysicalPayments = round( $amountOfPhysicalPayments, 2 );
-
-        $this->saleSummary = $amountOfPhysicalPayments;
-
-//            if ( $requestData->return_bonuses == "Y" ) $saleSummary += $requestData->sum_bonus;
-//            if ( $requestData->return_deposit == "Y" ) $saleSummary += $requestData->sum_deposit;
-
-        if ( $this->isReturn ) {
-
-            $saleServicesPrice = 0;
-            $allServicesPrice = 0;
-
-            /**
-             * Подсчёт стоимости посещения без скидок
-             */
-
-            foreach ( $this->allServices as $service )
-                $allServicesPrice += $service[ "price" ];
-
-            foreach ( $this->saleServices as $service )
-                $saleServicesPrice += $service[ "price" ];
-
-
-
-            /**
-             * Нахождение скидки для товаров по формуле (стоимость со скидками / стоимость без скидок)
-             */
-
-            $discountPerProduct = $amountOfPhysicalPayments / $allServicesPrice;
-
-
-
-            /**
-             * Нахождение суммы для налички и карты с учётом скидок
-             */
-
-            $amountOfPhysicalPayments = $saleServicesPrice * $discountPerProduct;
-            $amountOfPhysicalPayments = round( $amountOfPhysicalPayments, 2 );
-
-            $this->saleSummary = $amountOfPhysicalPayments;
-
-            if ( $requestData->return_bonuses == "Y" ) $this->saleSummary += $requestData->sum_bonus;
-            if ( $requestData->return_deposit == "Y" ) $this->saleSummary += $requestData->sum_deposit;
-
-        } // if. $this->isReturn
-
-        $formFieldsUpdate = [];
-
-        if ( $this->sum_cash > $amountOfPhysicalPayments ) $this->sum_cash = $amountOfPhysicalPayments;
-        if ( $this->sum_card > $amountOfPhysicalPayments ) $this->sum_card = $amountOfPhysicalPayments;
-
-
-
-        /**
-         * Подсчёт суммы списания с карты и наличными в зависимости от выбранного типа оплаты
-         */
-
-        if ( $requestData->pay_method == "card" ) {
-
-            $formFieldsUpdate[ "sum_cash" ][ "is_visible" ] = false;
-            $formFieldsUpdate[ "sum_card" ][ "is_visible" ] = true;
-            $this->sum_card = $amountOfPhysicalPayments;
-            $this->sum_cash = 0;
-
-        } // if. $requestData->pay_method == "card"
-
-        if ( $requestData->pay_method == "parts" ) {
-
-            $formFieldsUpdate[ "sum_card" ][ "is_visible" ] = true;
-            $formFieldsUpdate[ "sum_cash" ][ "is_visible" ] = true;
-            $this->sum_card = $amountOfPhysicalPayments - $this->sum_cash;
-            $this->sum_card = $this->sum_cash >= $amountOfPhysicalPayments ? 0 : $this->sum_card;
-
-        } // if. $requestData->pay_method == "parts"
-
-        if ( $requestData->pay_method == "cash" ) {
-
-            $formFieldsUpdate[ "sum_card" ][ "is_visible" ] = false;
-            $formFieldsUpdate[ "sum_cash" ][ "is_visible" ] = true;
-            $this->sum_cash = $amountOfPhysicalPayments;
-            $this->sum_card = 0;
-
-        } // if. $requestData->pay_method == "cash"
-
-
-
-        /**
-         * Заполнение и отправка формы
-         */
-
-        $clientDetails = $API->DB->from( "clients" )
-            ->where( "id", $requestData->client_id )
-            ->fetch();
-
-
-        foreach ( $this->visits as $visit )
-            $formFieldsUpdate[ "visits_ids" ][ "value" ][] = $visit[ "id" ];
-
-        foreach ( $this->saleServices as $service )
-            $formFieldsUpdate[ "products" ][ "value" ][] = $service[ "id" ];
-
-        $formFieldsUpdate[ "services" ][ "value" ] = $this->saleServices;
-
-
-
-        $formFieldsUpdate[ "sum_cash" ][ "value" ] = max( $this->sum_cash, 0 );
-        $formFieldsUpdate[ "sum_card" ][ "value" ] = max( $this->sum_card, 0 );
-        $formFieldsUpdate[ "summary" ][ "value" ] = $saleSummary;
-
-        $formFieldsUpdate[ "pay_type" ][ "is_visible" ] = false;
-        $formFieldsUpdate[ "visits_ids" ][ "is_visible" ] = false;
-        $formFieldsUpdate[ "store_id" ][ "is_visible" ] = false;
-        $formFieldsUpdate[ "client_id" ][ "is_visible" ] = count(
-                $API->DB->from( "visits_clients" )
-                    ->where( "visit_id", $this->visits[ 0 ][ "id" ] )
-            ) > 1;
-
-        if ( $this->isReturn ) {
-
-            $formFieldsUpdate[ "sum_deposit" ][ "is_visible" ] = false;
-            $formFieldsUpdate[ "sum_bonus" ][ "is_visible" ] = false;
-
-        }
-
-        return $formFieldsUpdate;
-    }
-}
+foreach ( $this->doca_services as $service )
+    $formFieldsUpdate[ "products" ][ "value" ][] = [
+        "product_id" => $service[ "id" ],
+        "type" => "service"
+    ];
+
+foreach ( $this->doca_products as $product )
+    $formFieldsUpdate[ "products" ][ "value" ][] = [
+        "product_id" => $product[ "id" ],
+        "type" => "product"
+    ];
+
+$formFieldsUpdate[ "services" ][ "value" ] = $this->saleServices;
+$formFieldsUpdate[ "client_id" ][ "is_visible" ] = count(
+        $API->DB->from( "visits_clients" )
+            ->where( "visit_id", $this->visits[ 0 ][ "id" ] )
+    ) > 1;

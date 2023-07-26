@@ -7,11 +7,11 @@
 $publicAppPath = $API::$configs[ "paths" ][ "public_app" ];
 $libPath = $publicAppPath . "/custom-libs/sales";
 
-require_once ( "./database/salesActions.php" );
-require_once ( "./database/salesPayMethods.php" );
-require_once ( "./database/salesProductTypes.php" );
-require_once ( "./database/salesProductsList.php" );
-require_once ( "./database/salesList.php" );
+require_once ( $libPath . "/database/salesActions.php" );
+require_once ( $libPath . "/database/salesPayMethods.php" );
+require_once ( $libPath . "/database/salesProductTypes.php" );
+require_once ( $libPath . "/database/salesProductsList.php" );
+require_once ( $libPath . "/database/salesList.php" );
 
 
 

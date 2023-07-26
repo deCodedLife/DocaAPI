@@ -89,6 +89,7 @@
         },
         {
           "title": "Чат",
+          "is_counter": true,
           "body": [
             {
               "title": "Чат задачи",

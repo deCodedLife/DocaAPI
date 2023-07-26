@@ -37,7 +37,7 @@ $sqlTimeCondition = "(
 
 $existingVisits = mysqli_query(
     $API->DB_connection,
-    "SELECT id, cabinet_id FROM visits WHERE $sqlTimeCondition AND is_active = 'Y'"
+    "SELECT id, cabinet_id, store_id FROM visits WHERE $sqlTimeCondition AND is_active = 'Y'"
 );
 
 
@@ -151,7 +151,7 @@ foreach ( $allConsumables as $consumable_id => $consumable ) {
             ->fetch();
 
     if ( $consumable[ "count" ] > $warehouse[ "count" ] ) {
-        
+
         $API->returnResponse("Недостаточно расходников", 400);
 
     }
@@ -194,7 +194,13 @@ foreach ( $existingVisits as $existingVisit ) {
                 ->limit( 1 )
                 ->fetch();
 
-            $API->returnResponse( "Сотрудник ${userDetail[ "last_name" ]} занят", 400 );
+            $storeDetail = $API->DB->from( "stores" )
+                ->where( "id", $existingVisit[ "store_id" ] )
+                ->limit( 1 )
+                ->fetch();
+
+
+            $API->returnResponse( "Сотрудник " . userDetail[ "last_name" ] . " занят" . "(Филиал " . $storeDetail[ "title" ] . ")" , 400 );
 
         } // if. in_array( $visitUser[ "user_id" ], $requestData->users_id
 

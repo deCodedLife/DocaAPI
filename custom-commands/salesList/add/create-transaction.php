@@ -21,8 +21,8 @@ $saleID = $API->DB->insertInto( "salesList" )
     ->values( [
         "employee_id" => (int) $API::$userDetail->id,
         "action" => $requestData->action,
-        "sum_bonus" => $requestData->sum_bonus,
-        "sum_deposit" => $requestData->sum_deposit,
+        "sum_bonus" => $requestData->sum_bonus ?? 0,
+        "sum_deposit" => $requestData->sum_deposit ?? 0,
         "sum_card" => $requestData->sum_card,
         "sum_cash" => $requestData->sum_cash,
         "status" => "waiting",
@@ -39,7 +39,7 @@ $saleID = $API->DB->insertInto( "salesList" )
  *  Заполнение посещений транзакции
  */
 
-foreach ( $requestData->visits_ids as $visit ) {
+foreach ( $requestData->visits_ids ?? [] as $visit ) {
 
     $API->DB->insertInto( "saleVisits" )
         ->values( [
@@ -57,25 +57,29 @@ foreach ( $requestData->visits_ids as $visit ) {
  */
 $products = [];
 
-foreach ( $requestData->products as $index => $service ) {
+/**
+ * TODO вынести к черту это в business_logic
+ */
+foreach ( $requestData->products ?? [] as $index => $product ) {
 
-    $detailedInfo = $API->DB->from( "services" )
-        ->where( "id", $service )
+    $database = $product[ "type" ] == "service" ? "services" : "products";
+    $detailedInfo = $API->DB->from( $database )
+        ->where( "id", $product[ "product_id" ] )
         ->fetch();
 
     $products[] = $detailedInfo;
 
 }
 
-foreach ( $products as $service ) {
+foreach ( $products as $product ) {
 
     $API->DB->insertInto( "salesProductsList" )
         ->values( [
-            "title" => $service[ "title" ],
+            "title" => $product[ "title" ],
             "type" => "service",
             "sale_id" => $saleID,
-            "product_id" => (int) $service[ "id" ],
-            "cost" => (float) $service[ "price" ],
+            "product_id" => (int) $product[ "id" ],
+            "cost" => (float) $product[ "price" ],
             "amount" => 1
         ] )
         ->execute();

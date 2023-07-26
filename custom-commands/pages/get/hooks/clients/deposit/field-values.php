@@ -4,12 +4,21 @@ $currentStore = $API->DB->from( "users" )
     ->where( "id", $API::$userDetail->id )
     ->fetch() ?? 1;
 
-$formFieldValues[ "client_id" ] = $requestData->context->client_id;
+//$API->returnResponse( json_encode($requestData), 500 );
+/// {"context":{"form":"deposit","row_id":1},"page":"clients\/deposit"}
+/// {"context":{"form":"bonus","row_id":1},"page":"clients\/deposit"}
+
+$formFieldValues[ "client_id" ] = $requestData->context->row_id;
 $formFieldValues[ "employee_id" ] = $API::$userDetail->id;
-$formFieldValues[ "pay_type" ] = "deposit";
-$formFieldValues[ "visits_ids" ] = [];
+$formFieldValues[ "action" ] = "deposit";
+
 $formFieldValues[ "store_id" ] = $currentStore;
-$formFieldValues[ "pay_object" ] = [];
+$formFieldValues[ "products" ] = [];
+
 $formFieldValues[ "online_receipt" ] = true;
-$formFieldValues[ "is_combined" ] = false;
 $formFieldValues[ "pay_method" ] = "card";
+
+$formFieldValues[ "sum_cash" ] = 0;
+$formFieldValues[ "sum_card" ] = 0;
+
+$formFieldValues[ "summary" ] = [ "is_disabled" => false, "value" => 0 ];

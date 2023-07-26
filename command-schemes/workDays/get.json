@@ -1,0 +1,7 @@
+{
+  "title": "Вывод",
+  "type": "get",
+  "object_scheme": "workDays",
+  "modules": [],
+  "permissions": []
+}

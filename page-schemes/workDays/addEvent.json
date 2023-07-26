@@ -35,6 +35,7 @@
               {
                 "title": "",
                 "fields": [
+                  "user_id",
                   "store_id",
                   "cabinet_id",
                   "is_weekend"

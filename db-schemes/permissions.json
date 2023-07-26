@@ -43,6 +43,12 @@
       "article": "doctor_schedule",
       "description": null,
       "group_id": 1
+    },
+    {
+      "title": "Расписание директора",
+      "article": "director_schedule",
+      "description": null,
+      "group_id": 1
     }
   ]
 }

@@ -24,8 +24,7 @@
         "object": "documents",
         "command": "add",
         "fields_list": [
-          "owners_id",
-          "is_general"
+          "owners_id"
         ]
       }
     }
