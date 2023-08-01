@@ -27,9 +27,11 @@ $clientStatistic = [
 /**
 * Получение посещений Сотрудника
 */
-$clientVisits = $API->DB->from( "depositHistory" )
+$clientVisits = $API->DB->from( "salesList" )
     ->where( [
-        "client_id" => $requestData->client_id
+        "client_id" => $requestData->client_id,
+        "action" => "deposit",
+        "status" => "done"
     ] )
     ->limit( 1000 );
 
@@ -41,7 +43,7 @@ $clientVisits = $API->DB->from( "depositHistory" )
 foreach ( $clientVisits as $userDepositt ) {
 
 $clientStatistic[ "deposit_count" ]++;
-$clientStatistic[ "deposit_sum" ] += (float) $userDepositt[ "replenished" ];
+$clientStatistic[ "deposit_sum" ] += (float) $userDepositt[ "summary" ];
 
 } // foreach. $userDepositt
 

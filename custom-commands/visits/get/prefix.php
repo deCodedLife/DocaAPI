@@ -9,3 +9,9 @@ if ( $requestData->context->block === "day_planning" ) {
     $requestData->users_id = $API::$userDetail->id;
 
 } // if. $requestData->context->block === "day_planning"
+
+
+/**
+ * Фильтр по периоду
+ */
+if ( $requestData->sort_by === "period" ) $requestData->sort_by = "start_at";

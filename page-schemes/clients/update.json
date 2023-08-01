@@ -164,7 +164,7 @@
                 "widgets_group": "client_statistic",
                 "filters": [
                   {
-                    "property": "client_id",
+                    "property": "clients_id",
                     "value": ":id"
                   }
                 ]
@@ -200,6 +200,12 @@
               "size": 4,
               "settings": {
                 "object": "visits",
+                "filters": [
+                  {
+                    "property": "clients_id",
+                    "value": ":id"
+                  }
+                ],
                 "linked_filter": "analytic_widgets_client_statistic"
               }
             }
@@ -311,6 +317,7 @@
               "title": "Статистика бонусов",
               "type": "analytic_widgets",
               "size": 4,
+              "hook": "bonusHistory",
               "settings": {
                 "widgets_group": "bonus_statistic",
                 "filters": [
@@ -348,7 +355,8 @@
                         "form": "bonus",
                         "row_id": ":id"
                       },
-                      "modal_size": "lg"
+                      "modal_size": "lg",
+                      "refresh_after_submit": true
                     }
                   }
                 ]
@@ -363,6 +371,7 @@
               "title": "Статистика депозита",
               "type": "analytic_widgets",
               "size": 4,
+              "hook": "salesList",
               "settings": {
                 "widgets_group": "deposit_statistic",
                 "filters": [
@@ -378,6 +387,7 @@
               "title": "Список операций",
               "type": "list",
               "size": 4,
+              "hook": "salesList",
               "settings": {
                 "object": "salesList",
                 "filters": [

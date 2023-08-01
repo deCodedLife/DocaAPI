@@ -139,4 +139,41 @@ if ( $requestData->clients_id ) {
 
 }
 
+if ( $requestData->users_id ) {
+
+    /**
+     *  Указание филиала
+     */
+    if ( !$requestData->store_id ) {
+
+        $userDetails = $API->DB->from( "users_stores" )
+            ->innerJoin( "users on users.id = users_stores.user_id" )
+            ->where( "users.id", ( $requestData->users_id[ 0 ] ?? 1 ) )
+            ->limit( 1 )
+            ->fetch();
+
+        $formFieldsUpdate[ "store_id" ][ "value" ] = $userDetails[ "store_id" ];
+
+    }
+
+//    /**
+//     * Указание кабинета сотрудника
+//     */
+//    if ( $performerWorkSchedule[ "cabinet_id" ] ) {
+//
+//        $cabinetDetail = $API->DB->from( "cabinets" )
+//            ->where( "id", $performerWorkSchedule[ "cabinet_id" ] )
+//            ->limit( 1 )
+//            ->fetch();
+//
+//
+//        $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ][ "performer_title" ] .= " [Каб. " . $cabinetDetail[ "title" ] . "]";
+//
+//    } // if. $performerWorkSchedule[ "cabinet_id" ]
+
+}
+
+
+
+
 $API->returnResponse( $formFieldsUpdate );

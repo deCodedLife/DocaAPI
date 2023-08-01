@@ -8,7 +8,7 @@ foreach ( $response[ "data" ] as $visit ) {
 
         $visits_services = $API->DB->from( "visits_services" )
             ->where( "visit_id", $visit[ "id" ] );
-
+        
         $visit[ "period" ] = "c " . $visit[ "start_at" ] . " по " . $visit[ "end_at" ];
 
         foreach ( $visits_services as $visit_service) {

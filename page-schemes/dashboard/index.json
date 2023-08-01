@@ -10,7 +10,7 @@
         "director_schedule"
       ],
       "settings": {
-        "widgets_group": "daily_report"
+          "widgets_group": "daily_report"
       },
       "components": {
         "filters": [

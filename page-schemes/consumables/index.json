@@ -1,1 +1,37 @@
-{"required_modules":[],"required_permissions":[],"structure":[{"title":"Шапка","type":"header","size":4,"settings":{"description":"Список расходников","title":["Склад"]},"components":{"buttons":[{"type":"href","settings":{"title":"Добавить","page":"consumables/add"}}]}},{"title":"Список","type":"list","size":4,"settings":{"object":"consumables"},"components":[]}]}
+{
+  "required_modules": [],
+  "required_permissions": [],
+  "structure": [
+    {
+      "title": "Шапка",
+      "type": "header",
+      "size": 4,
+      "settings": {
+        "description": "Список расходников",
+        "title": [
+          "Расходники"
+        ]
+      },
+      "components": {
+        "buttons": [
+          {
+            "type": "href",
+            "settings": {
+              "title": "Добавить",
+              "page": "consumables/add"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "title": "Список",
+      "type": "list",
+      "size": 4,
+      "settings": {
+        "object": "consumables"
+      },
+      "components": []
+    }
+  ]
+}

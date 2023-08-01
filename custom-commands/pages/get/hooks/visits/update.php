@@ -108,3 +108,24 @@ if ( $pageDetail[ "row_detail" ][ "status" ]->value === "paidfor" ) {
 
 if ( $clientDetail[ "is_contract" ] == "Y" )
     unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 2 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 0 ] );
+
+
+/**
+ * Подготовка
+ */
+
+foreach ( $pageDetail[ "row_detail" ][ "services_id" ] as $service ) {
+
+    /**
+     * Детальная информация об услуге
+     */
+    $serviceDetail = $API->DB->from( "services" )
+        ->where( "id", $service->value )
+        ->limit( 1 )
+        ->fetch();
+
+
+    if ( $serviceDetail[ "preparation" ] )
+        $response[ "detail" ][ "modal_info" ] = $serviceDetail[ "preparation" ];
+
+} // foreach. $pageDetail[ "row_detail" ][ "services_id" ]

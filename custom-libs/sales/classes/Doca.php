@@ -52,8 +52,9 @@ class Doca
 
         
         if ( !$allVisits ) return;
+        $allVisits = [];
 
-        if ( $requestData->is_combined ?? 'N' == 'Y' ) {
+        if ( ($requestData->is_combined ?? 'N') == 'Y' ) {
 
             /**
              * Получение всех, неоплаченных клиентом, посещений

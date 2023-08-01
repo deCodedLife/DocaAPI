@@ -1,36 +1,78 @@
 {
   "required_modules": [],
   "required_permissions": [],
-  "structure": [{
-    "title": "Продажа",
-    "type": "form",
-    "size": 4,
-    "settings": {
-      "object": "salesList",
-      "command": "add",
-      "areas": [{
-        "size": 2,
-        "blocks": [{
-          "title": "",
-          "fields": ["visits_ids", "products", "pay_method", "sum_cash", "sum_card", "summary"]
-        }]
-      }, {
-        "size": 2,
-        "blocks": [{
-          "title": "",
-          "fields": ["store_id", "sum_bonus", "sum_deposit", "return_bonuses", "return_deposit", "online_receipt", "client_id", "terminal_code", "action"]
-        }]
-      }]
+  "structure": [
+    {
+      "title": "Форма возврата",
+      "type": "header",
+      "size": 4,
+      "settings": {
+        "description": "",
+        "title": [
+          "Возврат"
+        ]
+      },
+      "components": {
+        "buttons": []
+      }
     },
-    "components": {
-      "buttons": [{
-        "type": "submit",
-        "settings": {
-          "title": "Вернуть",
-          "href": "payments",
-          "background": "dark"
-        }
-      }]
+    {
+      "title": "Продажа",
+      "type": "form",
+      "size": 4,
+      "settings": {
+        "object": "salesList",
+        "command": "add",
+        "areas": [
+          {
+            "size": 2,
+            "blocks": [
+              {
+                "title": "",
+                "fields": [
+                  "visits_ids",
+                  "return_services",
+                  "pay_method",
+                  "sum_cash",
+                  "sum_card",
+                  "summary"
+                ]
+              }
+            ]
+          },
+          {
+            "size": 2,
+            "blocks": [
+              {
+                "title": "",
+                "fields": [
+                  "store_id",
+                  "sum_bonus",
+                  "sum_deposit",
+                  "return_bonuses",
+                  "return_deposit",
+                  "online_receipt",
+                  "client_id",
+                  "terminal_code",
+                  "action"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "components": {
+        "buttons": [
+          {
+            "type": "submit",
+            "settings": {
+              "title": "Вернуть",
+              "href": "payments",
+              "background": "dark"
+            }
+          }
+        ]
+      }
     }
-  }]
+  ]
 }

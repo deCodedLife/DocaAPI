@@ -21,6 +21,47 @@ foreach ( $generatedTab[ "settings" ][ "areas" ][ 0 ][ "blocks" ][ 0 ][ "fields"
 
 
 /**
+ * Связанные группы услуг
+ */
+
+$userServiceGroups = $API->DB->from( "serviceGroupEmployees" )
+    ->where( "employeeID", $pageDetail[ "row_detail" ][ "id" ] );
+
+foreach ( $userServiceGroups as $userServiceGroup ) {
+
+    $userGroupServices = $API->DB->from( "services" )
+        ->where( [
+            "category_id" => $userServiceGroup[ "groupID" ],
+            "is_active" => "Y"
+        ] );
+
+
+    foreach ( $userGroupServices as $userGroupService ) {
+
+        /**
+         * Проверка привязки услуги
+         */
+
+        $isContinueService = false;
+
+        foreach ( $userServices as $userService )
+            if ( $userService[ "service_id" ] == $userGroupService[ "id" ] ) $isContinueService = true;
+
+        if ( $isContinueService ) continue;
+
+
+        $userServices[] = [
+            "service_id" => $userGroupService[ "id" ],
+            "percent" => 0,
+            "fix_sum" => 0
+        ];
+
+    } // foreach. $userGroupServices
+
+} // foreach. $userServiceGroups
+
+
+/**
  * Связанные услуги
  */
 

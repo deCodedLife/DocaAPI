@@ -1,5 +1,7 @@
 <?php
 
+global $API, $requestData;
+
 /**
  * Переменные для выдачи
  */
@@ -34,9 +36,9 @@ $filter = [
 /**
  * Обработка оставшихся параметров из фильтров
  */
-if ( $requestData->payment_type ) $filter[ "pay_method = ?" ] = $requestData->payment_type;
+if ( $requestData->action ) $filter[ "action = ?" ] = $requestData->action;
 if ( $requestData->client_id ) $filter[ "client_id = ?" ] = $requestData->client_id;
-if ( $requestData->user_id ) $filter[ "employee = ?" ] = $requestData->user_id;
+if ( $requestData->employee_id ) $filter[ "employee_id = ?" ] = $requestData->employee_id;
 if ( $requestData->store_id ) $filter[ "store_id = ?" ] = $requestData->store_id;
 
 

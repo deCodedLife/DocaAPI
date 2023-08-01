@@ -24,7 +24,7 @@
         "object": "handbook"
       },
       "components": {
-        "search": false,
+        "search": true,
         "filters": [
           {
             "title": "Справочник",
@@ -32,7 +32,6 @@
             "required_permissions": [],
             "required_modules": [],
             "settings": {
-              "is_search": false,
               "recipient_property": "type_id",
               "donor_object": "handbookTypes",
               "donor_property_title": "title",

@@ -28,7 +28,7 @@ $visits = $API->DB->from( "visits" )
  */
 
 foreach ( $visits as $visit ) {
-    $API->returnResponse(date( "Y-m-d" ) . " 00:00:00");
+//    $API->returnResponse(date( "Y-m-d" ) . " 00:00:00");
 
 
     $cabinetDetail = $API->DB->from( "cabinets" )

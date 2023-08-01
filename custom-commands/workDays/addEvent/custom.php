@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Дата начала графика
  */
@@ -32,6 +31,18 @@ $currentScheduleDate = $scheduleFrom;
  */
 
 $currentSchedule = [];
+
+/**
+ * Получение данных о филиале пользователя
+ */
+$storeDetails = $API->DB->from( "stores" )
+    ->where( "id", $requestData->store_id )
+    ->fetch();
+
+
+if ( strtotime( $requestData->event_from ) < strtotime( $storeDetails[ "schedule_from" ] ) ) $API->returnResponse( "Расписание выходит за рамки графика филиала", 500 );
+if ( strtotime( $requestData->event_to )   > strtotime( $storeDetails[ "schedule_to" ] )  )  $API->returnResponse( "Расписание выходит за рамки графика филиала", 500 );
+
 
 $currentScheduleEvents = $API->DB->from( $API->request->object )
     ->where( [

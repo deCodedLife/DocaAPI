@@ -41,12 +41,13 @@ $expensesFilter = [];
 /**
  * Формирование фильтров
  */
+
 $salesFilter[ "status" ] = "done";
 $salesFilter[ "action" ] = "sell";
+
 if ( $requestData->start_at ) $salesFilter[ "created_at >= ?" ] = $requestData->start_at . " 00:00:00";
 if ( $requestData->end_at ) $salesFilter[ "created_at <= ?" ] = $requestData->end_at . " 23:59:59";
 if ( $requestData->store_id ) $salesFilter[ "store_id" ] = $requestData->store_id;
-
 
 if ( $requestData->store_id ) $expensesFilter[ "store_id" ] = $requestData->store_id;
 if ( $requestData->start_at ) $expensesFilter[ "date >= ?" ] = $requestData->start_at . " 00:00:00";
@@ -54,9 +55,8 @@ if ( $requestData->end_at ) $expensesFilter[ "date <= ?" ] = $requestData->end_a
 
 
 /**
-* Получение продаж
-*/
-
+ * Получение продаж
+ */
 $salesList = $API->DB->from( "salesList" )
     ->leftJoin( "saleVisits ON saleVisits.sale_id = salesList.id" )
     ->select( null )->select( [ "saleVisits.visit_id", "salesList.summary"  ] )
@@ -67,7 +67,6 @@ $salesList = $API->DB->from( "salesList" )
 /**
  * Получение расходов
  */
-
 $expenses = $API->DB->from( "expenses" )
     ->where( $expensesFilter );
 
@@ -83,15 +82,12 @@ foreach ( $salesList as $sale ) {
 
 } // foreach. $salesList
 
+
 /**
  * Обработка расходов
  */
-
-foreach ( $expenses as $expense ) {
-
+foreach ( $expenses as $expense )
     $reportStatistic[ "expenses_sum" ] += (float) $expense[ "price" ];
-
-} // foreach. $expenses
 
 
 

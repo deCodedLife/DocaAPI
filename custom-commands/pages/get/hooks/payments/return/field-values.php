@@ -19,8 +19,11 @@ $formFieldValues[ "action" ] = "sellReturn";
 
 foreach ( $API->DB->from( "salesProductsList" )
               ->where( "sale_id", $saleID ) as $saleService )
-    $formFieldValues[ "products" ][ "value" ][] = $saleService[ "product_id" ];
+    $formFieldValues[ "return_services" ][ "value" ][] = $saleService[ "product_id" ];
 
 foreach ( $API->DB->from( "saleVisits" )
               ->where( "sale_id", $saleID ) as $saleVisit )
     $formFieldValues[ "visits_ids" ][] = $saleVisit[ "visit_id" ];
+
+//$API->returnResponse( json_encode( $formFieldValues ), 500 );
+//{"id":"11","status":"done","client_id":"1","store_id":"1","employee_id":"1","action":"sellReturn","pay_method":"card","sum_bonus":0,"sum_deposit":0,"sum_card":2,"sum_cash":0,"terminal_code":null,"created_at":"2023-07-07 13:06:58","online_receipt":true,"summary":2,"error":null,"is_system":"N","is_combined":false,"return_services":{"value":["28"]},"visits_ids":["336"]}

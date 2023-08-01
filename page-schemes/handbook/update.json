@@ -30,25 +30,15 @@
               {
                 "title": "",
                 "fields": [
+                  "code",
                   "title",
-                  "code"
-                ]
-              }
-            ]
-          },
-          {
-            "size": 2,
-            "blocks": [
-              {
-                "title": "",
-                "fields": [
                   "type_id"
                 ]
               }
             ]
           },
           {
-            "size": 4,
+            "size": 2,
             "blocks": [
               {
                 "title": "",

@@ -12,6 +12,7 @@ $API->DB->update( "salesList" )
     ->execute();
 
 
+$API->addEvent( "salesList" );
 
 /**
  * Изменение статуса посещений

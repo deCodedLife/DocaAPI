@@ -20,6 +20,11 @@ foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
          */
         $updatedSchedule = [];
 
+        /**
+         * Свободный день
+         */
+        $notWorkDay = true;
+
 
 
         /**
@@ -38,6 +43,8 @@ foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
                     "event" => $performerEvent[ "event" ],
                     "status" => $performerEvent[ "status" ]
                 ];
+
+                $notWorkDay = false;
 
                 continue;
 
@@ -191,6 +198,13 @@ foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
             if ( $updatedSchedule ) $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ][ "schedule" ] = $updatedSchedule;
 
         } // foreach. $performerSchedule
+
+
+        /**
+         * Обрезка пустых столбцов, при фильтре по клиенту
+         */
+        if ( $requestData->clients_id && $notWorkDay && $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ] )
+            unset( $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ] );
 
     } // foreach. $scheduleDateDetail
 

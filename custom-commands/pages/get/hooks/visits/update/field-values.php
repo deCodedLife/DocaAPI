@@ -9,90 +9,89 @@ $visitDetails = $API->DB->from( "visits" )
     ->limit( 1 )
     ->fetch();
 
+/**
+ * Получение информации о продаже
+ */
 $saleDetails =  $API->DB->from( "saleVisits" )
     ->where( "visit_id", $pageDetail[ "row_id" ] )
     ->fetch();
 
 
 /**
- * Получение детальной информации о пользователе
+ * Получение детальной информации о сотруднике
  */
-
 $userDetails = $API->DB->from( "users" )
     ->where( "id", $API::$userDetail->id )
     ->fetch();
-//
+
+// Правка для dev аккаунта
 if ( !$userDetails[ "store_id" ] ) $userDetails[ "store_id" ] = $API->DB->from( "stores" )->limit( 1 )->fetch()["id"];
 
 
 /**
  * Подсчёт итоговой стоимости посещения
  */
-
 $paymentSummary = $visitDetails[ "price" ];
 
-if ( $visitDetails[ "discount_type" ] == "fixed" ) $paymentSummary -= $visitDetails[ "discount_value" ];
-if ( $visitDetails[ "discount_type" ] == "percent" ) $paymentSummary -= ($paymentSummary / 100) * $visitDetails[ "discount_value" ];
-
-if ( $paymentSummary < 0 ) $paymentSummary = 0;
-
-$clients = $API->DB->from( "visits_clients" )
+/**
+ * Получение id клиента
+ */
+$client = $API->DB->from( "visits_clients" )
     ->where( "visit_id", $pageDetail[ "row_id" ] )
     ->limit( 1 )
     ->fetch();
 
 
 /**
- * Заполнение полей
+ * Заполнение полей стандартными значениями
  */
+$formFieldValues = [
+    "sum_cash" => $paymentSummary,
+    "pay_method" => "cash",
+    "store_id" => (int) $userDetails[ "store_id" ],
+    "client_id" => $client[ "client_id" ],
+    "online_receipt" => true
+];
+
+$formFieldValues[ "summary" ] = $paymentSummary;
+$formFieldValues[ "visits_ids" ][] = $pageDetail[ "row_id" ];
 
 
+/**
+ * Заполнение полей из продаж
+ */
+if ( $visitDetails[ "is_payed" ] == "Y" || ( $saleDetails && $saleDetails[ "status" ] != "error" ) ) {
 
-if ( $visitDetails[ "is_payed" ] == "B" || ( $saleDetails && $saleDetails[ "status" ] != "error" ) ) {
-
-    $formFieldValues =
+    /**
+     * Заполнение полей запросом в таблицу
+     */
+    $sale =
         $API->DB->from( "salesList" )
-            ->innerJoin( "salesVisits ON salesVisits.sale_id = sales.id" )
-            ->where( "salesVisits.visit_id", $pageDetail[ "row_id" ] )
+            ->innerJoin( "saleVisits ON saleVisits.sale_id = salesList.id" )
+            ->where( "saleVisits.visit_id", $pageDetail[ "row_id" ] )
             ->fetch();
 
-    $formFieldValues[ "summary" ] = (float) $formFieldValues[ "summary" ];
-    $formFieldValues[ "sum_cash" ] = (float) $formFieldValues[ "sun_cash" ];
-    $formFieldValues[ "sum_card" ] = (float) $formFieldValues[ "sum_card" ];
-    $formFieldValues[ "sum_bonus" ] = (float) $formFieldValues[ "sum_bonus" ];
-    $formFieldValues[ "sum_deposit" ] = (float) $formFieldValues[ "sum_deposit" ];
-    $formFieldValues[ "is_combined" ] = $formFieldValues[ "is_combined" ] == "Y";
-    $formFieldValues[ "online_receipt" ] = $formFieldValues[ "online_receipt" ] == "Y";
+    if ( $sale ) {
 
-    foreach ( $API->DB->from( "saleVisits" )
-                  ->where( "sale_id", $saleDetails[ "sale_id" ] ) as $saleVisit )
-        $formFieldValues[ "visits_ids" ][] = $saleVisit[ "visit_id" ];
+        $formFieldValues = $sale;
 
-    $products = $API->DB->from( "saleProductsList" )
-        ->where( [
-            "sale_id" => $saleDetails[ "sale_id" ],
-            "type" => "service"
-        ] );
+        /**
+         * Приведение данных к правильным типам
+         */
+        $formFieldValues[ "summary" ] = (float) $formFieldValues[ "summary" ];
+        $formFieldValues[ "sum_cash" ] = (float) $formFieldValues[ "sun_cash" ];
+        $formFieldValues[ "sum_card" ] = (float) $formFieldValues[ "sum_card" ];
+        $formFieldValues[ "sum_bonus" ] = (float) $formFieldValues[ "sum_bonus" ];
+        $formFieldValues[ "sum_deposit" ] = (float) $formFieldValues[ "sum_deposit" ];
+        $formFieldValues[ "is_combined" ] = $formFieldValues[ "is_combined" ] == "Y";
+        $formFieldValues[ "online_receipt" ] = $formFieldValues[ "online_receipt" ] == "Y";
 
-    foreach ( $products as $product )
-        $formFieldValues[ "products" ][] = $product[ "product_id" ];
+        foreach ( $API->DB->from( "saleVisits" )
+                      ->where( "sale_id", $saleDetails[ "sale_id" ] ) as $saleVisit )
+            $formFieldValues[ "visits_ids" ][] = $saleVisit[ "visit_id" ];
 
-} else {
+    }
 
-    $formFieldValues = [
-        "sum_cash" => $paymentSummary,
-        "pay_method" => "cash",
-        "store_id" => (int) $userDetails[ "store_id" ],
-        "client_id" => $clients[ "client_id" ],
-        "online_receipt" => true
-    ];
-
-    $formFieldValues[ "summary" ] = $paymentSummary;
-    $formFieldValues[ "visits_ids" ][] = $pageDetail[ "row_id" ];
-
-    $services = $API->DB->from( "visits_services" )
-        ->where( "visit_id", $pageDetail[ "row_id" ] );
-
-} // if. $visitDetails[ "is_payed" ] == "Y" || ( $saleDetails && $saleDetails[ "status" ] != "error" )
+}
 
 $formFieldValues[ "action" ] = "sell";

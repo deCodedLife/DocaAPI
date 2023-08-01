@@ -508,6 +508,56 @@
           ]
         },
         {
+          "title": "Звонки",
+          "body": [
+            {
+              "title": "Виджет",
+              "type": "analytic_widgets",
+              "size": 4,
+              "settings": {
+                "widgets_group": "userCalls"
+              },
+              "components": {
+                "filters": [
+                  {
+                    "title": "Дата (от)",
+                    "type": "date",
+                    "required_permissions": [],
+                    "required_modules": [],
+                    "settings": {
+                      "is_search": false,
+                      "recipient_property": "start_at"
+                    }
+                  },
+                  {
+                    "title": "Дата (до)",
+                    "type": "date",
+                    "required_permissions": [],
+                    "required_modules": [],
+                    "settings": {
+                      "is_search": false,
+                      "recipient_property": "end_at"
+                    }
+                  },
+                  {
+                    "title": "Сотрудник",
+                    "type": "list",
+                    "required_permissions": [],
+                    "required_modules": [],
+                    "settings": {
+                      "is_search": false,
+                      "recipient_property": "user_id",
+                      "donor_object": "users",
+                      "donor_property_title": "last_name",
+                      "donor_property_value": "id"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
           "title": "Удаленные записи",
           "body": [
             {

@@ -44,6 +44,10 @@
                                     }
                                 ],
                                 "event_page": "workDays/addEvent",
+                                "events": {
+                                    "add": "workDays/addEvent",
+                                    "update": "workDays/updateEvent"
+                                },
                                 "context": {
                                     "form": "users",
                                     "row_id": ":id"
@@ -62,7 +66,8 @@
                                             "context": {
                                                 "form": "users",
                                                 "row_id": ":id"
-                                            }
+                                            },
+                                            "refresh_after_submit": true
                                         }
                                     }
                                 ],
@@ -262,7 +267,7 @@
                                 "object": "visits",
                                 "filters": [
                                     {
-                                        "property": "user_id",
+                                        "property": "users_id",
                                         "value": ":id"
                                     },
                                     {

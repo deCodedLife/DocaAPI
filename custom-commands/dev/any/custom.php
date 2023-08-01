@@ -1,5 +1,9 @@
 <?php
 
+mysqli_query(
+    $API->DB_connection,
+    "update handbook set type_id = 6414 where type_id != 5454"
+);
 
 $API->returnResponse( "NYAAAAAA" );
 
@@ -29,7 +33,8 @@ while ( true ) {
     ob_flush();
     flush();
 
-    sleep( 1 );
+    sleep( random_int(10, 100) / 100 );
+    break;
 
 }
 

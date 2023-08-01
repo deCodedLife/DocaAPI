@@ -5,20 +5,20 @@
       "title": "Панель управления",
       "href": "dashboard",
       "children": [],
-      "icon": "garage"
+      "icon": "dashboard"
     },
     {
       "title": "Расписание",
       "href": "managerSchedule",
       "required_permissions": [ "director_schedule" ],
       "children": [],
-      "icon": "stethoscope"
+      "icon": "schedule"
     },
     {
       "title": "Сотрудники",
       "href": "users",
       "children": [],
-      "icon": "user"
+      "icon": "id-card"
     },
     {
       "title": "Клиенты",
@@ -36,67 +36,67 @@
       "title": "Товары",
       "href": "products",
       "children": [],
-      "icon": "reading"
+      "icon": "shopping-basket"
     },
     {
-      "title": "Склад",
+      "title": "Расходники",
       "href": "consumables",
       "children": [],
-      "icon": "stethoscope"
+      "icon": "first-aid-kit"
     },
     {
       "title": "Справочники",
       "href": "handbook",
       "children": [],
-      "icon": "stethoscope"
+      "icon": "reading"
     },
     {
       "title": "Электронная очередь",
       "href": "queue",
       "children": [],
-      "icon": "stethoscope"
+      "icon": "tag-2"
     },
     {
       "title": "Закупки",
       "href": "purchases",
       "children": [],
-      "icon": "stethoscope"
+      "icon": "fast-delivery"
     },
     {
       "title": "Отчеты",
       "href": "reports",
       "children": [],
-      "icon": "stethoscope"
+      "icon": "ranking"
     },
     {
       "title": "Задачи",
       "href": "tasks",
       "children": [],
-      "icon": "schedule"
+      "icon": "desktop"
     },
     {
       "title": "Акции",
       "href": "promotions",
       "children": [],
-      "icon": "reading"
+      "icon": "tag"
     },
     {
       "title": "Бонусы",
       "href": "bonus",
       "children": [],
-      "icon": "reading"
+      "icon": "tag"
     },
     {
       "title": "Шаблоны документов",
       "href": "documents",
       "children": [],
-      "icon": "reading"
+      "icon": "files"
     },
     {
       "title": "Касса",
       "href": "payments",
       "children": [],
-      "icon": "reading"
+      "icon": "e-commerce"
     },
     {
       "title": "Настройки",

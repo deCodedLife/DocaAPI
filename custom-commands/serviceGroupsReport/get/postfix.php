@@ -4,14 +4,20 @@
  * @file
  * Отчет "группы услуг
  */
+
+
 $returnServices = [];
+
 
 /**
  * Фильтр для продаж
  */
+
 $salesFilter[ "status" ] = "done";
 $salesFilter[ "type" ] = "service";
 $salesFilter[ "action" ] = "sell";
+$salesFilter[ "created_at >= ?" ] = date( "Y-m-" ) . "01 00:00:00";
+
 
 /**
  * Получение списка продаж
@@ -30,7 +36,7 @@ $salesList = $API->DB->from( "salesList" )
     ->limit( 0 );
 
 /**
- * Получение груп услуг
+ * Получение групп услуг
  */
 $serviceGroups = $API->DB->from( "serviceGroups" )
     ->where( "is_active", "Y" );
@@ -41,7 +47,7 @@ $serviceGroups = $API->DB->from( "serviceGroups" )
 $currentDateTime = new DateTime();
 
 /**
- * Обход груп услуг
+ * Обход групп услуг
  */
 foreach ( $serviceGroups as $serviceGroup ) {
 
@@ -87,6 +93,6 @@ foreach ( $serviceGroups as $serviceGroup ) {
     }
 
 
-} // foreach .$services
+} // foreach. $services
 
 $response[ "data" ] = array_values($returnServices);

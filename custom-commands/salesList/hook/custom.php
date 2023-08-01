@@ -3,7 +3,14 @@
 ini_set( "display_errors", true );
 $amountOfPhysicalPayments = $requestData->summary ?? 0;
 $saleSummary = 0;
+$sum_card = $requestData->sum_card ?? 0;
+$sum_cash = $requestData->sum_cash ?? 0;
 
+
+/**
+ * Обновление полей
+ */
+$formFieldsUpdate = [];
 
 /**
  * Определение значений
@@ -19,21 +26,22 @@ else {
     $saleSummary = $sum_cash + $sum_card;
 }
 
-/**
- * Обновление полей
- */
-$formFieldsUpdate = [];
+
 
 /**
  * Подсчёт суммы списания с карты и наличными в зависимости от выбранного типа оплаты
  */
+$formFieldsUpdate[ "sum_cash" ][ "is_disabled" ] = true;
+$formFieldsUpdate[ "sum_card" ][ "is_disabled" ] = true;
 
 if ( $requestData->pay_method == "card" ) {
 
     $formFieldsUpdate[ "sum_cash" ][ "is_visible" ] = false;
     $formFieldsUpdate[ "sum_card" ][ "is_visible" ] = true;
+
     $sum_card = $amountOfPhysicalPayments ?? $saleSummary;
     $sum_cash = 0;
+
 
 } // if. $requestData->pay_method == "card"
 
@@ -41,7 +49,10 @@ if ( $requestData->pay_method == "parts" ) {
 
     $formFieldsUpdate[ "sum_card" ][ "is_visible" ] = true;
     $formFieldsUpdate[ "sum_cash" ][ "is_visible" ] = true;
-    $sum_card = ($amountOfPhysicalPayments ?? $saleSummary) - $sum_cash;
+
+    $formFieldsUpdate[ "sum_cash" ][ "is_disabled" ] = false;
+
+    $sum_card = $amountOfPhysicalPayments - $sum_cash;
     $sum_card = $sum_cash >= ($amountOfPhysicalPayments ?? $saleSummary) ? 0 : $sum_card;
 
 } // if. $requestData->pay_method == "parts"
@@ -61,7 +72,7 @@ if ( $requestData->pay_method == "cash" ) {
  * Заполнение и отправка формы
  */
 $clientDetails = $API->DB->from( "clients" )
-    ->where( "id", $requestData->client_id )
+    ->where( "id", $requestData->client_id ?? 1 )
     ->fetch();
 
 
@@ -72,9 +83,6 @@ $formFieldsUpdate[ "sum_card" ][ "value" ] = max( $sum_card, 0 );
 if ( $requestData->action !== "deposit" )
     $formFieldsUpdate[ "summary" ][ "value" ] = $saleSummary;
 
-
-$formFieldsUpdate[ "pay_type" ][ "is_visible" ] = false;
-$formFieldsUpdate[ "visits_ids" ][ "is_visible" ] = false;
 
 if ( $isReturn ) {
 

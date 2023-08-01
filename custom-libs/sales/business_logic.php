@@ -16,15 +16,18 @@ use Sales\Subject;
 use Sales\Modifier;
 use Sales\SALES_VARIABLES;
 
-$allVisits = [];
+
+$allVisits = $requestData->visits_ids ?? [];
+$allProducts = $requestData->doca_products ?? [];
 $saleVisits = [];
 $allServices = [];
 $saleServices = [];
 $saleSummary  = 0;
+$productsPrice = 0;
 $isReturn = false;
-$sum_card = 0;
-$sum_cash = 0;
-$isReturn = $requestData->action ?? 'sell' === "sellReturn";
+$sum_card = $requestData->sum_card ?? 0;
+$sum_cash = $requestData->sum_cash ?? 0;
+$isReturn = ($requestData->action ?? 'sell') === "sellReturn";
 
 
 /**
@@ -50,7 +53,7 @@ if ( $isReturn ) {
             "type" => "service"
         ]);
 
-    foreach ( $requestData->pay_object as $index => $saleID ) {
+    foreach ( $requestData->return_services as $saleID ) {
 
         $details = $Doca->getServiceDetails( $saleID );
 
@@ -85,22 +88,33 @@ if ( $isReturn ) {
  * Получение итоговой суммы продажи
  */
 
-foreach ( $allVisits as $visit ) {
+foreach ( $allVisits as $visit )
+    $saleSummary += $visit[ "price" ];
 
-    $visitPrice = $visit[ "price" ];
+foreach ( $allProducts as $product ) {
 
-    if ( $requestData->discount_type === "fixed"   ) $visitPrice -= $requestData->discount_value;
-    if ( $requestData->discount_type === "percent" ) $visitPrice -= ($visitPrice / 100) * $requestData->discount_value;
+    $productDetails = $API->DB->from( "products" )
+        ->where( "id", $product->id )
+        ->fetch();
 
-    $visitPrice = max( $visitPrice, 0 );
-    $saleSummary += $visitPrice;
+    $productsPrice += $productDetails[ "price" ] * $product->amount;
 
-} // foreach. $saleVisits as $visit
+}
+
+$saleSummary += $productsPrice;
+
+if ( $requestData->discount_type === "fixed"   ) $saleSummary -= ( $requestData->discount_value ?? 0 );
+if ( $requestData->discount_type === "percent" ) $saleSummary -= ( $saleSummary / 100 ) * ( $requestData->discount_value ?? 0 );
+
+$saleSummary = max( $saleSummary, 0 );
+
+
 
 if ( $isReturn ) {
 
-    $saleDetails = $API->DB->from( $SALES_VARIABLES::$DB_SALES_PRODUCTS_LIST )
-        ->where( "id", $requestData->id )
+    $saleDetails = $API->DB->from( $SALES_VARIABLES::$DB_SALES_LIST )
+        ->innerJoin( "saleVisits on saleVisits.sale_id = {$SALES_VARIABLES::$DB_SALES_LIST}.id" )
+        ->where( "saleVisits.visit_id", $requestData->id )
         ->fetch();
 
     $saleSummary = $saleDetails[ "summary" ];
@@ -197,7 +211,7 @@ $saleSummary = max( $saleSummary, 0 );
  */
 
 $amountOfPhysicalPayments = 0;
-$amountOfPhysicalPayments = $saleSummary - ( $requestData->sum_bonus + $requestData->sum_deposit );
+$amountOfPhysicalPayments = $saleSummary - ( ($requestData->sum_bonus ?? 0) + ($requestData->sum_deposit ?? 0) );
 
 $saleServicesPrice = 0;
 $allServicesPrice = 0;
@@ -218,7 +232,7 @@ foreach ( $saleServices as $service )
  * Нахождение скидки для товаров по формуле (стоимость со скидками / стоимость без скидок)
  */
 
-$discountPerProduct = $amountOfPhysicalPayments / $allServicesPrice;
+$discountPerProduct = $amountOfPhysicalPayments / ( $allServicesPrice + $productsPrice );
 
 
 
@@ -226,7 +240,7 @@ $discountPerProduct = $amountOfPhysicalPayments / $allServicesPrice;
  * Нахождение суммы для налички и карты с учётом скидок
  */
 
-$amountOfPhysicalPayments = $saleServicesPrice * $discountPerProduct;
+$amountOfPhysicalPayments = ($saleServicesPrice + $productsPrice) * $discountPerProduct;
 $amountOfPhysicalPayments = round( $amountOfPhysicalPayments, 2 );
 
 $saleSummary = $amountOfPhysicalPayments;
@@ -266,31 +280,21 @@ if ( $isReturn ) {
 
     $saleSummary = $amountOfPhysicalPayments;
 
-    if ( $requestData->return_bonuses == "Y" ) $saleSummary += $requestData->sum_bonus;
-    if ( $requestData->return_deposit == "Y" ) $saleSummary += $requestData->sum_deposit;
+    if ( $requestData->return_bonuses ?? 'N' == "Y" ) $saleSummary += $requestData->sum_bonus;
+    if ( $requestData->return_deposit ?? 'N' == "Y" ) $saleSummary += $requestData->sum_deposit;
 
 } // if. isReturn
+
+
 
 if ( $sum_cash > $amountOfPhysicalPayments ) $sum_cash = $amountOfPhysicalPayments;
 if ( $sum_card > $amountOfPhysicalPayments ) $sum_card = $amountOfPhysicalPayments;
 
-foreach ( $this->visits as $visit )
+foreach ( $allVisits as $visit )
     $formFieldsUpdate[ "visits_ids" ][ "value" ][] = $visit[ "id" ];
 
-foreach ( $this->doca_services as $service )
-    $formFieldsUpdate[ "products" ][ "value" ][] = [
-        "product_id" => $service[ "id" ],
-        "type" => "service"
-    ];
+foreach ( $allServices as $service )
+    $formFieldsUpdate[ "doca_services" ][ "value" ][] = $service[ "title" ];
 
-foreach ( $this->doca_products as $product )
-    $formFieldsUpdate[ "products" ][ "value" ][] = [
-        "product_id" => $product[ "id" ],
-        "type" => "product"
-    ];
-
-$formFieldsUpdate[ "services" ][ "value" ] = $this->saleServices;
-$formFieldsUpdate[ "client_id" ][ "is_visible" ] = count(
-        $API->DB->from( "visits_clients" )
-            ->where( "visit_id", $this->visits[ 0 ][ "id" ] )
-    ) > 1;
+//foreach ( $allProducts as $product )
+//    $formFieldsUpdate[ "doca_products" ][ "value" ][] = $product[ "title" ];

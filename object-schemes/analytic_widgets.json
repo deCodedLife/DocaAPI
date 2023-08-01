@@ -16,7 +16,8 @@
         "sales_statistic",
         "userServices",
         "visit_clients",
-        "salary_info"
+        "salary_info",
+        "userCalls"
       ],
       "list_donor": {
         "table": "users",
@@ -39,7 +40,8 @@
         "clients",
         "sales_statistic",
         "visit_clients",
-        "client_statistic"
+        "client_statistic",
+        "userCalls"
 
       ]
     },
@@ -59,7 +61,8 @@
         "clients",
         "sales_statistic",
         "visit_clients",
-        "client_statistic"
+        "client_statistic",
+        "userCalls"
       ]
     },
     {
@@ -187,6 +190,25 @@
     },
     {
       "title": "Клиент",
+      "article": "clients_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "client_statistic"
+      ],
+      "require_in_commands": [
+        "client_statistic"
+      ],
+      "list_donor": {
+        "table": "clients",
+        "properties_title": "last_name"
+      }
+    },
+    {
+      "title": "Клиент",
       "article": "client_id",
       "data_type": "integer",
       "field_type": "list",
@@ -194,13 +216,11 @@
       "is_unique": false,
       "is_autofill": true,
       "use_in_commands": [
-        "client_statistic",
         "deposit_statistic",
         "bonus_statistic",
         "sales_statistic"
       ],
       "require_in_commands": [
-        "client_statistic",
         "deposit_statistic",
         "bonus_statistic"
       ],

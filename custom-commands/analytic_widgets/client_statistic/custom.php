@@ -5,7 +5,6 @@
 * Отчет "Статистика клиента
 */
 
-
 /**
 * Статистика клиента
 */
@@ -43,15 +42,20 @@ $clientStatistic = [
 
 ];
 
+$filters = [
+    "visits_clients.client_id" => $requestData->clients_id
+];
+
+if ( $requestData->start_at ) $filters[ "start_at >= ?" ] = $requestData->start_at . " 00:00:00";
+if ( $requestData->end_at )   $filters[ "end_at <= ?" ]   = $requestData->end_at   . " 23:59:59";
+
 /**
 * Получение посещений Сотрудника
 */
 $clientVisits = $API->DB->from( "visits" )
     ->leftJoin( "visits_clients ON visits_clients.visit_id = visits.id" )
     ->select( null )->select( [  "visits.id", "visits.start_at", "visits.is_active", "visits.status", "visits.price"  ] )
-    ->where( [
-        "visits_clients.client_id" => $requestData->client_id
-    ] )
+    ->where( $filters )
     ->orderBy( "visits.start_at desc" )
     ->limit( 0 );
 

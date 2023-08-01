@@ -29,7 +29,17 @@
               "type": "analytic_widgets",
               "size": 4,
               "settings": {
-                "widgets_group": "sales_statistic"
+                "widgets_group": "sales_statistic",
+                "filters": [
+                  {
+                    "property": "start_at",
+                    "value": ":date()"
+                  },
+                  {
+                    "property": "end_at",
+                    "value": ":date()"
+                  }
+                ]
               },
               "components": {
                 "filters": [
@@ -48,34 +58,44 @@
                     }
                   },
                   {
-                    "title": "Филлиал",
+                    "title": "Клиент",
                     "settings": {
-                      "recipient_property": "store_id",
-                      "donor_object": "stores",
-                      "donor_property_title": "title",
-                      "donor_property_value": "id"
+                      "donor_object": "clients",
+                      "donor_property_title": "last_name",
+                      "donor_property_value": "id",
+                      "recipient_property": "client_id"
                     },
                     "type": "list"
                   },
                   {
                     "title": "Тип операции",
+                    "type": "list",
                     "settings": {
-                      "recipient_property": "payment_type",
                       "donor_object": "salePayMethods",
                       "donor_property_title": "title",
-                      "donor_property_value": "article"
-                    },
-                    "type": "list"
+                      "donor_property_value": "article",
+                      "recipient_property": "sale_type"
+                    }
                   },
                   {
-                    "title": "Клиент",
+                    "title": "Тип оплаты",
+                    "type": "list",
                     "settings": {
-                      "recipient_property": "client_id",
-                      "donor_object": "clients",
-                      "donor_property_title": "last_name",
-                      "donor_property_value": "id"
-                    },
-                    "type": "list"
+                      "donor_object": "saleActions",
+                      "donor_property_title": "title",
+                      "donor_property_value": "article",
+                      "recipient_property": "pay_method"
+                    }
+                  },
+                  {
+                    "title": "Филиал",
+                    "type": "list",
+                    "settings": {
+                      "donor_object": "stores",
+                      "donor_property_title": "title",
+                      "donor_property_value": "id",
+                      "recipient_property": "store_id"
+                    }
                   },
                   {
                     "title": "Оператор",
@@ -96,27 +116,46 @@
               "size": 4,
               "settings": {
                 "object": "salesList",
-                "filters": [
-                  {
-                    "property": "action",
-                    "value": "sell"
-                  }
-                ]
+                "linked_filter": "analytic_widgets_sales_statistic"
+              }
+            }
+          ]
+        },
+        {
+          "title": "Операции по кассе",
+          "body": [
+            {
+              "title": "Список",
+              "type": "list",
+              "size": 4,
+              "settings": {
+                "object": "salesList"
               },
               "components": {
+                "buttons": [
+                  {
+                    "type": "modal",
+                    "settings": {
+                      "title": "Новая продажа",
+                      "background": "dark",
+                      "page": "payments/saleCreate",
+                      "modal_size": "xl"
+                    }
+                  }
+                ],
                 "filters": [
                   {
                     "title": "Дата (от)",
                     "type": "date",
                     "settings": {
-                      "recipient_property": "starts_at"
+                      "recipient_property": "start_at"
                     }
                   },
                   {
                     "title": "Дата (до)",
                     "type": "date",
                     "settings": {
-                      "recipient_property": "ends_at"
+                      "recipient_property": "end_at"
                     }
                   },
                   {
@@ -165,28 +204,26 @@
           ]
         },
         {
-          "title": "Операции по кассе",
+          "title": "Расходы",
           "body": [
             {
               "title": "Список",
               "type": "list",
               "size": 4,
               "settings": {
-                "object": "salesList"
+                "object": "expenses"
               },
               "components": {
                 "buttons": [
                   {
                     "type": "modal",
                     "settings": {
-                      "title": "Новая продажа",
+                      "title": "Добавить расход",
                       "background": "dark",
-                      "page": "clients/deposit",
-                      "context": {
-                        "form": "deposit",
-                        "row_id": ":id"
-                      },
-                      "modal_size": "lg"
+                      "page": "payments/addExpense",
+                      "modal_size": "xl",
+                      "refresh_after_submit": true,
+                      "close_after_submit": true
                     }
                   }
                 ],
@@ -195,44 +232,24 @@
                     "title": "Дата (от)",
                     "type": "date",
                     "settings": {
-                      "recipient_property": "starts_at"
+                      "recipient_property": "start_at"
                     }
                   },
                   {
                     "title": "Дата (до)",
                     "type": "date",
                     "settings": {
-                      "recipient_property": "ends_at"
+                      "recipient_property": "end_at"
                     }
                   },
                   {
-                    "title": "Клиент",
+                    "title": "Тип",
+                    "type": "list",
                     "settings": {
-                      "donor_object": "clients",
-                      "donor_property_title": "last_name",
+                      "donor_object": "expensTypes",
+                      "donor_property_title": "title",
                       "donor_property_value": "id",
-                      "recipient_property": "client_id"
-                    },
-                    "type": "list"
-                  },
-                  {
-                    "title": "Тип операции",
-                    "type": "list",
-                    "settings": {
-                      "donor_object": "salePayMethods",
-                      "donor_property_title": "title",
-                      "donor_property_value": "article",
-                      "recipient_property": "sale_type"
-                    }
-                  },
-                  {
-                    "title": "Тип оплаты",
-                    "type": "list",
-                    "settings": {
-                      "donor_object": "saleActions",
-                      "donor_property_title": "title",
-                      "donor_property_value": "article",
-                      "recipient_property": "pay_method"
+                      "recipient_property": "expensType_id"
                     }
                   },
                   {

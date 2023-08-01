@@ -240,7 +240,7 @@ $serviceDetail = $API->DB->from( "services" )
     ->fetch();
 
 $requestData->talon = mb_strtoupper(
-    mb_substr( translit( $serviceDetail[ "title" ] ), 0, 1 )
+    mb_substr( $serviceDetail[ "title" ], 0, 1 )
 ) . " ";
 
 $lastVisitDetail = $API->DB->from( "visits" )
