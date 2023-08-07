@@ -45,7 +45,7 @@ $clientStatistic = [
 
 
 /**
- * Получение посещений Сотрудника
+ * Получение посещений Клиента
  */
 $clientVisits = $API->DB->from( "visits" )
     ->leftJoin( "visits_clients ON visits_clients.visit_id = visits.id" )

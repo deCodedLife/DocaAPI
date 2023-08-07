@@ -5,7 +5,7 @@
  */
 
 $userDetail = $API->DB->from( "users" )
-    ->where( "id", $requestData->users_id[ 0 ] )
+    ->where( "id", $requestData->user_id )
     ->limit( 1 )
     ->fetch();
 

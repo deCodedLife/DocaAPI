@@ -20,12 +20,11 @@ foreach ( $clients as $client ) {
             substr($clientDetail [ "phone" ], 9)
         );
 
-    $clientsInfo[] = $clientDetail[ "last_name" ] . " " . $clientDetail[ "first_name" ] . " " . $clientDetail[ "patronymic" ] . ", " . $phoneFormat;
+    $clientsInfo[] = "№{$clientDetail[ "id" ]} {$clientDetail[ "last_name" ]} {$clientDetail[ "first_name" ]} {$clientDetail[ "patronymic" ]}, $phoneFormat";
 
 } // foreach. $clients
 
-$formFieldValues[ "clients_info" ] = [ "is_visible" => true, "value" => $clientsInfo ];
-
+$formFieldValues[ "clients_info" ] = [ "is_visible" => true, "value" => $clientsInfo, "title" => "" ];
 
 
 /**
@@ -124,6 +123,11 @@ foreach ( $pageDetail[ "row_detail" ][ "services_id" ] as $service ) {
         ->limit( 1 )
         ->fetch();
 
+    $second_users = $API->DB->from( "services_second_users" )
+        ->where( "service_id", $service->value );
+
+    if ( count( $second_users ) != 0 ) $formFieldValues[ "assist_id" ][ "is_visible" ] = true;
+    else $formFieldValues[ "assist_id" ][ "is_visible" ] = false;
 
     if ( $serviceDetail[ "preparation" ] )
         $response[ "detail" ][ "modal_info" ] = $serviceDetail[ "preparation" ];

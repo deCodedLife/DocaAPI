@@ -89,7 +89,7 @@ $eventDetails = [
     ],
     [
         "icon" => "user",
-        "value" => $event[ "users_id" ][ 0 ][ "title" ]
+        "value" => $event[ "user_id" ][ 0 ][ "title" ]
     ],
     [
         "icon" => "stethoscope",

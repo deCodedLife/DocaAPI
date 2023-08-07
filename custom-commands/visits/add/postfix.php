@@ -57,17 +57,17 @@ foreach ( $requestData->clients_id as $clientId ) {
          * Обработка статуса "Повторное" у Записи
          */
 
-        $visits_users = $API->DB->from( "visits_users" )
-            ->where( "visit_id", $clientVisit[ "id" ] );
+        $visits_user = $API->DB->from( "visits" )
+            ->where( "id", $clientVisit[ "id" ] );
 
-        foreach ( $visits_users as $visit_user )
-            if ( in_array( $visit_user[ "user_id" ], $requestData->users_id ) )
-                $API->DB->update( "visits" )
-                    ->set( "is_repeat", "Y" )
-                    ->where( [
-                        "id" => $insertId
-                    ] )
-                    ->execute();
+        if ( $visits_user[ "user_id" ] == $requestData->user_id )
+            $API->DB->update( "visits" )
+                ->set( "is_repeat", "Y" )
+                ->where( [
+                    "id" => $insertId
+                ] )
+                ->execute();
+
 
     } // foreach. $clientVisits
 

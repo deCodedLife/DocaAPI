@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Дата начала графика
  */
@@ -21,6 +22,31 @@ if ( !$scheduleTimeFrom ) $scheduleTimeFrom = "00:00:00";
 $scheduleTimeTo = $requestData->event_to;
 if ( !$scheduleTimeTo ) $scheduleTimeTo = "23:59:59";
 
+
+if ( $requestData->id ) $currentScheduleDetail = $API->DB->from( "workDays" )
+    ->where( "id", $requestData->id )
+    ->limit( 1 )
+    ->fetch();
+
+$currentScheduleDetail[ "start_at" ] = explode( " ", $currentScheduleDetail[ "event_from" ] );
+$currentScheduleDetail[ "end_at" ] = explode( " ", $currentScheduleDetail[ "event_to" ] );
+
+if ( !$scheduleFrom ) $scheduleFrom = strtotime( $currentScheduleDetail[ "start_at" ][ 0 ] );
+if ( !$scheduleTo ) $scheduleTo = strtotime( $currentScheduleDetail[ "end_at" ][ 0 ] );
+if ( !$requestData->event_from ) $scheduleTimeFrom = strtotime( $currentScheduleDetail[ "start_at" ][ 1 ] );
+if ( !$requestData->event_to ) $scheduleTimeTo = strtotime( $currentScheduleDetail[ "end_at" ][ 1 ] );
+
+if ( $requestData->is_weekend === null ) $eventIsWeekend = $currentScheduleDetail[ "is_weekend" ];
+elseif ( !$requestData->is_weekend ) $eventIsWeekend = "N";
+else $eventIsWeekend = "Y";
+
+if ( !$requestData->store_id ) $eventStoreId = $currentScheduleDetail[ "store_id" ];
+else $eventStoreId = $requestData->store_id;
+
+if ( !$requestData->cabinet_id ) $eventCabinetId = $currentScheduleDetail[ "cabinet_id" ];
+else $eventCabinetId = $requestData->cabinet_id;
+
+
 /**
  * Обработанная дата
  */
@@ -36,24 +62,24 @@ $currentSchedule = [];
  * Получение данных о филиале пользователя
  */
 $storeDetails = $API->DB->from( "stores" )
-    ->where( "id", $requestData->store_id )
+    ->where( "id", $eventStoreId )
     ->fetch();
 
 
 if ( strtotime( $requestData->event_from ) < strtotime( $storeDetails[ "schedule_from" ] ) ) $API->returnResponse( "Расписание выходит за рамки графика филиала", 500 );
-if ( strtotime( $requestData->event_to )   > strtotime( $storeDetails[ "schedule_to" ] )  )  $API->returnResponse( "Расписание выходит за рамки графика филиала", 500 );
+if ( strtotime( $requestData->event_to )   > strtotime( $storeDetails[ "schedule_to" ] )   ) $API->returnResponse( "Расписание выходит за рамки графика филиала", 500 );
 
 
 $currentScheduleEvents = $API->DB->from( $API->request->object )
     ->where( [
-        "event_from >= ?" => $requestData->start_from,
-        "event_from <= ?" => $requestData->start_to . " 23:59:59",
+        "event_from >= ?" => $currentScheduleDetail[ "start_at" ][ 0 ],
+        "event_from <= ?" => $currentScheduleDetail[ "end_at" ][ 0 ] . " 23:59:59",
         "user_id" => $requestData->id
     ] );
 
 foreach ( $currentScheduleEvents as $currentScheduleEvent )
     $currentSchedule[
-    date( "Y-m-d", strtotime( $currentScheduleEvent[ "event_from" ] ) )
+        date( "Y-m-d", strtotime( $currentScheduleEvent[ "event_from" ] ) )
     ][] = $currentScheduleEvent[ "id" ];
 
 
@@ -74,7 +100,6 @@ while ( $currentScheduleDate <= $scheduleTo ) {
      */
     $currentScheduleDate = strtotime( "+1 day", $currentScheduleDate );
 
-
     /**
      * Очистка дня
      */
@@ -93,15 +118,16 @@ while ( $currentScheduleDate <= $scheduleTo ) {
     /**
      * Добавление дня в график
      */
-    $API->DB->insertInto( $API->request->object )
-        ->values( [
+    $API->DB->update( $API->request->object )
+        ->set( [
             "event_from" => "$scheduleDate $scheduleTimeFrom",
             "event_to" => "$scheduleDate $scheduleTimeTo",
-            "user_id" => $requestData->id,
-            "is_weekend" => $requestData->is_weekend,
-            "store_id" => $requestData->store_id,
-            "cabinet_id" => $requestData->cabinet_id
+            "user_id" => $currentScheduleDetail[ "user_id" ],
+            "is_weekend" => $eventIsWeekend,
+            "store_id" => $eventStoreId,
+            "cabinet_id" => $eventCabinetId
         ] )
+        ->where( "id", $requestData->id )
         ->execute();
 
 } // while. $currentScheduleDate <= $scheduleTo

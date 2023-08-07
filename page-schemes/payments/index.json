@@ -29,17 +29,7 @@
               "type": "analytic_widgets",
               "size": 4,
               "settings": {
-                "widgets_group": "sales_statistic",
-                "filters": [
-                  {
-                    "property": "start_at",
-                    "value": ":date()"
-                  },
-                  {
-                    "property": "end_at",
-                    "value": ":date()"
-                  }
-                ]
+                "widgets_group": "sales_statistic"
               },
               "components": {
                 "filters": [
@@ -117,6 +107,49 @@
               "settings": {
                 "object": "salesList",
                 "linked_filter": "analytic_widgets_sales_statistic"
+              },
+              "components": {
+                "buttons": [
+                  {
+                    "type": "script",
+                    "settings": {
+                      "title": "Печать нулевого чека",
+                      "background": "dark",
+                      "object": "atol",
+                      "command": "create-operation",
+                      "data": {
+                        "operation_type": 0,
+                        "cashbox_id": ":cashbox_id"
+                      }
+                    }
+                  },
+                  {
+                    "type": "script",
+                    "settings": {
+                      "title": "Z1 отчёт",
+                      "background": "dark",
+                      "object": "atol",
+                      "command": "create-operation",
+                      "data": {
+                        "operation_type": 1,
+                        "cashbox_id": ":cashbox_id"
+                      }
+                    }
+                  },
+                  {
+                    "type": "script",
+                    "settings": {
+                      "title": "X отчёт",
+                      "background": "dark",
+                      "object": "atol",
+                      "command": "create-operation",
+                      "data": {
+                        "operation_type": 2,
+                        "cashbox_id": ":cashbox_id"
+                      }
+                    }
+                  }
+                ]
               }
             }
           ]
@@ -287,33 +320,6 @@
                 "object": "cashbox_balance"
               },
               "components": []
-            }
-          ]
-        },
-        {
-          "title": "Действия",
-          "body": [
-            {
-              "title": "Кассы",
-              "type": "list",
-              "size": 4,
-              "settings": {
-                "object": "atol"
-              },
-              "components": {
-                "filters": [
-                  {
-                    "title": "Филиал",
-                    "type": "list",
-                    "settings": {
-                      "donor_object": "stores",
-                      "donor_property_title": "title",
-                      "donor_property_value": "id",
-                      "recipient_property": "store_id"
-                    }
-                  }
-                ]
-              }
             }
           ]
         }

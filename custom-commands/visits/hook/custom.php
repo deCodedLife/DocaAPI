@@ -5,11 +5,12 @@
  * Хуки на Запись к врачу
  */
 $formFieldsUpdate = [];
+$hasAssist = false;
 
 /**
  * Расчет стоимости и времени выполнения Записи
  */
-if ( $requestData->services_id && $requestData->users_id ) {
+if ( $requestData->services_id && $requestData->user_id ) {
 
     /**
      * Стоимость Записи
@@ -33,6 +34,12 @@ if ( $requestData->services_id && $requestData->users_id ) {
      */
     foreach ( $requestData->services_id as $serviceId ) {
 
+        $second_users = $API->DB->from( "services_second_users" )
+            ->where( "service_id", $serviceId );
+
+        if ( count( $second_users ) != 0 ) $hasAssist = true;
+
+
         /**
          * Получение детальной информации об услуге
          */
@@ -48,7 +55,7 @@ if ( $requestData->services_id && $requestData->users_id ) {
             ->where(
                 [
                     "row_id" => $serviceId,
-                    "user_id" => $requestData->users_id[0]
+                    "user_id" => $requestData->user_id
                 ]
             )
             ->limit( 1 )
@@ -127,7 +134,7 @@ if ( $requestData->clients_id ) {
                 substr($clientDetail [ "phone" ], 9)
             );
 
-        $clientsInfo[] = $clientDetail[ "last_name" ] . " " . $clientDetail[ "first_name" ] . " " . $clientDetail[ "patronymic" ] . ", " . $phoneFormat;
+        $clientsInfo[] = "№{$clientDetail[ "id" ]} {$clientDetail[ "last_name" ]} {$clientDetail[ "first_name" ]} {$clientDetail[ "patronymic" ]}, $phoneFormat";
 
     }
 
@@ -139,41 +146,8 @@ if ( $requestData->clients_id ) {
 
 }
 
-if ( $requestData->users_id ) {
-
-    /**
-     *  Указание филиала
-     */
-    if ( !$requestData->store_id ) {
-
-        $userDetails = $API->DB->from( "users_stores" )
-            ->innerJoin( "users on users.id = users_stores.user_id" )
-            ->where( "users.id", ( $requestData->users_id[ 0 ] ?? 1 ) )
-            ->limit( 1 )
-            ->fetch();
-
-        $formFieldsUpdate[ "store_id" ][ "value" ] = $userDetails[ "store_id" ];
-
-    }
-
-//    /**
-//     * Указание кабинета сотрудника
-//     */
-//    if ( $performerWorkSchedule[ "cabinet_id" ] ) {
-//
-//        $cabinetDetail = $API->DB->from( "cabinets" )
-//            ->where( "id", $performerWorkSchedule[ "cabinet_id" ] )
-//            ->limit( 1 )
-//            ->fetch();
-//
-//
-//        $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ][ "performer_title" ] .= " [Каб. " . $cabinetDetail[ "title" ] . "]";
-//
-//    } // if. $performerWorkSchedule[ "cabinet_id" ]
-
-}
-
-
+if ( $hasAssist ) $formFieldsUpdate[ "assist_id" ][ "is_visible" ] = true;
+else $formFieldsUpdate[ "assist_id" ][ "is_visible" ] = false;
 
 
 $API->returnResponse( $formFieldsUpdate );

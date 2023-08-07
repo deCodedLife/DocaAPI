@@ -4,6 +4,11 @@
  * Расчет свободности Исполнителей, Клиентов и Кабинетов
  */
 
+/**
+ * Валидация посещения
+ */
+$publicAppPath = $API::$configs[ "paths" ][ "public_app" ];
+require_once ( $publicAppPath . '/custom-libs/visits/validate.php' );
 
 /**
  * Получение Записей за указанный период
@@ -14,6 +19,14 @@ $sqlTimeCondition = "(
     ( end_at > '$requestData->start_at' and end_at < '$requestData->end_at' ) OR
     ( start_at < '$requestData->start_at' and end_at > '$requestData->end_at' )
 )";
+
+$currentVisit = $API->DB->from( "visits" )
+    ->where( "id", $requestData->id )
+    ->fetch();
+
+$start_at = $requestData->start_at ?? $currentVisit[ "start_at" ];
+$end_at   = $requestData->end_at ?? $currentVisit[ "end_at" ];
+
 
 $existingVisits = mysqli_query(
     $API->DB_connection,
@@ -81,6 +94,18 @@ if ( !$requestData->reason_id ) {
                  */
                 $services_second_users = $API->DB->from("services_second_users")
                     ->where("service_id", $visit_service["service_id"]);
+
+//                foreach ( $requestData->users_id as $visitUser ) {
+//
+//                    $API->DB->from( "visits_users" )
+//                        ->innerJoin( "visits" )
+//                        ->where( [
+//                            "not visits.id = ?", $requestData->id,
+//                            "start_at >= ?" => $start_at,
+//                            "end_at <=" =>
+//                        ] )
+//
+//                }
 
                 /**
                  * Нет необходимости указывать второго исполнителя?

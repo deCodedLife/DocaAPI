@@ -16,10 +16,12 @@ $incomeBalance = $API->DB->from( "cashboxBalances" )
     ->limit( 1 )
     ->fetch();
 
-$payments = mysqli_query(
-    $API->DB_connection,
-    "SELECT * FROM salesList WHERE action = 'sell'"
-);
+$payments = $API->DB->from( "salesList" )
+    ->where( [
+        "action" => "sell",
+        "created_at >= ?" => date( 'Y-m-d' ) . " 00:00:00",
+        "created_at <= ?" => date( 'Y-m-d' ) . " 23:59:59"
+    ] );
 
 $summary = 0;
 

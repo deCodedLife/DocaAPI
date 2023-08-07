@@ -48,10 +48,10 @@ class Modifier
      * Запись объектов акции в совмещённую таблицу
      *
      * @param int $promotion_id
-     * @param Сashbox\IModifier $modifier
+     * @param Sales\Modifier $modifier
      * @return void
      */
-    public static function writeModifier( int $promotion_id, IModifier $modifier ): void {
+    public static function writeModifier( int $promotion_id, Modifier $modifier ): void {
 
         global $API;
 
@@ -74,10 +74,10 @@ class Modifier
      * Удаление модификаторов
      *
      * @param int $promotion_id
-     * @param Cashbox\IModifier $pattern
+     * @param Sales\IModifier $pattern
      * @return void
      */
-    public static function removeByPattern( int $promotion_id, IModifier $pattern ): void {
+    public static function removeByPattern( int $promotion_id, Iodifier $pattern ): void {
 
         global $API;
 

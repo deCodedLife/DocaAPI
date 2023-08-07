@@ -1,7 +1,7 @@
 <?php
 
-require_once $API::$configs[ "paths" ][ "public_app" ] . "/custom-libs/discounts/index.php";
-use Сashbox\IModifier as IModifier;
+require_once $API::$configs[ "paths" ][ "public_app" ] . "/custom-libs/sales/promotions/index.php";
+use Sales\Modifier as Modifier;
 
 
 
@@ -24,25 +24,25 @@ $promotion_id = $API->DB->insertInto( "promotions" )
 
 
 foreach ( $requestData->services as $service )
-    IModifier::writeModifier( $promotion_id, new IModifier( $service, "services" ) );
+    Modifier::writeModifier( $promotion_id, new Modifier( $service, "services" ) );
 
 foreach ( $requestData->servicesGroups as $serviceGroup )
-    IModifier::writeModifier( $promotion_id, new IModifier( $serviceGroup, "services", true ) );
+    Modifier::writeModifier( $promotion_id, new Modifier( $serviceGroup, "services", true ) );
 
 foreach ( $requestData->requiredServices as $service )
-    IModifier::writeModifier( $promotion_id, new IModifier( $service, "services", false, true ) );
+    Modifier::writeModifier( $promotion_id, new Modifier( $service, "services", false, true ) );
 
 foreach ( $requestData->requiredServicesGroups as $serviceGroup )
-    IModifier::writeModifier( $promotion_id, new IModifier( $serviceGroup, "services", true, true ) );
+    Modifier::writeModifier( $promotion_id, new Modifier( $serviceGroup, "services", true, true ) );
 
 foreach ( $requestData->excludedServices as $service )
-    IModifier::writeModifier( $promotion_id, new IModifier( $service, "services", false, false, true ) );
+    Modifier::writeModifier( $promotion_id, new Modifier( $service, "services", false, false, true ) );
 
 foreach ( $requestData->excludedServicesGroups as $serviceGroup )
-    IModifier::writeModifier( $promotion_id, new IModifier( $serviceGroup, "services", true, false, true ) );
+    Modifier::writeModifier( $promotion_id, new Modifier( $serviceGroup, "services", true, false, true ) );
 
 foreach ( $requestData->clientsGroups as $clientGroup )
-    IModifier::writeModifier( $promotion_id, new IModifier( $clientGroup, "clients", true ) );
+    Modifier::writeModifier( $promotion_id, new Modifier( $clientGroup, "clients", true ) );
 
 
 $API->returnResponse();

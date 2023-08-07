@@ -48,7 +48,7 @@ $workdayEnd = strtotime( $storeDetail[ "schedule_to" ] );
  * Увеличение диапазона графика для специальностей
  */
 
-if ( $requestData->profession_id || $requestData->users_id ) {
+if ( $requestData->profession_id || $requestData->user_id ) {
 
     $requestData->end_at = date(
         "Y-m-d", strtotime( "+30 days", strtotime( $requestData->start_at ) )

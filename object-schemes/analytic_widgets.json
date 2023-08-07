@@ -190,25 +190,6 @@
     },
     {
       "title": "Клиент",
-      "article": "clients_id",
-      "data_type": "integer",
-      "field_type": "list",
-      "is_default_in_list": true,
-      "is_unique": false,
-      "is_autofill": true,
-      "use_in_commands": [
-        "client_statistic"
-      ],
-      "require_in_commands": [
-        "client_statistic"
-      ],
-      "list_donor": {
-        "table": "clients",
-        "properties_title": "last_name"
-      }
-    },
-    {
-      "title": "Клиент",
       "article": "client_id",
       "data_type": "integer",
       "field_type": "list",
@@ -218,11 +199,16 @@
       "use_in_commands": [
         "deposit_statistic",
         "bonus_statistic",
-        "sales_statistic"
+        "sales_statistic",
+        "client_statistic",
+        "visit_statistic"
       ],
       "require_in_commands": [
         "deposit_statistic",
-        "bonus_statistic"
+        "bonus_statistic",
+        "client_statistic",
+        "visit_statistic"
+
       ],
       "list_donor": {
         "table": "clients",

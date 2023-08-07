@@ -10,7 +10,17 @@
         "director_schedule"
       ],
       "settings": {
-          "widgets_group": "daily_report"
+          "widgets_group": "daily_report",
+          "filters": [
+            {
+              "property": "start_at",
+              "value": ":date()"
+            },
+            {
+              "property": "end_at",
+              "value": ":date()"
+            }
+          ]
       },
       "components": {
         "filters": [
@@ -102,7 +112,7 @@
       "settings": {
         "object": "visits",
         "performers_table": "users",
-        "performers_row_article": "users_id",
+        "performers_row_article": "user_id",
         "performers_row_title": "first_name",
         "row_href": "visits/add"
       },
@@ -138,9 +148,9 @@
             "required_modules": [],
             "settings": {
               "is_search": false,
-              "recipient_property": "users_id",
+              "recipient_property": "user_id",
               "donor_object": "users",
-              "donor_property_title": "last_name",
+              "donor_property_title": "fio",
               "donor_property_value": "id"
             }
           },

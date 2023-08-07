@@ -2,7 +2,7 @@
 
 mysqli_query(
     $API->DB_connection,
-    "update handbook set type_id = 6414 where type_id != 5454"
+    "drop table visits_users"
 );
 
 $API->returnResponse( "NYAAAAAA" );

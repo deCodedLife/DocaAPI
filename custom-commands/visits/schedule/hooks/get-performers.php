@@ -5,7 +5,7 @@
  * Фильтр по Сотруднику
  */
 
-if ( $requestData->users_id ) {
+if ( $requestData->user_id ) {
 
     /**
      * Отфильтрованный список сотрудников
@@ -18,7 +18,7 @@ if ( $requestData->users_id ) {
      * в отфильтрованный список
      */
     foreach ( $performersRows as $performersRowKey => $performersRow )
-        if ( $performersRow[ "id" ] == $requestData->users_id ) $filteredUsers[] = $performersRow;
+        if ( $performersRow[ "id" ] == $requestData->user_id ) $filteredUsers[] = $performersRow;
 
 
     /**
@@ -67,4 +67,3 @@ if ( $requestData->profession_id ) {
     $performersRows = $filteredUsers;
 
 } // if. $requestData->profession_id
-

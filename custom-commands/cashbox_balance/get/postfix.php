@@ -13,6 +13,12 @@ $payments = $API->DB->from( "salesList" )
         "created_at <= ?" => $today->format( "Y-m-d" ) . " 23:59:59"
     ] );
 
+$expenses = $API->DB->from( "expenses" )
+    ->where( [
+        "created_at >= ?" => $today->format( "Y-m-d" ) . " 00:00:00",
+        "created_at <= ?" => $today->format( "Y-m-d" ) . " 23:59:59"
+    ] );
+
 
 /**
  * Если возвращаемый тип - список
@@ -20,6 +26,30 @@ $payments = $API->DB->from( "salesList" )
 if ( $requestData->context->block === "list" ) {
 
     $listData = [];
+
+    foreach ( $expenses as $expense ) {
+
+        $listItem = [];
+        $listItem[ "date" ] = $expense[ "created_at" ];
+
+        $listItem[ "operation_type" ] = "Расход";
+        $listItem[ "client_id" ] = $expense[ "user_id" ];
+
+        $user = $API->DB->from( "users" )
+            ->where( "id", $expense[ "user_id" ] )
+            ->fetch();
+
+        $listItem[ "client" ][] = [
+            "title" => $user[ "last_name" ],
+            "value" => $user[ "id" ]
+        ];
+
+        $listItem[ "summary" ] = $expense[ "price" ];
+        $listItem[ "operator" ] = $user[ "last_name" ];
+
+        $listData[] = $listItem;
+
+    }
 
     /**
      * Обход всех продаж

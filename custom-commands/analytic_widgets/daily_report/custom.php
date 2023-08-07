@@ -3,7 +3,7 @@
  * @file
  * Отчет "Суточный отчет
  */
-
+//ini_set( "display_errors", true );
 /**
  * Детальная информация об отчете
  */
@@ -50,8 +50,8 @@ if ( $requestData->end_at ) $salesFilter[ "created_at <= ?" ] = $requestData->en
 if ( $requestData->store_id ) $salesFilter[ "store_id" ] = $requestData->store_id;
 
 if ( $requestData->store_id ) $expensesFilter[ "store_id" ] = $requestData->store_id;
-if ( $requestData->start_at ) $expensesFilter[ "date >= ?" ] = $requestData->start_at . " 00:00:00";
-if ( $requestData->end_at ) $expensesFilter[ "date <= ?" ] = $requestData->end_at . " 23:59:59";
+if ( $requestData->start_at ) $expensesFilter[ "created_at >= ?" ] = $requestData->start_at . " 00:00:00";
+if ( $requestData->end_at ) $expensesFilter[ "created_at <= ?" ] = $requestData->end_at . " 23:59:59";
 
 
 /**

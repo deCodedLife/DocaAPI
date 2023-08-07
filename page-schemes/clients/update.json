@@ -161,10 +161,10 @@
               "type": "analytic_widgets",
               "size": 4,
               "settings": {
-                "widgets_group": "client_statistic",
+                "widgets_group": "visit_statistic",
                 "filters": [
                   {
-                    "property": "clients_id",
+                    "property": "client_id",
                     "value": ":id"
                   }
                 ]
@@ -233,26 +233,6 @@
           ]
         },
         {
-          "title": "Статистика",
-          "body": [
-            {
-              "title": "Статистика клиентов",
-              "type": "analytic_widgets",
-              "size": 4,
-              "settings": {
-                "widgets_group": "client_statistic",
-                "filters": [
-                  {
-                    "property": "client_id",
-                    "value": ":id"
-                  }
-                ]
-              },
-              "components": []
-            }
-          ]
-        },
-        {
           "title": "Задачи клиента",
           "body": [
             {
@@ -282,6 +262,25 @@
                         "row_id": ":id"
                       }
                     }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "title": "Статистика",
+          "body": [
+            {
+              "title": "Виджет статистики",
+              "type": "analytic_widgets",
+              "size": 4,
+              "settings": {
+                "widgets_group": "client_statistic",
+                "filters": [
+                  {
+                    "property": "client_id",
+                    "value": ":id"
                   }
                 ]
               }

@@ -46,7 +46,8 @@
                       {
                         "title": "",
                         "fields": [
-                          "users_id",
+                          "user_id",
+                          "assist_id",
                           "clients_id",
                           "clients_info",
                           "services_id"

@@ -1,6 +1,18 @@
 <?php
 
 /**
+ * Получение филиалов сотрудников
+ */
+
+$usersStores = [];
+$usersStoresRows = $API->DB->from( "users_stores" );
+
+foreach ( $usersStoresRows as $usersStoresRow )
+    $usersStores[ $usersStoresRow[ "user_id" ] ] = $usersStoresRow[ "store_id" ];
+
+
+
+/**
  * Обход дат расписания
  */
 foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
@@ -25,6 +37,10 @@ foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
          */
         $notWorkDay = true;
 
+        /**
+         * Добавлен кабинет к сотруднику
+         */
+        $isCabinet = false;
 
 
         /**
@@ -73,6 +89,12 @@ foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
 
 
                 /**
+                 * Подстановка филиала
+                 */
+                $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ][ "store_id" ] = $usersStores[ $schedulePerformerKey ];
+
+
+                /**
                  * Указание кабинета сотрудника
                  */
                 if ( $performerWorkSchedule[ "cabinet_id" ] ) {
@@ -83,7 +105,10 @@ foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
                         ->fetch();
 
 
-                    $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ][ "performer_title" ] .= " [Каб. " . $cabinetDetail[ "title" ] . "]";
+                    if ( !$isCabinet ) $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ][ "performer_title" ] .= " [Каб. " . $cabinetDetail[ "title" ] . "]";
+                    $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ][ "cabinet_id" ] = $cabinetDetail[ "id" ];
+
+                    $isCabinet = true;
 
                 } // if. $performerWorkSchedule[ "cabinet_id" ]
 
