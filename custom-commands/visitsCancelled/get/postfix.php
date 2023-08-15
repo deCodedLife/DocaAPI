@@ -29,28 +29,18 @@ foreach ( $visits as $visit ) {
 
     /**
      * Получение сотрудников из заявки
-     */
-    $visits_users = $API->DB->from( "visits_users" )
-        ->where( "visit_id",  $visit[ "id" ]);
+    */
+    $user = $API->DB->from( "users" )
+        ->where( "id",  $visit[ "user_id"] )
+        ->limit( 1 )
+        ->fetch();
 
-    $users = [];
+    $visit[ "user" ] = [
 
-    foreach ( $visits_users as $visit_users ) {
+        "title" => $user[ "last_name" ],
+        "value" => (int)$visit[ "user_id" ]
 
-        $user = $API->DB->from( "users" )
-            ->where( "id",  $visit_users[ "user_id"] )
-            ->limit( 1 )
-            ->fetch();
-
-        $users[] = [
-
-            "title" => $user[ "last_name" ],
-            "value" => (int)$visit_users[ "user_id" ]
-
-        ];
-
-    }
-
+    ];
     /**
      * Получение услуг из заявки
      */
@@ -96,7 +86,7 @@ foreach ( $visits as $visit ) {
      */
     $visits_clients = $API->DB->from( "visits_clients" )
         ->where( "visit_id",  $visit[ "id" ]);
-    
+
     $clients = [];
 
     foreach ( $visits_clients as $visit_clients ) {
@@ -135,7 +125,7 @@ foreach ( $visits as $visit ) {
         "operator" => $operatorValue,
         "id" => (int) $visit[ "id" ],
         "start_at" => $visit[ "start_at" ],
-        "users_id" => $users,
+        "user_id" => $visit[ "user" ],
         "clients_id" => $clients,
         "services_id" => $services,
         "reason_id" => $reasonValue,

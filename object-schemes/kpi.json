@@ -1,0 +1,96 @@
+{
+  "title": "KPI",
+  "table": "employees_kpi",
+  "is_trash": false,
+  "properties": [
+    {
+      "title": "Сотрудник",
+      "article": "user_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "list_donor": {
+        "table": "users",
+        "properties_title": "last_name"
+      },
+      "use_in_commands": [
+        "add",
+        "get",
+        "update"
+      ],
+      "require_in_commands": [
+        "add"
+      ]
+    },
+    {
+      "title": "Суммировать",
+      "article": "is_summed",
+      "data_type": "boolean",
+      "field_type": "checkbox",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add",
+        "get",
+        "update"
+      ],
+      "require_in_commands": [
+        "add"
+      ]
+    },
+    {
+      "title": "Поле в таблице",
+      "article": "target_column",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add",
+        "get",
+        "update"
+      ],
+      "require_in_commands": [
+        "add"
+      ]
+    },
+    {
+      "title": "Необходимое значение",
+      "article": "required_value",
+      "data_type": "integer",
+      "field_type": "integer",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add",
+        "get",
+        "update"
+      ],
+      "require_in_commands": [
+        "add"
+      ]
+    },
+    {
+      "title": "KPI",
+      "article": "kpi_value",
+      "data_type": "float",
+      "field_type": "price",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add",
+        "get",
+        "update"
+      ],
+      "require_in_commands": [
+        "add"
+      ]
+    }
+  ]
+}

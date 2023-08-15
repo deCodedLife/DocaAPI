@@ -15,10 +15,9 @@ $userVisitsGraph = [];
  * Получение посещений Сотрудника
  */
 $userVisits = $API->DB->from( "visits" )
-    ->leftJoin( "visits_users ON visits_users.visit_id = visits.id" )
     ->select( null )->select( [ "visits.id", "visits.start_at", "visits.is_active", "visits.status" ] )
     ->where( [
-        "visits_users.user_id" => $requestData->user_id,
+        "user_id" => $requestData->user_id,
         "visits.start_at >= ?" => date(
             "Y-m-d", strtotime( "-30 days", strtotime( date( "Y-m-d" ) ) )
         )

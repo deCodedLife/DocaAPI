@@ -47,14 +47,19 @@ if ( strtotime( $requestData->event_to )   > strtotime( $storeDetails[ "schedule
 $currentScheduleEvents = $API->DB->from( $API->request->object )
     ->where( [
         "event_from >= ?" => $requestData->start_from,
-        "event_from <= ?" => $requestData->start_to . " 23:59:59",
-        "user_id" => $requestData->id
+        "event_from <= ?" => $requestData->start_to . " 23:59:59"
     ] );
 
 foreach ( $currentScheduleEvents as $currentScheduleEvent )
     $currentSchedule[
-        date( "Y-m-d", strtotime( $currentScheduleEvent[ "event_from" ] ) )
-    ][] = $currentScheduleEvent[ "id" ];
+    date( "Y-m-d", strtotime( $currentScheduleEvent[ "event_from" ] ) )
+    ][] = [
+        "id" => $currentScheduleEvent[ "id" ],
+        "from" => date( "H:i:s", strtotime( $currentScheduleEvent[ "event_from" ] ) ),
+        "to" => date( "H:i:s", strtotime( $currentScheduleEvent[ "event_to" ] ) ),
+        "user_id" => $currentScheduleEvent[ "user_id" ],
+        "cabinet_id" => $currentScheduleEvent[ "cabinet_id" ]
+    ];
 
 
 /**
@@ -76,14 +81,42 @@ while ( $currentScheduleDate <= $scheduleTo ) {
 
 
     /**
+     * Проверка на свободность графика
+     */
+    if ( $currentSchedule[ $scheduleDate ] ) {
+
+        foreach ( $currentSchedule[ $scheduleDate ] as $dayWorkSchedule ) {
+
+            if (
+                (
+                    ( $requestData->event_from >= $dayWorkSchedule[ "from" ] ) &&
+                    ( $requestData->event_from <= $dayWorkSchedule[ "to" ] )
+                ) ||
+                (
+                    ( $requestData->event_to >= $dayWorkSchedule[ "from" ] ) &&
+                    ( $requestData->event_to <= $dayWorkSchedule[ "to" ] )
+                )
+            ) {
+
+                if ( $requestData->cabinet_id && $requestData->cabinet_id == $dayWorkSchedule[ "cabinet_id" ] )
+                    $API->returnResponse( "Кабинет занят", 500 );
+
+            } // if. Событие занято
+
+        } // foreach. $currentSchedule[ $scheduleDate ]
+
+    } // if. $currentSchedule[ $scheduleDate ]
+
+
+    /**
      * Очистка дня
      */
     if ( ( $requestData->is_weekend == "Y" ) && $currentSchedule[ $scheduleDate ] ) {
 
-        foreach ( $currentSchedule[ $scheduleDate ] as $currentDayId )
+        foreach ( $currentSchedule[ $scheduleDate ] as $currentDay )
             $API->DB->deleteFrom( $API->request->object )
                 ->where( [
-                    "id" => $currentDayId
+                    "id" => $currentDay[ "id" ]
                 ] )
                 ->execute();
 

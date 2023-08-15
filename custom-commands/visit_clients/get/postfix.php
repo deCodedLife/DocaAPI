@@ -99,7 +99,8 @@ if ( $requestData->user_id ) {
             "services_id" => $services,
             "price" => $visit[ "price" ],
             "end_at" => $visit[ "end_at" ],
-            "start_at" => $visit[ "start_at" ]
+            "start_at" => $visit[ "start_at" ],
+            "period" => date( 'Y-m-d H:i', strtotime( $visit[ "start_at" ] ) ) . " - " . date( "H:i", strtotime( $visit[ "end_at" ] ) )
 
         ];
 

@@ -58,16 +58,17 @@ foreach ( $requestData->clients_id as $clientId ) {
          */
 
         $visits_user = $API->DB->from( "visits" )
-            ->where( "id", $clientVisit[ "id" ] );
+            ->where( "id", $clientVisit[ "id" ] )
+            ->limit( 1 )
+            ->fetch();
 
-        if ( $visits_user[ "user_id" ] == $requestData->user_id )
+        if ( isset( $visits_user[ "user_id" ] ) && ( $visits_user[ "user_id" ] == $requestData->user_id ) )
             $API->DB->update( "visits" )
-                ->set( "is_repeat", "Y" )
+                ->set( [ "is_repeat" => "Y" ] )
                 ->where( [
                     "id" => $insertId
                 ] )
                 ->execute();
-
 
     } // foreach. $clientVisits
 

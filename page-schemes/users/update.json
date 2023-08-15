@@ -1,327 +1,368 @@
 {
-    "required_modules": [],
-    "required_permissions": [],
-    "structure": [
+  "required_modules": [],
+  "required_permissions": [],
+  "structure": [
+    {
+      "title": "Шапка",
+      "type": "header",
+      "size": 4,
+      "settings": {
+        "description": "Сотрудники - Редактирование",
+        "title": [
+          "№ ",
+          ":id",
+          " ",
+          ":last_name",
+          " ",
+          ":first_name",
+          " ",
+          ":patronymic"
+        ]
+      },
+      "components": {
+        "buttons": []
+      }
+    },
+    {
+      "title": "Табы",
+      "type": "tabs",
+      "size": 4,
+      "settings": [
         {
-            "title": "Шапка",
-            "type": "header",
-            "size": 4,
-            "settings": {
-                "description": "Сотрудники - Редактирование",
-                "title": [
-                    "№ ",
-                    ":id",
-                    " ",
-                    ":last_name",
-                    " ",
-                    ":first_name",
-                    " ",
-                    ":patronymic"
+          "title": "График работы",
+          "body": [
+            {
+              "title": "График работы",
+              "type": "calendar",
+              "size": 4,
+              "settings": {
+                "object": "workDays",
+                "filters": [
+                  {
+                    "property": "user_id",
+                    "value": ":id"
+                  }
+                ],
+                "event_page": "workDays/addEvent",
+                "events": {
+                  "add": "workDays/addEvent",
+                  "update": "workDays/updateEvent"
+                },
+                "context": {
+                  "form": "users",
+                  "row_id": ":id"
+                }
+              },
+              "components": {
+                "buttons": [
+                  {
+                    "type": "modal",
+                    "settings": {
+                      "title": "Добавить правило",
+                      "background": "dark",
+                      "page": "workDays/add",
+                      "close_previous_modal": true,
+                      "modal_size": "xl",
+                      "context": {
+                        "form": "users",
+                        "row_id": ":id"
+                      },
+                      "refresh_after_submit": true
+                    }
+                  }
+                ],
+                "filters": [
+                  {
+                    "title": "Филиал",
+                    "type": "list",
+                    "required_permissions": [],
+                    "required_modules": [],
+                    "settings": {
+                      "is_search": false,
+                      "recipient_property": "store_id",
+                      "donor_object": "stores",
+                      "donor_property_title": "title",
+                      "donor_property_value": "id"
+                    }
+                  }
                 ]
-            },
-            "components": {
-                "buttons": []
+              }
             }
+          ]
         },
         {
-            "title": "Табы",
-            "type": "tabs",
-            "size": 4,
-            "settings": [
-                {
-                    "title": "График работы",
-                    "body": [
-                        {
-                            "title": "График работы",
-                            "type": "calendar",
-                            "size": 4,
-                            "settings": {
-                                "object": "workDays",
-                                "filters": [
-                                    {
-                                        "property": "user_id",
-                                        "value": ":id"
-                                    }
-                                ],
-                                "event_page": "workDays/addEvent",
-                                "events": {
-                                    "add": "workDays/addEvent",
-                                    "update": "workDays/updateEvent"
-                                },
-                                "context": {
-                                    "form": "users",
-                                    "row_id": ":id"
-                                }
-                            },
-                            "components": {
-                                "buttons": [
-                                    {
-                                        "type": "modal",
-                                        "settings": {
-                                            "title": "Добавить правило",
-                                            "background": "dark",
-                                            "page": "workDays/add",
-                                            "close_previous_modal": true,
-                                            "modal_size": "xl",
-                                            "context": {
-                                                "form": "users",
-                                                "row_id": ":id"
-                                            },
-                                            "refresh_after_submit": true
-                                        }
-                                    }
-                                ],
-                                "filters": [
-                                    {
-                                        "title": "Филиал",
-                                        "type": "list",
-                                        "required_permissions": [],
-                                        "required_modules": [],
-                                        "settings": {
-                                            "is_search": false,
-                                            "recipient_property": "store_id",
-                                            "donor_object": "stores",
-                                            "donor_property_title": "title",
-                                            "donor_property_value": "id"
-                                        }
-                                    }
-                                ]
-                            }
-                        }
+          "title": "Основная информация",
+          "body": [
+            {
+              "title": "Кол-во посещений",
+              "type": "analytic_widgets",
+              "size": 4,
+              "settings": {
+                "widgets_group": "user_visits",
+                "filters": [
+                  {
+                    "property": "user_id",
+                    "value": ":id"
+                  }
+                ]
+              },
+              "components": []
+            },
+            {
+              "title": "Форма",
+              "type": "form",
+              "size": 4,
+              "settings": {
+                "object": "users",
+                "command": "update",
+                "areas": [
+                  {
+                    "size": 2,
+                    "blocks": [
+                      {
+                        "title": "Основное",
+                        "fields": [
+                          "avatar",
+                          "last_name",
+                          "first_name",
+                          "patronymic",
+                          "birthday",
+                          "gender",
+                          "domru_login"
+                        ]
+                      },
+                      {
+                        "title": "Доступы",
+                        "fields": [
+                          "role_id",
+                          "professions_id",
+                          "email",
+                          "password"
+                        ]
+                      }
                     ]
-                },
-                {
-                    "title": "Основная информация",
-                    "body": [
-                        {
-                            "title": "Кол-во посещений",
-                            "type": "analytic_widgets",
-                            "size": 4,
-                            "settings": {
-                                "widgets_group": "user_visits",
-                                "filters": [
-                                    {
-                                        "property": "user_id",
-                                        "value": ":id"
-                                    }
-                                ]
-                            },
-                            "components": []
-                        },
-                        {
-                            "title": "Форма",
-                            "type": "form",
-                            "size": 4,
-                            "settings": {
-                                "object": "users",
-                                "command": "update",
-                                "areas": [
-                                    {
-                                        "size": 2,
-                                        "blocks": [
-                                            {
-                                                "title": "Основное",
-                                                "fields": [
-                                                    "avatar",
-                                                    "last_name",
-                                                    "first_name",
-                                                    "patronymic",
-                                                    "birthday",
-                                                    "gender",
-                                                    "domru_login"
-                                                ]
-                                            },
-                                            {
-                                                "title": "Доступы",
-                                                "fields": [
-                                                    "role_id",
-                                                    "professions_id",
-                                                    "email",
-                                                    "password"
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "size": 2,
-                                        "blocks": [
-                                            {
-                                                "title": "Документы",
-                                                "fields": [
-                                                    "passport_series",
-                                                    "passport_number",
-                                                    "passport_issued",
-                                                    "snils",
-                                                    "inn"
-                                                ]
-                                            },
-                                            {
-                                                "title": "Контакты",
-                                                "fields": [
-                                                    "phone",
-                                                    "second_phone",
-                                                    "address"
-                                                ]
-                                            },
-                                            {
-                                                "title": "",
-                                                "fields": [
-                                                    "stores_id",
-                                                    "is_visible_in_schedule"
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "size": 4,
-                                        "blocks": [
-                                            {
-                                                "title": "",
-                                                "fields": [
-                                                    "comment"
-                                                ]
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            "components": {
-                                "buttons": [
-                                    {
-                                        "type": "submit",
-                                        "settings": {
-                                            "title": "Сохранить",
-                                            "background": "dark",
-                                            "href": "users"
-                                        }
-                                    }
-                                ]
-                            }
-                        }
+                  },
+                  {
+                    "size": 2,
+                    "blocks": [
+                      {
+                        "title": "Документы",
+                        "fields": [
+                          "passport_series",
+                          "passport_number",
+                          "passport_issued",
+                          "snils",
+                          "inn"
+                        ]
+                      },
+                      {
+                        "title": "Контакты",
+                        "fields": [
+                          "phone",
+                          "second_phone",
+                          "address"
+                        ]
+                      },
+                      {
+                        "title": "",
+                        "fields": [
+                          "stores_id",
+                          "is_visible_in_schedule"
+                        ]
+                      }
                     ]
-                },
-                {
-                    "title": "Зарплата",
-                    "body": [
-                        {
-                            "title": "Оклад",
-                            "type": "form",
-                            "size": 4,
-                            "settings": {
-                                "areas": [
-                                    {
-                                        "size": 4,
-                                        "blocks": [
-                                            {
-                                                "title": "",
-                                                "fields": [
-                                                    "salary",
-                                                    "is_percent",
-                                                    "services_user_percents"
-                                                ]
-                                            }
-                                        ]
-                                    }
-                                ],
-                                "object": "users",
-                                "command": "update"
-                            },
-                            "components": {
-                                "buttons": [
-                                    {
-                                        "type": "submit",
-                                        "settings": {
-                                            "title": "Сохранить",
-                                            "background": "dark",
-                                            "href": "users"
-                                        }
-                                    }
-                                ]
-                            }
-                        }
+                  },
+                  {
+                    "size": 4,
+                    "blocks": [
+                      {
+                        "title": "",
+                        "fields": [
+                          "comment"
+                        ]
+                      }
                     ]
-                },
-                {
-                    "title": "Детальная информация по зарплате",
-                    "body": [
-                        {
-                            "title": "Виджет информации о зарплате",
-                            "type": "analytic_widgets",
-                            "size": 4,
-                            "settings": {
-                                "widgets_group": "salary_info",
-                                "filters": [
-                                    {
-                                        "property": "user_id",
-                                        "value": ":id"
-                                    }
-                                ]
-                            },
-                            "components": []
-                        },
-                        {
-                            "title": "Список транзакций",
-                            "type": "list",
-                            "size": 4,
-                            "settings": {
-                                "object": "visits",
-                                "filters": [
-                                    {
-                                        "property": "users_id",
-                                        "value": ":id"
-                                    },
-                                    {
-                                        "property": "status",
-                                        "value": "ended"
-                                    }
-                                ]
-                            },
-                            "components": {}
-                        }
+                  }
+                ]
+              },
+              "components": {
+                "buttons": [
+                  {
+                    "type": "submit",
+                    "settings": {
+                      "title": "Сохранить",
+                      "background": "dark",
+                      "href": "users"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "title": "Зарплата",
+          "body": [
+            {
+              "title": "Оклад",
+              "type": "form",
+              "size": 4,
+              "settings": {
+                "areas": [
+                  {
+                    "size": 4,
+                    "blocks": [
+                      {
+                        "title": "",
+                        "fields": [
+                          "salary",
+                          "is_percent",
+                          "services_user_percents"
+                        ]
+                      }
                     ]
-                },
-                {
-                    "title": "История звонков",
-                    "is_counter": true,
-                    "body": [
-                        {
-                            "title": "История звонков",
-                            "type": "list",
-                            "size": 4,
-                            "settings": {
-                                "object": "callHistory",
-                                "filters": [
-                                    {
-                                        "property": "user_id",
-                                        "value": ":id"
-                                    }
-                                ]
-                            },
-                            "components": []
-                        }
-                    ]
-                },
-                {
-                    "title": "Логи",
-                    "body": [
-                        {
-                            "title": "Логи",
-                            "type": "logs",
-                            "size": 4,
-                            "settings": {
-                                "object": "logs",
-                                "filters": [
-                                    {
-                                        "property": "users_id",
-                                        "value": ":id"
-                                    }
-                                ]
-                            },
-                            "components": []
-                        }
-                    ]
-                }
-            ]
+                  }
+                ],
+                "object": "users",
+                "command": "update"
+              },
+              "components": {
+                "buttons": [
+                  {
+                    "type": "submit",
+                    "settings": {
+                      "title": "Сохранить",
+                      "background": "dark",
+                      "href": "users"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "title": "Детальная информация по зарплате",
+          "body": [
+            {
+              "title": "Виджет информации о зарплате",
+              "type": "analytic_widgets",
+              "size": 4,
+              "settings": {
+                "widgets_group": "salary_info",
+                "filters": [
+                  {
+                    "property": "user_id",
+                    "value": ":id"
+                  }
+                ]
+              },
+              "components": {
+                "filters": [
+                  {
+                    "title": "Дата (от)",
+                    "type": "date",
+                    "required_permissions": [],
+                    "required_modules": [],
+                    "settings": {
+                      "is_search": false,
+                      "recipient_property": "start_at"
+                    }
+                  },
+                  {
+                    "title": "Дата (до)",
+                    "type": "date",
+                    "required_permissions": [],
+                    "required_modules": [],
+                    "settings": {
+                      "is_search": false,
+                      "recipient_property": "end_at"
+                    }
+                  },
+                  {
+                    "title": "Группа услуг",
+                    "type": "list",
+                    "required_permissions": [],
+                    "required_modules": [],
+                    "settings": {
+                      "is_search": false,
+                      "recipient_property": "category",
+                      "donor_object": "serviceGroups",
+                      "donor_property_title": "title",
+                      "donor_property_value": "id"
+                    }
+                  },
+                  {
+                    "title": "Услуга",
+                    "type": "list",
+                    "required_permissions": [],
+                    "required_modules": [],
+                    "settings": {
+                      "is_search": false,
+                      "recipient_property": "service",
+                      "donor_object": "services",
+                      "donor_property_title": "title",
+                      "donor_property_value": "id"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "title": "Список транзакций",
+              "type": "list",
+              "size": 4,
+              "settings": {
+                "object": "visits",
+                "linked_filter": "analytic_widgets_salary_info",
+                "filters": []
+              },
+              "components": []
+            }
+          ]
+        },
+        {
+          "title": "История звонков",
+          "is_counter": true,
+          "body": [
+            {
+              "title": "История звонков",
+              "type": "list",
+              "size": 4,
+              "settings": {
+                "object": "userCallHistory",
+                "filters": [
+                  {
+                    "property": "user_id",
+                    "value": ":id"
+                  }
+                ]
+              },
+              "components": []
+            }
+          ]
+        },
+        {
+          "title": "Логи",
+          "body": [
+            {
+              "title": "Логи",
+              "type": "logs",
+              "size": 4,
+              "settings": {
+                "object": "logs",
+                "filters": [
+                  {
+                    "property": "users_id",
+                    "value": ":id"
+                  }
+                ]
+              },
+              "components": []
+            }
+          ]
         }
-    ]
+      ]
+    }
+  ]
 }

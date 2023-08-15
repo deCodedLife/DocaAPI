@@ -22,7 +22,6 @@ if ( !$scheduleTimeFrom ) $scheduleTimeFrom = "00:00:00";
 $scheduleTimeTo = $requestData->event_to;
 if ( !$scheduleTimeTo ) $scheduleTimeTo = "23:59:59";
 
-
 if ( $requestData->id ) $currentScheduleDetail = $API->DB->from( "workDays" )
     ->where( "id", $requestData->id )
     ->limit( 1 )
@@ -33,8 +32,9 @@ $currentScheduleDetail[ "end_at" ] = explode( " ", $currentScheduleDetail[ "even
 
 if ( !$scheduleFrom ) $scheduleFrom = strtotime( $currentScheduleDetail[ "start_at" ][ 0 ] );
 if ( !$scheduleTo ) $scheduleTo = strtotime( $currentScheduleDetail[ "end_at" ][ 0 ] );
-if ( !$requestData->event_from ) $scheduleTimeFrom = strtotime( $currentScheduleDetail[ "start_at" ][ 1 ] );
-if ( !$requestData->event_to ) $scheduleTimeTo = strtotime( $currentScheduleDetail[ "end_at" ][ 1 ] );
+if ( !$requestData->event_from ) $scheduleTimeFrom = $currentScheduleDetail[ "start_at" ][ 1 ];
+
+if ( !$requestData->event_to ) $scheduleTimeTo = $currentScheduleDetail[ "end_at" ][ 1 ];
 
 if ( $requestData->is_weekend === null ) $eventIsWeekend = $currentScheduleDetail[ "is_weekend" ];
 elseif ( !$requestData->is_weekend ) $eventIsWeekend = "N";
@@ -65,10 +65,16 @@ $storeDetails = $API->DB->from( "stores" )
     ->where( "id", $eventStoreId )
     ->fetch();
 
+if ( $requestData->event_from ) {
 
-if ( strtotime( $requestData->event_from ) < strtotime( $storeDetails[ "schedule_from" ] ) ) $API->returnResponse( "Расписание выходит за рамки графика филиала", 500 );
-if ( strtotime( $requestData->event_to )   > strtotime( $storeDetails[ "schedule_to" ] )   ) $API->returnResponse( "Расписание выходит за рамки графика филиала", 500 );
+    if ( strtotime( $requestData->event_from ) < strtotime( $storeDetails[ "schedule_from" ] ) ) $API->returnResponse( "Расписание выходит за рамки графика филиала", 500 );
 
+}
+if ( $requestData->event_to ) {
+
+    if ( strtotime( $requestData->event_to )   > strtotime( $storeDetails[ "schedule_to" ] )   ) $API->returnResponse( "Расписание выходит за рамки графика филиала", 500 );
+
+}
 
 $currentScheduleEvents = $API->DB->from( $API->request->object )
     ->where( [
@@ -113,8 +119,6 @@ while ( $currentScheduleDate <= $scheduleTo ) {
                 ->execute();
 
     } // if. $currentSchedule[ $scheduleDate ]
-
-
     /**
      * Добавление дня в график
      */

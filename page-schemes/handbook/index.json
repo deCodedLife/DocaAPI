@@ -7,9 +7,9 @@
       "type": "header",
       "size": 4,
       "settings": {
-        "description": "Cправочники ",
+        "description": "Справочники",
         "title": [
-          "Cправочники "
+          "Справочники"
         ]
       },
       "components": {

@@ -1,1 +1,215 @@
-{"title":"График работы","table":"workDays","is_trash":false,"properties":[{"title":"Начало рабочего дня","article":"event_from","data_type":"time","field_type":"time","is_default_in_list":false,"is_unique":false,"is_autofill":false,"use_in_commands":["add","calendar","addEvent","updateEvent"],"require_in_commands":["add"],"list_donor":[]},{"title":"Окончание рабочего дня","article":"event_to","data_type":"time","field_type":"time","is_default_in_list":false,"is_unique":false,"is_autofill":false,"use_in_commands":["add","calendar","addEvent","updateEvent"],"require_in_commands":["add"],"list_donor":[]},{"title":"Начало рабочего графика","article":"start_from","data_type":"date","field_type":"date","is_default_in_list":false,"is_unique":false,"is_autofill":false,"use_in_commands":["add","addEvent","updateEvent"],"require_in_commands":["add","addEvent"],"list_donor":[]},{"title":"Окончание рабочего графика","article":"start_to","data_type":"date","field_type":"date","is_default_in_list":false,"is_unique":false,"is_autofill":false,"use_in_commands":["add","addEvent","updateEvent"],"require_in_commands":["add","addEvent"],"list_donor":[]},{"title":"Рабочие дни","article":"work_days","data_type":"array","field_type":"list","is_default_in_list":false,"is_unique":false,"is_autofill":false,"use_in_commands":["add"],"require_in_commands":[],"is_hook":false,"custom_list":[{"title":"Понедельник","value":"Monday"},{"title":"Вторник","value":"Tuesday"},{"title":"Среда","value":"Wednesday"},{"title":"Четверг","value":"Thursday"},{"title":"Пятница","value":"Friday"},{"title":"Суббота","value":"Saturday"},{"title":"Воскресенье","value":"Sunday"}]},{"title":"Сотрудник","article":"user_id","data_type":"integer","field_type":"list","is_default_in_list":true,"is_unique":false,"is_autofill":false,"use_in_commands":["add","addEvent","get","calendar","updateEvent"],"require_in_commands":[],"list_donor":{"table":"users","properties_title":"last_name"},"is_visible":false},{"title":"Нет приема","article":"is_weekend","data_type":"boolean","field_type":"checkbox","is_default_in_list":false,"is_unique":false,"is_autofill":true,"use_in_commands":["add","addEvent","updateEvent"]},{"title":"Филиал","article":"store_id","data_type":"integer","field_type":"list","is_default_in_list":false,"is_unique":false,"is_autofill":true,"use_in_commands":["calendar","addEvent","add","hook","updateEvent","get"],"require_in_commands":["add","addEvent","updateEvent"],"is_hook":true,"is_visible":true,"list_donor":{"table":"stores","properties_title":"title"}},{"title":"Кабинет","article":"cabinet_id","data_type":"integer","field_type":"list","joined_field":"store_id","is_default_in_list":false,"is_unique":false,"is_autofill":true,"use_in_commands":["calendar","add","addEvent","hook","updateEvent"],"is_hook":true,"is_visible":false,"list_donor":{"table":"cabinets","properties_title":"title"}}]}
+{
+  "title": "График работы",
+  "table": "workDays",
+  "is_trash": false,
+  "properties": [
+    {
+      "title": "Начало рабочего дня",
+      "article": "event_from",
+      "data_type": "time",
+      "field_type": "time",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "add",
+        "calendar",
+        "addEvent",
+        "updateEvent",
+        "hook"
+      ],
+      "require_in_commands": [
+        "add"
+      ],
+      "list_donor": []
+    },
+    {
+      "title": "Окончание рабочего дня",
+      "article": "event_to",
+      "data_type": "time",
+      "field_type": "time",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "add",
+        "calendar",
+        "addEvent",
+        "updateEvent",
+        "hook"
+      ],
+      "require_in_commands": [
+        "add"
+      ],
+      "list_donor": []
+    },
+    {
+      "title": "Начало рабочего графика",
+      "article": "start_from",
+      "data_type": "date",
+      "field_type": "date",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "add",
+        "addEvent",
+        "updateEvent"
+      ],
+      "require_in_commands": [
+        "add",
+        "addEvent"
+      ],
+      "list_donor": []
+    },
+    {
+      "title": "Окончание рабочего графика",
+      "article": "start_to",
+      "data_type": "date",
+      "field_type": "date",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "add",
+        "addEvent",
+        "updateEvent"
+      ],
+      "require_in_commands": [
+        "add",
+        "addEvent"
+      ],
+      "list_donor": []
+    },
+    {
+      "title": "Рабочие дни",
+      "article": "work_days",
+      "data_type": "array",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "add"
+      ],
+      "require_in_commands": [],
+      "is_hook": false,
+      "custom_list": [
+        {
+          "title": "Понедельник",
+          "value": "Monday"
+        },
+        {
+          "title": "Вторник",
+          "value": "Tuesday"
+        },
+        {
+          "title": "Среда",
+          "value": "Wednesday"
+        },
+        {
+          "title": "Четверг",
+          "value": "Thursday"
+        },
+        {
+          "title": "Пятница",
+          "value": "Friday"
+        },
+        {
+          "title": "Суббота",
+          "value": "Saturday"
+        },
+        {
+          "title": "Воскресенье",
+          "value": "Sunday"
+        }
+      ]
+    },
+    {
+      "title": "Сотрудник",
+      "article": "user_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "add",
+        "addEvent",
+        "get",
+        "calendar",
+        "updateEvent"
+      ],
+      "require_in_commands": [],
+      "list_donor": {
+        "table": "users",
+        "properties_title": "last_name"
+      },
+      "is_visible": false
+    },
+    {
+      "title": "Нет приема",
+      "article": "is_weekend",
+      "data_type": "boolean",
+      "field_type": "checkbox",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add",
+        "addEvent",
+        "updateEvent"
+      ]
+    },
+    {
+      "title": "Филиал",
+      "article": "store_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "calendar",
+        "addEvent",
+        "add",
+        "hook",
+        "updateEvent",
+        "get"
+      ],
+      "require_in_commands": [
+        "add",
+        "addEvent"
+      ],
+      "is_hook": true,
+      "is_visible": true,
+      "list_donor": {
+        "table": "stores",
+        "properties_title": "title"
+      }
+    },
+    {
+      "title": "Кабинет",
+      "article": "cabinet_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "joined_field": "store_id",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "calendar",
+        "add",
+        "addEvent",
+        "hook",
+        "updateEvent"
+      ],
+      "is_hook": true,
+      "is_visible": false,
+      "list_donor": {
+        "table": "cabinets",
+        "properties_title": "title"
+      }
+    }
+  ]
+}

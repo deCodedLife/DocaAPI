@@ -18,16 +18,16 @@ function sortObjects( $promotion, $type, $object ): array {
     if ( $object[ "is_group" ] == 'Y' ) $type .= "Groups";
 
     if ( $object[ "is_excluded" ] == 'Y' ) {
-        $promotion[ "excluded" . $type ][] = (int) $object[ "object_id" ];
+        $promotion[ "excluded" . $type ][ "value" ][] = (int) $object[ "object_id" ];
         return $promotion;
     }
 
     if ( $object[ "is_required" ] == 'Y' ) {
-        $promotion[ "required" . $type ][] = (int) $object[ "object_id" ];
+        $promotion[ "required" . $type ][ "value" ][] = (int) $object[ "object_id" ];
         return $promotion;
     }
 
-    $promotion[ lcfirst( $type ) ][] = (int) $object[ "object_id" ];
+    $promotion[ lcfirst( $type ) ][ "value" ][] = (int) $object[ "object_id" ];
     return $promotion;
 
 } // sortObjects $promotion, $type, $object

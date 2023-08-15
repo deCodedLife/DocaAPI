@@ -134,6 +134,7 @@ foreach ( Discount::GetActiveDiscounts( $SALES_VARIABLES::$DB_PROMOTIONS ) as $d
 
 
     $servicesGroups = [];
+    $Discount = new Discount();
     $Discount->GetModifiers( "promotion_id", $discount[ "id" ] );
 
 

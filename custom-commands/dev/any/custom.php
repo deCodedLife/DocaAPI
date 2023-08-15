@@ -1,51 +1,50 @@
 <?php
 
-mysqli_query(
-    $API->DB_connection,
-    "drop table visits_users"
-);
-
-$API->returnResponse( "NYAAAAAA" );
-
-header('X-Accel-Buffering: no');
-header( "Content-Type: text/event-stream" );
-header('Cache-Control: no-store');
-
-session_start();
-ob_end_flush();
-ob_start();
-
-$testData = [
-    "cashboxID" => 200,
-    "task" => [
-        "test" => 100
-    ]
-];
-
-$i = 0;
-
-while ( true ) {
-
-    if ( connection_aborted() ) break;
-    echo json_encode( $testData );
-    echo "\n\n";
-
-    ob_flush();
-    flush();
-
-    sleep( random_int(10, 100) / 100 );
-    break;
-
-}
-
-exit();
+//mysqli_query(
+//    $API->DB_connection,
+//    "drop table visits_users"
+//);
+//
+//header('X-Accel-Buffering: no');
+//header( "Content-Type: text/event-stream" );
+//header('Cache-Control: no-store');
+//
+//session_start();
+//ob_end_flush();
+//ob_start();
+//
+//$testData = [
+//    "cashboxID" => 200,
+//    "task" => [
+//        "test" => 100
+//    ]
+//];
+//
+//$i = 0;
+//
+//while ( true ) {
+//
+//    if ( connection_aborted() ) break;
+//    echo json_encode( $testData );
+//    echo "\n\n";
+//
+//    ob_flush();
+//    flush();
+//
+//    sleep( random_int(10, 100) / 100 );
+//    break;
+//
+//}
+//
+//exit();
 
 
+ini_set( "display_errors", true );
 
-//$publicAppPath = $API::$configs[ "paths" ][ "public_app" ];
+$publicAppPath = $API::$configs[ "paths" ][ "public_app" ];
+require_once ( $publicAppPath . "/custom-libs/kpi/install.php" );
 
-//require_once ( $publicAppPath . '/custom-libs/sales/business_logic.php' );
-//require_once ( $publicAppPath . "/custom-libs/sales/install.php" );
+$API->returnResponse( "installed" );
 
 // $API->DB->delete( "promotionObjects" )
 	// ->where( "id", 121 )

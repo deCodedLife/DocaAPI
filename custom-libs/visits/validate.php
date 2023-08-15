@@ -1,6 +1,5 @@
 <?php
 
-//ini_set( "display_errors", true );
 global $API, $requestData;
 
 $start_at    = "";
@@ -17,7 +16,7 @@ $consumables = [];
 /**
  * Подтягиваем данные из существующего посещения
  */
-if ( $requestData->id ) {
+if ( isset( $requestData->id ) ) {
 
     $visitDetail = $API->DB->from( "visits" )
         ->where( "id", $requestData->id )
@@ -41,8 +40,7 @@ if ( $requestData->id ) {
                   ->where( "visit_id", $requestData->id ) as $visit_service )
         $services[] = $visit_service[ "service_id" ];
 
-} // if ( $requestData->id )
-
+} // if. isset( $requestData->id )
 
 
 $start_at    = $requestData->start_at ?? $start_at;
@@ -53,7 +51,6 @@ $services    = $requestData->services_id ?? $services;
 $employee    = $requestData->user_id ?? $employee;
 $assistant   = $requestData->assist_id ?? $assistant;
 $store_id    = $requestData->store_id ?? $store_id;
-
 
 
 /**
@@ -72,7 +69,6 @@ if ( strtotime( DateTime::createFromFormat( 'Y-m-d H:i:s', $end_at )->format('H:
 if ( !$isTimeCorrect ) $API->returnResponse( "Время посещения выходит за рамки графика работы филиала", 400 );
 
 
-
 /**
  * Получение расходников
  */
@@ -81,11 +77,12 @@ foreach ( $services as $service ) {
     $service_consumables = $API->DB->from( "services_consumables" )
         ->where( "row_id", $service );
 
+
+
     foreach ( $service_consumables as $consumable )
-        $consumables[ $consumable[ "consumable_id" ] ][ "count" ] +=  $consumable[ "count" ];
+        $consumables[$consumable["consumable_id"]]["count"] += $consumable->count;
 
-} // foreach ( $services as $service ) {
-
+} // foreach. $services
 
 
 /**
@@ -105,7 +102,6 @@ foreach ( $consumables as $consumable_id => $consumable ) {
         $API->returnResponse( "Недостаточно расходников", 400 );
 
 } // foreach ( $consumables as $consumable_id => $consumable )
-
 
 
 /**
@@ -128,7 +124,6 @@ $existingVisits = mysqli_query(
     $API->DB_connection,
     $getVisitsQuery
 );
-
 
 
 /**
@@ -164,7 +159,6 @@ function isCabinetOccupied( $cabinetID, $visits ): bool {
 } // function isCabinetOccupied( $cabinetID, $visits )
 
 if ( isCabinetOccupied( $cabinet, $existingVisits ) ) $API->returnResponse( "Кабинет занят", 400 );
-
 
 
 /**
@@ -203,7 +197,6 @@ function isClientBusy( $client, $visits ): int {
 } // function isClientBusy( $clients, $visits )
 
 
-
 /**
  *  Обход всех клиентов
  */
@@ -237,7 +230,6 @@ foreach ( $clients as $client ) {
 } // foreach ( $clients as $client )
 
 
-
 /**
  * Проверка дополнительного сотрудника
  * @param $serviceDetails
@@ -268,7 +260,6 @@ function employeesAccountedFor( $serviceDetails, $employee ): bool {
 } // function employeesAccountedFor( $services, $employees )
 
 
-
 /**
  * Проверка второго исполнителя для каждой услуги
  */
@@ -288,7 +279,6 @@ foreach ( $services as $service ) {
     if ( $serviceDetails[ "is_consider_second_performer_time" ] == "N" ) $employees = [ $employees[ 0 ] ];
 
 } // foreach ( $services as $service )
-
 
 
 /**
@@ -324,7 +314,6 @@ function isEmployeeBusy( $employee, $visits ): int {
     return 0;
 
 } // function isEmployeeBusy( $employees, $visits ): bool
-
 
 
 /**

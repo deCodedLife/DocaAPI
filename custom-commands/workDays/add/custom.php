@@ -24,8 +24,7 @@ $currentSchedule = [];
 $currentScheduleEvents = $API->DB->from( $API->request->object )
     ->where( [
         "event_from >= ?" => $requestData->start_from,
-        "event_from <= ?" => $requestData->start_to . " 23:59:59",
-        "user_id" => $requestData->id
+        "event_from <= ?" => $requestData->start_to . " 23:59:59"
     ] );
 
 foreach ( $currentScheduleEvents as $currentScheduleEvent )

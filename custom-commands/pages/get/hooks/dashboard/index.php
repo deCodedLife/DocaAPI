@@ -21,3 +21,11 @@ $pageScheme[ "structure" ][ 0 ][ "settings" ][ "filters" ] = [
                 ->limit(1)->fetch()[ "id" ]
     ]
 ];
+
+$pageScheme[ "structure" ][ 4 ][ "settings" ][ "filters" ] = [
+    "performers_article" => "user_id",
+    "performers_table" => "users",
+    "performers_title" => "first_name",
+    "store_id" => $userDetails[ "store_id" ] ?? $API->DB->from( "stores" )
+            ->limit(1)->fetch()[ "id" ]
+];

@@ -51,7 +51,9 @@ $salesList = $API->DB->from( "salesList" )
     ->orderBy( "salesList.created_at desc" )
     ->limit( 0 );
 
-
+/**
+ * Обход продаж
+ */
 foreach ( $salesList as $sale ) {
 
     $service = $API->DB->from( "services" )

@@ -36,6 +36,7 @@
                 "title": "",
                 "fields": [
                   "user_id",
+                  "author_id",
                   "assist_id",
                   "clients_id",
                   "clients_info",

@@ -1,6 +1,6 @@
 {
   "title": "Товары",
-  "table": " products",
+  "table": "products",
   "is_trash": false,
   "properties": [
     {
@@ -11,14 +11,14 @@
       "is_default_in_list": true,
       "is_unique": false,
       "is_autofill": true,
-      "is_in_search": true,
+      "is_in_search": false,
       "require_in_commands": [
         "add"
       ],
       "use_in_commands": [
         "update",
         "get",
-        "remove",
+        "search",
         "add"
       ]
     },
@@ -43,7 +43,7 @@
       ]
     },
     {
-      "title": "Цена ",
+      "title": "Цена",
       "article": "price",
       "data_type": "float",
       "field_type": "price",
@@ -61,7 +61,7 @@
       ]
     },
     {
-      "title": "Себестоимость ",
+      "title": "Себестоимость",
       "article": "cost",
       "data_type": "float",
       "field_type": "price",

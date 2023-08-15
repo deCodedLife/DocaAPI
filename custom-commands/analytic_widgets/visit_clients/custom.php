@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Отчет "Клиенты посещавшие специалистов
@@ -102,7 +103,6 @@ foreach ( $visitsClients as $visitsClient ) {
     }
 
 } // foreach .$userServices
-
 
 $API->returnResponse(
 

@@ -77,7 +77,7 @@ class Modifier
      * @param Sales\IModifier $pattern
      * @return void
      */
-    public static function removeByPattern( int $promotion_id, Iodifier $pattern ): void {
+    public static function removeByPattern( int $promotion_id, Modifier $pattern ): void {
 
         global $API;
 

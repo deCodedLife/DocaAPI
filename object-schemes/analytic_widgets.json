@@ -38,6 +38,7 @@
         "daily_report",
         "advertise",
         "clients",
+        "salary_info",
         "sales_statistic",
         "visit_clients",
         "client_statistic",
@@ -55,6 +56,7 @@
       "is_autofill": true,
       "use_in_commands": [
         "sum_all_services",
+        "salary_info",
         "userServices",
         "daily_report",
         "advertise",
@@ -107,6 +109,22 @@
       }
     },
     {
+      "title": "Категория",
+      "article": "category",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "salary_info"
+      ],
+      "list_donor": {
+        "table": "serviceGroups",
+        "properties_title": "title"
+      }
+    },
+    {
       "title": "Возраст (до)",
       "article": "end_ear",
       "data_type": "date",
@@ -141,7 +159,7 @@
       }
     },
     {
-      "title": "Услуга",
+      "title": "Услуги",
       "article": "services_id",
       "data_type": "integer",
       "field_type": "list",
@@ -150,6 +168,22 @@
       "is_autofill": true,
       "use_in_commands": [
         "sum_all_services"
+      ],
+      "list_donor": {
+        "table": "services",
+        "properties_title": "title"
+      }
+    },
+    {
+      "title": "Услуга",
+      "article": "service",
+      "data_type": "array",
+      "field_type": "list",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "salary_info"
       ],
       "list_donor": {
         "table": "services",
@@ -181,7 +215,8 @@
       "is_unique": false,
       "is_autofill": true,
       "use_in_commands": [
-        "sum_all_services"
+        "sum_all_services",
+        "salary_info"
       ],
       "list_donor": {
         "table": "serviceGroups",

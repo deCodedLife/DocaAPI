@@ -24,5 +24,4 @@ foreach ( $users_stores as $user_store ) {
 
 } // foreach. $users_stores
 
-
-$response[ "data" ][ 0 ][ "settings" ][ "areas" ][ 1 ][ "blocks" ][ 0 ][ "fields" ][ 0 ][ "list" ] = $stores;
+$response[ "data" ][ 0 ][ "settings" ][ "areas" ][ 1 ][ "blocks" ][ 0 ][ "fields" ][ 1 ][ "list" ] = $stores;

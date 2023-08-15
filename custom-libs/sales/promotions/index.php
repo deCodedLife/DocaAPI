@@ -162,6 +162,7 @@ class Discount
     public static function getGroups( $groupID, $table ): array {
 
         global $API;
+        return [];
         $returnIDs = [ $groupID ];
 
         $details = $API->DB->from( $table )

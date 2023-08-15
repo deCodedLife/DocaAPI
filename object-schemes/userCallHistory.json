@@ -1,0 +1,123 @@
+{
+  "title": "История звонков",
+  "table": "callHistory",
+  "is_trash": false,
+  "properties": [
+    {
+      "title": "ID звонка",
+      "article": "api_id",
+      "data_type": "integer",
+      "field_type": "integer",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add"
+      ],
+      "require_in_commands": []
+    },
+    {
+      "title": "Статус",
+      "article": "status",
+      "data_type": "string",
+      "field_type": "list",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add"
+      ],
+      "require_in_commands": [],
+      "custom_list": [
+        {
+          "title": "Пропущено",
+          "value": "missed"
+        },
+        {
+          "title": "Исходящий",
+          "value": "out"
+        },
+        {
+          "title": "Входящий",
+          "value": "in"
+        },
+        {
+          "title": "Нет ответа",
+          "value": "noanswer"
+        }
+      ]
+    },
+    {
+      "title": "Дата и время создания",
+      "article": "created_at",
+      "data_type": "datetime",
+      "field_type": "datetime",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": []
+    },
+    {
+      "title": "Клиент",
+      "article": "client_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add",
+        "get"
+      ],
+      "require_in_commands": [
+        "add"
+      ],
+      "list_donor": {
+        "table": "clients",
+        "properties_title": "last_name"
+      }
+    },
+    {
+      "title": "Сотрудник",
+      "article": "user_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add",
+        "get"
+      ],
+      "require_in_commands": [],
+      "list_donor": {
+        "table": "users",
+        "properties_title": "last_name"
+      }
+    },
+    {
+      "title": "Продолжительность",
+      "article": "duration",
+      "data_type": "integer",
+      "field_type": "integer",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add"
+      ]
+    },
+    {
+      "title": "Запись",
+      "article": "record",
+      "data_type": "string",
+      "field_type": "audio_player",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add"
+      ]
+    }
+  ]
+}

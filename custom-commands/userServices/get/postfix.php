@@ -106,10 +106,10 @@ if ( $requestData->user_id ) {
                     /**
                      * Получение сотрудника посещения
                      */
-                    $visitUser = $API->DB->from( "visits_users" )
-                        ->where( "visit_id", $saleVisit[ "visit_id" ] )
+                    $visitUser = $API->DB->from( "visits" )
+                        ->where( "id", $saleVisit[ "visit_id" ] )
                         ->limit( 1 )
-                        ->fetch();
+                        ->fetch()[ "user_id" ];
 
                     /**
                      * Приверка на наличие сотрудника в посещении

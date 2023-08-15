@@ -1,6 +1,5 @@
 <?php
 
-ini_set( "display_errors", 500 );
 function translit ( $value ) {
 
     $converter = array(
@@ -26,13 +25,11 @@ function translit ( $value ) {
 } // function. translit
 
 
-
 /**
  * Валидация посещения
  */
 $publicAppPath = $API::$configs[ "paths" ][ "public_app" ];
-require_once ( $publicAppPath . '/custom-libs/visits/validate.php' );
-
+require_once ( $publicAppPath . "/custom-libs/visits/validate.php" );
 
 
 /**

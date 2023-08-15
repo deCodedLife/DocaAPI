@@ -19,7 +19,7 @@ if ( $requestData->context->block === "list" ) {
             ->fetch();
 
 
-        $row[ "period" ] = "c " . ( $row[ "start" ] ?? "-" ) . " по " . ( $row[ "end" ] ?? "-" );
+        $row[ "period" ] = date( 'Y-m-d H:i', strtotime( $row[ "start" ] ) ) . " - " . date( 'Y-m-d H:i', strtotime( $row[ "end" ] ) );
 
         if ( $detailPromotion[ "promotion_type" ] == "percent" )
             $row[ "value" ] =  $row[ "value" ] . "%";

@@ -30,14 +30,14 @@ foreach ( $response[ "data" ] as $row ) {
      */
 
     $client = "{$clientDetail[ "last_name" ]} {$clientDetail[ "first_name" ]} {$clientDetail[ "patronymic" ]}";
-    $fio = explode( " ", $client );
+//    $fio = explode( " ", $client );
+//
+//    $row[ "title" ] = $fio[ 0 ];
+//
+//    if ( $fio[ 1 ] ) $row[ "title" ] .= " " . mb_substr( $fio[ 1 ], 0, 1 ) . ".";
+//    if ( $fio[ 2 ] ) $row[ "title" ] .= " " . mb_substr( $fio[ 2 ], 0, 1 ) . ".";
 
-    $row[ "title" ] = $fio[ 0 ];
-
-    if ( $fio[ 1 ] ) $row[ "title" ] .= " " . mb_substr( $fio[ 1 ], 0, 1 ) . ".";
-    if ( $fio[ 2 ] ) $row[ "title" ] .= " " . mb_substr( $fio[ 2 ], 0, 1 ) . ".";
-
-    $row[ "fio" ] = $row[ "title" ];
+    $row[ "fio" ] = $client;
     $row[ "menu_title" ] = "$client $phoneFormat";
 
     $returnRows[] = $row;

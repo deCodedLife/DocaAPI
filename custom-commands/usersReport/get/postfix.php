@@ -23,14 +23,13 @@ foreach ( $response[ "data" ] as $user ) {
      * Получение посещений Сотрудника за 3 месяца
      */
     $visits3Month = $API->DB->from( "visits" )
-        ->leftJoin( "visits_users ON visits_users.visit_id = visits.id" )
-        ->select( null )->select( [ "visits.id", "visits_users.user_id", "visits.start_at",  "visits.end_at", "visits.is_active", "visits.price" , "visits.status" ] )
+        ->select( null )->select( [ "id", "user_id", "start_at",  "end_at", "is_active", "price" , "status" ] )
         ->where( [
             "start_at >=?" => $currentDateTime->modify( "-2 month" )->format( "Y-m-01 00:00:00" ),
             "is_payed" => "Y",
-            "visits_users.user_id" => $user[ "id" ],
+            "user_id" => $user[ "id" ],
         ] )
-        ->orderBy( "visits.start_at desc" )
+        ->orderBy( "start_at desc" )
         ->limit( 0 );
 
     /**

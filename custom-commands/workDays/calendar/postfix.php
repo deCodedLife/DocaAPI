@@ -19,6 +19,23 @@ foreach ( $response[ "data" ] as $eventDate => $events ) {
             ->limit( 1 )
             ->fetch();
 
+
+        /**
+         * Кабинет события
+         */
+
+        if ( $eventDetail[ "cabinet_id" ] ) {
+
+            $cabinetDetail = $API->DB->from( "cabinets" )
+                ->where( "id", $eventDetail[ "cabinet_id" ] )
+                ->limit( 1 )
+                ->fetch();
+
+            $event[ "title" ] .= " [Каб. " . $cabinetDetail[ "title" ] . "]";
+
+        } // if. $events[ "cabinet_id" ]
+
+
         if ( $eventDetail[ "is_weekend" ] == "Y" ) {
 
             $event[ "title" ] = "Отмена приема";

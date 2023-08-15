@@ -8,6 +8,7 @@ $users_stores = $API->DB->from( "users_stores" )
     ->where( "user_id", $requestData->context->row_id );
 
 $stores = [];
+$cabinets = [];
 
 foreach ( $users_stores as $user_store ) {
 
@@ -25,4 +26,31 @@ foreach ( $users_stores as $user_store ) {
 } // foreach. $users_stores
 
 
+foreach ( $response[ "data" ][ 0 ][ "settings" ][ "areas" ][ 1 ][ "blocks" ][ 0 ][ "fields" ][ 2 ][ "list" ] as $cabinet ) {
+
+    $workDays = $API->DB->from( "workDays" )
+        ->where( "cabinet_id", $cabinet[ "value" ] )
+        ->limit( 1 )
+        ->fetch();
+
+    if ( $workDays[ "cabinet_id" ] != NULL ){
+
+        $title = "№ " . $cabinet[ "title" ] . " ( " . date('d.m',  strtotime($workDays[ "event_from" ]) ) . " " . date('H:i',  strtotime($workDays[ "event_from" ] )) . " - " .  date('H:i',  strtotime($workDays[ "event_to" ]) ) .  " )";
+
+    } else {
+
+        $title = $cabinet[ "title" ];
+
+    }
+
+    $cabinets[] = [
+        "title" => $cabinet[ "title" ],
+        "value" => $cabinet[ "value" ],
+        "menu_title" => $title,
+        "joined_field_value" => $cabinet[ "joined_field_value" ],
+    ];
+
+} // foreach. $response[ "data" ][ 0 ][ "settings" ][ "areas" ][ 1 ][ "blocks" ][ 0 ][ "fields" ][ 2 ][ "list" ]
+
 $response[ "data" ][ 0 ][ "settings" ][ "areas" ][ 1 ][ "blocks" ][ 0 ][ "fields" ][ 1 ][ "list" ] = $stores;
+$response[ "data" ][ 0 ][ "settings" ][ "areas" ][ 1 ][ "blocks" ][ 0 ][ "fields" ][ 2 ][ "list" ] = $cabinets;

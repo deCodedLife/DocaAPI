@@ -111,9 +111,6 @@
       "required_modules": [],
       "settings": {
         "object": "visits",
-        "performers_table": "users",
-        "performers_row_article": "user_id",
-        "performers_row_title": "first_name",
         "row_href": "visits/add"
       },
       "components": {
@@ -150,7 +147,7 @@
               "is_search": false,
               "recipient_property": "user_id",
               "donor_object": "users",
-              "donor_property_title": "fio",
+              "donor_property_title": "last_name",
               "donor_property_value": "id"
             }
           },

@@ -7,6 +7,22 @@
 $formFieldsUpdate = [];
 $hasAssist = false;
 
+
+
+/**
+ * Проход
+ */
+foreach ( $requestData->services_id as $service ) {
+
+    $serviceDetail = $API->DB->from( "services" )
+        ->where( "id", $service )
+        ->fetch();
+
+    if ( $serviceDetail[ "preparation" ] ) $formFieldsUpdate[ "modal_info" ][] = $serviceDetail[ "preparation" ];
+
+}
+
+
 /**
  * Расчет стоимости и времени выполнения Записи
  */

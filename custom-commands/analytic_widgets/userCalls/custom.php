@@ -4,7 +4,6 @@
  * Отчет "Кол-во звонков у Сотрудника"
  */
 
-
 /**
  * График звонков Сотрудника
  */
@@ -50,7 +49,6 @@ $userCalls = $API->DB->from( "callHistory" )
     ->where( $filter )
     ->limit( 0 );
 
-
 /**
  * Формирование графика посещений
  */
@@ -61,7 +59,6 @@ foreach ( $userCalls as $userCall ) {
     $userCallsGraph[ $callDate ]++;
 
 } // foreach. $userCalls
-
 
 function num_word ( $value, $words, $show = true ) { // function. num_word() for declension of nouns after the numeral
 

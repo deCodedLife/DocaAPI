@@ -50,6 +50,18 @@ foreach ( $userServiceGroups as $userServiceGroup ) {
         if ( $isContinueService ) continue;
 
 
+        /**
+         * Проверка активности услуги
+         */
+
+        $serviceDetail = $API->DB->from( "services" )
+            ->where( "id", $userGroupService[ "id" ] )
+            ->limit( 1 )
+            ->fetch();
+
+        if ( $serviceDetail[ "is_active" ] === "N" ) continue;
+
+
         $userServices[] = [
             "service_id" => $userGroupService[ "id" ],
             "percent" => 0,
@@ -80,6 +92,18 @@ foreach ( $joinUserServices as $joinUserService ) {
         if ( $userService[ "service_id" ] == $joinUserService[ "service_id" ] ) $isContinueService = true;
 
     if ( $isContinueService ) continue;
+
+
+    /**
+     * Проверка активности услуги
+     */
+
+    $serviceDetail = $API->DB->from( "services" )
+        ->where( "id", $joinUserService[ "service_id" ] )
+        ->limit( 1 )
+        ->fetch();
+
+    if ( $serviceDetail[ "is_active" ] === "N" ) continue;
 
 
     $userServices[] = [
