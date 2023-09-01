@@ -2,6 +2,6 @@
   "title": "Удаление",
   "type": "remove",
   "object_scheme": "taskGroups",
-  "required_permissions": [],
+  "required_permissions": ["settings_task_themes"],
   "required_modules": []
 }

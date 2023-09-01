@@ -67,3 +67,41 @@ if ( $requestData->profession_id ) {
     $performersRows = $filteredUsers;
 
 } // if. $requestData->profession_id
+
+/**
+ * Фильтр по филиалу
+ */
+
+if ( $requestData->store_id ) {
+
+    /**
+     * Отфильтрованный список сотрудников
+     */
+    $filteredUsers = [];
+
+
+    /**
+     * Добавление сотрудников с указанной специальностью
+     * в отфильтрованный список
+     */
+    foreach ( $performersRows as $performersRowKey => $performersRow ) {
+
+        $userStores = $API->DB->from( "users_stores" )
+            ->where( [
+                "store_id" => $requestData->store_id,
+                "user_id" => $performersRow[ "id" ]
+            ] )
+            ->limit( 1 )
+            ->fetch();
+
+        if ( !empty( $userStores ) ) $filteredUsers[] = $performersRow;
+
+    }
+
+
+    /**
+     * Обновление списка сотрудников
+     */
+    $performersRows = $filteredUsers;
+
+} // if. $requestData->users_id

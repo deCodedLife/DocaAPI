@@ -1,6 +1,6 @@
 {
   "required_modules": [],
-  "required_permissions": [],
+  "required_permissions": ["clients_get", "clients_update"],
   "structure": [
     {
       "title": "Шапка",
@@ -177,6 +177,7 @@
                     "required_permissions": [],
                     "required_modules": [],
                     "settings": {
+                      "size": 2,
                       "is_search": false,
                       "recipient_property": "start_at"
                     }
@@ -187,6 +188,7 @@
                     "required_permissions": [],
                     "required_modules": [],
                     "settings": {
+                      "size": 2,
                       "is_search": false,
                       "recipient_property": "end_at"
                     }
@@ -200,13 +202,15 @@
               "size": 4,
               "settings": {
                 "object": "visits",
+                "link": false,
+                "is_edit": false,
                 "filters": [
                   {
                     "property": "clients_id",
                     "value": ":id"
                   }
                 ],
-                "linked_filter": "analytic_widgets_client_statistic"
+                "linked_filter": "analytic_widgets_visit_statistic"
               }
             }
           ]
@@ -249,6 +253,81 @@
                 ]
               },
               "components": {
+                "filters": [
+                  {
+                    "title": "Тема",
+                    "type": "list",
+                    "required_permissions": [],
+                    "required_modules": [],
+                    "settings": {
+                      "is_search": false,
+                      "recipient_property": "taskGroup_id",
+                      "donor_object": "taskGroups",
+                      "donor_property_title": "title",
+                      "donor_property_value": "id"
+                    }
+                  },
+                  {
+                    "title": "Дата",
+                    "type": "date",
+                    "required_permissions": [],
+                    "required_modules": [],
+                    "settings": {
+                      "is_search": false,
+                      "recipient_property": "deadline"
+                    }
+                  },
+                  {
+                    "title": "Исполнитель",
+                    "type": "list",
+                    "required_permissions": [],
+                    "required_modules": [],
+                    "settings": {
+                      "is_search": false,
+                      "recipient_property": "performer_id",
+                      "donor_object": "users",
+                      "donor_property_title": "last_name",
+                      "donor_property_value": "id"
+                    }
+                  },
+                  {
+                    "title": "Автор",
+                    "type": "list",
+                    "required_permissions": [],
+                    "required_modules": [],
+                    "settings": {
+                      "is_search": false,
+                      "recipient_property": "author_id",
+                      "donor_object": "users",
+                      "donor_property_title": "last_name",
+                      "donor_property_value": "id"
+                    }
+                  },
+                  {
+                    "title": "Статус",
+                    "type": "list",
+                    "required_permissions": [],
+                    "required_modules": [],
+                    "settings": {
+                      "is_search": false,
+                      "recipient_property": "status",
+                      "list": [
+                        {
+                          "title": "Поставлена",
+                          "value": "set"
+                        },
+                        {
+                          "title": "Завершена",
+                          "value": "ended"
+                        },
+                        {
+                          "title": "Просрочена",
+                          "value": "overdue"
+                        }
+                      ]
+                    }
+                  }
+                ],
                 "buttons": [
                   {
                     "type": "modal",
@@ -334,6 +413,7 @@
               "size": 4,
               "settings": {
                 "object": "bonusHistory",
+                "link": false,
                 "filters": [
                   {
                     "property": "client_id",
@@ -347,7 +427,7 @@
                   {
                     "type": "modal",
                     "settings": {
-                      "title": "Изменить",
+                      "title": "Пополнить",
                       "background": "dark",
                       "page": "clients/bonus",
                       "context": {
@@ -388,6 +468,7 @@
               "size": 4,
               "hook": "salesList",
               "settings": {
+                "link": false,
                 "object": "salesList",
                 "filters": [
                   {

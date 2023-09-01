@@ -1,1 +1,1 @@
-{"title":"Добавление","type":"add","object_scheme":"consumableCategories","modules":[],"permissions":[]}
+{"title":"Добавление","type":"add","object_scheme":"consumableCategories","modules":[],"required_permissions":["settings_consumable_categories"]}

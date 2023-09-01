@@ -1,1 +1,40 @@
-{"title":"История пополнения бонусов","properties":[{"title":"ID  сотрудника","article":"user_id","type":"int","default":null,"is_required":"N"},{"title":"ID клиента","article":"client_id","type":"int","default":null,"is_required":"N"},{"title":"Пополнено","article":"replenished","type":"int","default":null,"is_required":"N"}]}
+{
+  "title": "История пополнения бонусов",
+  "properties": [
+    {
+      "title": "Дата",
+      "article": "created_at",
+      "type": "datetime",
+      "default": "CURRENT_TIMESTAMP",
+      "is_required": "N"
+    },
+    {
+      "title": "ID  сотрудника",
+      "article": "user_id",
+      "type": "int",
+      "default": null,
+      "is_required": "N"
+    },
+    {
+      "title": "ID клиента",
+      "article": "client_id",
+      "type": "int",
+      "default": null,
+      "is_required": "N"
+    },
+    {
+      "title": "Пополнено",
+      "article": "replenished",
+      "type": "int",
+      "default": null,
+      "is_required": "N"
+    },
+    {
+      "title": "Пополнено",
+      "article": "action",
+      "type": "varchar(75)",
+      "default": null,
+      "is_required": "N"
+    }
+  ]
+}

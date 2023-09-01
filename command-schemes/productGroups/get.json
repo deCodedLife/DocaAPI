@@ -1,1 +1,1 @@
-{"title":"Получить типы товаров","type":"get","object_scheme":"productGroups","modules":[],"permissions":[],"no_limit":false}
+{"title":"Получить типы товаров","type":"get","object_scheme":"productGroups","modules":[],"required_permissions":["settings_product_groups"],"no_limit":false}

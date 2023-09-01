@@ -1,6 +1,6 @@
 {
     "required_modules": [],
-    "required_permissions": [],
+    "required_permissions": ["promotions_get"],
     "structure": [
         {
             "title": "Заголовок",

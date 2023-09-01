@@ -1,6 +1,6 @@
 {
   "required_modules": [],
-  "required_permissions": [],
+  "required_permissions": ["handbook_get","handbook_add"],
   "structure": [
     {
       "title": "Шапка",

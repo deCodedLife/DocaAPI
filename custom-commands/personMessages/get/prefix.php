@@ -4,7 +4,7 @@
  * Получение ключа чата
  */
 
-$usersId = [ $API::$userDetail->id, $requestData->chat_key ];
+$usersId = [ (int) $API::$userDetail->id, (int) $requestData->chat_key ];
 asort( $usersId );
 
 $chatKey = implode( "_", $usersId );

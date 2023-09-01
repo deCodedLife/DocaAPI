@@ -1,1 +1,1 @@
-{"title":"Вывод","type":"get","object_scheme":"advertise","modules":[],"permissions":[]}
+{"title":"Вывод","type":"get","object_scheme":"advertise","modules":[],"required_permissions":["settings_advert_types"]}

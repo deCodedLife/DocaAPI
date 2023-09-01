@@ -1,1 +1,79 @@
-{"title":"История пополнения бонусов","table":"bonusHistory","is_trash":false,"properties":[{"title":"Cотрудник","article":"user_id","data_type":"integer","field_type":"list","is_default_in_list":true,"is_unique":false,"is_autofill":false,"list_donor":{"table":"users","properties_title":"last_name"},"use_in_commands":["get","add"]},{"title":"ID клиента","article":"client_id","data_type":"integer","field_type":"list","is_default_in_list":false,"is_unique":false,"is_autofill":true,"list_donor":{"table":"clients","properties_title":"last_name"},"use_in_commands":["get","add"]},{"title":"Пополнено","article":"replenished","data_type":"integer","field_type":"integer","is_default_in_list":true,"is_unique":false,"is_autofill":true,"use_in_commands":["get","add"]}]}
+{
+  "title": "История пополнения бонусов",
+  "table": "bonusHistory",
+  "is_trash": false,
+  "properties": [
+    {
+      "title": "Дата",
+      "article": "created_at",
+      "data_type": "datetime",
+      "field_type": "datetime",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "get",
+        "add"
+      ]
+    },
+    {
+      "title": "Тип действия",
+      "article": "action",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "get"
+      ]
+    },
+    {
+      "title": "Сотрудник",
+      "article": "user_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": false,
+      "list_donor": {
+        "table": "users",
+        "properties_title": "last_name"
+      },
+      "use_in_commands": [
+        "get",
+        "add"
+      ]
+    },
+    {
+      "title": "ID клиента",
+      "article": "client_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "list_donor": {
+        "table": "clients",
+        "properties_title": "last_name"
+      },
+      "use_in_commands": [
+        "get",
+        "add"
+      ]
+    },
+    {
+      "title": "Пополнено",
+      "article": "replenished",
+      "data_type": "integer",
+      "field_type": "integer",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "get",
+        "add"
+      ]
+    }
+  ]
+}

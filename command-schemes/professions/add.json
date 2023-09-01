@@ -2,6 +2,6 @@
   "title": "Добавление",
   "type": "add",
   "object_scheme": "professions",
-  "required_permissions": [],
+  "required_permissions": ["settings_professions"],
   "required_modules": []
 }

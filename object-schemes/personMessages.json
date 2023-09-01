@@ -62,5 +62,22 @@
       "title": "Да",
       "value": "Y"
     }]
+  }, {
+    "title": "Оповещено",
+    "article": "is_notificated",
+    "data_type": "string",
+    "field_type": "list",
+    "is_default_in_list": false,
+    "is_unique": false,
+    "is_autofill": true,
+    "use_in_commands": ["add", "update"],
+    "require_in_commands": [],
+    "custom_list": [{
+      "title": "Нет",
+      "value": "N"
+    }, {
+      "title": "Да",
+      "value": "Y"
+    }]
   }]
 }

@@ -9,6 +9,24 @@
  */
 $userCallsGraph = [];
 
+/**
+ * График заергистрированных Клиентов
+ */
+$regCallsGraph = [];
+
+/**
+ * Колличество заергистрированных Клиентов
+ */
+$regCalls = 0;
+/**
+ * График записавшихся Клиентов
+ */
+$visitsCallsGraph = [];
+
+/**
+ * Колличество записавшихся Клиентов
+ */
+$visitsCalls = 0;
 
 if ( !$requestData->user_id ) $API->returnResponse(
 
@@ -57,6 +75,37 @@ foreach ( $userCalls as $userCall ) {
 
     $callDate = date( "Y-m-d", strtotime( $userCall[ "created_at" ] ) );
     $userCallsGraph[ $callDate ]++;
+    if ( !$regCallsGraph[ $callDate ] ) $regCallsGraph[ $callDate ] = 0;
+    if ( !$visitsCallsGraph[ $callDate ] ) $visitsCallsGraph[ $callDate ] = 0;
+
+    $client = $API->DB->from( "clients" )
+        ->where( "phone", $userCall[ "client_phone" ] )
+        ->limit( 1 )
+        ->fetch();
+
+    if ( $client && $client[ "created_at" ] < $callDate + 1 && $client[ "created_at" ] > $callDate ) {
+
+        $regCallsGraph[ $callDate ]++;
+        $regCalls++;
+
+        $visitClient = $API->DB->from( "visits_clients" )
+            ->where( "client_id", $client[ "id" ] )
+            ->limit( 0 )
+            ->fetch();
+
+        $visit = $API->DB->from( "visits_clients" )
+            ->where( "id", $visitClient[ "visit_id" ] )
+            ->limit( 0 )
+            ->fetch();
+
+        if ( $visitClient && $visit[ "created_at" ] < $callDate + 1 && $visit[ "created_at" ] > $callDate ) {
+
+            $visitsCallsGraph[ $callDate ]++;
+            $visitsCalls++;
+
+        }
+
+    }
 
 } // foreach. $userCalls
 
@@ -106,7 +155,24 @@ $API->returnResponse(
             "detail" => [
                 "type" => "char",
                 "settings" => [
-                    "char" => $userCallsGraph
+                    "char" => [
+                        "x" => array_keys($userCallsGraph),
+                        "lines" => [
+                            [
+                                "title" => "Звонков",
+                                "values" => $userCallsGraph
+                            ],
+                            [
+                                "title" => "Зарегистрировано клиентов",
+                                "values" => $regCallsGraph
+
+                            ],
+                            [
+                                "title" => "Записано клиентов",
+                                "values" => $visitsCallsGraph
+                            ],
+                        ]
+                    ]
                 ]
             ]
 

@@ -110,6 +110,7 @@ $API->returnResponse(
         [
             "value" => $reportStatistic["visits_sum"],
             "description" => "Сумма продаж",
+            "size" => "1",
             "icon" => "",
             "prefix" => "₽",
             "postfix" => [
@@ -124,6 +125,7 @@ $API->returnResponse(
         [
             "value" => $reportStatistic["services_user_percents"],
             "description" => "Сумма продаж с  %",
+            "size" => "1",
             "icon" => "",
             "prefix" => "₽",
             "postfix" => [
@@ -139,6 +141,7 @@ $API->returnResponse(
             "value" => $reportStatistic[ "clients_count" ],
             "description" => "Количество клиентов",
             "icon" => "",
+            "size" => "1",
             "prefix" => "",
             "postfix" => [
                 "icon" => "",

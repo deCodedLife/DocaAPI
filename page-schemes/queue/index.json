@@ -1,5 +1,5 @@
 {
-  "required_permissions": [],
+  "required_permissions": [ "queue_get" ],
   "required_modules": [],
   "structure": [
     {

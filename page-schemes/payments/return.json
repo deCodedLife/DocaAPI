@@ -1,6 +1,6 @@
 {
   "required_modules": [],
-  "required_permissions": [],
+  "required_permissions": ["payments_get"],
   "structure": [
     {
       "title": "Форма возврата",

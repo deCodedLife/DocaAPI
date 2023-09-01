@@ -236,7 +236,7 @@ if ( !$requestData->reason_id ) {
 
                 if ($specifySecondEmployee == false) {
 
-                    $API->returnResponse("Укажите второго сотрудника для услуги " . $serviceDetail["title"], 400);
+                    $API->returnResponse("Укажите второго сотрудника для услуги ${$serviceDetail[ "title" ]}", 400);
 
                 }
 
@@ -285,7 +285,7 @@ if ( !$requestData->reason_id ) {
 
                 if ($specifySecondEmployee == false) {
 
-                    $API->returnResponse("Укажите второго сотрудника для услуги " . $serviceDetail["title"], 400);
+                    $API->returnResponse("Укажите второго сотрудника для услуги ${$serviceDetail[ "title" ]}", 400);
 
                 }
 
@@ -305,9 +305,14 @@ if ( !$requestData->reason_id ) {
             ->limit(1)
             ->fetch();
 
+        $consumable = $API->DB->from("consumables")
+            ->where( "id", $consumable_id )
+            ->limit(1)
+            ->fetch();
+
         if ($warehouse && $consumable["count"] > $warehouse["count"]) {
 
-            $API->returnResponse("Недостаточно расходников", 400);
+            $API->returnResponse("Недостаточно расходника - ${$consumable[ "title" ]}", 400);
 
         }
 
@@ -351,7 +356,7 @@ foreach ( $existingVisits as $existingVisit ) {
                 ->limit( 1 )
                 ->fetch();
 
-            $API->returnResponse( "Сотрудник ${userDetail[ "last_name" ]} занят", 400 );
+            $API->returnResponse( "Сотрудник ${userDetail[ "last_name" ]} занят, посещение - № ${$visitUser[ "visit_id" ]}", 400 );
 
         } // if. in_array( $visitUser[ "user_id" ], $requestData->users_id
 
@@ -375,7 +380,7 @@ foreach ( $existingVisits as $existingVisit ) {
                 ->limit( 1 )
                 ->fetch();
 
-            $API->returnResponse( "Клиент ${clientDetail[ "last_name" ]} занят", 400 );
+            $API->returnResponse( "Клиент ${clientDetail[ "last_name" ]}  занят, посещение - № ${$visitClient[ "visit_id" ]}", 400 );
 
         } // if. in_array( $visitClient[ "client_id" ], $requestData->client_id
 

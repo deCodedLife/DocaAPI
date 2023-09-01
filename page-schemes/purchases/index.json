@@ -1,6 +1,6 @@
 {
   "required_modules": [],
-  "required_permissions": [],
+  "required_permissions": ["purchases_get"],
   "structure": [
     {
       "title": "Шапка",
@@ -23,6 +23,16 @@
       },
       "components": {
         "filters": [
+          {
+            "title": "Дата",
+            "type": "date",
+            "required_permissions": [],
+            "required_modules": [],
+            "settings": {
+              "is_search": false,
+              "recipient_property": "created_at"
+            }
+          },
           {
             "title": "Поставщик",
             "type": "list",

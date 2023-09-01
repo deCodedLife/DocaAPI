@@ -138,7 +138,8 @@
         "addEvent",
         "get",
         "calendar",
-        "updateEvent"
+        "updateEvent",
+        "export"
       ],
       "require_in_commands": [],
       "list_donor": {
@@ -169,13 +170,15 @@
       "is_default_in_list": false,
       "is_unique": false,
       "is_autofill": true,
+      "is_clearable": false,
       "use_in_commands": [
         "calendar",
         "addEvent",
         "add",
         "hook",
         "updateEvent",
-        "get"
+        "get",
+        "export"
       ],
       "require_in_commands": [
         "add",
@@ -200,6 +203,7 @@
       "use_in_commands": [
         "calendar",
         "add",
+        "get",
         "addEvent",
         "hook",
         "updateEvent"
@@ -210,6 +214,18 @@
         "table": "cabinets",
         "properties_title": "title"
       }
+    },
+    {
+      "title": "Услуга для экспорта",
+      "article": "service_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "export"
+      ]
     }
   ]
 }

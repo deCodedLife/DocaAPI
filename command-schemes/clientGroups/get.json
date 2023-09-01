@@ -2,6 +2,6 @@
   "title": "Вывод",
   "type": "get",
   "object_scheme": "clientGroups",
-  "required_permissions": [],
+  "required_permissions": ["settings_client_groups"],
   "required_modules": []
 }

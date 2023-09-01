@@ -2,6 +2,6 @@
   "title": "Редактирование",
   "type": "update",
   "object_scheme": "cabinets",
-  "required_permissions": [],
+  "required_permissions": ["settings_cabinets"],
   "required_modules": []
 }

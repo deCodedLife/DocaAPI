@@ -1,1 +1,1 @@
-{"title":"Удалить документ","type":"remove","object_scheme":"documents","required_modules":[],"required_permissions":[],"no_limit":true}
+{"title":"Удалить документ","type":"remove","object_scheme":"documents","required_modules":[],"required_permissions":["documents_remove"],"no_limit":true}

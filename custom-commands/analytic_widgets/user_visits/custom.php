@@ -82,7 +82,15 @@ $API->returnResponse(
             "detail" => [
                 "type" => "char",
                 "settings" => [
-                    "char" => $userVisitsGraph
+                    "char" => [
+                        "x" => array_keys($userVisitsGraph),
+                        "lines" => [
+                            [
+                                "title" => "Посещений",
+                                "values" => $userVisitsGraph
+                            ]
+                        ]
+                    ]
                 ]
             ]
 

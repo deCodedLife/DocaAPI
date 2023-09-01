@@ -1,0 +1,110 @@
+{
+  "title": "KPI",
+  "table": "employees_kpi",
+  "is_trash": false,
+  "properties": [
+    {
+      "title": "Сотрудник",
+      "article": "user_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "list_donor": {
+        "table": "users",
+        "properties_title": "last_name"
+      },
+      "use_in_commands": [
+        "add",
+        "get",
+        "update"
+      ],
+      "require_in_commands": [
+        "add"
+      ]
+    },
+    {
+      "title": "Тип KPI",
+      "article": "type",
+      "data_type": "string",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add",
+        "update",
+        "get",
+        "return",
+        "hook"
+      ],
+      "require_in_commands": [
+        "add"
+      ],
+      "custom_list": [
+        {
+          "title": "Сумма",
+          "value": "summary"
+        },
+        {
+          "title": "Подсчёт",
+          "value": "count"
+        }
+      ],
+      "is_visible": false,
+      "is_disabled": true
+    },
+    {
+      "title": "Колонка в таблице",
+      "article": "target_row",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add",
+        "get",
+        "update"
+      ],
+      "require_in_commands": [
+        "add"
+      ]
+    },
+    {
+      "title": "Необходимое количество",
+      "article": "required_value",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add",
+        "get",
+        "update"
+      ],
+      "require_in_commands": [
+        "add"
+      ]
+    },
+    {
+      "title": "KPI",
+      "article": "kpi_value",
+      "data_type": "float",
+      "field_type": "price",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add",
+        "get",
+        "update"
+      ],
+      "require_in_commands": [
+        "add"
+      ]
+    }
+  ]
+}

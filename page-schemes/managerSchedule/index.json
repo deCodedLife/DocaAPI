@@ -33,6 +33,7 @@
             "required_modules": [],
             "settings": {
               "is_search": false,
+              "is_clearable": false,
               "recipient_property": "store_id",
               "donor_object": "stores",
               "donor_property_title": "title",

@@ -17,12 +17,16 @@ $formFieldsUpdate = [];
  */
 $publicAppPath = $API::$configs[ "paths" ][ "public_app" ];
 
-if ( $requestData->action !== "deposit" )
-    require_once ( $publicAppPath . '/custom-libs/sales/business_logic.php' );
-else {
+if ( $requestData->action !== "deposit" ) {
+
+    require_once( $publicAppPath . '/custom-libs/sales/include.php' );
+    require_once( $publicAppPath . '/custom-libs/sales/projects/doca/business_logic.php' );
+
+} else {
     $isReturn = false;
     $sum_card = $requestData->sum_card ?? 0;
     $sum_cash = $requestData->sum_cash ?? 0;
+    $sum_entity = $requestData->sum_entity ?? 0;
     $saleSummary = $sum_cash + $sum_card;
 }
 
@@ -65,6 +69,14 @@ if ( $requestData->pay_method == "cash" ) {
     $sum_card = 0;
 
 } // if. $requestData->pay_method == "cash"
+
+if ( $requestData->pay_method == "legalEntity" ) {
+
+    $formFieldsUpdate[ "sum_card" ][ "is_visible" ] = false;
+    $formFieldsUpdate[ "sum_cash" ][ "is_visible" ] = false;
+    $formFieldsUpdate[ "sum_entity" ][ "value" ] = $saleSummary;
+
+}
 
 
 

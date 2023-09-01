@@ -41,10 +41,12 @@
 
 ini_set( "display_errors", true );
 
-$publicAppPath = $API::$configs[ "paths" ][ "public_app" ];
-require_once ( $publicAppPath . "/custom-libs/kpi/install.php" );
+mysqli_query(
+    $API->DB_connection,
+    "ALTER TABLE salesList ADD sum_entity FLOAT NOT NULL DEFAULT 0 COMMENT 'Средства юр лица' AFTER sum_card"
+);
 
-$API->returnResponse( "installed" );
+$API->returnResponse( "Ok" );
 
 // $API->DB->delete( "promotionObjects" )
 	// ->where( "id", 121 )

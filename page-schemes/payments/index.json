@@ -1,6 +1,6 @@
 {
   "required_modules": [],
-  "required_permissions": [],
+  "required_permissions": ["payments_get"],
   "structure": [
     {
       "title": "Табы",
@@ -37,6 +37,7 @@
                     "title": "Дата (от)",
                     "type": "date",
                     "settings": {
+                      "size": 2,
                       "recipient_property": "start_at"
                     }
                   },
@@ -44,6 +45,7 @@
                     "title": "Дата (до)",
                     "type": "date",
                     "settings": {
+                      "size": 2,
                       "recipient_property": "end_at"
                     }
                   },
@@ -181,6 +183,7 @@
                     "title": "Дата (от)",
                     "type": "date",
                     "settings": {
+                      "size": 2,
                       "recipient_property": "start_at"
                     }
                   },
@@ -188,6 +191,7 @@
                     "title": "Дата (до)",
                     "type": "date",
                     "settings": {
+                      "size": 2,
                       "recipient_property": "end_at"
                     }
                   },
@@ -265,6 +269,7 @@
                     "title": "Дата (от)",
                     "type": "date",
                     "settings": {
+                      "size": 2,
                       "recipient_property": "start_at"
                     }
                   },
@@ -272,6 +277,7 @@
                     "title": "Дата (до)",
                     "type": "date",
                     "settings": {
+                      "size": 2,
                       "recipient_property": "end_at"
                     }
                   },

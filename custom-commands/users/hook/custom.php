@@ -29,7 +29,7 @@ if ( $requestData->patronymic ) {
  * Блок "Процент от продаж услуг"
  */
 
-if ( $requestData->is_percent == "Y" ) {
+if ( $requestData->salary_type == "rate_percent" ) {
 
     $formFieldsUpdate[ "services_user_percents" ][ "is_visible" ] = true;
 
@@ -38,6 +38,20 @@ if ( $requestData->is_percent == "Y" ) {
     $formFieldsUpdate[ "services_user_percents" ][ "is_visible" ] = false;
 
 } // if. $requestData->is_percent == "Y"
+
+if ( $requestData->salary_type == 'rate_kpi' ) {
+
+    $formFieldsUpdate[ "sales" ][ "is_visible" ] = true;
+    $formFieldsUpdate[ "services" ][ "is_visible" ] = true;
+    $formFieldsUpdate[ "promotions" ][ "is_visible" ] = true;
+
+} else {
+
+    $formFieldsUpdate[ "sales" ][ "is_visible" ] = false;
+    $formFieldsUpdate[ "services" ][ "is_visible" ] = false;
+    $formFieldsUpdate[ "promotions" ][ "is_visible" ] = false;
+
+}
 
 
 $API->returnResponse( $formFieldsUpdate );

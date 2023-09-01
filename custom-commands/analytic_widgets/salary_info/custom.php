@@ -46,8 +46,11 @@ $userDetail = $API->DB->from( "users" )
     ->limit( 1 )
     ->fetch();
 
+$salaryType = $userDetail[ "salary_type" ];
 $salary_fixed = $userDetail[ "salary" ];
 
+$additionalWidgetTitle = "";
+$additionalWidgetValue = 0;
 
 $visits = $API->DB->from( "visits" )
     ->where( $filter );
@@ -109,7 +112,7 @@ if ( $requestData->service && !empty( $requestData->service ) ) {
  * Процент от продаж
  */
 
-if ( $userDetail[ "is_percent" ] === "Y" ) {
+if ( $salaryType == "rate_percent" ) {
 
     /**
      * Общая сумма продаж
@@ -124,7 +127,6 @@ if ( $userDetail[ "is_percent" ] === "Y" ) {
     /**
      * Обработка услуг
      */
-
     if ( !empty($visitsList) ) {
 
         foreach ($visitsList as $visit) {
@@ -173,6 +175,10 @@ if ( $userDetail[ "is_percent" ] === "Y" ) {
             } // foreach. $visit[ "services_id" ]
 
         } // foreach. $visits
+
+        $additionalWidgetTitle = "% от продаж";
+        $additionalWidgetValue = $salary_kpi_value + $salary_kpi_percent;
+
     }
 
 } // if. $userDetail[ "is_percent" ] === "Y"
@@ -203,6 +209,36 @@ if ( !empty( $visitsList ) ) {
 
 }
 
+if ( $salaryType == "rate_kpi" ) {
+
+    $additionalWidgetTitle = "Итого по KPI";
+    $kpi = [];
+
+    $publicApp = $API::$configs[ "paths" ][ "public_app" ];
+    require_once( "$publicApp/custom-libs/kpi/sales.php" );
+    require_once( "$publicApp/custom-libs/kpi/services.php" );
+    require_once( "$publicApp/custom-libs/kpi/promotions.php" );
+
+    $highestKPI = [];
+
+    foreach ( $kpi as $record ) {
+
+        if ( $record[ "bonus" ] < $highestKPI[ $record[ 'kpi_type' ] ] ) continue;
+        $highestKPI[ $record[ 'kpi_type' ] ] = $record[ "bonus" ];
+
+    }
+
+    foreach ( $highestKPI as $key => $record ) {
+        $additionalWidgetValue += $record;
+    }
+
+    $salary_kpi_value = $additionalWidgetValue;
+
+}
+
+$additionalWidgetValue = number_format( $additionalWidgetValue, 0, ".", " " );
+
+
 $API->returnResponse(
 
     [
@@ -223,8 +259,8 @@ $API->returnResponse(
         ],
         [
             "size" => 1,
-            "value" => number_format( $salary_kpi_value + $salary_kpi_percent, 0, ".", " " ),
-            "description" => "% от продаж",
+            "value" => $additionalWidgetValue,
+            "description" => $additionalWidgetTitle,
             "icon" => "",
             "prefix" => "₽",
             "postfix" => [

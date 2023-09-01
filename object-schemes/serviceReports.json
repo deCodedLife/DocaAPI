@@ -4,6 +4,30 @@
   "is_trash": true,
   "properties": [
     {
+      "title": "Сумма (от)",
+      "article": "start_price",
+      "data_type": "float",
+      "field_type": "price",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "get"
+      ]
+    },
+    {
+      "title": "Сумма (до)",
+      "article": "end_price",
+      "data_type": "float",
+      "field_type": "price",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "get"
+      ]
+    },
+    {
       "title": "Название",
       "article": "title",
       "data_type": "string",

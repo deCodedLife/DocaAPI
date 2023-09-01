@@ -2,6 +2,6 @@
   "title": "Добавление",
   "type": "add",
   "object_scheme": "users",
-  "required_permissions": [],
+  "required_permissions": ["users_add"],
   "required_modules": []
 }

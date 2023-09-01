@@ -41,3 +41,14 @@ $pageScheme[ "structure" ][ 1 ][ "settings" ][ 3 ][ "body" ][ 1 ][ "settings" ][
 ];
 
 $pageScheme[ "structure" ][ 1 ][ "settings" ][ 3 ][ "body" ][ 0 ][ "components" ][ "filters" ][ 3 ][ "settings" ][ "is_multi" ] = true;
+
+$user = $API->DB->from( "users" )
+    ->where( "id", $pageDetail[ "row_detail" ][ "id" ] )
+    ->fetch();
+
+if ( $user[ "salary_type" ] != "rate_kpi" ) {
+
+    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 3 ][ "body" ][ 1 ] );
+    $pageScheme[ "structure" ][ 1 ][ "settings" ][ 3 ][ "body" ] = array_values( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 3 ][ "body" ] );
+
+}

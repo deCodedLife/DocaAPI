@@ -26,6 +26,16 @@ foreach ( $clients as $client ) {
 
 $formFieldValues[ "clients_info" ] = [ "is_visible" => true, "value" => $clientsInfo, "title" => "" ];
 
+/**
+ * Отключение кнопок "Удалить посещение", "Сохранить" и "Оплатить"
+ */
+if ( $pageDetail[ "row_detail" ][ "is_payed" ] == true ) {
+
+    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 4 ] );
+    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 5 ] );
+    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 0 ] );
+
+}
 
 /**
  * Определение того, стоит ли скрывать кнопку оплаты
@@ -89,16 +99,6 @@ if ( $pageDetail[ "row_detail" ][ "status" ]->value === "ended" ) {
 
 }
 
-/**
- * Отключение кнопок "Удалить посещение", "Сохранить" и "Оплатить"
- */
-if ( $pageDetail[ "row_detail" ][ "status" ]->value === "paidfor" ) {
-
-    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 4 ] );
-    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 5 ] );
-    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 0 ] );
-
-}
 
 
 /**

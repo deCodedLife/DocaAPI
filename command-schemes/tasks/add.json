@@ -2,6 +2,6 @@
   "title": "Добавление",
   "type": "add",
   "object_scheme": "tasks",
-  "required_permissions": [],
+  "required_permissions": ["tasks_add"],
   "required_modules": []
 }

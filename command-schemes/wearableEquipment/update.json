@@ -1,1 +1,1 @@
-{"title":"Изменение","type":"update","object_scheme":"wearableEquipment","modules":[],"permissions":[]}
+{"title":"Изменение","type":"update","object_scheme":"wearableEquipment","modules":[],"required_permissions":["settings_wearable_equipment"]}

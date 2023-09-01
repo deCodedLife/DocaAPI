@@ -1,6 +1,6 @@
 {
     "required_modules": [],
-    "required_permissions": [],
+    "required_permissions": ["purchases_get", "purchases_add"],
     "structure": [
         {
             "title": "Шапка",

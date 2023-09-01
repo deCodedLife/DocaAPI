@@ -52,6 +52,23 @@ if ( $requestData->cmd === "event" ) {
         ] )
         ->execute();
 
+
+    /**
+     * Уведомления о пропущенных звонках
+     */
+    if ( $requestData->type === "missed" ) {
+
+        $API->addNotification(
+            "system_alerts",
+            "Пропущен звонок",
+            $requestData->phone,
+            "info",
+            $employeeDetail[ "id" ]
+        );
+
+        $API->addEvent( "notifications" );
+
+    } // if. $requestData->type === "missed"
     
     $API->returnResponse( true );
 

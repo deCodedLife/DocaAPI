@@ -1,1 +1,62 @@
-{"required_modules":[],"required_permissions":[],"structure":[{"title":"Заголовок","type":"header","size":4,"settings":{"description":"Список бонусов","title":["Бонусы"]},"components":[]},{"title":"Список","type":"list","size":4,"settings":{"object":"bonus"},"components":{"buttons":[{"type":"href","settings":{"title":"Добавить бонус","background":"dark","page":"bonus/add"}}]}}]}
+{
+  "required_modules": [],
+  "required_permissions": [
+    "bonuses_get"
+  ],
+  "structure": [
+    {
+      "title": "Заголовок",
+      "type": "header",
+      "size": 4,
+      "settings": {
+        "description": "Список бонусов",
+        "title": [
+          "Бонусы"
+        ]
+      },
+      "components": []
+    },
+    {
+      "title": "Список",
+      "type": "list",
+      "size": 4,
+      "settings": {
+        "object": "bonus"
+      },
+      "components": {
+        "filters": [
+          {
+            "title": "Тип бонусов",
+            "type": "list",
+            "required_permissions": [],
+            "required_modules": [],
+            "settings": {
+              "is_search": false,
+              "recipient_property": "bonusType",
+              "list": [
+                {
+                  "value": "percent",
+                  "title": "Процент"
+                },
+                {
+                  "title": "Фиксированный",
+                  "value": "fixed"
+                }
+              ]
+            }
+          }
+        ],
+        "buttons": [
+          {
+            "type": "href",
+            "settings": {
+              "title": "Добавить бонус",
+              "background": "dark",
+              "page": "bonus/add"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

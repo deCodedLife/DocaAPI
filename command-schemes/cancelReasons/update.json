@@ -1,1 +1,1 @@
-{"title":"Изменить причину отмены посещения","type":"update","object_scheme":"cancelReasons","modules":[],"permissions":[],"no_limit":true}
+{"title":"Изменить причину отмены посещения","type":"update","object_scheme":"cancelReasons","modules":[],"required_permissions":["settings_cancel_reasons"],"no_limit":true}

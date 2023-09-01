@@ -67,12 +67,12 @@ $storeDetails = $API->DB->from( "stores" )
 
 if ( $requestData->event_from ) {
 
-    if ( strtotime( $requestData->event_from ) < strtotime( $storeDetails[ "schedule_from" ] ) ) $API->returnResponse( "Расписание выходит за рамки графика филиала", 500 );
+    if ( strtotime( $requestData->event_from ) < strtotime( $storeDetails[ "schedule_from" ] ) ) $API->returnResponse( "Расписание выходит за рамки графика филиала ${$storeDetails[ "title" ]}", 500 );
 
 }
 if ( $requestData->event_to ) {
 
-    if ( strtotime( $requestData->event_to )   > strtotime( $storeDetails[ "schedule_to" ] )   ) $API->returnResponse( "Расписание выходит за рамки графика филиала", 500 );
+    if ( strtotime( $requestData->event_to )   > strtotime( $storeDetails[ "schedule_to" ] )   ) $API->returnResponse( "Расписание выходит за рамки графика филиала ${$storeDetails[ "title" ]}", 500 );
 
 }
 

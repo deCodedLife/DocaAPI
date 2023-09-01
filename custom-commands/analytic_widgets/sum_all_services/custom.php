@@ -29,6 +29,9 @@ $salesFilter = [];
 $salesFilter[ "status" ] = "done";
 $salesFilter[ "type" ] = "service";
 $salesFilter[ "action" ] = "sell";
+
+if ( $requestData->start_price ) $salesFilter[ "summary >= ?" ] = $requestData->start_price;
+if ( $requestData->end_price ) $salesFilter[ "summary <= ?" ] = $requestData->end_price;
 if ( $requestData->start_at ) $salesFilter[ "created_at >= ?" ] = $requestData->start_at . " 00:00:00";
 if ( $requestData->end_at ) $salesFilter[ "created_at <= ?" ] = $requestData->end_at . " 23:59:59";
 if ( $requestData->store_id ) $salesFilter[ "store_id" ] = $requestData->store_id;

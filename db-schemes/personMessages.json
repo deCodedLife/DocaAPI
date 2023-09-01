@@ -25,6 +25,12 @@
     "default": "N",
     "is_required": "N"
   }, {
+    "title": "Оповещено",
+    "article": "is_notificated",
+    "type": "char(1)",
+    "default": "N",
+    "is_required": "N"
+  }, {
     "title": "Дата и время создания сообщения",
     "article": "created_at",
     "type": "datetime",

@@ -59,6 +59,8 @@ $generatedTab[ "settings" ][ "areas" ][ 0 ][ "blocks" ][ 0 ][ "fields" ][ 0 ][ "
 $generatedTab[ "settings" ][ "areas" ][ 0 ][ "blocks" ][ 0 ][ "fields" ][ 1 ][ "value" ] = $servicesInfo;
 
 
+
+
 /**
  * Заполнение описаний полей "Списать бонусов" и "Списать с депозита"
  */
@@ -74,6 +76,32 @@ $client = $API->DB->from( "clients" )
     ->limit( 1 )
     ->fetch();
 
-$generatedTab[ "settings" ][ "areas" ][ 1 ][ "blocks" ][ 0 ][ "fields" ][ 1 ][ "description" ] = "Ваш баланс: " . $client["deposit"] . " бонусов";
-$generatedTab[ "settings" ][ "areas" ][ 1 ][ "blocks" ][ 0 ][ "fields" ][ 2 ][ "description" ] = "Ваш баланс: " . $client["bonuses"] . " ₽";
+$generatedTab[ "settings" ][ "areas" ][ 1 ][ "blocks" ][ 0 ][ "fields" ][ 1 ][ "description" ] = "Ваш баланс: " . number_format( $client[ "deposit" ] , 0, '.', ' ' ) . " бонусов";
+$generatedTab[ "settings" ][ "areas" ][ 1 ][ "blocks" ][ 0 ][ "fields" ][ 2 ][ "description" ] = "Ваш баланс: " . number_format( $client[ "bonuses" ], 0, '.', ' ' ) . " ₽";
 
+
+/**
+ * Получение информации о юр лице клиента
+ */
+$clientEntity = $API->DB->from( "legal_entity_clients" )
+    ->where( "client_id", $client[ "id" ] )
+    ->fetch();
+
+if ( $clientEntity ) {
+
+    $legalEntity = $API->DB->from( "legal_entities" )
+        ->where( "id", $clientEntity[ "legal_entity_id" ] )
+        ->fetch();
+
+    $generatedTab[ "settings" ][ "areas" ][ 1 ][ "blocks" ][ 0 ][ "fields" ][ 3 ][ "description" ] = "{$legalEntity[ "title" ]}: " . number_format( $legalEntity[ "balance" ], 0, '.', ' ' ) . " ₽";
+    $generatedTab[ "settings" ][ "areas" ][ 1 ][ "blocks" ][ 0 ][ "fields" ][ 3 ][ "is_visible" ] = true;
+
+} // if ( $clientEntity )
+
+
+/**
+ * Получение детальной информации о сотруднике
+ */
+$userDetails = $API->DB->from( "users" )
+    ->where( "id", $API::$userDetail->id )
+    ->fetch();

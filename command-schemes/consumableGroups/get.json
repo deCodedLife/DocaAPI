@@ -1,1 +1,1 @@
-{"title":"Получить расходники","type":"get","object_scheme":"consumableGroups","modules":[],"permissions":[],"no_limit":true}
+{"title":"Получить расходники","type":"get","object_scheme":"consumableGroups","modules":[],"required_permissions":["settings_consumable_groups"],"no_limit":true}

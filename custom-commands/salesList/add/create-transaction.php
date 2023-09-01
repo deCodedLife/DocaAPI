@@ -25,7 +25,7 @@ $saleID = $API->DB->insertInto( "salesList" )
         "sum_deposit" => $requestData->sum_deposit ?? 0,
         "sum_card" => $requestData->sum_card,
         "sum_cash" => $requestData->sum_cash,
-        "status" => "waiting",
+        "status" => $requestData->pay_method == "legalEntity" ? "done" : "waiting",
         "store_id" => (int) $userDetails[ "store_id" ],
         "pay_method" => $requestData->pay_method,
         "online_receipt" => $requestData->online_receipt,

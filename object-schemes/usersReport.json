@@ -1,1 +1,91 @@
-{"title":"Отчет сотрудников","table":"users","is_trash":false,"properties":[{"title":"Сотрудник","article":"last_name","data_type":"string","field_type":"string","is_default_in_list":true,"is_unique":false,"is_autofill":true,"use_in_commands":["get"]},{"title":"Смен в текущем месяце","article":"count_one","data_type":"integer","field_type":"integer","is_default_in_list":true,"is_unique":false,"is_autofill":true,"use_in_commands":["get"]},{"title":"Сумма продаж","article":"sum_one","data_type":"float","field_type":"price","is_default_in_list":true,"is_unique":false,"is_autofill":true,"use_in_commands":["get"]},{"title":"Смен в прошлом месяце","article":"count_two","data_type":"integer","field_type":"integer","is_default_in_list":true,"is_unique":false,"is_autofill":true,"use_in_commands":["get"]},{"title":"Сумма продаж","article":"sum_two","data_type":"float","field_type":"price","is_default_in_list":true,"is_unique":false,"is_autofill":true,"use_in_commands":["get"]},{"title":"Смен в позапрошлом месяце","article":"count_three","data_type":"integer","field_type":"integer","is_default_in_list":true,"is_unique":false,"is_autofill":true,"use_in_commands":["get"]},{"title":"Сумма продаж","article":"sum_three","data_type":"float","field_type":"price","is_default_in_list":true,"is_unique":false,"is_autofill":true,"use_in_commands":["get"]}]}
+{
+  "title": "Отчет сотрудников",
+  "table": "users",
+  "is_trash": false,
+  "properties": [
+    {
+      "title": "Сотрудник",
+      "article": "last_name",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "get"
+      ]
+    },
+    {
+      "title": "Смен в текущем месяце",
+      "article": "count_one",
+      "data_type": "integer",
+      "field_type": "integer",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "get"
+      ]
+    },
+    {
+      "title": "Сумма продаж",
+      "article": "sum_one",
+      "data_type": "float",
+      "field_type": "price",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "get"
+      ]
+    },
+    {
+      "title": "Смен в прошлом месяце",
+      "article": "count_two",
+      "data_type": "integer",
+      "field_type": "integer",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "get"
+      ]
+    },
+    {
+      "title": "Сумма продаж",
+      "article": "sum_two",
+      "data_type": "float",
+      "field_type": "price",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "get"
+      ]
+    },
+    {
+      "title": "Смен в позапрошлом месяце",
+      "article": "count_three",
+      "data_type": "integer",
+      "field_type": "integer",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "get"
+      ]
+    },
+    {
+      "title": "Сумма продаж",
+      "article": "sum_three",
+      "data_type": "float",
+      "field_type": "price",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "get"
+      ]
+    }
+  ]
+}

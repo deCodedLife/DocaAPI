@@ -96,10 +96,11 @@ $API->returnResponse(
 
     [
         [
-            "value" => num_word($clientStatistic[ "visits_count" ], array('посещение', 'посещения', 'посещений')),
-            "description" => "Всего",
+            "value" => $clientStatistic[ "visits_count" ],
+            "description" => "Посещений",
             "icon" => "",
             "prefix" => "",
+            "size" => 1,
             "postfix" => [
                 "icon" => "",
                 "value" => "",
@@ -114,6 +115,7 @@ $API->returnResponse(
             "description" => "Сумма посещений",
             "icon" => "",
             "prefix" => "₽",
+            "size" => 1,
             "postfix" => [
                 "icon" => "",
                 "value" => "",

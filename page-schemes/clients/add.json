@@ -1,6 +1,6 @@
 {
   "required_modules": [],
-  "required_permissions": [],
+  "required_permissions": ["clients_get", "clients_add"],
   "structure": [
     {
       "title": "Шапка",

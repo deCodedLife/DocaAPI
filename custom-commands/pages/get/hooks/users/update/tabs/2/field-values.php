@@ -1,10 +1,26 @@
 <?php
 
-/**
- * Блок "Процент от продаж услуг"
- */
-if ( $pageDetail[ "row_detail" ][ "is_percent" ] )
-    $generatedTab[ "settings" ][ "areas" ][ 0 ][ "blocks" ][ 0 ][ "fields" ][ 2 ][ "is_visible" ] = true;
+
+
+$user = $API->DB->from( "users" )
+    ->where( "id", $pageDetail[ "row_detail" ][ "id" ] )
+    ->fetch();
+
+
+switch ( $user[ "salary_type" ] ) {
+
+    case "rate_percent":
+        $generatedTab["settings"]["areas"][0]["blocks"][0]["fields"][2]["is_visible"] = true;
+        break;
+
+    case "rate_kpi":
+        $generatedTab["settings"]["areas"][0]["blocks"][0]["fields"][3]["is_visible"] = true;
+        $generatedTab["settings"]["areas"][0]["blocks"][0]["fields"][4]["is_visible"] = true;
+        $generatedTab["settings"]["areas"][0]["blocks"][0]["fields"][5]["is_visible"] = true;
+        break;
+
+} // switch ( $user[ "salary_type" ] )
+
 
 
 /**
@@ -16,7 +32,7 @@ $userServices = [];
 /**
  * Текущие услуги
  */
-foreach ( $generatedTab[ "settings" ][ "areas" ][ 0 ][ "blocks" ][ 0 ][ "fields" ][ 2 ][ "value" ] as $userService )
+foreach ($generatedTab["settings"]["areas"][0]["blocks"][0]["fields"][2]["value"] as $userService)
     $userServices[] = $userService;
 
 
@@ -24,19 +40,19 @@ foreach ( $generatedTab[ "settings" ][ "areas" ][ 0 ][ "blocks" ][ 0 ][ "fields"
  * Связанные группы услуг
  */
 
-$userServiceGroups = $API->DB->from( "serviceGroupEmployees" )
-    ->where( "employeeID", $pageDetail[ "row_detail" ][ "id" ] );
+$userServiceGroups = $API->DB->from("serviceGroupEmployees")
+    ->where("employeeID", $pageDetail["row_detail"]["id"]);
 
-foreach ( $userServiceGroups as $userServiceGroup ) {
+foreach ($userServiceGroups as $userServiceGroup) {
 
-    $userGroupServices = $API->DB->from( "services" )
-        ->where( [
-            "category_id" => $userServiceGroup[ "groupID" ],
+    $userGroupServices = $API->DB->from("services")
+        ->where([
+            "category_id" => $userServiceGroup["groupID"],
             "is_active" => "Y"
-        ] );
+        ]);
 
 
-    foreach ( $userGroupServices as $userGroupService ) {
+    foreach ($userGroupServices as $userGroupService) {
 
         /**
          * Проверка привязки услуги
@@ -44,26 +60,26 @@ foreach ( $userServiceGroups as $userServiceGroup ) {
 
         $isContinueService = false;
 
-        foreach ( $userServices as $userService )
-            if ( $userService[ "service_id" ] == $userGroupService[ "id" ] ) $isContinueService = true;
+        foreach ($userServices as $userService)
+            if ($userService["service_id"] == $userGroupService["id"]) $isContinueService = true;
 
-        if ( $isContinueService ) continue;
+        if ($isContinueService) continue;
 
 
         /**
          * Проверка активности услуги
          */
 
-        $serviceDetail = $API->DB->from( "services" )
-            ->where( "id", $userGroupService[ "id" ] )
-            ->limit( 1 )
+        $serviceDetail = $API->DB->from("services")
+            ->where("id", $userGroupService["id"])
+            ->limit(1)
             ->fetch();
 
-        if ( $serviceDetail[ "is_active" ] === "N" ) continue;
+        if ($serviceDetail["is_active"] === "N") continue;
 
 
         $userServices[] = [
-            "service_id" => $userGroupService[ "id" ],
+            "service_id" => $userGroupService["id"],
             "percent" => 0,
             "fix_sum" => 0
         ];
@@ -77,10 +93,10 @@ foreach ( $userServiceGroups as $userServiceGroup ) {
  * Связанные услуги
  */
 
-$joinUserServices = $API->DB->from( "services_users" )
-    ->where( "user_id", $pageDetail[ "row_detail" ][ "id" ] );
+$joinUserServices = $API->DB->from("services_users")
+    ->where("user_id", $pageDetail["row_detail"]["id"]);
 
-foreach ( $joinUserServices as $joinUserService ) {
+foreach ($joinUserServices as $joinUserService) {
 
     /**
      * Проверка привязки услуги
@@ -88,30 +104,32 @@ foreach ( $joinUserServices as $joinUserService ) {
 
     $isContinueService = false;
 
-    foreach ( $userServices as $userService )
-        if ( $userService[ "service_id" ] == $joinUserService[ "service_id" ] ) $isContinueService = true;
+    foreach ($userServices as $userService)
+        if ($userService["service_id"] == $joinUserService["service_id"]) $isContinueService = true;
 
-    if ( $isContinueService ) continue;
+    if ($isContinueService) continue;
 
 
     /**
      * Проверка активности услуги
      */
 
-    $serviceDetail = $API->DB->from( "services" )
-        ->where( "id", $joinUserService[ "service_id" ] )
-        ->limit( 1 )
+    $serviceDetail = $API->DB->from("services")
+        ->where("id", $joinUserService["service_id"])
+        ->limit(1)
         ->fetch();
 
-    if ( $serviceDetail[ "is_active" ] === "N" ) continue;
+    if ($serviceDetail["is_active"] === "N") continue;
 
 
     $userServices[] = [
-        "service_id" => $joinUserService[ "service_id" ],
+        "service_id" => $joinUserService["service_id"],
         "percent" => 0,
         "fix_sum" => 0
     ];
 
 } // foreach. $joinUserServices
 
-$generatedTab[ "settings" ][ "areas" ][ 0 ][ "blocks" ][ 0 ][ "fields" ][ 2 ][ "value" ] = $userServices;
+$generatedTab[ "structure" ][ 2 ]["settings"]["areas"][0]["blocks"][0]["fields"][2]["value"] = $userServices;
+
+

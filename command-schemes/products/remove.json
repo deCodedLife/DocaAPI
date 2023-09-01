@@ -1,1 +1,1 @@
-{"title":"Удаление","type":"remove","object_scheme":"products","required_permissions":[],"required_modules":[]}
+{"title":"Удаление","type":"remove","object_scheme":"products","required_permissions":["products_remove"],"required_modules":[]}

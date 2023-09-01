@@ -10,3 +10,4 @@ $pageScheme[ "structure" ][ 1 ][ "settings" ][ 6 ][ "body" ][ 0 ][ "components" 
  */
 if ( $pageDetail[ "row_detail" ][ "is_contract" ] )
     unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 0 ] );
+

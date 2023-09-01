@@ -14,6 +14,7 @@ mysqli_query(
         sum_deposit FLOAT NOT NULL DEFAULT 0 COMMENT 'Депозита к списанию',
         sum_card FLOAT NOT NULL DEFAULT 0 COMMENT 'Сумма списания с карты',
         sum_cash FLOAT NOT NULL DEFAULT 0 COMMENT 'Сумма списания наличными',
+        sum_entity FLOAT NOT NULL DEFAULT 0 COMMENT 'Средства юр лица',
         terminal_code VARCHAR(75) NULL COMMENT 'Код отмены операции',
         created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Дата проведения операции',
         online_receipt CHAR(1) NOT NULL DEFAULT 'Y' COMMENT 'Отправить чек на почту',

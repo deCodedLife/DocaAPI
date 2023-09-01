@@ -35,5 +35,3 @@ if ( $requestData->clients_id ) {
 } // if. $requestData->clients_id
 
 
-
-

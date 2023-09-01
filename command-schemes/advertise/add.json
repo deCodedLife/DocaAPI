@@ -1,1 +1,1 @@
-{"title":"Создание","type":"add","object_scheme":"advertise","modules":[],"permissions":[]}
+{"title":"Создание","type":"add","object_scheme":"advertise","modules":[],"required_permissions":["settings_advert_types"]}

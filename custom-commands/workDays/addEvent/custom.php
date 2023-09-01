@@ -40,8 +40,8 @@ $storeDetails = $API->DB->from( "stores" )
     ->fetch();
 
 
-if ( strtotime( $requestData->event_from ) < strtotime( $storeDetails[ "schedule_from" ] ) ) $API->returnResponse( "Расписание выходит за рамки графика филиала", 500 );
-if ( strtotime( $requestData->event_to )   > strtotime( $storeDetails[ "schedule_to" ] )  )  $API->returnResponse( "Расписание выходит за рамки графика филиала", 500 );
+if ( strtotime( $requestData->event_from ) < strtotime( $storeDetails[ "schedule_from" ] ) ) $API->returnResponse( "Расписание выходит за рамки графика филиала ${$storeDetails[ "title" ]}", 500 );
+if ( strtotime( $requestData->event_to )   > strtotime( $storeDetails[ "schedule_to" ] )  )  $API->returnResponse( "Расписание выходит за рамки графика филиала ${$storeDetails[ "title" ]}", 500 );
 
 
 $currentScheduleEvents = $API->DB->from( $API->request->object )
@@ -97,9 +97,12 @@ while ( $currentScheduleDate <= $scheduleTo ) {
                     ( $requestData->event_to <= $dayWorkSchedule[ "to" ] )
                 )
             ) {
+                $user = $API->DB->from( "users" )
+                    ->where( "id", $dayWorkSchedule[ "user_id" ] )
+                    ->fetch();
 
                 if ( $requestData->cabinet_id && $requestData->cabinet_id == $dayWorkSchedule[ "cabinet_id" ] )
-                    $API->returnResponse( "Кабинет занят", 500 );
+                    $API->returnResponse( "Кабинет занят - сотрудник ${$user[ "last_name" ]}", 500 );
 
             } // if. Событие занято
 

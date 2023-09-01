@@ -46,7 +46,8 @@ $expensesFilter = [];
 
 $salesFilter[ "status" ] = "done";
 $salesFilter[ "action" ] = "sell";
-
+if ( $requestData->start_price ) $salesFilter[ "summary >= ?" ] = $requestData->start_price;
+if ( $requestData->end_price ) $salesFilter[ "summary <= ?" ] = $requestData->end_price;
 if ( $requestData->start_at ) $salesFilter[ "created_at >= ?" ] = $requestData->start_at . " 00:00:00";
 if ( $requestData->end_at ) $salesFilter[ "created_at <= ?" ] = $requestData->end_at . " 23:59:59";
 if ( $requestData->store_id ) $salesFilter[ "store_id" ] = $requestData->store_id;
@@ -131,8 +132,8 @@ $API->returnResponse(
     [
         [
             "size" => 1,
-            "value" => num_word( $reportStatistic[ "visits_count" ], [ 'посещение', 'посещения', 'посещений' ]),
-            "description" => "всего",
+            "value" => $reportStatistic[ "visits_count"],
+            "description" => "Посещений",
             "icon" => "",
             "prefix" => "",
             "postfix" => [

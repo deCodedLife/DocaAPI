@@ -49,6 +49,387 @@
       "article": "director_schedule",
       "description": null,
       "group_id": 1
+    },
+
+    {
+      "title": "Основное",
+      "article": "settings_main",
+      "description": null,
+      "group_id": 37
+    },
+    {
+      "title": "Филиалы",
+      "article": "settings_stores",
+      "description": null,
+      "group_id": 37
+    },
+    {
+      "title": "Группы услуг",
+      "article": "settings_services_groups",
+      "description": null,
+      "group_id": 37
+    },
+    {
+      "title": "Типы справочников",
+      "article": "settings_handbook_types",
+      "description": null,
+      "group_id": 37
+    },
+    {
+      "title": "Рекламные каналы",
+      "article": "settings_advert_types",
+      "description": null,
+      "group_id": 37
+    },
+    {
+      "title": "Группы клиентов",
+      "article": "settings_client_groups",
+      "description": null,
+      "group_id": 37
+    },
+    {
+      "title": "Темы задач",
+      "article": "settings_task_themes",
+      "description": null,
+      "group_id": 37
+    },
+    {
+      "title": "Категории расходников",
+      "article": "settings_consumable_categories",
+      "description": null,
+      "group_id": 37
+    },
+    {
+      "title": "Специальности",
+      "article": "settings_professions",
+      "description": null,
+      "group_id": 37
+    },
+    {
+      "title": "Носимое оборудование",
+      "article": "settings_wearable_equipment",
+      "description": null,
+      "group_id": 37
+    },
+    {
+      "title": "Роли",
+      "article": "settings_roles",
+      "description": null,
+      "group_id": 37
+    },
+    {
+      "title": "Кабинеты",
+      "article": "settings_cabinets",
+      "description": null,
+      "group_id": 37
+    },
+    {
+      "title": "Типы расходов",
+      "article": "settings_expense_types",
+      "description": null,
+      "group_id": 37
+    },
+    {
+      "title": "Типы товаров",
+      "article": "settings_product_types",
+      "description": null,
+      "group_id": 37
+    },
+    {
+      "title": "Группы расходников",
+      "article": "settings_consumable_groups",
+      "description": null,
+      "group_id": 37
+    },
+    {
+      "title": "Группы товаров",
+      "article": "settings_product_groups",
+      "description": null,
+      "group_id": 37
+    },
+    {
+      "title": "Категории товаров",
+      "article": "settings_product_categories",
+      "description": null,
+      "group_id": 37
+    },
+    {
+      "title": "Причины отмены посещений",
+      "article": "settings_cancel_reasons",
+      "description": null,
+      "group_id": 37
+    },
+    {
+      "title": "Поставщики",
+      "article": "settings_providers",
+      "description": null,
+      "group_id": 37
+    },
+
+    {
+      "title": "Зарплата",
+      "article": "users_tab_salary",
+      "description": null,
+      "group_id": 30
+    },
+    {
+      "title": "Логи",
+      "article": "users_tab_logs",
+      "description": null,
+      "group_id": 30
+    },
+    {
+      "title": "История звонков",
+      "article": "users_tab_calls",
+      "description": null,
+      "group_id": 30
+    },
+
+    {
+      "title": "Вывод",
+      "article": "queue_get",
+      "description": null,
+      "group_id": 36
+    },
+    {
+      "title": "Вывод",
+      "article": "bonuses_get",
+      "description": null,
+      "group_id": 35
+    },
+    {
+      "title": "Вывод",
+      "article": "promotions_get",
+      "description": null,
+      "group_id": 34
+    },
+    {
+      "title": "Вывод",
+      "article": "payments_get",
+      "description": null,
+      "group_id": 6
+    },
+    {
+      "title": "Вывод",
+      "article": "documents_get",
+      "description": null,
+      "group_id": 13
+    },
+    {
+      "title": "Добавление",
+      "article": "documents_add",
+      "description": null,
+      "group_id": 13
+    },
+    {
+      "title": "Редактирование",
+      "article": "documents_update",
+      "description": null,
+      "group_id": 13
+    },
+    {
+      "title": "Удаление",
+      "article": "documents_remove",
+      "description": null,
+      "group_id": 13
+    },
+    {
+      "title": "Вывод",
+      "article": "tasks_get",
+      "description": null,
+      "group_id": 4
+    },
+    {
+      "title": "Добавление",
+      "article": "tasks_add",
+      "description": null,
+      "group_id": 4
+    },
+    {
+      "title": "Редактирование",
+      "article": "tasks_update",
+      "description": null,
+      "group_id": 4
+    },
+    {
+      "title": "Удаление",
+      "article": "tasks_remove",
+      "description": null,
+      "group_id": 4
+    },
+    {
+      "title": "Вывод",
+      "article": "reports_get",
+      "description": null,
+      "group_id": 3
+    },
+    {
+      "title": "Вывод",
+      "article": "purchases_get",
+      "description": null,
+      "group_id": 7
+    },
+    {
+      "title": "Добавление",
+      "article": "purchases_add",
+      "description": null,
+      "group_id": 7
+    },
+    {
+      "title": "Редактирование",
+      "article": "purchases_update",
+      "description": null,
+      "group_id": 7
+    },
+    {
+      "title": "Удаление",
+      "article": "purchases_remove",
+      "description": null,
+      "group_id": 7
+    },
+    {
+      "title": "Вывод",
+      "article": "handbook_get",
+      "description": null,
+      "group_id": 19
+    },
+    {
+      "title": "Добавление",
+      "article": "handbook_add",
+      "description": null,
+      "group_id": 19
+    },
+    {
+      "title": "Редактирование",
+      "article": "handbook_update",
+      "description": null,
+      "group_id": 19
+    },
+    {
+      "title": "Удаление",
+      "article": "handbook_remove",
+      "description": null,
+      "group_id": 19
+    },
+    {
+      "title": "Вывод",
+      "article": "consumables_get",
+      "description": null,
+      "group_id": 14
+    },
+    {
+      "title": "Добавление",
+      "article": "consumables_add",
+      "description": null,
+      "group_id": 14
+    },
+    {
+      "title": "Редактирование",
+      "article": "consumables_update",
+      "description": null,
+      "group_id": 14
+    },
+    {
+      "title": "Удаление",
+      "article": "consumables_remove",
+      "description": null,
+      "group_id": 14
+    },
+    {
+      "title": "Вывод",
+      "article": "products_get",
+      "description": null,
+      "group_id": 9
+    },
+    {
+      "title": "Добавление",
+      "article": "products_add",
+      "description": null,
+      "group_id": 9
+    },
+    {
+      "title": "Редактирование",
+      "article": "products_update",
+      "description": null,
+      "group_id": 9
+    },
+    {
+      "title": "Удаление",
+      "article": "products_remove",
+      "description": null,
+      "group_id": 9
+    },
+    {
+      "title": "Вывод",
+      "article": "services_get",
+      "description": null,
+      "group_id": 5
+    },
+    {
+      "title": "Добавление",
+      "article": "services_add",
+      "description": null,
+      "group_id": 5
+    },
+    {
+      "title": "Редактирование",
+      "article": "services_update",
+      "description": null,
+      "group_id": 5
+    },
+    {
+      "title": "Удаление",
+      "article": "services_remove",
+      "description": null,
+      "group_id": 5
+    },
+    {
+      "title": "Вывод",
+      "article": "clients_get",
+      "description": null,
+      "group_id": 15
+    },
+    {
+      "title": "Добавление",
+      "article": "clients_add",
+      "description": null,
+      "group_id": 15
+    },
+    {
+      "title": "Редактирование",
+      "article": "clients_update",
+      "description": null,
+      "group_id": 15
+    },
+    {
+      "title": "Удаление",
+      "article": "clients_remove",
+      "description": null,
+      "group_id": 15
+    },
+    {
+      "title": "Вывод",
+      "article": "users_get",
+      "description": null,
+      "group_id": 23
+    },
+    {
+      "title": "Добавление",
+      "article": "users_add",
+      "description": null,
+      "group_id": 23
+    },
+    {
+      "title": "Редактирование",
+      "article": "users_update",
+      "description": null,
+      "group_id": 23
+    },
+    {
+      "title": "Удаление",
+      "article": "users_remove",
+      "description": null,
+      "group_id": 23
     }
   ]
 }

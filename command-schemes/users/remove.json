@@ -2,6 +2,6 @@
   "title": "Удаление",
   "type": "remove",
   "object_scheme": "users",
-  "required_permissions": [],
+  "required_permissions": ["users_remove"],
   "required_modules": []
 }

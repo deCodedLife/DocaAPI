@@ -370,18 +370,39 @@
       "require_in_commands": []
     },
     {
-      "title": " Зарплата с процентом от продаж",
-      "article": "is_percent",
-      "data_type": "boolean",
-      "field_type": "checkbox",
+      "title": "Тип зарплаты",
+      "article": "salary_type",
+      "data_type": "string",
+      "field_type": "list",
       "is_default_in_list": false,
       "is_unique": false,
       "is_autofill": true,
+      "is_in_search": false,
       "is_hook": true,
       "use_in_commands": [
         "update",
+        "remove",
+        "get",
         "add",
         "hook"
+      ],
+      "custom_list": [
+        {
+          "title": "Фиксированный оклад",
+          "value": "fixed"
+        },
+        {
+          "title": "Оклад в час",
+          "value": "per_hour"
+        },
+        {
+          "title": "Ставка + процент от продаж",
+          "value": "rate_percent"
+        },
+        {
+          "title": "Ставка + KPI",
+          "value": "rate_kpi"
+        }
       ]
     },
     {
@@ -407,6 +428,7 @@
         "properties": [
           {
             "title": "Услуга",
+            "size": 2,
             "article": "service_id",
             "data_type": "integer",
             "field_type": "list",
@@ -416,6 +438,7 @@
             }
           },
           {
+            "size": 1,
             "article": "percent",
             "data_type": "float",
             "field_type": "float",
@@ -423,6 +446,7 @@
           },
           {
             "title": "Фиксированная сумма",
+            "size": 1,
             "article": "fix_sum",
             "data_type": "float",
             "field_type": "price"
@@ -452,6 +476,141 @@
         "property_article": "title",
         "insert_property": "user_id",
         "filter_property": "store_id"
+      }
+    },
+
+    {
+      "title": "KPI продаж",
+      "article": "sales",
+      "data_type": "array",
+      "field_type": "smart_list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_visible": false,
+      "use_in_commands": [
+        "add",
+        "update",
+        "get"
+      ],
+      "require_in_commands": [],
+      "settings": {
+        "connection_table": "kpi_sales",
+        "properties": [
+          {
+            "title": "Сумма проданных услуг",
+            "size": 2,
+            "article": "summary",
+            "data_type": "integer",
+            "field_type": "integer"
+          },
+          {
+            "title": "% Выполнения KPI",
+            "size": 1,
+            "article": "required_value",
+            "data_type": "integer",
+            "field_type": "integer"
+          },
+          {
+            "title": "Бонус за выполнение % KPI в рублях",
+            "size": 1,
+            "article": "kpi_value",
+            "data_type": "integer",
+            "field_type": "price"
+          }
+        ]
+      }
+    },
+    {
+      "title": "KPI по количеству проданных услуг",
+      "article": "services",
+      "data_type": "array",
+      "field_type": "smart_list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_visible": false,
+      "use_in_commands": [
+        "add",
+        "update",
+        "get"
+      ],
+      "require_in_commands": [],
+      "settings": {
+        "connection_table": "kpi_services",
+        "properties": [
+          {
+            "title": "Услуга",
+            "size": 2,
+            "article": "service",
+            "data_type": "integer",
+            "field_type": "list",
+            "list_donor": {
+              "table": "services",
+              "properties_title": "title"
+            }
+          },
+          {
+            "title": "Количество проданных услуг",
+            "size": 1,
+            "article": "required_value",
+            "data_type": "integer",
+            "field_type": "integer"
+          },
+          {
+            "title": "Бонус за выполнения процента KPI (в рублях)",
+            "size": 1,
+            "article": "kpi_value",
+            "data_type": "integer",
+            "field_type": "price"
+          }
+        ]
+      }
+    },
+    {
+      "title": "KPI по количеству проданных скидок / акций",
+      "article": "promotions",
+      "data_type": "array",
+      "field_type": "smart_list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_visible": false,
+      "use_in_commands": [
+        "add",
+        "update",
+        "get"
+      ],
+      "require_in_commands": [],
+      "settings": {
+        "connection_table": "kpi_promotions",
+        "properties": [
+          {
+            "title": "Акция",
+            "size": 2,
+            "article": "summary",
+            "data_type": "integer",
+            "field_type": "list",
+            "list_donor": {
+              "table": "promotions",
+              "properties_title": "title"
+            }
+          },
+          {
+            "title": "Количество проданных услуг",
+            "size": 1,
+            "article": "required_value",
+            "data_type": "integer",
+            "field_type": "integer"
+          },
+          {
+            "title": "Бонус за выполнения процента KPI (в рублях)",
+            "size": 1,
+            "article": "kpi_value",
+            "data_type": "integer",
+            "field_type": "price"
+          }
+        ]
       }
     }
   ],

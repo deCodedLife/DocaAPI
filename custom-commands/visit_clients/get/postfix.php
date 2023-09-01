@@ -16,10 +16,13 @@ if ( $requestData->user_id ) {
      */
 
     $visitsFilter = [];
+
+    if ( $requestData->start_price ) $visitsFilter[ "price >= ?" ] = $requestData->start_price;
+    if ( $requestData->end_price ) $visitsFilter[ "price <= ?" ] = $requestData->end_price;
     if ( $requestData->start_at ) $visitsFilter[ "start_at >= ?" ] = $requestData->start_at . " 00:00:00";
     if ( $requestData->end_at ) $visitsFilter[ "start_at <= ?" ] = $requestData->end_at . " 23:59:59";
     if ( $requestData->store_id ) $visitsFilter[ "store_id" ] = $requestData->store_id;
-    if ( $requestData->user_id ) $visitsFilter[ "visits_users.user_id" ] = $requestData->user_id;
+    if ( $requestData->user_id ) $visitsFilter[ "user_id" ] = $requestData->user_id;
     $visitsFilter[ "is_payed" ] = "Y" ;
 
 
@@ -27,24 +30,21 @@ if ( $requestData->user_id ) {
      * Получение посещений Сотрудника
      */
     $visits = $API->DB->from( "visits" )
-        ->leftJoin( "visits_users ON visits_users.visit_id = visits.id" )
-        ->select( null )->select( [ "visits.id", "visits_users.user_id", "visits.start_at",  "visits.end_at", "visits.is_active", "visits.price" , "visits.status" ] )
-        ->where( $visitsFilter )
-        ->orderBy( "visits.start_at desc" )
-        ->limit( 0 );
+        ->where( $visitsFilter );
 
 
-    /**
-     * Масив клиентов
-     */
-    $clients = [];
-
-    /**
-     * Масив услуг
-     */
-    $services = [];
 
     foreach (  $visits as $visit ) {
+
+        /**
+         * Масив клиентов
+         */
+        $clients = [];
+
+        /**
+         * Масив услуг
+         */
+        $services = [];
 
         /**
          * Получение услуг из заявки
@@ -59,15 +59,14 @@ if ( $requestData->user_id ) {
                 ->limit( 1 )
                 ->fetch();
 
-            $services[] = [
+            $services[$visit[ "id" ]] = [
 
                 "title" => $service[ "title" ],
-                "value" => (int)$visit_services[ "service_id" ]
+                "value" => (int)$service[ "id" ]
 
             ];
 
         }
-
 
         /**
          * Получение клиентов из заявки
@@ -92,14 +91,12 @@ if ( $requestData->user_id ) {
         }
 
         $returnVisits[] = [
-            "user_id" => $visit[ "user_id" ],
+
             "id" => $visit[ "id" ],
             "client_id" => $clients[ 0 ][ "id" ],
             "fio" => $clients[ 0 ][ "fio" ],
-            "services_id" => $services,
+            "services_id" => $services[$visit[ "id" ]],
             "price" => $visit[ "price" ],
-            "end_at" => $visit[ "end_at" ],
-            "start_at" => $visit[ "start_at" ],
             "period" => date( 'Y-m-d H:i', strtotime( $visit[ "start_at" ] ) ) . " - " . date( "H:i", strtotime( $visit[ "end_at" ] ) )
 
         ];
@@ -107,6 +104,70 @@ if ( $requestData->user_id ) {
     }
 
     $response[ "data" ] = $returnVisits;
+
+    function array_sort ( $array, $on, $order=SORT_ASC ) {
+
+        $new_array = array();
+        $sortable_array = array();
+
+        if (count($array) > 0) {
+            foreach ($array as $k => $v) {
+                if (is_array($v)) {
+                    foreach ($v as $k2 => $v2) {
+                        if ($k2 == $on) {
+                            $sortable_array[$k] = $v2;
+                        }
+                    }
+                } else {
+                    $sortable_array[$k] = $v;
+                }
+            }
+
+            switch ($order) {
+                case SORT_ASC:
+                    asort($sortable_array);
+                    break;
+                case SORT_DESC:
+                    arsort($sortable_array);
+                    break;
+            }
+
+            foreach ($sortable_array as $k => $v) {
+                $new_array[$k] = $array[$k];
+            }
+        }
+
+        return $new_array;
+
+    }
+
+    if ( $sort_by == "id" ) {
+
+        if ( $sort_order == "desc" ) $response[ "data" ] = array_values( array_sort( $response[ "data" ], "id", SORT_DESC ) );
+        if ( $sort_order == "asc" ) $response[ "data" ] = array_values( array_sort( $response[ "data" ], "id", SORT_ASC ) );
+
+    }
+
+    if ( $sort_by == "fio" ) {
+
+        if ( $sort_order == "desc" ) $response[ "data" ] = array_values( array_sort( $response[ "data" ], "fio", SORT_DESC ) );
+        if ( $sort_order == "asc" ) $response[ "data" ] = array_values( array_sort( $response[ "data" ], "fio", SORT_ASC ) );
+
+    }
+
+    if ( $sort_by == "price" ) {
+
+        if ( $sort_order == "desc" ) $response[ "data" ] = array_values( array_sort( $response[ "data" ], "price", SORT_DESC ) );
+        if ( $sort_order == "asc" ) $response[ "data" ] = array_values( array_sort( $response[ "data" ], "price", SORT_ASC ) );
+
+    }
+
+    if ( $sort_by == "period" ) {
+
+        if ( $sort_order == "desc" ) $response[ "data" ] = array_values( array_sort( $response[ "data" ], "period", SORT_DESC ) );
+        if ( $sort_order == "asc" ) $response[ "data" ] = array_values( array_sort( $response[ "data" ], "period", SORT_ASC ) );
+
+    }
 
 } else {
 

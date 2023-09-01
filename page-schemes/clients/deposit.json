@@ -36,7 +36,6 @@
                   "action",
                   "client_id",
                   "employee_id",
-                  "store_id",
                   "online_receipt",
                   "pay_method",
                   "sum_cash",

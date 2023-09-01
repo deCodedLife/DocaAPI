@@ -120,7 +120,7 @@ foreach ( $clients as $client ) {
          * График среднего чека
          */
         $visitDate = date( "Y-m-d", strtotime( $clientsVisit[ "start_at" ] ) );
-        $averageСhequeGraph[ $visitDate ] += $cashFlowGraph[ $visitDate ] / $clientVisitsGraph[ $visitDate ];
+        $averageСhequeGraph[ $visitDate ] += round( $cashFlowGraph[ $visitDate ] / $clientVisitsGraph[ $visitDate ] );
 
     } // foreach. $userVisits
 
@@ -150,7 +150,15 @@ $API->returnResponse(
             "detail" => [
                 "type" => "details_char",
                 "settings" => [
-                    "char" => $clientsRegGraph
+                    "char" => [
+                        "x" => array_keys($clientsRegGraph),
+                        "lines" => [
+                            [
+                                "title" => "Новых клиентов",
+                                "values" => $clientsRegGraph
+                            ]
+                        ]
+                    ]
                 ]
             ]
         ],
@@ -168,7 +176,15 @@ $API->returnResponse(
             "detail" => [
                 "type" => "details_char",
                 "settings" => [
-                    "char" => $clientVisitsGraph
+                    "char" => [
+                        "x" => array_keys($clientVisitsGraph),
+                        "lines" => [
+                            [
+                                "title" => "Посещений",
+                                "values" => $clientVisitsGraph
+                            ]
+                        ]
+                    ]
                 ]
             ]
         ],
@@ -186,13 +202,20 @@ $API->returnResponse(
             "detail" => [
                 "type" => "details_char",
                 "settings" => [
-                    "value_title" => "Сумма",
-                    "char" => $cashFlowGraph
+                    "char" => [
+                        "x" => array_keys($cashFlowGraph),
+                        "lines" => [
+                            [
+                                "title" => "Приход",
+                                "values" => $cashFlowGraph
+                            ]
+                        ]
+                    ]
                 ]
             ]
         ],
         [
-            "value" => $averageСheque,
+            "value" => round( $averageСheque, 2 ),
             "description" => "Средний чек",
             "icon" => "",
             "prefix" => "₽",
@@ -205,8 +228,15 @@ $API->returnResponse(
             "detail" => [
                 "type" => "details_char",
                 "settings" => [
-                    "value_title" => "Сумма",
-                    "char" => $averageСhequeGraph
+                    "char" => [
+                        "x" => array_keys($averageСhequeGraph),
+                        "lines" => [
+                            [
+                                "title" => "Средний чек",
+                                "values" => $averageСhequeGraph
+                            ]
+                        ]
+                    ]
                 ]
             ]
 

@@ -1,1 +1,1 @@
-{"title":"Получить поставщиков","type":"get","object_scheme":"providers","modules":[],"permissions":[],"no_limit":false}
+{"title":"Получить поставщиков","type":"get","object_scheme":"providers","modules":[],"required_permissions":["settings_providers"],"no_limit":false}

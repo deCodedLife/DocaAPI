@@ -1,1 +1,1 @@
-{"title":"Добавление","type":"add","object_scheme":"wearableEquipment","modules":[],"permissions":[]}
+{"title":"Добавление","type":"add","object_scheme":"wearableEquipment","modules":[],"required_permissions":["settings_wearable_equipment"]}

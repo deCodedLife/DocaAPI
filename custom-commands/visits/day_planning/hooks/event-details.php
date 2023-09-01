@@ -6,54 +6,55 @@
 
 $isContinue = true;
 
-$visitUsers = [ $API->DB->from("visits")
-    ->where("id", $event["id"])
+$visitUsers = [ $API->DB->from( "visits" )
+    ->where("id", $event[ "id" ])
     ->fetch()[ "user_id" ] ];
 
-foreach ($visitUsers as $visitUser)
-    if ($visitUser["user_id"] == $API::$userDetail->id) $isContinue = false;
+foreach  ($visitUsers as $visitUser )
+    if ($visitUser[ "user_id" ] == $API::$userDetail->id) $isContinue = false;
 
 
 /**
  * Формирование тела записи
  */
 
-$visitServices = $API->DB->from("visits_services")
-    ->where("visit_id", $event["id"]);
+$visitServices = $API->DB->from( "visits_services" )
+    ->where( "visit_id", $event[ "id"] );
 
 foreach ($visitServices as $visitService) {
 
-    $visitServiceDetail = $API->DB->from("services")
-        ->where("id", $visitService["service_id"])
-        ->limit(1)
+    $visitServiceDetail = $API->DB->from( "services" )
+        ->where( "id", $visitService[ "service_id" ] )
+        ->limit( 1 )
         ->fetch();
 
 
-    $eventDetails["body"] .= $visitServiceDetail["title"] . ", ";
+    $eventDetails[ "body" ] .= $visitServiceDetail[ "title" ] . ", ";
 
 } // foreach. $visitServices
 
-if ($eventDetails["body"])
-    $eventDetails["body"] = substr($eventDetails["body"], 0, -2);
+if ( $eventDetails[ "body" ] )
+    $eventDetails[ "body" ] = substr( $eventDetails[ "body" ], 0, -2 );
 
 
 /**
  * Формирование ссылок записи
  */
 
-$visitClients = $API->DB->from("visits_clients")
-    ->where("visit_id", $event["id"]);
+$visitClients = $API->DB->from( "visits_clients" )
+    ->where( "visit_id", $event[ "id" ] );
 
-foreach ($visitClients as $visitClient) {
+foreach ( $visitClients as $visitClient ) {
 
-    $visitClientDetail = $API->DB->from("clients")
-        ->where("id", $visitClient["client_id"])
+    $visitClientDetail = $API->DB->from( "clients" )
+        ->where("id", $visitClient[ "client_id"] )
         ->limit(1)
         ->fetch();
 
+    $event[ "clients" ][] = $visitClientDetail;
 
-    $eventDetails["links"][] = [
-        "title" => $visitClientDetail["last_name"] . " " . $visitClientDetail[ "first_name" ] . " " . $visitClientDetail[ "patronymic" ],
+    $eventDetails[ "links" ][] = [
+        "title" => $visitClientDetail[ "last_name" ] . " " . $visitClientDetail[ "first_name" ] . " " . $visitClientDetail[ "patronymic" ],
         "link" => "clients/update/" . $visitClientDetail[ "id" ]
     ];
 
@@ -92,7 +93,7 @@ if ( $event[ "status" ] == "planning" ) $eventDetails[ "buttons" ][] = [
     "settings" => [
         "title" => "Принять пациента",
         "background" => "dark",
-        "icon"=>"stethoscope",
+        "icon"=>"megaphone",
         "object" => "visits",
         "command" => "accept-patient",
         "data" => [
@@ -101,12 +102,13 @@ if ( $event[ "status" ] == "planning" ) $eventDetails[ "buttons" ][] = [
     ]
 ];
 
+
 if ( $event[ "status" ] == "process" ) $eventDetails[ "buttons" ][] = [
     "type" => "script",
     "settings" => [
         "title" => "Принять повторно",
         "background" => "dark",
-        "icon"=>"stethoscope",
+        "icon"=>"megaphone",
         "object" => "visits",
         "command" => "accept-again",
         "data" => [
@@ -122,9 +124,16 @@ if ( $event[ "status" ] == "process" ) $eventDetails[ "buttons" ][] = [
         "background"=>"dark",
         "icon"=>"print",
         "data" => [
-            "document_article" => "services_contract",
-            "is_edit" => true,
-            "row_id" => $event[ "id" ]
+            "save_to" => [
+                "object"=> "visitReports",
+                "properties"=> [
+                    "client_id"=> $event[ "clients" ][ 0 ][ "id" ],
+                    "user_id"=> $event[ "user_id" ]
+                ]
+            ],
+            "is_edit"=> true,
+            "scheme_name"=> "visits",
+            "row_id"=> $event[ "id" ]
         ]
     ]
 ];

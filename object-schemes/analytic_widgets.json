@@ -68,6 +68,38 @@
       ]
     },
     {
+      "title": "Сумма (от)",
+      "article": "start_price",
+      "data_type": "float",
+      "field_type": "price",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "sum_all_services",
+        "daily_report",
+        "userServices",
+        "visit_clients",
+        "advertise"
+      ]
+    },
+    {
+      "title": "Сумма (до)",
+      "article": "end_price",
+      "data_type": "float",
+      "field_type": "price",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "sum_all_services",
+        "daily_report",
+        "userServices",
+        "visit_clients",
+        "advertise"
+      ]
+    },
+    {
       "title": "Возраст (от)",
       "article": "start_ear",
       "data_type": "date",

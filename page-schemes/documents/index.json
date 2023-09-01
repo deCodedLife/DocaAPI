@@ -1,6 +1,6 @@
 {
   "required_permissions": [],
-  "required_modules": [],
+  "required_modules": ["documents_get"],
   "structure": [
     {
       "title": "Шапка",

@@ -18,17 +18,6 @@ $saleDetails =  $API->DB->from( "saleVisits" )
 
 
 /**
- * Получение детальной информации о сотруднике
- */
-$userDetails = $API->DB->from( "users" )
-    ->where( "id", $API::$userDetail->id )
-    ->fetch();
-
-// Правка для dev аккаунта
-if ( !$userDetails[ "store_id" ] ) $userDetails[ "store_id" ] = $API->DB->from( "stores" )->limit( 1 )->fetch()["id"];
-
-
-/**
  * Подсчёт итоговой стоимости посещения
  */
 $paymentSummary = $visitDetails[ "price" ];
@@ -48,7 +37,7 @@ $client = $API->DB->from( "visits_clients" )
 $formFieldValues = [
     "sum_cash" => $paymentSummary,
     "pay_method" => "cash",
-    "store_id" => (int) $userDetails[ "store_id" ],
+    "store_id" => $visitDetails[ "store_id" ],
     "client_id" => $client[ "client_id" ],
     "online_receipt" => true
 ];

@@ -25,7 +25,7 @@ if ( $requestData->patronymic ) {
 } // if. $requestData->patronymic
 
 
-if ( $requestData->is_representative == "Y" ) {
+if ( $requestData->is_representative == "Y"  ) {
 
     $formFieldsUpdate[ "present_last_name" ] = [
         "is_visible" => true

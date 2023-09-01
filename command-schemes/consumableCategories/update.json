@@ -1,1 +1,1 @@
-{"title":"Изменение","type":"update","object_scheme":"consumableCategories","modules":[],"permissions":[]}
+{"title":"Изменение","type":"update","object_scheme":"consumableCategories","modules":[],"required_permissions":["settings_consumable_categories"]}

@@ -21,7 +21,7 @@ foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
      * Обход Исполнителей в расписании за текущую дату
      */
     foreach ( $scheduleDateDetail as $schedulePerformerKey => $schedulePerformerDetail ) {
-        
+
         /**
          * Расписание Исполнителя на текущую дату
          */
@@ -230,7 +230,7 @@ foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
          */
         if ( $requestData->clients_id && $notWorkDay && $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ] )
             unset( $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ] );
-
+        
     } // foreach. $scheduleDateDetail
 
 } // foreach. $resultSchedule

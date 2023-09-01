@@ -37,6 +37,12 @@ $unreadMessages = $API->DB->from( "personMessages" )
 
 foreach ( $unreadMessages as $unreadMessage ) {
 
+    /**
+     * Сообщение отправлено текущему пользователю
+     */
+    $isPersonMessage = false;
+
+
     if ( !$chatGroups[ $unreadMessage[ "chat_id" ] ] ) {
 
         /**
@@ -50,23 +56,38 @@ foreach ( $unreadMessages as $unreadMessage ) {
 
         $chatKey = explode( "_", $chatGroup[ "chat_key" ] );
 
-        foreach ( $chatKey as $chatUserId )
-            if ( $chatUserId != $API::$userDetail->id )
+        foreach ( $chatKey as $chatUserId ) {
+
+            if ( $chatUserId != $API::$userDetail->id ) {
+
                 $chatGroup = $API->DB->from( "users" )
                     ->where( "id", $chatUserId )
                     ->limit( 1 )
                     ->fetch();
 
+            } else {
 
+                $isPersonMessage = true;
+
+            } // if. $chatUserId != $API::$userDetail->id
+
+        } // foreach. $chatKey
+
+
+        $chatGroups[ $unreadMessage[ "chat_id" ] ][ "is_person" ] = $isPersonMessage;
         $chatGroups[ $unreadMessage[ "chat_id" ] ][ "chat" ] = $chatGroup[ "id" ];
         $chatGroups[ $unreadMessage[ "chat_id" ] ][ "group" ] = $chatGroup[ "role_id" ];
 
     } // if. !$chatGroups[ $unreadMessage[ "chat_id" ] ]
 
 
-    $resultCounter[ "total" ]++;
-    $resultCounter[ "chats" ][ $chatGroups[ $unreadMessage[ "chat_id" ] ][ "chat" ] ]++;
-    $resultCounter[ "groups" ][ $chatGroups[ $unreadMessage[ "chat_id" ] ][ "group" ] ]++;
+    if ( $chatGroups[ $unreadMessage[ "chat_id" ] ][ "is_person" ] ) {
+
+        $resultCounter[ "total" ]++;
+        $resultCounter[ "chats" ][ $chatGroups[ $unreadMessage[ "chat_id" ] ][ "chat" ] ]++;
+        $resultCounter[ "groups" ][ $chatGroups[ $unreadMessage[ "chat_id" ] ][ "group" ] ]++;
+
+    } // if. $chatGroups[ $unreadMessage[ "chat_id" ] ][ "is_person" ]
 
 } // foreach. $unreadMessages
 

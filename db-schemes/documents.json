@@ -28,6 +28,12 @@
       "article": "act_work_complete",
       "object": "visits",
       "is_system": "Y"
+    },
+    {
+      "title": "Шаблон",
+      "article": "header",
+      "object": "visits",
+      "is_system": "Y"
     }
   ]
 }

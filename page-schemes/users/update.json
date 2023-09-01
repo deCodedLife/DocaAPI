@@ -1,6 +1,9 @@
 {
   "required_modules": [],
-  "required_permissions": [],
+  "required_permissions": [
+    "users_get",
+    "users_update"
+  ],
   "structure": [
     {
       "title": "Шапка",
@@ -202,6 +205,9 @@
         },
         {
           "title": "Зарплата",
+          "required_permissions": [
+            "users_tab_salary"
+          ],
           "body": [
             {
               "title": "Оклад",
@@ -216,8 +222,12 @@
                         "title": "",
                         "fields": [
                           "salary",
+                          "salary_type",
                           "is_percent",
-                          "services_user_percents"
+                          "services_user_percents",
+                          "sales",
+                          "services",
+                          "promotions"
                         ]
                       }
                     ]
@@ -243,6 +253,9 @@
         },
         {
           "title": "Детальная информация по зарплате",
+          "required_permissions": [
+            "users_tab_salary"
+          ],
           "body": [
             {
               "title": "Виджет информации о зарплате",
@@ -265,6 +278,7 @@
                     "required_permissions": [],
                     "required_modules": [],
                     "settings": {
+                      "size": 2,
                       "is_search": false,
                       "recipient_property": "start_at"
                     }
@@ -275,6 +289,7 @@
                     "required_permissions": [],
                     "required_modules": [],
                     "settings": {
+                      "size": 2,
                       "is_search": false,
                       "recipient_property": "end_at"
                     }
@@ -309,11 +324,26 @@
               }
             },
             {
+              "title": "KPI",
+              "type": "list",
+              "size": 4,
+              "settings": {
+                "link": false,
+                "is_edit": false,
+                "object": "kpi",
+                "linked_filter": "analytic_widgets_salary_info",
+                "filters": []
+              },
+              "components": []
+            },
+            {
               "title": "Список транзакций",
               "type": "list",
               "size": 4,
               "settings": {
                 "object": "visits",
+                "is_edit": false,
+                "link": false,
                 "linked_filter": "analytic_widgets_salary_info",
                 "filters": []
               },
@@ -323,6 +353,9 @@
         },
         {
           "title": "История звонков",
+          "required_permissions": [
+            "users_tab_calls"
+          ],
           "is_counter": true,
           "body": [
             {
@@ -330,6 +363,7 @@
               "type": "list",
               "size": 4,
               "settings": {
+                "link": false,
                 "object": "userCallHistory",
                 "filters": [
                   {
@@ -344,6 +378,9 @@
         },
         {
           "title": "Логи",
+          "required_permissions": [
+            "users_tab_logs"
+          ],
           "body": [
             {
               "title": "Логи",

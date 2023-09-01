@@ -2,6 +2,6 @@
   "title": "Добавление",
   "type": "add",
   "object_scheme": "clients",
-  "required_permissions": [],
+  "required_permissions": ["clients_add"],
   "required_modules": []
 }

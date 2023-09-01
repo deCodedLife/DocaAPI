@@ -1,1 +1,1 @@
-{"title":"Изменение","type":"update","object_scheme":"documents","modules":[],"permissions":[]}
+{"title":"Изменение","type":"update","object_scheme":"documents","modules":[],"required_permissions":["documents_update"]}

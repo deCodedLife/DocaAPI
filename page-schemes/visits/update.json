@@ -81,7 +81,8 @@
                         "save_to": {
                           "object": "visitReports",
                           "properties": {
-                            "client_id": ":clients_id"
+                            "client_id": ":clients_id",
+                            "user_id": ":user_id"
                           }
                         },
                         "is_edit": true,
@@ -197,6 +198,7 @@
                           "store_id",
                           "sum_bonus",
                           "sum_deposit",
+                          "sum_entity",
                           "online_receipt",
                           "is_combined",
                           "client_id"

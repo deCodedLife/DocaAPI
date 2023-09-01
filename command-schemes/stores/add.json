@@ -2,6 +2,6 @@
   "title": "Добавление",
   "type": "add",
   "object_scheme": "stores",
-  "required_permissions": [],
+  "required_permissions": ["settings_stores"],
   "required_modules": []
 }
