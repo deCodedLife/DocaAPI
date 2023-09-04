@@ -18,6 +18,7 @@ foreach ( $response[ "data" ] as $user ) {
 
     $returnServices[$user[ "id" ]][ "last_name" ] = $user[ "last_name" ] . " " . mb_substr($user[ "first_name" ], 0, 1) . ". " . mb_substr($user[ "patronymic" ], 0, 1) . ".";
 
+    $returnServices[$user[ "id" ]][ "id" ] = $user[ "id" ];
     $returnServices[$user[ "id" ]][ "count_one" ] = 0;
     $returnServices[$user[ "id" ]][ "count_two" ] = 0;
     $returnServices[$user[ "id" ]][ "count_three" ] = 0;
@@ -190,3 +191,11 @@ if ( $sort_by == "sum_three" ) {
 
 
 }
+$response[ "detail" ] = [
+
+    "pages_count" => ceil(count($response[ "data" ]) / $requestData->limit),
+    "rows_count" => count($response[ "data" ])
+
+];
+
+$response[ "data" ] = array_slice($response[ "data" ], $requestData->limit * $requestData->page - $requestData->limit, $requestData->limit);

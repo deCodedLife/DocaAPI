@@ -2,16 +2,30 @@
   "top": [],
   "side": [
     {
-      "title": "Панель управления",
+      "title": "Dashboard",
       "href": "dashboard",
       "children": [],
       "icon": "dashboard"
+    },
+    {
+      "title": "Операционная",
+      "href": "operating",
+      "children": [],
+      "icon": "surgical-instrument",
+      "required_permissions": [ "director_schedule", "manager_schedule" ]
     },
     {
       "title": "Расписание",
       "href": "managerSchedule",
       "children": [],
       "icon": "schedule",
+      "required_permissions": [ "director_schedule" ]
+    },
+    {
+      "title": "Оборудование",
+      "href": "equipmentSchedule",
+      "children": [],
+      "icon": "health",
       "required_permissions": [ "director_schedule" ]
     },
     {

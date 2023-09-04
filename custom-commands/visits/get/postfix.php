@@ -11,6 +11,21 @@ foreach ( $response[ "data" ] as $visit ) {
 
     $visit[ "period" ] = date( 'Y-m-d H:i', strtotime( $visit[ "start_at" ] ) ) . " - " . date( "H:i", strtotime( $visit[ "end_at" ] ) );
 
+    if ( $visit[ "cabinet_id" ] ) {
+
+        $cabinetDetail = $API->DB->from( "cabinets" )
+            ->where( "id", $visit[ "cabinet_id" ][ "value" ] )
+            ->limit( 1 )
+            ->fetch();
+
+        if ( $cabinetDetail[ "is_operating" ] == "Y" ) {
+
+            $visit[ "cabinet" ] = "operating";
+
+        }
+
+    }
+
     foreach ( $visits_services as $visit_service) {
 
         $service = $API->DB->from( "services" )
@@ -83,3 +98,4 @@ if ( $requestData->service && !empty( $requestData->service ) ) {
 }
 
 $response[ "data" ] = $returnVisits;
+

@@ -1,1 +1,87 @@
-{"title":"Носимое оборудование","table":"wearableEquipment","is_trash":false,"properties":[{"title":"Название","article":"title","data_type":"string","field_type":"string","is_default_in_list":true,"is_unique":true,"is_autofill":true,"use_in_commands":["get","update","add"],"require_in_commands":["add","update"]}],"action_buttons":[{"type":"href","settings":{"title":"Изменить","background":"dark","icon":"gear","page":["wearableEquipment/update/",":id"]}},{"type":"script","settings":{"title":"Удалить","icon":"trash","object":"wearableEquipment","command":"remove","data":{"id":":id"}}}]}
+{
+  "title": "Сотрудники",
+  "table": "wearableEquipment",
+  "is_trash": true,
+  "properties": [
+    {
+      "title": "Название",
+      "article": "title",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add",
+        "update"
+      ],
+      "require_in_commands": [
+        "add"
+      ]
+    },
+    {
+      "title": "Выводить в Расписании",
+      "article": "is_visible_in_schedule",
+      "data_type": "boolean",
+      "field_type": "checkbox",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add",
+        "update"
+      ]
+    },
+    {
+      "title": "Филиалы",
+      "article": "stores_id",
+      "data_type": "array",
+      "field_type": "list",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "update",
+        "get",
+        "add"
+      ],
+      "list_donor": {
+        "table": null
+      },
+      "join": {
+        "connection_table": "equipment_stores",
+        "donor_table": "stores",
+        "property_article": "title",
+        "insert_property": "equipment_id",
+        "filter_property": "store_id"
+      }
+    }
+  ],
+  "action_buttons": [
+    {
+      "type": "href",
+      "settings": {
+        "title": "Изменить",
+        "page": [
+          "wearableEquipment/update/",
+          ":id"
+        ],
+        "icon": "gear",
+        "background": "dark"
+      }
+    },
+    {
+      "type": "script",
+      "settings": {
+        "title": "Удалить",
+        "background": "dark",
+        "icon": "trash",
+        "object": "wearableEquipment",
+        "command": "remove",
+        "data": {
+          "id": ":id"
+        }
+      }
+    }
+  ]
+}

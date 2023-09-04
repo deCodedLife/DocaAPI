@@ -1,48 +1,61 @@
 {
   "required_modules": [],
   "required_permissions": [],
-  "structure": [{
-    "title": "Шапка",
-    "type": "header",
-    "size": 4,
-    "settings": {
-      "description": "Кабинеты",
-      "title": ["Кабинеты"]
+  "structure": [
+    {
+      "title": "Шапка",
+      "type": "header",
+      "size": 4,
+      "settings": {
+        "description": "Кабинеты",
+        "title": [
+          "Кабинеты"
+        ]
+      },
+      "components": {
+        "buttons": []
+      }
     },
-    "components": {
-      "buttons": []
-    }
-  }, {
-    "title": "Список",
-    "type": "list",
-    "size": 4,
-    "settings": {
-      "object": "cabinets"
-    },
-    "components": {
-      "filters": [
-        {
-          "title": "Филиал",
-          "type": "list",
-          "required_permissions": [],
-          "required_modules": [],
-          "settings": {
-            "is_search": false,
-            "recipient_property": "store_id",
-            "donor_object": "stores",
-            "donor_property_title": "title",
-            "donor_property_value": "id"
+    {
+      "title": "Список",
+      "type": "list",
+      "size": 4,
+      "settings": {
+        "object": "cabinets",
+        "filters": [
+          {
+            "property": "is_operating",
+            "value": "N"
           }
-        }
-      ],
-      "buttons": [{
-        "type": "href",
-        "settings": {
-          "title": "Добавление кабинета",
-          "background": "dark",
-          "page": "cabinets/add"
-        }
-      }]
+        ]
+      },
+      "components": {
+        "filters": [
+          {
+            "title": "Филиал",
+            "type": "list",
+            "required_permissions": [],
+            "required_modules": [],
+            "settings": {
+              "is_search": false,
+              "recipient_property": "store_id",
+              "donor_object": "stores",
+              "donor_property_title": "title",
+              "donor_property_value": "id"
+            }
+          }
+        ],
+        "buttons": [
+          {
+            "type": "href",
+            "settings": {
+              "title": "Добавление кабинета",
+              "background": "dark",
+              "page": "cabinets/add"
+            }
+          }
+        ]
+      }
     }
-  }]
+  ]
 }

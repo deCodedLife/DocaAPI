@@ -38,9 +38,7 @@
                         "title": "",
                         "fields": [
                           "start_at",
-                          "end_at",
-                          "is_earlier",
-                          "status"
+                          "end_at"
                         ]
                       },
                       {
@@ -63,6 +61,24 @@
                         "fields": [
                           "store_id",
                           "cabinet_id"
+                        ]
+                      },
+                      {
+                        "title": "",
+                        "fields": [
+                          "price",
+                          "is_earlier"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "size": 4,
+                    "blocks": [
+                      {
+                        "title": "",
+                        "fields": [
+                          "comment"
                         ]
                       }
                     ]

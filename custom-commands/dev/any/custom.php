@@ -41,10 +41,10 @@
 
 ini_set( "display_errors", true );
 
-mysqli_query(
-    $API->DB_connection,
-    "ALTER TABLE salesList ADD sum_entity FLOAT NOT NULL DEFAULT 0 COMMENT 'Средства юр лица' AFTER sum_card"
-);
+//mysqli_query(
+//    $API->DB_connection,
+//    "DROP TABLE wearableEquipmentVisits"
+//);
 
 $API->returnResponse( "Ok" );
 

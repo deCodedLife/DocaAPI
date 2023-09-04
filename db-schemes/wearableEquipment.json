@@ -1,1 +1,26 @@
-{"title":"Носимое оборудование","properties":[{"title":"Название","article":"title","type":"varchar(75)","default":null,"is_required":"Y"}]}
+{
+  "title": "Носимое оборудование",
+  "properties": [
+    {
+      "title": "Название оборудования",
+      "article": "title",
+      "type": "varchar(255)",
+      "default": null,
+      "is_required": "Y"
+    },
+    {
+      "title": "Активность (Y/N)",
+      "article": "is_active",
+      "type": "char(1)",
+      "default": "Y",
+      "is_required": "Y"
+    },
+    {
+      "title": "Выводить в Расписании",
+      "article": "is_visible_in_schedule",
+      "type": "char(1)",
+      "default": "Y",
+      "is_required": "N"
+    }
+  ]
+}

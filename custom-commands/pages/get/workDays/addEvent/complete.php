@@ -32,6 +32,11 @@ foreach ( $response[ "data" ][ 0 ][ "settings" ][ "areas" ][ 1 ][ "blocks" ][ 0 
         ->where( "cabinet_id", $cabinet[ "value" ] )
         ->limit( 1 )
         ->fetch();
+    
+    $cabinetDetail = $API->DB->from( "cabinets" )
+        ->where( "id", $cabinet[ "value" ] )
+        ->limit( 1 )
+        ->fetch();
 
     if ( $workDays[ "cabinet_id" ] != NULL ){
 
@@ -42,13 +47,16 @@ foreach ( $response[ "data" ][ 0 ][ "settings" ][ "areas" ][ 1 ][ "blocks" ][ 0 
         $title = $cabinet[ "title" ];
 
     }
+    if ( $cabinetDetail[ "is_operating" ] == "N" ) {
 
-    $cabinets[] = [
-        "title" => $cabinet[ "title" ],
-        "value" => $cabinet[ "value" ],
-        "menu_title" => $title,
-        "joined_field_value" => $cabinet[ "joined_field_value" ],
-    ];
+        $cabinets[] = [
+            "title" => $cabinet[ "title" ],
+            "value" => $cabinet[ "value" ],
+            "menu_title" => $title,
+            "joined_field_value" => $cabinet[ "joined_field_value" ],
+        ];
+
+    }
 
 } // foreach. $response[ "data" ][ 0 ][ "settings" ][ "areas" ][ 1 ][ "blocks" ][ 0 ][ "fields" ][ 2 ][ "list" ]
 

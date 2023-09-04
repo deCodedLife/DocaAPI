@@ -84,3 +84,8 @@ if ( $visitDetails[ "is_payed" ] == "Y" || ( $saleDetails && $saleDetails[ "stat
 }
 
 $formFieldValues[ "action" ] = "sell";
+
+if ( $visitDetails[ "status" ] == "ended" ) unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 1 ] );
+if ( $visitDetails[ "status" ] != "ended" ) unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 3 ] );
+
+$pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ "0" ][ "components" ][ "buttons" ] = array_values( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ "0" ][ "components" ][ "buttons" ] );

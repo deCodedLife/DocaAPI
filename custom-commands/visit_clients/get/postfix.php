@@ -169,6 +169,17 @@ if ( $requestData->user_id ) {
 
     }
 
+
+
+    $response[ "detail" ] = [
+
+        "pages_count" => ceil(count($response[ "data" ]) / $requestData->limit),
+        "rows_count" => count($response[ "data" ])
+
+    ];
+
+    $response[ "data" ] = array_slice($response[ "data" ], $requestData->limit * $requestData->page - $requestData->limit, $requestData->limit);
+
 } else {
 
     $response[ "data" ] = [];

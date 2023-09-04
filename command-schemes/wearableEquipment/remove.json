@@ -1,1 +1,7 @@
-{"title":"Удаление","type":"get","object_scheme":"wearableEquipment","modules":[],"required_permissions":["settings_wearable_equipment"]}
+{
+  "title": "Удаление",
+  "type": "remove",
+  "object_scheme": "wearableEquipment",
+  "required_permissions": ["users_remove"],
+  "required_modules": []
+}
