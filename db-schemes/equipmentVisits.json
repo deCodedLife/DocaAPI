@@ -135,6 +135,13 @@
       "is_required": "Y"
     },
     {
+      "title": "Оборудование",
+      "article": "equipment_id",
+      "type": "int",
+      "default": null,
+      "is_required": "N"
+    },
+    {
       "title": "Сотрудник",
       "article": "user_id",
       "type": "int",

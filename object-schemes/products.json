@@ -43,6 +43,25 @@
       ]
     },
     {
+      "title": "Ответственное лицо",
+      "article": "user_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_in_search": true,
+      "list_donor": {
+        "table": "users",
+        "properties_title": "last_name"
+      },
+      "use_in_commands": [
+        "update",
+        "get",
+        "add"
+      ]
+    },
+    {
       "title": "Цена",
       "article": "price",
       "data_type": "float",

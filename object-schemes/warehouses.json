@@ -1,1 +1,77 @@
-{"title":"Складские остатки","table":"warehouses","is_trash":false,"properties":[{"title":"Филиал","article":"store_id","data_type":"integer","field_type":"list","is_default_in_list":true,"is_unique":false,"is_autofill":true,"use_in_commands":["get"],"list_donor":{"table":"stores","properties_title":"title"}},{"title":"Количество","article":"count","data_type":"integer","field_type":"integer","is_default_in_list":true,"is_unique":false,"is_autofill":true,"use_in_commands":["get"]},{"title":"Расходник","article":"consumable_id","data_type":"integer","field_type":"list","is_default_in_list":false,"is_unique":false,"is_autofill":true,"use_in_commands":["get"]}]}
+{
+  "title": "Складские остатки",
+  "table": "warehouses",
+  "is_trash": false,
+  "properties": [
+    {
+      "title": "Филиал",
+      "article": "store_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "get",
+        "update"
+      ],
+      "list_donor": {
+        "table": "stores",
+        "properties_title": "title"
+      }
+    },
+    {
+      "title": "Количество",
+      "article": "count",
+      "data_type": "integer",
+      "field_type": "integer",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "get",
+        "update"
+      ]
+    },
+    {
+      "title": "Расходник",
+      "article": "consumable_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "get",
+        "update"
+      ]
+    },
+    {
+      "title": "Товар",
+      "article": "product_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "get",
+        "update"
+      ]
+    }
+  ],
+  "action_buttons": [
+    {
+      "type": "href",
+      "settings": {
+        "title": "Изменить",
+        "page": [
+          "warehouses/update/",
+          ":id"
+        ],
+        "icon": "gear",
+        "background": "dark"
+      }
+    }
+  ]
+}

@@ -19,7 +19,7 @@
       "type": "form",
       "size": 4,
       "settings": {
-        "object": "visits",
+        "object": "equipmentVisits",
         "command": "add",
         "areas": [
           {
@@ -35,6 +35,7 @@
               {
                 "title": "",
                 "fields": [
+                  "equipment_id",
                   "user_id",
                   "author_id",
                   "assist_id",

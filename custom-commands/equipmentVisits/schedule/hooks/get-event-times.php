@@ -23,12 +23,14 @@ foreach ( $performersDetail as $performerId => $performerDetail ) {
 
         foreach ( $storesInfo as $store ) {
 
+            if ( $store[ "id" ] != $requestData->store_id ) continue;
+
             $performerWorkSchedule[] = [
                 "id" => $day,
                 "event_from" => $datetime->format( "Y-m-d {$store[ "schedule_from" ]}" ),
                 "event_to" => $datetime->format( "Y-m-d  {$store[ "schedule_to" ]}" ),
                 "is_system" => "N",
-                "user_id" => $performerId,
+                "equipment_id" => $performerId,
                 "is_weekend" => $datetime->format('N') >= 7,
                 "store_id" => $store[ "id" ],
                 "cabinet_id" => null
