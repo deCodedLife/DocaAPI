@@ -11,7 +11,7 @@
     {
       "title": "Название",
       "article": "title",
-      "type": "varchar(75)",
+      "type": "varchar(255)",
       "default": null,
       "is_required": "Y"
     },

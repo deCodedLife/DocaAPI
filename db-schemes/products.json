@@ -1,1 +1,40 @@
-{"title":"Товары","properties":[{"title":"Название ","article":"title","type":"varchar(75)","default":null,"is_required":"Y"},{"title":"Категория","article":"category_id","type":"int","default":null,"is_required":"N"},{"title":"Цена ","article":"price","type":"float","default":null,"is_required":"Y"},{"title":"Себестоимость ","article":"cost","type":"float","default":null,"is_required":"Y"},{"title":"Минимальное количество","article":"minCount","type":"int","default":null,"is_required":"N"}]}
+{
+  "title": "Товары",
+  "properties": [
+    {
+      "title": "Название ",
+      "article": "title",
+      "type": "varchar(255)",
+      "default": null,
+      "is_required": "Y"
+    },
+    {
+      "title": "Категория",
+      "article": "category_id",
+      "type": "int",
+      "default": null,
+      "is_required": "N"
+    },
+    {
+      "title": "Цена ",
+      "article": "price",
+      "type": "float",
+      "default": null,
+      "is_required": "Y"
+    },
+    {
+      "title": "Себестоимость ",
+      "article": "cost",
+      "type": "float",
+      "default": null,
+      "is_required": "Y"
+    },
+    {
+      "title": "Минимальное количество",
+      "article": "minCount",
+      "type": "int",
+      "default": null,
+      "is_required": "N"
+    }
+  ]
+}

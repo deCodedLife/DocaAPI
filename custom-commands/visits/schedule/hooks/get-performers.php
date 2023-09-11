@@ -46,9 +46,10 @@ if ( $requestData->profession_id ) {
 
     $usersWithCurrentProfession = [];
 
-    $usersProfessions = $API->DB->from( "users_professions" )
-        ->select( [ "user_id", "profession_id" ] )
-        ->where( "profession_id", $requestData->profession_id );
+    $usersProfessions = mysqli_query(
+      $API->DB_connection,
+      "SELECT user_id, profession_id FROM users_professions where profession_id = $requestData->profession_id"
+    );
 
     foreach ( $usersProfessions as $userProfession ) $usersWithCurrentProfession[] = $userProfession[ "user_id" ];
 
@@ -86,13 +87,12 @@ if ( $requestData->store_id ) {
      */
     foreach ( $performersRows as $performersRowKey => $performersRow ) {
 
-        $userStores = $API->DB->from( "users_stores" )
-            ->where( [
-                "store_id" => $requestData->store_id,
-                "user_id" => $performersRow[ "id" ]
-            ] )
-            ->limit( 1 )
-            ->fetch();
+        $userStores = mysqli_fetch_array(
+            mysqli_query(
+                $API->DB_connection,
+                "SELECT * FROM users_stores WHERE store_id = $requestData->store_id AND user_id = {$performersRow[ "id" ]}"
+            )
+        );
 
         if ( !empty( $userStores ) ) $filteredUsers[] = $performersRow;
 

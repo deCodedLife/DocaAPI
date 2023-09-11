@@ -32,14 +32,14 @@
     {
       "title": "Начало акции",
       "article": "begin_at",
-      "type": "date",
+      "type": "datetime",
       "default": "CURRENT_TIMESTAMP",
       "is_required": "Y"
     },
     {
       "title": "Окончание",
       "article": "end_at",
-      "type": "date",
+      "type": "datetime",
       "default": null,
       "is_required": "N"
     },

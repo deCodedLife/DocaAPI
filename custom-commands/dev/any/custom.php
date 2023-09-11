@@ -38,15 +38,31 @@
 //
 //exit();
 
-
+error_reporting(0);
 ini_set( "display_errors", true );
 
-//mysqli_query(
-//    $API->DB_connection,
-//    "DROP TABLE wearableEquipmentVisits"
-//);
+$DB_connection = new mysqli(
+    "31.184.218.141",
+    "ya_zdorov",
+    "roMj7csdqKnEoiAR",
+    "ya_zdorov",
+    3306
+);
 
-$API->returnResponse( "Ok" );
+if ( $DB_connection->connect_errno )
+    $API->returnResponse( $DB_connection->connect_error, 500 );
+
+$workShedule = mysqli_query(
+    $DB_connection,
+    "SELECT * FROM work_schedules_rules"
+);
+
+$rules = [];
+
+foreach ( $workShedule as $item )
+    $rules[] = $item;
+
+$API->returnResponse( $rules );
 
 // $API->DB->delete( "promotionObjects" )
 	// ->where( "id", 121 )
