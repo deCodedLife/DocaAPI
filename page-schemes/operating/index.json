@@ -10,10 +10,10 @@
       "required_modules": [],
       "settings": {
         "link": false,
+        "sort_by": "period",
+        "sort_order": "desc",
         "is_edit": false,
         "object": "visits",
-        "sort_by": "period",
-        "sort_order": "asc",
         "filters": [
           {
             "property": "cabinet",

@@ -80,6 +80,30 @@
       "is_visible": false
     },
     {
+      "title": "Оборудование",
+      "article": "equipment_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_hook": true,
+      "use_in_commands": [
+        "add",
+        "update",
+        "get",
+        "hook",
+        "schedule"
+      ],
+      "require_in_commands": [
+        "add"
+      ],
+      "list_donor": {
+        "table": "wearableEquipment",
+        "properties_title": "title"
+      }
+    },
+    {
       "title": "Сотрудник",
       "article": "user_id",
       "data_type": "integer",

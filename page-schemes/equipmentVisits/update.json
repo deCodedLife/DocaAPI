@@ -28,7 +28,7 @@
               "type": "form",
               "size": 4,
               "settings": {
-                "object": "visits",
+                "object": "equipmentVisits",
                 "command": "update",
                 "areas": [
                   {
@@ -46,6 +46,7 @@
                       {
                         "title": "",
                         "fields": [
+                          "equipment_id",
                           "user_id",
                           "assist_id",
                           "clients_id",

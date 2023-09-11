@@ -15,7 +15,6 @@ $returnServices = [];
 $currentDateTime = new DateTime();
 
 foreach ( $response[ "data" ] as $user ) {
-
     $returnServices[$user[ "id" ]][ "last_name" ] = $user[ "last_name" ] . " " . mb_substr($user[ "first_name" ], 0, 1) . ". " . mb_substr($user[ "patronymic" ], 0, 1) . ".";
 
     $returnServices[$user[ "id" ]][ "id" ] = $user[ "id" ];
@@ -25,6 +24,8 @@ foreach ( $response[ "data" ] as $user ) {
     $returnServices[$user[ "id" ]][ "sum_one" ] = "0";
     $returnServices[$user[ "id" ]][ "sum_two" ] = "0";
     $returnServices[$user[ "id" ]][ "sum_three" ] = "0";
+
+
     /**
      * Получение посещений Сотрудника за 3 месяца
      */
@@ -61,13 +62,13 @@ foreach ( $response[ "data" ] as $user ) {
 
             $returnServices[$user[ "id" ]][ "count_three" ] = $returnServices[$user[ "id" ]][ "count_three" ] + 1;
 
-        } elseif ( $workDay[ "event_from" ] >= $currentDateTime->modify( "-1 month" )->format( "Y-m-01 00:00:00" ) ) {
+        } elseif ( $workDay[ "event_from" ] <= $currentDateTime->modify( "-1 month" )->format( "Y-m-01 00:00:00" ) ) {
 
             $returnServices[$user[ "id" ]][ "count_two" ] = $returnServices[$user[ "id" ]][ "count_two" ] + 1;
 
             $returnServices[$user[ "id" ]][ "count_three" ] = $returnServices[$user[ "id" ]][ "count_three" ] + 1;
 
-        } elseif ( $workDay[ "event_from" ] >= $currentDateTime->modify( "-2 month" )->format( "Y-m-01 00:00:00" ) ) {
+        } elseif ( $workDay[ "event_from" ] <= $currentDateTime->modify( "-2 month" )->format( "Y-m-01 00:00:00" ) ) {
 
             $returnServices[$user[ "id" ]][ "count_three" ] = $returnServices[$user[ "id" ]][ "count_three" ] + 1;
 
@@ -100,6 +101,7 @@ foreach ( $response[ "data" ] as $user ) {
         }
 
     }
+    
 
 }
 
@@ -191,6 +193,7 @@ if ( $sort_by == "sum_three" ) {
 
 
 }
+
 $response[ "detail" ] = [
 
     "pages_count" => ceil(count($response[ "data" ]) / $requestData->limit),

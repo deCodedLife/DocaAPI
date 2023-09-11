@@ -33,3 +33,32 @@ if ( $purchaseDetail[ "purchaseType" ] == "consumables" ) {
     }
 
 }
+
+if ( $purchaseDetail[ "purchaseType" ] == "product" ) {
+
+    $purchases_products = $API->DB->from( "purchases_products" )
+        ->where( "row_id", $requestData->id );
+
+    foreach ( $purchases_products as $purchases_product ){
+
+        $productActive = $API->DB->from( "warehouses" )
+            ->where( [
+                "product_id" => $purchases_product[ "product_id" ],
+                "store_id" => $purchaseDetail[ "store_id" ]
+            ] )
+            ->limit( 1 )
+            ->fetch();
+
+        $API->DB->update( "warehouses" )
+            ->set([
+                "count" =>  (int)$productActive[ "count" ] - (int)$purchases_product[ "count" ]
+            ])
+            ->where( [
+                "product_id" => $purchases_product[ "product_id" ],
+                "store_id" => $purchaseDetail[ "store_id" ]
+            ] )
+            ->execute();
+
+    }
+
+}

@@ -39,10 +39,9 @@
                         "title": "Основное",
                         "fields": [
                           "title",
-                          "category_id",
-                          "cost",
-                          "is_multiple",
-                          "minCount"
+                          "price",
+                          "min_count",
+                          "user_id"
                         ]
                       }
                     ]
@@ -55,7 +54,7 @@
                     "type": "submit",
                     "settings": {
                       "title": "Сохранить",
-                      "href": "",
+                      "href": "consumables",
                       "background": "dark"
                     }
                   }

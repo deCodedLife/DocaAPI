@@ -57,10 +57,10 @@
       "required_permissions": [ "products_get" ]
     },
     {
-      "title": "Расходники",
+      "title": "Склад",
       "href": "consumables",
       "children": [],
-      "icon": "first-aid-kit",
+      "icon": "delivery",
       "required_permissions": [ "consumables_get" ]
     },
     {

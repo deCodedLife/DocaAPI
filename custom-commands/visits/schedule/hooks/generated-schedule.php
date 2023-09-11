@@ -81,7 +81,6 @@ foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
                 $workScheduleStepFromKey = getStepKey( $performerWorkSchedule[ "from" ] );
                 $workScheduleStepToKey = getStepKey( $performerWorkSchedule[ "to" ] );
 
-
                 foreach ( $stepsList as $stepKey => $step )
                     if (
                         ( $stepKey >= $workScheduleStepFromKey ) && ( $stepKey <= $workScheduleStepToKey )
@@ -91,7 +90,7 @@ foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
                 /**
                  * Подстановка филиала
                  */
-                $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ][ "store_id" ] = $usersStores[ $schedulePerformerKey ];
+                $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ][ "initials" ][ "store_id" ] = $requestData->store_id ?? $usersStores[ $schedulePerformerKey ];
 
 
                 /**
@@ -106,11 +105,17 @@ foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
 
 
                     if ( !$isCabinet ) $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ][ "performer_title" ] .= " [Каб. " . $cabinetDetail[ "title" ] . "]";
-                    $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ][ "cabinet_id" ] = $cabinetDetail[ "id" ];
+                    $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ][ "initials" ][ "cabinet_id" ] = $cabinetDetail[ "id" ];
 
                     $isCabinet = true;
 
                 } // if. $performerWorkSchedule[ "cabinet_id" ]
+
+                /**
+                 * Подстановка сотрудника
+                 */
+                $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ][ "initials" ][ "user_id" ] =
+                    $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ][ "performer_id" ];
 
             } // foreach. $performersWorkSchedule[ $schedulePerformerKey ][ $scheduleDateKey ]
 
