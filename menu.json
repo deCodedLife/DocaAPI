@@ -8,13 +8,6 @@
       "icon": "dashboard"
     },
     {
-      "title": "Операционная",
-      "href": "operating",
-      "children": [],
-      "icon": "surgical-instrument",
-      "required_permissions": [ "director_schedule", "manager_schedule" ]
-    },
-    {
       "title": "Расписание",
       "href": "managerSchedule",
       "children": [],
@@ -27,6 +20,13 @@
       "children": [],
       "icon": "health",
       "required_permissions": [ "director_schedule" ]
+    },
+    {
+      "title": "Операционная",
+      "href": "operating",
+      "children": [],
+      "icon": "surgical-instrument",
+      "required_permissions": [ "director_schedule", "manager_schedule" ]
     },
     {
       "title": "Сотрудники",
@@ -207,16 +207,6 @@
         },
         {
           "title": "Группы товаров",
-          "href": "productGroups",
-          "required_permissions": [ "settings_product_groups" ]
-        },
-        {
-          "title": "Типы товаров",
-          "href": "productTypes",
-          "required_permissions": [ "settings_product_types" ]
-        },
-        {
-          "title": "Категории товаров",
           "href": "productCategories",
           "required_permissions": [ "settings_product_categories" ]
         },

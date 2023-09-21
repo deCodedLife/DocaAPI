@@ -184,6 +184,13 @@
       "is_required": "N"
     },
     {
+      "title": "Клиент",
+      "article": "client_id",
+      "type": "int",
+      "default": null,
+      "is_required": "N"
+    },
+    {
       "title": "Дата",
       "article": "created_at",
       "type": "datetime",

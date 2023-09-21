@@ -132,7 +132,7 @@ $API->returnResponse(
     [
         [
             "size" => 1,
-            "value" => $reportStatistic[ "visits_count"],
+            "value" => round( $reportStatistic[ "visits_count"] ),
             "description" => "Посещений",
             "icon" => "",
             "prefix" => "",
@@ -147,7 +147,7 @@ $API->returnResponse(
         ],
         [
             "size" => 1,
-            "value" => $reportStatistic[ "visits_sum" ],
+            "value" => round( $reportStatistic[ "visits_sum"] ),
             "description" => "Поступления",
             "icon" => "",
             "prefix" => "₽",
@@ -162,7 +162,7 @@ $API->returnResponse(
         ],
         [
             "size" => 1,
-            "value" => $reportStatistic[ "expenses_sum" ],
+            "value" => round( $reportStatistic[ "expenses_sum"] ),
             "description" => "Расход",
             "icon" => "",
             "prefix" => "₽",
@@ -177,7 +177,7 @@ $API->returnResponse(
         ],
         [
             "size" => 1,
-            "value" =>$reportStatistic[ "visits_sum" ] - $reportStatistic[ "expenses_sum" ],
+            "value" => round( $reportStatistic[ "visits_sum" ] - $reportStatistic[ "expenses_sum" ] ),
             "description" => "Итог",
             "icon" => "",
             "prefix" => "₽",

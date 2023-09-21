@@ -128,15 +128,23 @@
       "is_default_in_list": false,
       "is_unique": false,
       "is_autofill": true,
+      "search": "clients",
       "use_in_commands": [
         "add",
         "update",
-        "get"
+        "get",
+        "schedule"
       ],
+      "require_in_commands": [
+        "add"
+      ],
+      "is_disabled": false,
       "list_donor": {
         "table": "clients",
-        "properties_title": "patronymic"
-      }
+        "properties_title": "last_name"
+      },
+      "annotation": "",
+      "is_hook": true
     }
   ],
   "action_buttons": []

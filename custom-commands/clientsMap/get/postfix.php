@@ -11,7 +11,11 @@ foreach ( $response[ "data" ] as $client ) {
         $client[ "title" ] = $client[ "last_name" ] . " " . $client[ "first_name" ] . " " .  $client[ "patronymic" ];
         $client[ "url" ] = "/clients/update/" . $client[ "id" ];
 
-        $returnVisits[] = $client;
+        $returnVisits[] = [
+            "title" => $client[ "title" ],
+            "url" => $client[ "url" ],
+            "geolocation" => $client[ "geolocation" ]
+        ];
 
     }
 

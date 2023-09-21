@@ -62,22 +62,6 @@
       "use_in_commands": [
         "get"
       ]
-    },
-    {
-      "title": "Категория услуг",
-      "article": "category_id",
-      "data_type": "integer",
-      "field_type": "list",
-      "is_default_in_list": false,
-      "is_unique": false,
-      "is_autofill": true,
-      "list_donor": {
-        "table": "serviceGroups",
-        "properties_title": "title"
-      },
-      "use_in_commands": [
-        "get"
-      ]
     }
   ]
 }

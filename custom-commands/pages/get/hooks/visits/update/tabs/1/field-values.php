@@ -36,6 +36,7 @@ if ( $visitDetails[ "is_payed" ] == "Y" || ( $saleDetails && $saleDetails[ "stat
 
     $visitServices = $API->DB->from( "visits_services" )
         ->where( "visit_id", $pageDetail[ "row_detail" ][ "id" ] );
+
     $visitsList[] = $pageDetail[ "row_id" ];
 
 } // if ( $visitDetails[ "is_payed" ] == "Y" || ( $saleDetails && $saleDetails[ "status" ] != "error" ) )

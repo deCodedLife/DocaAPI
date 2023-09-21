@@ -15,11 +15,11 @@ foreach ( $performersDetail as $performerId => $performerDetail ) {
     $storesInfo = $API->DB->from( "stores" );
 
     /**
-     * Кастомный график работы оборудования на 7 дней
+     * Кастомный график работы оборудования на 30 дней
      */
     $datetime = new DateTime( date( "Y-m-d" ) );
 
-    for ( $day = 0; $day < 7; $day++ ) {
+    for ( $day = 0; $day < 30; $day++ ) {
 
         foreach ( $storesInfo as $store ) {
 

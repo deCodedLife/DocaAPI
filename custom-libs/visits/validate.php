@@ -53,6 +53,19 @@ $assistant   = $requestData->assist_id ?? $assistant;
 $store_id    = $requestData->store_id ?? $store_id;
 
 
+
+if ( strtotime( $start_at ) == strtotime( $end_at ) ) {
+
+
+    $modifiedEndData = new DateTime( $end_at );
+    $modifiedEndData->modify( "+1 min" );
+    
+    $end_at = $modifiedEndData->format( "Y-m-d H:i:s" );
+    $requestData->end_at = $end_at;
+
+} // if ( $requestData->start_at == $requestData->end_at )
+
+
 /**
  * Проверка времени филиала
  */
@@ -221,7 +234,7 @@ foreach ( $clients as $client ) {
     $employee_details = mysqli_fetch_array(
         mysqli_query(
             $API->DB_connection,
-            "SELECT users.last_name FROM users INNER JOIN visits_users ON users.id = visits_users.user_id WHERE visits_users.visit_id = $busyVisitID"
+            "SELECT last_name FROM users id = $busyVisitID"
         )
     )[0] ?? "";
 
@@ -302,12 +315,13 @@ function isEmployeeBusy( $employee, $visits ): int {
          * Получение всех сотрудников из посещения
          * PS: Запрос $API->DB->from... ->where( "user_id in (?)", join( ... ) ) не отрабатывает(
          */
-        $visit_employees = mysqli_query(
-            $API->DB_connection,
-            "SELECT * FROM visits_users WHERE visit_id = {$visit[ "id" ]} AND user_id = $employee"
-        );
+        // TODO
+//        $visit_employees = mysqli_query(
+//            $API->DB_connection,
+//            "SELECT * FROM visits_users WHERE visit_id = {$visit[ "id" ]} AND user_id = $employee"
+//        );
 
-        if ( mysqli_num_rows( $visit_employees ) != 0 ) return $visit[ "id" ];
+//        if ( mysqli_num_rows( $visit_employees ) != 0 ) return $visit[ "id" ];
 
     } // foreach ( $visits as $visit )
 

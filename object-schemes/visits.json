@@ -67,12 +67,11 @@
       "field_type": "info_strings",
       "is_default_in_list": false,
       "is_unique": false,
-      "is_autofill": true,
+      "is_autofill": false,
       "use_in_commands": [
         "update",
         "add",
-        "get",
-        "hook"
+        "get"
       ],
       "require_in_commands": [],
       "is_hook": true,
@@ -108,9 +107,9 @@
       "title": "Услуги",
       "article": "services_id",
       "data_type": "array",
+      "joined_field": "user_id",
       "field_type": "list",
       "is_default_in_list": true,
-      "joined_field": "user_id",
       "is_unique": false,
       "is_autofill": true,
       "is_hook": true,
@@ -126,10 +125,6 @@
       "require_in_commands": [
         "add"
       ],
-      "list_donor": {
-        "table": "services",
-        "properties_title": "title"
-      },
       "join": {
         "connection_table": "visits_services",
         "donor_table": "services",
@@ -277,10 +272,6 @@
       "require_in_commands": [
         "add"
       ],
-      "list_donor": {
-        "table": null,
-        "properties_title": null
-      },
       "is_disabled": false,
       "join": {
         "connection_table": "visits_clients",
@@ -439,6 +430,9 @@
     {
       "title": "Комментарий",
       "article": "comment",
+      "settings": {
+        "rows": 4
+      },
       "data_type": "string",
       "field_type": "textarea",
       "is_default_in_list": false,

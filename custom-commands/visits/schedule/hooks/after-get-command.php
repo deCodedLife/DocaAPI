@@ -3,6 +3,7 @@
  * Фильтр Записей по Клиентам
  */
 
+
 if ( $requestData->clients_id ) {
 
     /**
@@ -33,5 +34,3 @@ if ( $requestData->clients_id ) {
     $response[ "data" ] = $filteredEvents;
 
 } // if. $requestData->clients_id
-
-

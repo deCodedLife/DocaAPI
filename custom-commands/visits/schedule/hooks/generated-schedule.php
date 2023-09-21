@@ -1,4 +1,4 @@
-<?php
+<?php // C
 
 /**
  * Получение филиалов сотрудников
@@ -98,10 +98,12 @@ foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
                  */
                 if ( $performerWorkSchedule[ "cabinet_id" ] ) {
 
-                    $cabinetDetail = $API->DB->from( "cabinets" )
-                        ->where( "id", $performerWorkSchedule[ "cabinet_id" ] )
-                        ->limit( 1 )
-                        ->fetch();
+                    $cabinetDetail = mysqli_fetch_array(
+                        mysqli_query(
+                            $API->DB_connection,
+                            "SELECT * FROM cabinets WHERE id = {$performerWorkSchedule[ 'cabinet_id' ]}"
+                        )
+                    );
 
 
                     if ( !$isCabinet ) $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ][ "performer_title" ] .= " [Каб. " . $cabinetDetail[ "title" ] . "]";

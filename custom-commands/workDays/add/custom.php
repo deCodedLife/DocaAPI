@@ -1,5 +1,6 @@
 <?php
 
+
 /**
  * Дата начала графика
  */
@@ -28,8 +29,9 @@ $currentScheduleEvents = $API->DB->from( $API->request->object )
     ] );
 
 foreach ( $currentScheduleEvents as $currentScheduleEvent )
-    $currentSchedule[
-        date( "Y-m-d", strtotime( $currentScheduleEvent[ "event_from" ] ) )
+
+$currentSchedule[
+    date( "Y-m-d", strtotime( $currentScheduleEvent[ "start_from" ] ) )
     ][] = [
         "from" => date( "H:i:s", strtotime( $currentScheduleEvent[ "event_from" ] ) ),
         "to" => date( "H:i:s", strtotime( $currentScheduleEvent[ "event_to" ] ) ),
@@ -63,7 +65,7 @@ while ( $currentScheduleDate <= $scheduleTo ) {
         $currentWeekDay = date( "l", $currentScheduleDate );
 
         if ( !in_array( $currentWeekDay, $requestData->work_days ) ) $isContinue = true;
-
+        
     } // if. !$requestData->work_days
 
 

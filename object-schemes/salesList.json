@@ -100,7 +100,7 @@
       "join": {
         "connection_table": "saleVisits",
         "donor_table": "visits",
-        "property_article": "start_at",
+        "property_article": "user_id",
         "insert_property": "sale_id",
         "filter_property": "visit_id"
       },
@@ -110,10 +110,10 @@
       "title": "Клиент",
       "article": "client_id",
       "data_type": "integer",
-      "field_type": "list",
       "is_default_in_list": false,
       "is_unique": false,
       "is_autofill": true,
+      "search": "clients",
       "list_donor": {
         "table": "clients",
         "properties_title": "last_name"

@@ -1,7 +1,12 @@
 <?php
+if ( $requestData->sort_by != "id" ) {
 
-$sort_by = $requestData->sort_by;
-$sort_order = $requestData->sort_order;
+    $sort_by = $requestData->sort_by;
+    $sort_order = $requestData->sort_order;
 
-unset($requestData->sort_by);
-unset($requestData->sort_order);
+    unset($requestData->sort_by);
+    unset($requestData->sort_order);
+
+}
+
+

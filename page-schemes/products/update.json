@@ -14,20 +14,6 @@
         "title": [
           ":title"
         ]
-      },
-      "components": {
-        "buttons": [
-          {
-            "type": "href",
-            "settings": {
-              "title": "Добавить",
-              "background": "dark",
-              "page": [
-                "products/add"
-              ]
-            }
-          }
-        ]
       }
     },
     {

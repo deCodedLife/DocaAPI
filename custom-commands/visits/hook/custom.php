@@ -8,7 +8,6 @@ $formFieldsUpdate = [];
 $hasAssist = false;
 
 
-
 /**
  * Проход
  */
@@ -21,7 +20,6 @@ foreach ( $requestData->services_id as $service ) {
     if ( $serviceDetail[ "preparation" ] ) $formFieldsUpdate[ "modal_info" ][] = $serviceDetail[ "preparation" ];
 
 }
-
 
 /**
  * Расчет стоимости и времени выполнения Записи
@@ -71,7 +69,7 @@ if ( $requestData->services_id && $requestData->user_id ) {
             ->where(
                 [
                     "row_id" => $serviceId,
-                    "user_id" => $requestData->user_id
+                    "user" => $requestData->user_id
                 ]
             )
             ->limit( 1 )
@@ -115,8 +113,6 @@ if ( $requestData->services_id && $requestData->user_id ) {
      * Обновление полей формы
      */
 
-
-
     $formFieldsUpdate[ "price" ] = [
         "value" => $visitPrice
     ];
@@ -130,6 +126,7 @@ if ( $requestData->services_id && $requestData->user_id ) {
     ];
 
 } // if. $requestData->services_id && $requestData->users_id
+
 
 if ( $requestData->clients_id ) {
 

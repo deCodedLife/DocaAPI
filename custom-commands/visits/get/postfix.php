@@ -3,6 +3,7 @@
  * Сформированный список
  */
 $returnVisits = [];
+//$API->returnResponse( "Nyaaa?", 500 );
 
 foreach ( $response[ "data" ] as $visit ) {
 
@@ -18,10 +19,10 @@ foreach ( $response[ "data" ] as $visit ) {
             ->limit( 1 )
             ->fetch();
 
-        $visit[ "services_id" ][] = [
-            "title" => $service[ "title" ],
-            "value" => $service[ "id" ]
-        ];
+//        $visit[ "services_id" ][] = [
+//            "title" => $service[ "title" ],
+//            "value" => $service[ "id" ]
+//        ];
 
         $visit[ "category_id" ][] = [
             "title" => $service[ "category_id" ],

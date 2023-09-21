@@ -6,23 +6,14 @@ $resultBlockFieldList = [];
 foreach ( $blockField[ "list" ] as $blockFieldProperty ) {
 
     /**
-     * Получение группы услуг
-     */
-    $serviceDetail = $API->DB->from( "services" )
-        ->where( "id", $blockFieldProperty[ "value" ] )
-        ->limit( 1 )
-        ->fetch();
-
-
-    /**
-     * Получение исполнителей группы услуг
+     * Получение исполнителей услуги
      */
 
-    $serviceGroupUsers = $API->DB->from( "serviceGroupEmployees" )
-        ->where( "groupID", $serviceDetail[ "category_id" ] );
+    $serviceUsers = $API->DB->from( "services_users" )
+        ->where( "service_id", $blockFieldProperty[ "value" ] );
 
-    foreach ( $serviceGroupUsers as $serviceGroupUser )
-        $blockFieldProperty[ "joined_field_value" ][] = $serviceGroupUser[ "employeeID" ];
+    foreach ( $serviceUsers as $serviceUser )
+        $blockFieldProperty[ "joined_field_value" ][] = $serviceUser[ "user_id" ];
 
     $filteredBlockFieldProperties = array_unique( $blockFieldProperty[ "joined_field_value" ] );
 

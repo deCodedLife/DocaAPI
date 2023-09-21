@@ -1,5 +1,6 @@
 <?php
 
+
 //mysqli_query(
 //    $API->DB_connection,
 //    "drop table visits_users"
@@ -38,31 +39,8 @@
 //
 //exit();
 
-error_reporting(0);
-ini_set( "display_errors", true );
 
-$DB_connection = new mysqli(
-    "31.184.218.141",
-    "ya_zdorov",
-    "roMj7csdqKnEoiAR",
-    "ya_zdorov",
-    3306
-);
-
-if ( $DB_connection->connect_errno )
-    $API->returnResponse( $DB_connection->connect_error, 500 );
-
-$workShedule = mysqli_query(
-    $DB_connection,
-    "SELECT * FROM work_schedules_rules"
-);
-
-$rules = [];
-
-foreach ( $workShedule as $item )
-    $rules[] = $item;
-
-$API->returnResponse( $rules );
+//$API->returnResponse( $rules );
 
 // $API->DB->delete( "promotionObjects" )
 	// ->where( "id", 121 )
@@ -98,17 +76,17 @@ $API->returnResponse( $rules );
 //mysqli_query($API->DB_connection, "DELETE FROM salesServices;");
 //mysqli_query($API->DB_connection, "DELETE FROM salesVisits");
 
-$API->DB->update( "sales" )
-    ->set( [
-        "status" => "done"
-    ] )
-    ->where( "id", 93 )
-    ->execute();
-
-$API->DB->update( "visits" )
-    ->set( "is_payed", 'Y' )
-    ->where( "id", 246 )
-    ->execute();
+//$API->DB->update( "sales" )
+//    ->set( [
+//        "status" => "done"
+//    ] )
+//    ->where( "id", 93 )
+//    ->execute();
+//
+//$API->DB->update( "visits" )
+//    ->set( "is_payed", 'Y' )
+//    ->where( "id", 246 )
+//    ->execute();
 
 //
 //$API->DB->delete( "salesServices" )

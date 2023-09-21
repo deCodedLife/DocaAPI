@@ -4,6 +4,11 @@
 /**
  * Фильтр по Сотруднику
  */
+$users = [];
+
+//foreach ( $performersRows as $performersRow ) $users[] = $performersRow;
+//$API->returnResponse( $requestData->user_id );
+//$API->returnResponse( $users );
 
 if ( $requestData->user_id ) {
 
@@ -18,7 +23,7 @@ if ( $requestData->user_id ) {
      * в отфильтрованный список
      */
     foreach ( $performersRows as $performersRowKey => $performersRow )
-        if ( $performersRow[ "id" ] == $requestData->user_id ) $filteredUsers[] = $performersRow;
+        if ( in_array( $performersRow[ "id" ], (array) $requestData->user_id ) ) $filteredUsers[] = $performersRow;
 
 
     /**
@@ -27,6 +32,7 @@ if ( $requestData->user_id ) {
     $performersRows = $filteredUsers;
 
 } // if. $requestData->users_id
+
 
 /**
  * Фильтр по Специальности

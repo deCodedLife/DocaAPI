@@ -38,6 +38,7 @@ if ( !$storeDetail ) $API->returnResponse( "Не определен филиал
 $workdayStart = strtotime( $storeDetail[ "schedule_from" ] );
 $currentStep = $workdayStart;
 
+
 /**
  * Конец рабочего дня
  */

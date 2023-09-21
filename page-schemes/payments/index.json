@@ -107,8 +107,7 @@
               "type": "list",
               "size": 4,
               "settings": {
-                "object": "salesList",
-                "linked_filter": "analytic_widgets_sales_statistic"
+                "object": "salesList"
               },
               "components": {
                 "buttons": [

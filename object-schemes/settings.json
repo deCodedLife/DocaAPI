@@ -46,7 +46,7 @@
       "is_disabled": false
     },
     {
-      "title": "ID папке",
+      "title": "ID папки",
       "article": "folder_id",
       "data_type": "string",
       "field_type": "string",

@@ -8,3 +8,10 @@ if ( $requestData->created_at ) {
     unset( $requestData->created_at );
 
 } // if. $requestData->created_at
+
+if ( !$requestData->sort_by ) {
+
+    $requestData->sort_by = "created_at";
+    $requestData->sort_order = "desc";
+
+}

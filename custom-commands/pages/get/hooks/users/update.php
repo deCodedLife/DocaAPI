@@ -68,6 +68,29 @@ $user = $API->DB->from( "users" )
     ->where( "id", $pageDetail[ "row_detail" ][ "id" ] )
     ->fetch();
 
+$userStores = $API->DB->from( "users_stores" )
+    ->where( "user_id", $pageDetail[ "row_detail" ][ "id" ] )
+    ->limit( 1 )
+    ->fetch();
+
+
+if ( $userStores ) {
+
+    $pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "settings" ][ "filters" ] = [
+
+        [
+            "property" => "store_id",
+            "value" => (int)$userStores[ "store_id" ]
+        ],
+        [
+            "property" => "user_id",
+            "value" => ":id"
+        ]
+
+    ];
+
+}
+
 if ( $user[ "salary_type" ] != "rate_kpi" ) {
 
     unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 3 ][ "body" ][ 1 ] );

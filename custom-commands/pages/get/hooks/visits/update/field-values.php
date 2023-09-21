@@ -43,7 +43,7 @@ $formFieldValues = [
 ];
 
 $formFieldValues[ "summary" ] = $paymentSummary;
-$formFieldValues[ "visits_ids" ][] = $pageDetail[ "row_id" ];
+//$formFieldValues[ "visits_ids" ][] = $pageDetail[ "row_id" ];
 
 
 /**

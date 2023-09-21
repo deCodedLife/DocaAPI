@@ -1,8 +1,10 @@
 <?php
+
 /**
  * @ file
  * Отчет статистики клиентов
  */
+
 
 /**
  * График новых клиетнов
@@ -26,7 +28,7 @@ $averageСhequeGraph = [];
 
 
 /**
- * Колличество посещений
+ * Количество посещений
  */
 $visitsCount = 0;
 
@@ -51,14 +53,18 @@ $clientsFilter = [];
  */
 $visitsFilter = [];
 
+
 /**
  * Формирование фильтра клиентов
  */
+
 $clientsFilter[ "is_active" ] = "Y";
+
 if ( $requestData->start_at ) $clientsFilter[ "created_at >= ?" ] = $requestData->start_at . " 00:00:00";
 if ( $requestData->end_at ) $clientsFilter[ "created_at <= ?" ] = $requestData->end_at . " 23:59:59";
 if ( $requestData->start_ear ) $clientsFilter[ "birthday >= ?" ] = $requestData->start_ear;
 if ( $requestData->end_ear ) $clientsFilter[ "birthday <= ?" ] = $requestData->end_ear;
+
 
 /**
  * Получение клиентов
@@ -84,45 +90,26 @@ foreach ( $clients as $client ) {
     /**
      * Получение посещений Клиента
      */
-    $clientsVisits = $API->DB->from( "visits" )
-        ->leftJoin( "visits_clients ON visits_clients.visit_id = visits.id" )
-        ->select( null )->select( [ "visits.id", "visits.start_at", "visits.store_id", "visits.price", "visits.status", "visits.is_payed" ] )
-        ->where( $visitsFilter )
-        ->orderBy( "visits.start_at desc" )
-        ->limit( 0 );
-
-    /**
-     * Обход посещений клиента
-     */
-    foreach ( $clientsVisits as $clientsVisit ) {
-
-        /**
-         * График посещений
-         */
-        $visitDate = date( "Y-m-d", strtotime( $clientsVisit[ "start_at" ] ) );
-        $clientVisitsGraph[ $visitDate ]++;
-        $visitsCount++;
-
-        /**
-         * График прихода
-         */
-        $cashFlow += $clientsVisit[ "price" ];
-        $cashFlowGraph[ $visitDate ] += $clientsVisit[ "price" ];
-
-    } // foreach. $userVisits
-
-    /**
-     * Обход посещений клиента
-     */
-    foreach ( $clientsVisits as $clientsVisit ) {
-
-        /**
-         * График среднего чека
-         */
-        $visitDate = date( "Y-m-d", strtotime( $clientsVisit[ "start_at" ] ) );
-        $averageСhequeGraph[ $visitDate ] += round( $cashFlowGraph[ $visitDate ] / $clientVisitsGraph[ $visitDate ] );
-
-    } // foreach. $userVisits
+//    $clientsVisits = $API->DB->from( "visits" )
+//        ->leftJoin( "visits_clients ON visits_clients.visit_id = visits.id" )
+//        ->select( null )->select( [ "visits.id", "visits.start_at", "visits.store_id", "visits.price", "visits.status", "visits.is_payed" ] )
+//        ->where( $visitsFilter )
+//        ->orderBy( "visits.start_at desc" )
+//        ->limit( 0 );
+//
+//
+//    /**
+//     * Обход посещений клиента
+//     */
+//    foreach ( $clientsVisits as $clientsVisit ) {
+//
+//        /**
+//         * График среднего чека
+//         */
+//        $visitDate = date( "Y-m-d", strtotime( $clientsVisit[ "start_at" ] ) );
+//        $averageСhequeGraph[ $visitDate ] += round( $cashFlowGraph[ $visitDate ] / $clientVisitsGraph[ $visitDate ] );
+//
+//    } // foreach. $userVisits
 
 } // foreach. $clients
 

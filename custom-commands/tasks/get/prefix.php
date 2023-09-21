@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Фильтр по дате
+ * Фильтры
  */
 
 if ( $requestData->deadline ) {
@@ -12,3 +12,4 @@ if ( $requestData->deadline ) {
     unset( $requestData->deadline );
 
 } // if. $requestData->deadline
+

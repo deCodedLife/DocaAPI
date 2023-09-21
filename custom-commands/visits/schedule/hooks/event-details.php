@@ -1,9 +1,10 @@
-<?php
+<?php //X
+
 
 /**
  * Определение цвета Записи
  */
-switch ( $event[ "status" ][ "value" ] ) {
+switch ( $event[ "status" ] ) {
 
     case "planning":
         $event[ "color" ] = "primary";
@@ -26,16 +27,15 @@ switch ( $event[ "status" ][ "value" ] ) {
  * Определение иконки Записи
  */
 
-if ( $event[ "is_payed" ] ) $event[ "icons" ][] = "shopping-basket";
-if ( $event[ "is_earlier" ] ) $event[ "icons" ][] = "time";
+if ( $event[ "is_payed" ] == "Y" ) $event[ "icons" ][] = "rub";
+if ( $event[ "is_earlier" ] == "Y" ) $event[ "icons" ][] = "time";
 
 
 /**
  * Получение детальной информации о пациенте
  */
 $clientDetail = $API->DB->from( "clients" )
-    ->where( "id", $event[ "clients_id" ][ 0 ][ "value" ] )
-    ->limit( 1 )
+    ->where( "id", $event[ 'client_id' ] )
     ->fetch();
 
 /**

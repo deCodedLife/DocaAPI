@@ -1,4 +1,4 @@
-<?php
+<?php // X
 
 /**
  * Получение графиков работ Сотрудников
@@ -6,18 +6,22 @@
 
 $performersWorkSchedule = [];
 
+
 foreach ( $performersDetail as $performerId => $performerDetail ) {
+
+    if ( !in_array( $performerId, $requestData->user_id ) ) continue;
 
     /**
      * Обход графика работы Сотрудника
      */
 
-    $performerWorkSchedule = $API->DB->from( "workDays" )
-        ->where( [
-            "event_from >= ?" => "$requestData->start_at 00:00:00",
-            "event_from <= ?" => "$requestData->end_at 23:59:59",
-            "user_id" => $performerId
-        ] );
+    $performerWorkSchedule = mysqli_query(
+        $API->DB_connection,
+        "SELECT * 
+               FROM workDays 
+               WHERE event_from >= '$requestData->start_at 00:00:00' 
+                 AND event_to <= '$requestData->end_at 23:59:59' 
+                 AND user_id = $performerId");
 
     foreach ( $performerWorkSchedule as $scheduleEvent ) {
 

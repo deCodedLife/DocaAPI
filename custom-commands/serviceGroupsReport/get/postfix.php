@@ -5,35 +5,7 @@
  * Отчет "группы услуг
  */
 
-
 $returnServices = [];
-
-
-/**
- * Фильтр для продаж
- */
-
-$salesFilter[ "status" ] = "done";
-$salesFilter[ "type" ] = "service";
-$salesFilter[ "action" ] = "sell";
-$salesFilter[ "created_at >= ?" ] = date( "Y-m-" ) . "01 00:00:00";
-
-
-/**
- * Получение списка продаж
- */
-$salesList = $API->DB->from( "salesList" )
-    ->leftJoin( "salesProductsList ON salesProductsList.sale_id = salesList.id" )
-    ->select( null )->select( [
-        "salesList.id",
-        "salesList.created_at",
-        "salesProductsList.product_id",
-        "salesProductsList.cost",
-        "salesProductsList.amount"
-    ] )
-    ->where( $salesFilter )
-    ->orderBy( "salesList.created_at desc" )
-    ->limit( 0 );
 
 /**
  * Получение групп услуг
@@ -46,54 +18,135 @@ $serviceGroups = $API->DB->from( "serviceGroups" )
  */
 $currentDateTime = new DateTime();
 
+
 /**
- * Обход групп услуг
+ * Начало текущего месяца
  */
-foreach ( $serviceGroups as $serviceGroup ) {
+$currentStart = $currentDateTime->format("Y-m-01 00:00:00");
+
+/**
+ * Конец текущего месяца
+ */
+$currentEnd = $currentDateTime->modify('last day of this month')->format("Y-m-d 23:59:59");
+
+/**
+ * Начало прошлого месяца
+ */
+$pastStart = $currentDateTime->modify("-1 month")->format("Y-m-01 00:00:00");
+
+/**
+ * Конец прошлого месяца
+ */
+$pastEnd = $currentDateTime->modify('last day of this month')->format("Y-m-d 23:59:59");
+
+/**
+ * Начало позапрошлого месяца
+ */
+$beforeLastStart = $currentDateTime->modify("-2 month")->format("Y-m-01 00:00:00");
+
+/**
+ * Конец позапрошлого месяца
+ */
+$beforeLastEnd = $currentDateTime->modify('last day of this month')->format("Y-m-d 23:59:59");
+
+/**
+ * Фильтр для продаж
+ */
+
+$salesFilter[ "salesList.status" ] = "done";
+$salesFilter[ "salesProductsList.type" ] = "service";
+$salesFilter[ "salesList.action" ] = "sell";
+$salesFilter[ "salesList.created_at >= ?" ] = $beforeLastStart;
+$salesFilter[ "salesList.created_at <= ?" ] = $currentEnd;
+
+
+/**
+ * Получение списка продаж
+ */
+
+$salesList = mysqli_query(
+    $API->DB_connection,
+    "SELECT salesList.id,
+                   serviceGroups.id,
+                   serviceGroups.title,
+                   salesList.created_at,
+                   salesProductsList.product_id,
+                   salesProductsList.cost,
+                   salesProductsList.amount
+            FROM salesList
+            LEFT JOIN salesProductsList ON salesProductsList.sale_id = salesList.id
+            LEFT JOIN services ON salesProductsList.product_id = services.id
+            LEFT JOIN serviceGroups ON serviceGroups.id = services.category_id
+            WHERE salesList.status = 'done'
+              AND salesProductsList.type = 'service'
+              AND salesList.action = 'sell'
+              AND salesList.created_at >= '$beforeLastStart'
+              AND salesList.created_at <= '$currentEnd'
+            ORDER BY  salesList.created_at DESC;"
+);
+
+
+$servicesDetail = [];
+
+/**
+ * Обход продаж
+ */
+foreach ( $salesList as $sale ) {
+
+    if ( !$returnServices[ $sale[ "id" ]][ "sum_one" ] ) $returnServices[ $sale[ "id" ]][ "sum_one" ] = "0";
+    if ( !$returnServices[ $sale[ "id" ]][ "sum_two" ] ) $returnServices[ $sale[ "id" ]][ "sum_two" ] = "0";
+    if ( !$returnServices[ $sale[ "id" ]][ "sum_three" ] ) $returnServices[ $sale[ "id" ]][ "sum_three" ] = "0";
+
 
     /**
-     * Обход продаж
+     * Получение детальной информации об услуги
      */
-    foreach ( $salesList as $sale ) {
 
-        /**
-         * Получение детальной информации об услуги
-         */
+    $serviceDetail = $servicesDetail[ $sale[ "product_id" ] ];
+
+    if ( !$serviceDetail ) {
+
         $serviceDetail = $API->DB->from( "services" )
-            ->where( "id",  $sale[ "product_id" ] )
+            ->select( null )->select( "category_id" )
+            ->where( "id", $sale[ "product_id" ] )
             ->limit( 1 )
             ->fetch();
 
-        /**
-         * Заполнение списка
-         */
-        if ( $serviceDetail[ "category_id" ] == $serviceGroup[ "id" ] ) {
+        $servicesDetail[ $sale[ "product_id" ] ] = $serviceDetail;
 
-            $returnServices[$serviceGroup[ "id" ]][ "title" ] = $serviceGroup[ "title" ];
-
-            if ( $sale[ "created_at" ] >= $currentDateTime->format( "Y-m-01 00:00:00" ) ){
-
-                $returnServices[$serviceGroup[ "id" ]][ "sum_one" ] = $returnServices[$serviceGroup[ "id" ]][ "sum_one" ] + $sale[ "amount" ] * $sale[ "cost" ];
-
-            }
-
-            if ( $sale[ "created_at" ] >= $currentDateTime->modify( "-1 month" )->format( "Y-m-01 00:00:00" ) ) {
-
-                $returnServices[$serviceGroup[ "id" ]][ "sum_two" ] = $returnServices[$serviceGroup[ "id" ]][ "sum_two" ] + $sale[ "amount" ] * $sale[ "cost" ];
-
-            }
-
-            if ( $sale[ "created_at" ] >= $currentDateTime->modify( "-2 month" )->format( "Y-m-01 00:00:00" ) ) {
-
-                $returnServices[$serviceGroup[ "id" ]][ "sum_three" ] = $returnServices[$serviceGroup[ "id" ]][ "sum_three" ] + $sale[ "amount" ] * $sale[ "cost" ];
-
-            }
-
-        }
     }
 
 
-} // foreach. $services
+    /**
+     * Заполнение списка
+     */
+    if ( $serviceDetail[ "category_id" ] == $sale[ "id" ] ) {
+
+        $returnServices[$sale[ "id" ]][ "title" ] =  $sale[ "title" ];
+
+        if ( $sale[ "created_at" ] >= $currentStart && $sale[ "created_at" ] <= $currentEnd ){
+
+            $returnServices[$sale[ "id" ]][ "sum_one" ] = $returnServices[$sale[ "id" ]][ "sum_one" ] + $sale[ "amount" ] * $sale[ "cost" ];
+
+        }
+
+        if ( $sale[ "created_at" ] >= $pastStart && $sale[ "created_at" ] <= $currentEnd ) {
+
+            $returnServices[$sale[ "id" ]][ "sum_two" ] =  $returnServices[$sale[ "id" ]][ "sum_two" ] + $sale[ "amount" ] * $sale[ "cost" ];
+
+        }
+
+        if ( $sale[ "created_at" ] >= $beforeLastStart && $sale[ "created_at" ] <= $currentEnd ) {
+
+            $returnServices[$sale[ "id" ]][ "sum_three" ] = $returnServices[$sale[ "id" ]][ "sum_three" ] + $sale[ "amount" ] * $sale[ "cost" ];
+
+        }
+
+    }
+
+
+} // foreach. $salesList
+
 
 $response[ "data" ] = array_values($returnServices);
 

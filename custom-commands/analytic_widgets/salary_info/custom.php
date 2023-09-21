@@ -49,7 +49,7 @@ $userDetail = $API->DB->from( "users" )
 $salaryType = $userDetail[ "salary_type" ];
 $salary_fixed = $userDetail[ "salary" ];
 
-$additionalWidgetTitle = "";
+$additionalWidgetTitle = "% от продаж";
 $additionalWidgetValue = 0;
 
 $visits = $API->DB->from( "visits" )

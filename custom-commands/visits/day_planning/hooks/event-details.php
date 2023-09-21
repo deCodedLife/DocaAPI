@@ -1,20 +1,6 @@
 <?php
 
 /**
- * Фильтр по врачу
- */
-
-$isContinue = true;
-
-$visitUsers = [ $API->DB->from( "visits" )
-    ->where("id", $event[ "id" ])
-    ->fetch()[ "user_id" ] ];
-
-foreach  ($visitUsers as $visitUser )
-    if ($visitUser[ "user_id" ] == $API::$userDetail->id) $isContinue = false;
-
-
-/**
  * Формирование тела записи
  */
 

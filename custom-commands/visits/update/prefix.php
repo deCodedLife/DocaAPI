@@ -1,5 +1,14 @@
 <?php
 
+if ( $requestData->start_at == $requestData->end_at ) {
+
+    $modifiedEndData = new DateTime( $requestData->start_at );
+    $modifiedEndData->modify( "+1 minute" );
+
+    $requestData->end_at = $modifiedEndData->format( "Y-m-d H:i:s" );
+
+} // if ( $requestData->start_at == $requestData->end_at )
+
 /**
  * Расчет свободности Исполнителей, Клиентов и Кабинетов
  */
@@ -342,23 +351,23 @@ foreach ( $existingVisits as $existingVisit ) {
      * Проверка свободности Сотрудника
      */
 
-    $visitUsers = $API->DB->from( "visits_users" )
-        ->where( "visit_id", $existingVisit[ "id" ] );
+//    $visitUsers = $API->DB->from( "visits_users" )
+//        ->where( "visit_id", $existingVisit[ "id" ] );
 
-    foreach ( $visitUsers as $visitUser )
-        if ( in_array( $visitUser[ "user_id" ], $requestData->users_id ) ) {
-
-            /**
-             * Получение детальной информации о Сотруднике
-             */
-            $userDetail = $API->DB->from( "users" )
-                ->where( "id", $visitUser[ "user_id" ] )
-                ->limit( 1 )
-                ->fetch();
-
-            $API->returnResponse( "Сотрудник ${userDetail[ "last_name" ]} занят, посещение - № ${$visitUser[ "visit_id" ]}", 400 );
-
-        } // if. in_array( $visitUser[ "user_id" ], $requestData->users_id
+//    foreach ( $visitUsers as $visitUser )
+//        if ( in_array( $visitUser[ "user_id" ], $requestData->users_id ) ) {
+//
+//            /**
+//             * Получение детальной информации о Сотруднике
+//             */
+//            $userDetail = $API->DB->from( "users" )
+//                ->where( "id", $visitUser[ "user_id" ] )
+//                ->limit( 1 )
+//                ->fetch();
+//
+//            $API->returnResponse( "Сотрудник ${userDetail[ "last_name" ]} занят, посещение - № ${$visitUser[ "visit_id" ]}", 400 );
+//
+//        } // if. in_array( $visitUser[ "user_id" ], $requestData->users_id
 
 
     /**

@@ -50,12 +50,6 @@ function array_sort ( $array, $on, $order=SORT_ASC )
     return $new_array;
 }
 
-if ( $sort_by == "id" ) {
-
-    if ( $sort_order == "desc" ) $response[ "data" ] = array_values( array_sort( $response[ "data" ], "id", SORT_DESC ) );
-    if ( $sort_order == "asc" ) $response[ "data" ] = array_values( array_sort( $response[ "data" ], "id", SORT_ASC ) );
-
-}
 
 if ( $sort_by == "fio" ) {
 
