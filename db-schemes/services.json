@@ -112,6 +112,13 @@
       "type": "char(1)",
       "default": "N",
       "is_required": "N"
+    },
+    {
+      "title": "Используется для оборудования (Y/N)",
+      "article": "is_equipment",
+      "type": "char(1)",
+      "default": "N",
+      "is_required": "Y"
     }
   ]
 }

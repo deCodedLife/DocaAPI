@@ -551,6 +551,22 @@
                 "link": "advertise",
                 "object": "advertiseClients",
                 "linked_filter": "analytic_widgets_advertise"
+              },
+              "components": {
+                "buttons": [
+                  {
+                    "type": "script",
+                    "settings": {
+                      "title": "Обновить отчет",
+                      "background": "dark",
+                      "object": "reports",
+                      "command": "update",
+                      "data": {
+                        "report": "advertise"
+                      }
+                    }
+                  }
+                ]
               }
             }
           ]

@@ -139,15 +139,25 @@ if ( $requestData->clients_id ) {
             ->limit(1)
             ->fetch();
 
-        $phoneFormat = "+" . sprintf("%s (%s) %s-%s-%s",
-                substr($clientDetail [ "phone" ], 0, 1),
-                substr($clientDetail [ "phone" ], 1, 3),
-                substr($clientDetail [ "phone" ], 4, 3),
-                substr($clientDetail [ "phone" ], 7, 2),
-                substr($clientDetail [ "phone" ], 9)
-            );
 
-        $clientsInfo[] = "№{$clientDetail[ "id" ]} {$clientDetail[ "last_name" ]} {$clientDetail[ "first_name" ]} {$clientDetail[ "patronymic" ]}, $phoneFormat";
+        if ( $clientDetail[ "phone" ] ) {
+            $API->returnResponse($clientDetail[ "phone" ] );
+
+            $phoneFormat = ", +" . sprintf("%s (%s) %s-%s-%s",
+                    substr($clientDetail["phone"], 0, 1),
+                    substr($clientDetail["phone"], 1, 3),
+                    substr($clientDetail["phone"], 4, 3),
+                    substr($clientDetail["phone"], 7, 2),
+                    substr($clientDetail["phone"], 9)
+                );
+
+        } else {
+
+            $phoneFormat = "";
+
+        }
+
+        $clientsInfo[] = "№{$clientDetail[ "id" ]} {$clientDetail[ "last_name" ]} {$clientDetail[ "first_name" ]} {$clientDetail[ "patronymic" ]} $phoneFormat";
 
     }
 

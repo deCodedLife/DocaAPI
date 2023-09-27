@@ -350,7 +350,7 @@
       "is_unique": false,
       "is_autofill": true,
       "join": {
-        "connection_table": "clientsGroupsAssaciation",
+        "connection_table": "clientsGroupsAssociation",
         "donor_table": "clientGroups",
         "property_article": "title",
         "insert_property": "client_id",

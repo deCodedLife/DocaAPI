@@ -43,7 +43,9 @@ foreach ( $generatedTab[ "settings" ][ "areas" ][ 0 ][ "blocks" ][ 1 ][ "fields"
 
 }
 
+
 /**
  * Переназначение значений списка
  */
 $generatedTab[ "settings" ][ "areas" ][ 0 ][ "blocks" ][ 1 ][ "fields" ][ 1 ][ "list" ] = $clients;
+$generatedTab[ "components" ][ "buttons" ][ 0 ][ "settings" ][ "context" ][ "owner_id" ] = $pageDetail[ "row_detail" ][ "user_id" ]->value;

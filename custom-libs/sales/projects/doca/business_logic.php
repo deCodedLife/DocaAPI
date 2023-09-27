@@ -156,8 +156,10 @@ foreach ( Discount::GetActiveDiscounts( DB_PROMOTIONS ) as $discount ) {
     /**
      * Не забываем про клиентов
      */
-    foreach ( $API->DB->from( "clientsGroupsAssaciation" )->where( "client_id", $requestData->client_id ) as $group )
+    foreach ( $API->DB->from( "clientsGroupsAssociation" )->where( "client_id", $requestData->client_id ) as $group )
         $clientGroups[] = $group[ "clientGroup_id" ];
+
+    $API->returnResponse( $clientGroups );
 
     $Discount->Subjects[] = new Subject(
         "clients",

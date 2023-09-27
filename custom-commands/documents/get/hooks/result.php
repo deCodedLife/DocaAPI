@@ -67,9 +67,13 @@ if ( $requestData->context->block == "print" ) {
     $publicDocuments = $API->DB->from( "documents" )
         ->where( "is_active", "Y" );
 
-    $documents_users = $API->DB->from( "documents_users" )
-        ->where( "user_id", (int)$API::$userDetail->id );
 
+    $filters = [];
+    if ( $requestData->owner_id ) $filters[] = [ "user_id" => $requestData->owner_id ];
+
+    
+    $documents_users = $API->DB->from( "documents_users" )
+        ->where( $filters );
 
 
     foreach ( $publicDocuments as $publicDocument ) {

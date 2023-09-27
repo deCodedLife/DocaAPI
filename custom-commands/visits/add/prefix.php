@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Определение рекламного источника
+ */
+
+$clientDetail = $API->DB->from( "clients" )
+    ->where( "id", $requestData->clients_id[ 0 ] )
+    ->limit( 1 )
+    ->fetch();
+
+$requestData->advert_id = $clientDetail[ "advertise_id" ];
+
 
 /**
  * Регистрация клиента при записи с сайта

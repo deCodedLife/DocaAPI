@@ -59,6 +59,24 @@ foreach ( $event[ "services_id" ] as $eventService ) $eventServices .= $eventSer
 if ( $eventServices ) $eventServices = substr( $eventServices, 0, -2 );
 
 
+$phone = [];
+if ( $clientDetail[ "phone" ] ) {
+
+    $phoneFormat = "+" . sprintf("%s (%s) %s-%s-%s",
+            substr($clientDetail["phone"], 0, 1),
+            substr($clientDetail["phone"], 1, 3),
+            substr($clientDetail["phone"], 4, 3),
+            substr($clientDetail["phone"], 7, 2),
+            substr($clientDetail["phone"], 9)
+        );
+
+    $phone =  [
+        "icon" => "conversation",
+        "value" => $phoneFormat
+    ];
+
+}
+
 /**
  * Заполнение описания Записи
  */
@@ -77,16 +95,7 @@ $eventDetails = [
         "icon" => "customers",
         "value" => $eventClientDetails
     ],
-    [
-        "icon" => "conversation",
-        "value" => sprintf("+%s (%s) %s-%s-%s",
-            substr( $clientDetail[ "phone" ], 0, 1 ),
-            substr( $clientDetail[ "phone" ], 1, 3 ),
-            substr( $clientDetail[ "phone" ], 4, 3 ),
-            substr( $clientDetail[ "phone" ], 7, 2 ),
-            substr( $clientDetail[ "phone" ], 9 )
-        )
-    ],
+    $phone,
     [
         "icon" => "user",
         "value" => $event[ "user_id" ][ 0 ][ "title" ]

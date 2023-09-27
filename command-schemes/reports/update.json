@@ -1,1 +1,1 @@
-{"title":"Изменить акцию","type":"update","object_scheme":"reports","required_modules":[],"required_permissions":[],"no_limit":true}
+{"title":"Изменить акцию","type":"custom","object_scheme":"reports","required_modules":[],"required_permissions":[],"no_limit":true}

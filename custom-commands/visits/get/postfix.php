@@ -7,6 +7,32 @@ $returnVisits = [];
 
 foreach ( $response[ "data" ] as $visit ) {
 
+
+    $user = $API->DB->from( "users" )
+        ->where( "id", $visit[ "user_id" ][ "value" ])
+        ->limit( 1 )
+        ->fetch();
+
+    if ( $user[ "first_name" ] ){
+
+        $user[ "first_name" ] =  " " . mb_substr($user[ "first_name" ], 0, 1) . ". ";
+
+    }
+
+    if ( $user[ "patronymic" ] ){
+
+        $user[ "patronymic" ] =  mb_substr($user[ "patronymic" ], 0, 1) . ". ";
+
+    }
+
+    $visit[ "user_id" ] = [
+
+        "title" => $user[ "last_name" ] . $user[ "first_name" ] . $user[ "patronymic" ],
+        "value" => $visit[ "user_id" ][ "value" ]
+
+    ];
+
+
     $visits_services = $API->DB->from( "visits_services" )
         ->where( "visit_id", $visit[ "id" ] );
 

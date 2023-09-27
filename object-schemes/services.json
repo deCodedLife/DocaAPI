@@ -275,6 +275,20 @@
           }
         ]
       }
+    },
+    {
+      "title": "Используется для оборудования",
+      "article": "is_equipment",
+      "data_type": "boolean",
+      "field_type": "checkbox",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "update",
+        "get",
+        "add"
+      ]
     }
   ],
   "action_buttons": [

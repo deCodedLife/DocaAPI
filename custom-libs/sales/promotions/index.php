@@ -23,6 +23,8 @@ class Discount
     public function __construct() {
 
         $this->DB = "promotions";
+        $this->Subjects = [];
+        $this->DiscountModifiers = [];
 
     }
 

@@ -123,7 +123,6 @@ foreach ( $advertises as $advertise ) {
             $underdoneCount++;
 
         }
-
         /**
          * Обход посещений клиента
          */

@@ -4,5 +4,9 @@
  * Фильтр документов при печати
  */
 
-if ( $requestData->context->block == "print" )
-    $requestData->owner_id = $API::$userDetail->id;
+if ( $requestData->context->block == "print" ) {
+
+    if ( $requestData->context->owner_id )
+        $requestData->owner_id = $requestData->context->owner_id;
+
+}

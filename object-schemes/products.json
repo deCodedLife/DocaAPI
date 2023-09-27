@@ -47,7 +47,7 @@
       "article": "user_id",
       "data_type": "integer",
       "field_type": "list",
-      "is_default_in_list": true,
+      "is_default_in_list": false,
       "is_unique": false,
       "is_autofill": true,
       "is_in_search": true,
@@ -103,7 +103,7 @@
       "annotation": "При достижении этого кол-ва, будет отправлено предупреждение ответственным сотрудникам",
       "data_type": "integer",
       "field_type": "integer",
-      "is_default_in_list": true,
+      "is_default_in_list": false,
       "is_unique": false,
       "is_autofill": true,
       "use_in_commands": [

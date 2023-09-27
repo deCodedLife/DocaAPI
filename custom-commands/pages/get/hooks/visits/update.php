@@ -12,15 +12,23 @@ foreach ( $clients as $client ) {
         ->limit(1)
         ->fetch();
 
-    $phoneFormat = "+" . sprintf("%s (%s) %s-%s-%s",
-            substr($clientDetail [ "phone" ], 0, 1),
-            substr($clientDetail [ "phone" ], 1, 3),
-            substr($clientDetail [ "phone" ], 4, 3),
-            substr($clientDetail [ "phone" ], 7, 2),
-            substr($clientDetail [ "phone" ], 9)
-        );
+    if ( $clientDetail[ "phone" ] ) {
 
-    $clientsInfo[] = "№{$clientDetail[ "id" ]} {$clientDetail[ "last_name" ]} {$clientDetail[ "first_name" ]} {$clientDetail[ "patronymic" ]}, $phoneFormat";
+        $phoneFormat = ", +" . sprintf("%s (%s) %s-%s-%s",
+                substr($clientDetail["phone"], 0, 1),
+                substr($clientDetail["phone"], 1, 3),
+                substr($clientDetail["phone"], 4, 3),
+                substr($clientDetail["phone"], 7, 2),
+                substr($clientDetail["phone"], 9)
+            );
+
+    } else {
+
+        $phoneFormat = "";
+
+    }
+
+    $clientsInfo[] = "№{$clientDetail[ "id" ]} {$clientDetail[ "last_name" ]} {$clientDetail[ "first_name" ]} {$clientDetail[ "patronymic" ]} $phoneFormat";
 
 } // foreach. $clients
 
@@ -102,10 +110,8 @@ if ( $pageDetail[ "row_detail" ][ "status" ]->value === "ended" ) {
 /**
  * Кнопка "Печать договора"
  */
-
 if ( $clientDetail[ "is_contract" ] == "Y" )
     unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 2 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 0 ] );
-
 
 /**
  * Подготовка

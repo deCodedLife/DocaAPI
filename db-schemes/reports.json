@@ -1,1 +1,12 @@
-{"title":"Отчеты","properties":[{"title":"Название","article":"title","type":"varchar(75)","default":null,"is_required":"N"}]}
+{
+  "title": "Отчеты",
+  "properties": [
+    {
+      "title": "Название",
+      "article": "title",
+      "type": "varchar(75)",
+      "default": null,
+      "is_required": "N"
+    }
+  ]
+}

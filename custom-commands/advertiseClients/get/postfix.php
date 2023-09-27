@@ -1,7 +1,8 @@
 <?php
+
 /**
  * @file
- * Список "ректамные источники
+ * Список "Рекламные источники
  */
 
 /**
@@ -29,7 +30,7 @@ if ( !$requestData->id ) $API->returnResponse( [] );
 if ( $requestData->start_price ) $visitsFilter[ "price >= ?" ] = $requestData->start_price;
 if ( $requestData->end_price ) $visitsFilter[ "price <= ?" ] = $requestData->end_price;
 if ( $requestData->start_at ) $visitsFilter[ "end_at >= ?" ] = $requestData->start_at . " 00:00:00";
-if ( $requestData->end_at ) $visitsFilter[ "end_at <= ?" ] = $requestData->end_at . " 23:59:59";
+if ( $requestData->end_at ) $visitsFilter[ "end_at <= ?" ] = $requestData->end_at;
 if ( $requestData->store_id ) $visitsFilter[ "store_id" ] = $requestData->store_id;
 
 $visitsFilter[ "is_payed" ] = "Y";
@@ -51,67 +52,46 @@ foreach ( $response[ "data" ] as $advertise ) {
     $visitsPrice = 0;
 
     /**
-     * Колличество записаных Клиентов
+     * Количество записаных Клиентов
      */
     $recordedCount = 0;
 
     /**
-     * Колличество получивших услугу Клиентов
+     * Количество получивших услугу Клиентов
      */
     $extantCount = 0;
 
     /**
-     * Колличество недошедших Клиентов
+     * Количество недошедших Клиентов
      */
     $underdoneCount = 0;
 
     /**
      * Получение клиентов
      */
+
     $clients = $API->DB->from( "clients" )
         ->where( "advertise_id", $advertise[ "id" ] );
 
-    foreach ( $clients as $client ) {
 
-        /**
-         * Фильтрация посещений по клиенту
-         */
-        $visitsFilter[ "visits_clients.client_id" ] = $client[ "id" ];
+    /**
+     * Получение посещений
+     */
 
-        /**
-         * Получение посещений Клиента
-         */
-//        $clientVisits = $API->DB->from( "visits" )
-//            ->leftJoin( "visits_clients ON visits_clients.visit_id = visits.id" )
-//            ->select( null )->select( [ "visits.id", "visits.status", "visits.start_at", "visits.store_id", "visits.price", "visits.status", "visits.is_payed" ] )
-//            ->where( $visitsFilter )
-//            ->orderBy( "visits.start_at desc" )
-//            ->limit( 0 );
-//
-//
-//        if ( $clientVisits ) {
-//
-//            $recordedCount++;
-//
-//        } else {
-//
-//            $underdoneCount++;
-//
-//        }
-//
-//        /**
-//         * Обход посещений клиента
-//         */
-//        foreach ( $clientVisits as $clientVisit ) {
-//
-//            if ( $clientVisit[ "status" ] == "ended" ) $extantCount++;
-//            $visitsCount++;
-//            $visitsPrice += $clientVisit[ "price" ];
-//
-//
-//        } // foreach. $userVisits
+    $visitsFilter[ "advert_id" ] = $advertise[ "id" ];
 
-    } // foreach. $clients
+    $visits = $API->DB->from( "visits" )
+        ->where( $visitsFilter );
+
+    foreach ( $visits as $visit ) {
+
+        if ( $visit[ "status" ] == "ended" ) $extantCount++;
+        $visitsCount++;
+        $recordedCount++;
+        $visitsPrice += $visit[ "price" ];
+
+    } // foreach. $visits
+    
 
     $returnAdvertises[] = [
 

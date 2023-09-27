@@ -109,26 +109,29 @@
     {
       "title": "Клиент",
       "article": "client_id",
-      "data_type": "integer",
+      "data_type": "array",
+      "field_type": "list",
       "is_default_in_list": false,
       "is_unique": false,
       "is_autofill": true,
       "search": "clients",
+      "use_in_commands": [
+        "add",
+        "update",
+        "get",
+        "schedule",
+        "hook"
+      ],
+      "require_in_commands": [
+        "add"
+      ],
+      "is_disabled": false,
       "list_donor": {
         "table": "clients",
         "properties_title": "last_name"
       },
-      "use_in_commands": [
-        "add",
-        "update",
-        "hook",
-        "get"
-      ],
+      "annotation": "",
       "is_hook": true,
-      "require_in_commands": [
-        "add",
-        "return"
-      ],
       "is_visible": false
     },
     {

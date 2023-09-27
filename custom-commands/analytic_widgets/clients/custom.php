@@ -42,29 +42,56 @@ $cashFlow = 0;
  */
 $averageСheque = 0;
 
-
 /**
  * Фильтр клиентов
  */
 $clientsFilter = [];
 
 /**
- * Фильтр посещений
+ * Фильтр посещений клиентов
  */
-$visitsFilter = [];
+$clientsVisitsfilter = [];
 
+
+/**
+ * Колличество онлайн поссещений
+ */
+$clientsOnlineVisits = 0;
+
+/**
+ * График онлайн поссещений
+ */
+$clientOnlineVisitsGraph = [];
+
+/**
+ * Формирование фильтра посещений клиентов
+ */
+
+$clientsVisitsfilter[ "clients.is_active" ] = "Y";
+if ( $requestData->start_at ) $clientsVisitsfilter[ "clients.created_at >= ?" ] = $requestData->start_at;
+if ( $requestData->end_at ) $clientsVisitsfilter[ "clients.created_at <= ?" ] = $requestData->end_at;
+if ( $requestData->start_ear ) $clientsVisitsfilter[ "clients.birthday >= ?" ] = $requestData->start_ear;
+if ( $requestData->end_ear ) $clientsVisitsfilter[ "clients.birthday <= ?" ] = $requestData->end_ear;
+
+$clientsVisitsfilter[ "visits.is_active" ] = "Y";
+$clientsVisitsfilter[ "visits.is_payed" ] = "Y";
+if ( $requestData->store_id ) $clientsVisitsfilter[ "visits.store_id" ] = $requestData->store_id;
+
+
+$clientsVisits = $API->DB->from( "visits" )
+    ->leftJoin( "clients ON visits.client_id = clients.id" )
+    ->select( null )->select( [ "visits.id", "visits.client_id",  "visits.start_at", "visits.is_active", "visits.is_payed", "visits.price", "visits.is_online", "clients.birthday", "clients.is_active", "clients.created_at", "visits.store_id" ] )
+    ->where( $clientsVisitsfilter )
+    ->orderBy( "visits.start_at DESC" );
 
 /**
  * Формирование фильтра клиентов
  */
-
 $clientsFilter[ "is_active" ] = "Y";
-
-if ( $requestData->start_at ) $clientsFilter[ "created_at >= ?" ] = $requestData->start_at . " 00:00:00";
-if ( $requestData->end_at ) $clientsFilter[ "created_at <= ?" ] = $requestData->end_at . " 23:59:59";
+if ( $requestData->start_at ) $clientsFilter[ "created_at >= ?" ] = $requestData->start_at;
+if ( $requestData->end_at ) $clientsFilter[ "created_at <= ?" ] = $requestData->end_at;
 if ( $requestData->start_ear ) $clientsFilter[ "birthday >= ?" ] = $requestData->start_ear;
 if ( $requestData->end_ear ) $clientsFilter[ "birthday <= ?" ] = $requestData->end_ear;
-
 
 /**
  * Получение клиентов
@@ -72,6 +99,9 @@ if ( $requestData->end_ear ) $clientsFilter[ "birthday <= ?" ] = $requestData->e
 $clients = $API->DB->from( "clients" )
     ->where( $clientsFilter );
 
+/**
+ * Обход клиентов
+ */
 foreach ( $clients as $client ) {
 
     /**
@@ -80,46 +110,78 @@ foreach ( $clients as $client ) {
     $regDate = date( "Y-m-d", strtotime( $client[ "created_at" ] ) );
     $clientsRegGraph[ $regDate ]++;
 
-    /**
-     * Формирование фильтра для посещений
-     */
-    if ( $requestData->store_id ) $visitsFilter[ "visits.store_id" ] = $requestData->store_id;
-    $visitsFilter[ "visits_clients.client_id" ] = $client[ "id" ];
-    $visitsFilter[ "visits.is_payed" ] = "Y";
-
-    /**
-     * Получение посещений Клиента
-     */
-//    $clientsVisits = $API->DB->from( "visits" )
-//        ->leftJoin( "visits_clients ON visits_clients.visit_id = visits.id" )
-//        ->select( null )->select( [ "visits.id", "visits.start_at", "visits.store_id", "visits.price", "visits.status", "visits.is_payed" ] )
-//        ->where( $visitsFilter )
-//        ->orderBy( "visits.start_at desc" )
-//        ->limit( 0 );
-//
-//
-//    /**
-//     * Обход посещений клиента
-//     */
-//    foreach ( $clientsVisits as $clientsVisit ) {
-//
-//        /**
-//         * График среднего чека
-//         */
-//        $visitDate = date( "Y-m-d", strtotime( $clientsVisit[ "start_at" ] ) );
-//        $averageСhequeGraph[ $visitDate ] += round( $cashFlowGraph[ $visitDate ] / $clientVisitsGraph[ $visitDate ] );
-//
-//    } // foreach. $userVisits
-
 } // foreach. $clients
 
-if ( $visitsCount != 0 ) {
 
-    $averageСheque = $cashFlow / $visitsCount;
+/**
+ * Обход посещений клиентов
+ */
+foreach ( $clientsVisits as $clientsVisit ) {
+
+    /**
+     * Дата посещения
+     */
+    $visitDate = date( "Y-m-d", strtotime( $clientsVisit[ "start_at" ] ) );
+
+    /**
+     * Проверка на Онлайн запись
+     */
+    if ( $clientsVisit[ "is_online" ] == "Y" ) {
+
+        /**
+         * График онлайн записей клиентов
+         */
+        $clientsOnlineVisits++;
+        $clientOnlineVisitsGraph[ $visitDate ]++;
+
+    }
+
+    /**
+     * График посещений клиентов
+     */
+    $clientVisitsGraph[ $visitDate ]++;
+
+    /**
+     * Приход
+     */
+    $cashFlow += $clientsVisit[ "price" ];
+
+    /**
+     * График прихода
+     */
+    $cashFlowGraph[ $visitDate ] += $clientsVisit[ "price" ];
+
+
+}
+
+/**
+ * Обход графика прихода
+ */
+foreach ( $cashFlowGraph as $visitDate => $cashFlowGraphDay ) {
+
+    /**
+     * Посчет ссреднего чека на дату
+     */
+    $averageСhequeGraph[ $visitDate ] = round($cashFlowGraphDay / $clientVisitsGraph[ $visitDate ] );
+
+}
+
+
+/**
+ * Проверка есть ли посещения
+ */
+if ( count( $clientsVisits ) != 0 ) {
+
+    /**
+     * Средний чек
+     */
+    $averageСheque = $cashFlow / count( $clientsVisits );
 
 } // if ( $visitsCount != 0 )
 
-
+/**
+ * Формирования виджетов
+ */
 $API->returnResponse(
 
     [
@@ -127,6 +189,7 @@ $API->returnResponse(
             "value" => count( $clients ),
             "description" => "Новые клиенты",
             "icon" => "",
+            "size" => "4",
             "prefix" => "",
             "postfix" => [
                 "icon" => "",
@@ -150,7 +213,7 @@ $API->returnResponse(
             ]
         ],
         [
-            "value" => $visitsCount,
+            "value" => count( $clientsVisits ),
             "description" => "Посещения",
             "icon" => "",
             "prefix" => "",
@@ -169,6 +232,32 @@ $API->returnResponse(
                             [
                                 "title" => "Посещений",
                                 "values" => $clientVisitsGraph
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ],
+        [
+            "value" => $clientsOnlineVisits,
+            "description" => "Посещения через онлайн запись",
+            "icon" => "",
+            "prefix" => "",
+            "postfix" => [
+                "icon" => "",
+                "value" => "",
+                "background" => ""
+            ],
+            "background" => "",
+            "detail" => [
+                "type" => "details_char",
+                "settings" => [
+                    "char" => [
+                        "x" => array_keys($clientOnlineVisitsGraph),
+                        "lines" => [
+                            [
+                                "title" => "Посещений",
+                                "values" => $clientOnlineVisitsGraph
                             ]
                         ]
                     ]

@@ -4,7 +4,7 @@
   "is_trash": true,
   "properties": [
     {
-      "title": "Дата начала - окончания",
+      "title": "Дата начала",
       "article": "start_at",
       "size": 2,
       "article_modifier": ">= ?",
@@ -26,7 +26,7 @@
       ]
     },
     {
-      "title": "",
+      "title": "Дата окончания",
       "article": "end_at",
       "size": 2,
       "article_modifier": "<= ?",
@@ -104,10 +104,11 @@
       "is_disabled": false
     },
     {
-      "title": "Услуги",
+      "title": "Услуга",
       "article": "services_id",
       "data_type": "array",
       "joined_field": "user_id",
+      "joined_field_filter": "users_id",
       "field_type": "list",
       "is_default_in_list": true,
       "is_unique": false,
@@ -174,6 +175,19 @@
       ],
       "require_in_commands": [
         "add"
+      ]
+    },
+    {
+      "title": "Оплачено",
+      "article": "is_payed",
+      "data_type": "boolean",
+      "field_type": "checkbox",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "update",
+        "get"
       ]
     },
     {
@@ -252,6 +266,21 @@
         "table": "cabinets",
         "properties_title": "title"
       }
+    },
+    {
+      "title": "Рекламный источник",
+      "article": "advert_id",
+      "data_type": "integer",
+      "field_type": "integer",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add",
+        "update",
+        "get"
+      ],
+      "require_in_commands": []
     },
     {
       "title": "Клиент",
@@ -555,18 +584,6 @@
       "require_in_commands": []
     },
     {
-      "title": "Оплачено",
-      "article": "is_payed",
-      "data_type": "boolean",
-      "field_type": "checkbox",
-      "is_default_in_list": false,
-      "is_unique": false,
-      "is_autofill": false,
-      "use_in_commands": [
-        "update"
-      ]
-    },
-    {
       "title": "Повторное",
       "article": "is_repeat",
       "data_type": "boolean",
@@ -709,6 +726,20 @@
       "is_autofill": false,
       "use_in_commands": [
         "get"
+      ]
+    },
+    {
+      "title": "Онлайн запись",
+      "article": "is_online",
+      "data_type": "boolean",
+      "field_type": "checkbox",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "get",
+        "add",
+        "update"
       ]
     }
   ]
