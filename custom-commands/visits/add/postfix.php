@@ -1,5 +1,13 @@
 <?php
 
+
+$requestData->client_id = intval( $requestData->clients_id[ 0 ] ?? 1 );
+
+$API->DB->update( "visits" )
+    ->set( "client_id", $requestData->client_id )
+    ->where( "id", $insertId )
+    ->execute();
+
 /**
  * Время действия статуса "Повторное" у Записей
  */

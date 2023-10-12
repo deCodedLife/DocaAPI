@@ -35,7 +35,7 @@ if ( $event[ "is_earlier" ] == "Y" ) $event[ "icons" ][] = "time";
  * Получение детальной информации о пациенте
  */
 $clientDetail = $API->DB->from( "clients" )
-    ->where( "id", $event[ 'client_id' ] )
+    ->where( "id", $event[ "client_id" ] )
     ->fetch();
 
 /**

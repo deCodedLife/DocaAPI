@@ -21,10 +21,11 @@ function checkClients() {
     /**
      * Получение списка клиентов
      */
-    $existingClients = mysqli_query(
+    $existingClients = mysqli_fetch_array(mysqli_query(
         $API->DB_connection,
         "SELECT * FROM legal_entity_clients WHERE client_id IN ($clientsList) $additional"
-    );
+    ));
+
     if ( !$existingClients ) return;
 
     /**

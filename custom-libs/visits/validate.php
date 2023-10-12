@@ -93,7 +93,7 @@ foreach ( $services as $service ) {
 
 
     foreach ( $service_consumables as $consumable )
-        $consumables[$consumable["consumable_id"]]["count"] += $consumable->count;
+        $consumables[ $consumable[ "consumable_id" ] ][ "count" ] += $consumable->count;
 
 } // foreach. $services
 
@@ -121,7 +121,8 @@ foreach ( $consumables as $consumable_id => $consumable ) {
  * Ищем все посещения за запрашиваемый период
  * Сорян, но периоды я таки скопировал(
  */
-$getVisitsQuery = "SELECT * FROM visits WHERE (
+$getVisitsQuery = "SELECT * FROM visits WHERE 
+    reason_id IS NULL AND (
     ( start_at >= '$start_at' and start_at < '$end_at' ) OR
     ( end_at > '$start_at' and end_at < '$end_at' ) OR
     ( start_at < '$start_at' and end_at > '$end_at' )

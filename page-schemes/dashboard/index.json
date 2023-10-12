@@ -174,7 +174,7 @@
             "required_permissions": [],
             "required_modules": [],
             "settings": {
-              "is_search": false,
+              "is_search": true,
               "recipient_property": "clients_id",
               "donor_object": "clients",
               "donor_property_title": "last_name",

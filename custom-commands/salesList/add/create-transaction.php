@@ -16,7 +16,6 @@ if ( !$userDetails[ "store_id" ] ) $userDetails[ "store_id" ] = $API->DB->from( 
 /**
  *  Создание транзакции
  */
-
 $saleID = $API->DB->insertInto( "salesList" )
     ->values( [
         "employee_id" => (int) $API::$userDetail->id,
@@ -51,37 +50,15 @@ foreach ( $requestData->visits_ids ?? [] as $visit ) {
 } // foreach. $requestData->visits_ids as $visit
 
 
+foreach ( $requestData->products as $product ) {
 
-/**
- *  Заполнение услуг транзакции
- */
-$products = [];
-
-/**
- * TODO вынести к черту это в business_logic
- */
-foreach ( $requestData->products ?? [] as $index => $product ) {
-
-    $database = $product[ "type" ] == "service" ? "services" : "products";
-    $detailedInfo = $API->DB->from( $database )
-        ->where( "id", $product[ "product_id" ] )
-        ->fetch();
-
-    $products[] = $detailedInfo;
-
-}
-
-foreach ( $products as $product ) {
+    $product = (array) $product;
+    $product[ "sale_id" ] = $saleID;
 
     $API->DB->insertInto( "salesProductsList" )
-        ->values( [
-            "title" => $product[ "title" ],
-            "type" => "service",
-            "sale_id" => $saleID,
-            "product_id" => (int) $product[ "id" ],
-            "cost" => (float) $product[ "price" ],
-            "amount" => 1
-        ] )
+        ->values( $product )
         ->execute();
 
 } // foreach. $requestData->pay_object as $service
+
+

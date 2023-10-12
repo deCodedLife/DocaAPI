@@ -1,6 +1,5 @@
 <?php
 
-ini_set( 'display_errors', 1 );
 global $API, $requestData;
 
 
@@ -26,6 +25,7 @@ $isReturn = false;
 $sum_card = $requestData->sum_card ?? 0;
 $sum_cash = $requestData->sum_cash ?? 0;
 $isReturn = ($requestData->action ?? 'sell') === "sellReturn";
+$store_id = $requestData->store_id;
 
 
 /**
@@ -45,11 +45,11 @@ if ( $isReturn ) {
 
     $saleServices = [];
 
-    $soldSales = $API->DB->from( DB_SALES_PRODUCTS_LIST )
+    $soldSales = $API->DB->from( "salesProductsList" )
         ->where( [
             "sale_id" => $requestData->id,
             "type" => "service"
-        ]);
+        ] );
 
     foreach ( $requestData->return_services as $saleID ) {
 
@@ -101,8 +101,8 @@ foreach ( $allProducts as $product ) {
 
 $saleSummary += $productsPrice;
 
-if ( $requestData->discount_type === "fixed"   ) $saleSummary -= ( $requestData->discount_value ?? 0 );
-if ( $requestData->discount_type === "percent" ) $saleSummary -= ( $saleSummary / 100 ) * ( $requestData->discount_value ?? 0 );
+if ( $requestData->discount_type ?? "" === "fixed"   ) $saleSummary -= ( $requestData->discount_value ?? 0 );
+if ( $requestData->discount_type ?? "" === "percent" ) $saleSummary -= ( $saleSummary / 100 ) * ( $requestData->discount_value ?? 0 );
 
 $saleSummary = max( $saleSummary, 0 );
 
@@ -125,12 +125,27 @@ if ( $isReturn ) {
  * Получение скидок
  */
 foreach ( Discount::GetActiveDiscounts( DB_PROMOTIONS ) as $discount ) {
-
+    
     // При возврате не считаем скидки
     if ( $isReturn ) continue;
 
+    /**
+     * Получение филиалов в которых действует акция
+     */
+    $stores = $API->DB->from( "promotionStores" )
+        ->where( "promotion_id", $discount[ "id" ] );
 
+    $promotionStores = [];
 
+    foreach ( $stores as $store ) {
+
+        $promotionStores[] = $store[ "store_id" ];
+
+    } // foreach ( $stores as $store ) {
+
+    if ( !in_array( $store_id, $promotionStores ) ) continue;
+
+    
     $servicesGroups = [];
     $Discount = new Discount();
     $Discount->GetModifiers( "promotion_id", $discount[ "id" ] );
@@ -158,8 +173,6 @@ foreach ( Discount::GetActiveDiscounts( DB_PROMOTIONS ) as $discount ) {
      */
     foreach ( $API->DB->from( "clientsGroupsAssociation" )->where( "client_id", $requestData->client_id ) as $group )
         $clientGroups[] = $group[ "clientGroup_id" ];
-
-    $API->returnResponse( $clientGroups );
 
     $Discount->Subjects[] = new Subject(
         "clients",
@@ -244,7 +257,7 @@ $discountPerProduct = $amountOfPhysicalPayments / ( $allServicesPrice + $product
 $amountOfPhysicalPayments = ($saleServicesPrice + $productsPrice) * $discountPerProduct;
 $amountOfPhysicalPayments = round( $amountOfPhysicalPayments, 2 );
 
-$saleSummary = $amountOfPhysicalPayments;
+//$saleSummary = $amountOfPhysicalPayments;
 
 
 if ( $isReturn ) {
@@ -295,7 +308,37 @@ foreach ( $allVisits as $visit )
     $formFieldsUpdate[ "visits_ids" ][ "value" ][] = $visit[ "id" ];
 
 foreach ( $allServices as $service )
-    $formFieldsUpdate[ "doca_services" ][ "value" ][] = $service[ "title" ];
+    $formFieldsUpdate[ "products_display" ][ "value" ][] = $service[ "title" ];
 
-//foreach ( $allProducts as $product )
-//    $formFieldsUpdate[ "doca_products" ][ "value" ][] = $product[ "title" ];
+if ( $allServices ) {
+
+    foreach ( $allServices as $product ) {
+
+        $formFieldsUpdate[ "products" ][] = [
+            "title" => $product[ "title" ],
+            "type" => "service",
+            "cost" => $product[ "price" ],
+            "amount" => 1,
+            "product_id" => $product[ "id" ]
+        ];
+
+    }
+
+
+}
+
+if ( $allProducts ) {
+
+    foreach ( $allProducts as $product ) {
+
+        $formFieldsUpdate[ "products" ][] = [
+            "title" => $product[ "title" ],
+            "type" => "product",
+            "cost" => $product[ "price" ],
+            "amount" => 1,
+            "product_id" => $product[ "id" ]
+        ];
+
+    }
+
+}

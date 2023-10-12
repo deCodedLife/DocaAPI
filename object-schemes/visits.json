@@ -114,6 +114,7 @@
       "is_unique": false,
       "is_autofill": true,
       "is_hook": true,
+      "search": "services",
       "settings": {
         "is_duplicate": true
       },
@@ -182,7 +183,20 @@
       "article": "is_payed",
       "data_type": "boolean",
       "field_type": "checkbox",
-      "is_default_in_list": true,
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "update",
+        "get"
+      ]
+    },
+    {
+      "title": "Оплачено",
+      "article": "payed",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": false,
       "is_unique": false,
       "is_autofill": false,
       "use_in_commands": [
@@ -198,7 +212,7 @@
       "is_default_in_list": true,
       "is_unique": false,
       "is_autofill": true,
-      "is_disabled": true,
+      "is_disabled": false,
       "is_variable": false,
       "use_in_commands": [
         "add",
@@ -741,6 +755,41 @@
         "add",
         "update"
       ]
+    },
+    {
+      "title": "Клиент (кеш для эвентов)",
+      "article": "client_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add",
+        "update"
+      ],
+      "require_in_commands": [],
+      "is_visible": false,
+      "is_disabled": false,
+      "is_hook": true
+    },
+    {
+      "title": "Способ оплаты",
+      "article": "paymentMethod",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "is_disabled": false,
+      "is_variable": false,
+      "use_in_commands": [
+        "get"
+      ],
+      "list_donor": {
+        "table": "salePayMethods",
+        "properties_title": "title"
+      }
     }
   ]
 }

@@ -1,38 +1,48 @@
 <?php
 
-set_time_limit( 0 );
+$API->returnResponse( $API::$userDetail->id );
+
+//$API->DB->insertInto( "atolCashboxes" )
+//    ->values( [
+//        "store_id" => 62,
+//        "cashbox_id" => "1_yashlek"
+//    ] )
+//    ->execute();
 
 
-$visits = $API->DB->from( "visits" );
-
-foreach ( $visits as $visit ) {
-
-    $API->returnResponse( $visit );
-
-    $visitClient = $API->DB->from( "visits_clients" )
-        ->where( "visit_id", $visit[ "id" ] )
-        ->limit( 1 )
-        ->fetch();
-
-    $clientDetail = $API->DB->from( "clients" )
-        ->where( "id", $visitClient[ "client_id" ] )
-        ->limit( 1 )
-        ->fetch();
+//set_time_limit( 0 );
 
 
-    $API->DB->update( "visits" )
-        ->set( [
-            "advert_id" => $clientDetail[ "advertise_id" ]
-        ] )
-        ->where( [
-            "id" => $visit[ "id" ]
-        ] )
-        ->execute();
-
-
-    sleep( 0.01 );
-
-}
+//$visits = $API->DB->from( "visits" );
+//
+//foreach ( $visits as $visit ) {
+//
+//    $API->returnResponse( $visit );
+//
+//    $visitClient = $API->DB->from( "visits_clients" )
+//        ->where( "visit_id", $visit[ "id" ] )
+//        ->limit( 1 )
+//        ->fetch();
+//
+//    $clientDetail = $API->DB->from( "clients" )
+//        ->where( "id", $visitClient[ "client_id" ] )
+//        ->limit( 1 )
+//        ->fetch();
+//
+//
+//    $API->DB->update( "visits" )
+//        ->set( [
+//            "advert_id" => $clientDetail[ "advertise_id" ]
+//        ] )
+//        ->where( [
+//            "id" => $visit[ "id" ]
+//        ] )
+//        ->execute();
+//
+//
+//    sleep( 0.01 );
+//
+//}
 
 
 //$oldPassword = "81dc9bdb52d04dc20036dbd8313ed055";

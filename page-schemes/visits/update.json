@@ -195,7 +195,7 @@
                         "title": "",
                         "fields": [
                           "visits_ids",
-                          "doca_services",
+                          "products_display",
                           "pay_method",
                           "action",
                           "sum_cash",
@@ -534,7 +534,7 @@
                   {
                     "type": "modal",
                     "settings": {
-                      "title": "Пополнить",
+                      "title": "Изменить баланс",
                       "page": "clients/deposit",
                       "background": "dark",
                       "context": {

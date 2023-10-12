@@ -1,1 +1,104 @@
-{"required_modules":[],"required_permissions":["promotions_get"],"structure":[{"title":"Шапка","type":"header","size":4,"settings":{"description":"Редактирование акции","title":[":title"]},"components":[]},{"title":"Форма","type":"form","size":4,"settings":{"object":"promotions","command":"update","areas":[{"size":2,"blocks":[{"title":"","fields":["title"]},{"title":"Период","fields":["begin_at","end_at"]},{"title":"Условия","fields":["min_order","requiredServices","requiredServicesGroups","excludedServices","excludedServicesGroups","clientsGroups","store_id"]}]},{"size":2,"blocks":[{"title":"Сумма скидки","fields":["value","promotion_type","type"]},{"title":"Услуги со скидкой","fields":["services","servicesGroups"]}]},{"size":4,"blocks":[{"title":"","fields":["comment"]}]}]},"components":{"buttons":[{"type":"submit","settings":{"title":"Сохранить","background":"dark","href":"promotions"}}]}}]}
+{
+  "required_modules": [],
+  "required_permissions": [
+    "promotions_get"
+  ],
+  "structure": [
+    {
+      "title": "Шапка",
+      "type": "header",
+      "size": 4,
+      "settings": {
+        "description": "Редактирование акции",
+        "title": [
+          ":title"
+        ]
+      },
+      "components": []
+    },
+    {
+      "title": "Форма",
+      "type": "form",
+      "size": 4,
+      "settings": {
+        "object": "promotions",
+        "command": "update",
+        "areas": [
+          {
+            "size": 2,
+            "blocks": [
+              {
+                "title": "",
+                "fields": [
+                  "title"
+                ]
+              },
+              {
+                "title": "Период",
+                "fields": [
+                  "begin_at",
+                  "end_at"
+                ]
+              },
+              {
+                "title": "Условия",
+                "fields": [
+                  "min_order",
+                  "requiredServices",
+                  "requiredServicesGroups",
+                  "excludedServices",
+                  "excludedServicesGroups",
+                  "clientsGroups",
+                  "stores_id"
+                ]
+              }
+            ]
+          },
+          {
+            "size": 2,
+            "blocks": [
+              {
+                "title": "Сумма скидки",
+                "fields": [
+                  "value",
+                  "promotion_type",
+                  "type"
+                ]
+              },
+              {
+                "title": "Услуги со скидкой",
+                "fields": [
+                  "services",
+                  "servicesGroups"
+                ]
+              }
+            ]
+          },
+          {
+            "size": 4,
+            "blocks": [
+              {
+                "title": "",
+                "fields": [
+                  "comment"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "components": {
+        "buttons": [
+          {
+            "type": "submit",
+            "settings": {
+              "title": "Сохранить",
+              "background": "dark",
+              "href": "promotions"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

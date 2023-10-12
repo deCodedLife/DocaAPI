@@ -71,7 +71,7 @@ class IPCallsDomRu {
             )
         );
 
-        return $queryUrl;
+        return $response;
 
     } // function. makeCall
 

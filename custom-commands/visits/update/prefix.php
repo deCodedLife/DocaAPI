@@ -1,17 +1,9 @@
 <?php
 
-if ( $requestData->start_at == $requestData->end_at ) {
-
-    $modifiedEndData = new DateTime( $requestData->start_at );
-    $modifiedEndData->modify( "+1 minute" );
-
-    $requestData->end_at = $modifiedEndData->format( "Y-m-d H:i:s" );
-
-} // if ( $requestData->start_at == $requestData->end_at )
-
 /**
  * Расчет свободности Исполнителей, Клиентов и Кабинетов
  */
+
 
 /**
  * Валидация посещения

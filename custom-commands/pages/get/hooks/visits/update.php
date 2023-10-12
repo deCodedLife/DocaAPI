@@ -1,7 +1,10 @@
 <?php
 
-$clientsInfo = [];
+//ini_set( "display_errors", true );
 
+//
+//$clientsInfo = [];
+//
 $clients = $API->DB->from( "visits_clients" )
     ->where( "visit_id", $pageDetail[ "row_id" ] );
 
@@ -32,6 +35,7 @@ foreach ( $clients as $client ) {
 
 } // foreach. $clients
 
+
 $formFieldValues[ "clients_info" ] = [ "is_visible" => true, "value" => $clientsInfo, "title" => "" ];
 
 /**
@@ -39,7 +43,6 @@ $formFieldValues[ "clients_info" ] = [ "is_visible" => true, "value" => $clients
  */
 if ( $pageDetail[ "row_detail" ][ "is_payed" ] == true ) {
 
-    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 4 ] );
     unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 5 ] );
     unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 0 ] );
 
@@ -58,19 +61,16 @@ function shouldHideButton(): bool {
     /**
      * Получение информации из таблицы продаж
      */
-    $listedInSales = $API->DB->from( "saleVisits" )
-        ->where( "visit_id", $pageDetail[ "row_detail" ][ "id" ] )
+    $listedInSales = $API->DB->from( "salesList" )
+        ->innerJoin( "saleVisits ON saleVisits.sale_id = salesList.id" )
+        ->where( "saleVisits.visit_id", $pageDetail[ "row_detail" ][ "id" ] )
         ->limit( 1 )
         ->fetch();
 
     if ( !$listedInSales ) return false;
 
-    $saleDetails = $API->DB->from( "sales" )
-        ->where( "id", $listedInSales )
-        ->fetch();
-
-    if ( $saleDetails[ "status" ] == "done" ) return true;
-    if ( $saleDetails[ "status" ] == "waiting" ) return true;
+    if ( $listedInSales[ "status" ] == "done" ) return true;
+    if ( $listedInSales[ "status" ] == "waiting" ) return true;
 
     // if sale status is error
     return false;
@@ -116,7 +116,6 @@ if ( $clientDetail[ "is_contract" ] == "Y" )
 /**
  * Подготовка
  */
-
 foreach ( $pageDetail[ "row_detail" ][ "services_id" ] as $service ) {
 
     /**

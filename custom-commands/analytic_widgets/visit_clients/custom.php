@@ -108,7 +108,7 @@ $API->returnResponse(
 
     [
         [
-            "value" => $reportStatistic["visits_sum"],
+            "value" => number_format( intval( $reportStatistic["visits_sum"] ), 0, '.', ' ' ),
             "description" => "Сумма продаж",
             "size" => "1",
             "icon" => "",
@@ -123,7 +123,7 @@ $API->returnResponse(
             "detail" => []
         ],
         [
-            "value" => $reportStatistic["services_user_percents"],
+            "value" => number_format( intval( $reportStatistic["services_user_percents"] ), 0, '.', ' ' ),
             "description" => "Сумма продаж с  %",
             "size" => "1",
             "icon" => "",

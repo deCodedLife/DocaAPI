@@ -130,6 +130,30 @@
       "is_hook": true
     },
     {
+      "title": "Оборудование",
+      "article": "equipment_id",
+      "data_type": "array",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_visible": false,
+      "use_in_commands": [
+        "add",
+        "update",
+        "get",
+        "hook"
+      ],
+      "join": {
+        "connection_table": "service_equipment",
+        "donor_table": "wearableEquipment",
+        "property_article": "title",
+        "insert_property": "service_id",
+        "filter_property": "equipment_id"
+      },
+      "is_hook": true
+    },
+    {
       "title": "Ассистент",
       "article": "secondUsers_id",
       "data_type": "array",
@@ -281,13 +305,15 @@
       "article": "is_equipment",
       "data_type": "boolean",
       "field_type": "checkbox",
+      "is_hook": true,
       "is_default_in_list": false,
       "is_unique": false,
       "is_autofill": true,
       "use_in_commands": [
         "update",
         "get",
-        "add"
+        "add",
+        "hook"
       ]
     }
   ],

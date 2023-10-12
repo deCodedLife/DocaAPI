@@ -225,6 +225,7 @@
       "is_default_in_list": false,
       "is_unique": false,
       "is_autofill": true,
+      "search": "services",
       "use_in_commands": [
         "add",
         "update"
@@ -343,22 +344,25 @@
       ]
     },
     {
-      "title": "Филиал",
-      "article": "store_id",
-      "data_type": "integer",
+      "title": "Филиалы",
+      "article": "stores_id",
+      "data_type": "array",
       "field_type": "list",
-      "is_default_in_list": false,
+      "is_default_in_list": true,
       "is_unique": false,
       "is_autofill": true,
+      "join": {
+        "connection_table": "promotionStores",
+        "donor_table": "stores",
+        "property_article": "title",
+        "insert_property": "promotion_id",
+        "filter_property": "store_id"
+      },
       "use_in_commands": [
         "get",
         "update",
         "add"
-      ],
-      "list_donor": {
-        "table": "stores",
-        "properties_title": "title"
-      }
+      ]
     }
   ]
 }

@@ -30,6 +30,30 @@
               "background": "dark",
               "page": "documents/add"
             }
+          },
+          {
+            "type": "href",
+            "settings": {
+              "title": "Талон",
+              "background": "dark",
+              "page": "documents/update/1"
+            }
+          },
+          {
+            "type": "href",
+            "settings": {
+              "title": "Договор основной",
+              "background": "dark",
+              "page": "documents/update/17"
+            }
+          },
+          {
+            "type": "href",
+            "settings": {
+              "title": "Акт выполненных работ",
+              "background": "dark",
+              "page": "documents/update/3"
+            }
           }
         ]
       }

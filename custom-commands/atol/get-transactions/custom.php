@@ -5,13 +5,10 @@ ini_set( 'display_errors', 1 );
 ini_set( 'serialize_precision', -1 );
 
 
-
 $AtolReciept = new Сashbox\Atol;
 $AtolReciept->operator = new Сashbox\IOperator;
 $AtolReciept->operator->name = "Миннахматовна Э. Ц.";
 $AtolReciept->operator->vatin = "123654789507";
-
-
 
 
 $cashboxStore = $API->DB->from( "atolCashboxes" )
@@ -23,7 +20,7 @@ $cashboxStore = $API->DB->from( "atolCashboxes" )
 
 $processedSale = $API->DB->from( "salesList" )
     ->where( [
-        "store_id", $cashboxStore,
+        "store_id" => $cashboxStore,
         "status" => "waiting",
         "created_at > ?" => date('Y-m-d') . " 00:00:00"
     ] )

@@ -19,25 +19,34 @@
     },
     {
       "title": "Товары и услуги",
+      "article": "products_display",
+      "data_type": "array",
+      "field_type": "info_strings",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "hook",
+        "get"
+      ],
+      "require_in_commands": [],
+      "custom_list": []
+    },
+    {
+      "title": "RESERVED",
       "article": "products",
       "data_type": "array",
       "field_type": "list",
       "is_default_in_list": false,
       "is_unique": false,
       "is_autofill": false,
+      "is_visible": false,
       "use_in_commands": [
-        "get",
-        "add",
-        "return",
-        "update",
-        "hook"
+        "add"
       ],
+      "is_empty": true,
       "require_in_commands": [],
-      "is_hook": true,
-      "list_donor": {
-        "table": "services",
-        "properties_title": "title"
-      }
+      "custom_list": []
     },
     {
       "title": "Тип скидки",
@@ -46,7 +55,7 @@
       "field_type": "radio",
       "is_default_in_list": false,
       "is_unique": false,
-      "is_autofill": true,
+      "is_autofill": false,
       "is_variable": false,
       "use_in_commands": [
         "add",
@@ -109,9 +118,9 @@
     {
       "title": "Клиент",
       "article": "client_id",
-      "data_type": "array",
+      "data_type": "integer",
       "field_type": "list",
-      "is_default_in_list": false,
+      "is_default_in_list": true,
       "is_unique": false,
       "is_autofill": true,
       "search": "clients",
@@ -455,7 +464,7 @@
       "title": "Способ оплаты",
       "article": "pay_method",
       "data_type": "string",
-      "field_type": "list",
+      "field_type": "radio",
       "is_default_in_list": false,
       "is_unique": false,
       "is_autofill": true,
@@ -479,7 +488,7 @@
           "value": "parts"
         },
         {
-          "title": "Счёт юридического лица",
+          "title": "Юридическое лицо",
           "value": "legalEntity"
         }
       ],
@@ -488,6 +497,48 @@
         "add",
         "return"
       ]
+    },
+    {
+      "title": "Товары",
+      "article": "doca_products",
+      "data_type": "array",
+      "field_type": "smart_list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "hook",
+        "add",
+        "update"
+      ],
+      "list_donor": {
+        "table": "products",
+        "properties_title": "title"
+      },
+      "settings": {
+        "properties": [
+          {
+            "title": "Продукт",
+            "article": "id",
+            "data_type": "integer",
+            "field_type": "list",
+            "size": 3,
+            "search": "products",
+            "list_donor": {
+              "table": "products",
+              "properties_title": "title"
+            }
+          },
+          {
+            "size": 1,
+            "article": "amount",
+            "data_type": "integer",
+            "field_type": "integer",
+            "title": "Количество"
+          }
+        ]
+      },
+      "is_hook": true
     },
     {
       "title": "Фильтр даты (от)",
@@ -512,100 +563,6 @@
       "use_in_commands": [
         "get"
       ]
-    },
-    {
-      "title": "Услуги",
-      "article": "doca_services",
-      "data_type": "array",
-      "field_type": "info_strings",
-      "is_default_in_list": false,
-      "is_unique": false,
-      "is_autofill": true,
-      "use_in_commands": [
-        "hook",
-        "add",
-        "update"
-      ],
-      "list_donor": {
-        "table": "services",
-        "properties_title": "title"
-      },
-      "is_disabled": true
-    },
-    {
-      "title": "Услуги",
-      "article": "return_services",
-      "data_type": "array",
-      "field_type": "list",
-      "is_default_in_list": false,
-      "is_unique": false,
-      "is_autofill": true,
-      "use_in_commands": [
-        "hook",
-        "add",
-        "update"
-      ],
-      "list_donor": {
-        "table": "services",
-        "properties_title": "title"
-      }
-    },
-    {
-      "title": "Товары",
-      "article": "return_products",
-      "data_type": "int",
-      "field_type": "list",
-      "is_default_in_list": false,
-      "is_unique": false,
-      "is_autofill": true,
-      "use_in_commands": [
-        "hook",
-        "add",
-        "update"
-      ],
-      "list_donor": {
-        "table": "products",
-        "properties_title": "title"
-      }
-    },
-    {
-      "title": "Товары",
-      "article": "doca_products",
-      "data_type": "array",
-      "field_type": "smart_list",
-      "is_default_in_list": false,
-      "is_unique": false,
-      "is_autofill": true,
-      "use_in_commands": [
-        "hook",
-        "add",
-        "update"
-      ],
-      "list_donor": {
-        "table": "products",
-        "properties_title": "title"
-      },
-      "settings": {
-        "properties": [
-          {
-            "title": "Продукт",
-            "article": "id",
-            "data_type": "integer",
-            "field_type": "list",
-            "list_donor": {
-              "table": "products",
-              "properties_title": "title"
-            }
-          },
-          {
-            "article": "amount",
-            "data_type": "integer",
-            "field_type": "integer",
-            "title": "Количество"
-          }
-        ]
-      },
-      "is_hook": true
     },
     {
       "title": "Количество",

@@ -1,6 +1,6 @@
 {
   "required_modules": [],
-  "required_permissions": ["payments_get"],
+  "required_permissions": [ "payments_get" ],
   "structure": [
     {
       "title": "Заголовок",
@@ -43,6 +43,7 @@
                 "title": "",
                 "fields": [
                   "pay_method",
+                  "store_id",
                   "client_id",
                   "employee_id",
                   "sum_cash",
@@ -57,9 +58,7 @@
               {
                 "title": "",
                 "fields": [
-                  "store_id",
                   "action",
-                  "store_id",
                   "discount_type",
                   "discount_value",
                   "summary",

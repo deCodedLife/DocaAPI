@@ -5,6 +5,21 @@ foreach ( $response[ "data" ] as $row ) {
     if ( $row[ "replenished" ] < 0 ) $row[ "action" ] = "Списание";
     if ( $row[ "replenished" ] > 0 ) $row[ "action" ] = "Пополнение";
 
+    $userDetails = $API->DB->from( "users" )
+        ->where( "id", $row[ "user_id" ] )
+        ->fetch();
+
+    $lastname = $userDetails[ "first_name" ] ?? " ";
+    $patronimic = $userDetails[ "patronymic" ] ?? " ";
+
+    $lastname = mb_substr($lastname ?? "", 0, 1);
+    $patronimic = mb_substr($patronimic ?? "", 0, 1);
+
+    if ( $lastname != "" ) $lastname . ".";
+    if ( $patronimic != "" ) $patronimic . ".";
+
+    $row[ "user" ] = $userDetails[ "last_name" ] . " $lastname.$patronimic.";
+
     $returnRows[] = $row;
 
 } // foreach. $response[ "data" ]

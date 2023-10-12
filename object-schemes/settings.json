@@ -18,7 +18,7 @@
       "is_disabled": false
     },
     {
-      "title": "Ссылка на CRM",
+      "title": "Адрес CRM",
       "article": "crm_url",
       "data_type": "string",
       "field_type": "string",
@@ -32,7 +32,7 @@
       "is_disabled": false
     },
     {
-      "title": "Токен",
+      "title": "Ключ авторизации в АТС",
       "article": "token",
       "data_type": "string",
       "field_type": "string",

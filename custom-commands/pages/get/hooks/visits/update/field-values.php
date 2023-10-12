@@ -10,6 +10,48 @@ $visitDetails = $API->DB->from( "visits" )
     ->fetch();
 
 /**
+ * Получение id клиента
+ */
+$client = $API->DB->from( "visits_clients" )
+    ->where( "visit_id", $pageDetail[ "row_id" ] )
+    ->limit( 1 )
+    ->fetch();
+
+/**
+ * Подключение общего скрипта обработки продаж
+ */
+$publicAppPath = $API::$configs[ "paths" ][ "public_app" ];
+
+/**
+ * Предварительная настройка обязательных параметров
+ */
+$requestData->id = $pageDetail[ "row_id" ];
+$requestData->visits_ids = [ $pageDetail[ "row_id" ] ];
+$requestData->store_id = $visitDetails[ "store_id" ];
+$requestData->client_id = $client[ "client_id" ];
+
+/**
+ * Вызов скрипта
+ */
+require_once( $publicAppPath . '/custom-libs/sales/include.php' );
+require_once( $publicAppPath . '/custom-libs/sales/projects/doca/business_logic.php' );
+
+
+/**
+ * Заполнение полей стандартными значениями
+ */
+$formFieldValues = [
+    "sum_cash" => $amountOfPhysicalPayments,
+    "action" => "sell",
+    "pay_method" => "cash",
+    "store_id" => $visitDetails[ "store_id" ],
+    "client_id" => $client[ "client_id" ],
+    "online_receipt" => true,
+    "summary" => $saleSummary,
+    "visits_ids" => [ "value" => $pageDetail[ "row_id" ] ]
+];
+
+/**
  * Получение информации о продаже
  */
 $saleDetails =  $API->DB->from( "saleVisits" )
@@ -18,37 +60,9 @@ $saleDetails =  $API->DB->from( "saleVisits" )
 
 
 /**
- * Подсчёт итоговой стоимости посещения
- */
-$paymentSummary = $visitDetails[ "price" ];
-
-/**
- * Получение id клиента
- */
-$client = $API->DB->from( "visits_clients" )
-    ->where( "visit_id", $pageDetail[ "row_id" ] )
-    ->limit( 1 )
-    ->fetch();
-
-
-/**
- * Заполнение полей стандартными значениями
- */
-$formFieldValues = [
-    "sum_cash" => $paymentSummary,
-    "pay_method" => "cash",
-    "store_id" => $visitDetails[ "store_id" ],
-    "client_id" => $client[ "client_id" ],
-    "online_receipt" => true
-];
-
-$formFieldValues[ "summary" ] = $paymentSummary;
-//$formFieldValues[ "visits_ids" ][] = $pageDetail[ "row_id" ];
-
-
-/**
  * Заполнение полей из продаж
  */
+
 if ( $visitDetails[ "is_payed" ] == "Y" || ( $saleDetails && $saleDetails[ "status" ] != "error" ) ) {
 
     /**
@@ -59,6 +73,7 @@ if ( $visitDetails[ "is_payed" ] == "Y" || ( $saleDetails && $saleDetails[ "stat
             ->innerJoin( "saleVisits ON saleVisits.sale_id = salesList.id" )
             ->where( "saleVisits.visit_id", $pageDetail[ "row_id" ] )
             ->fetch();
+
 
     if ( $sale ) {
 
@@ -77,15 +92,37 @@ if ( $visitDetails[ "is_payed" ] == "Y" || ( $saleDetails && $saleDetails[ "stat
 
         foreach ( $API->DB->from( "saleVisits" )
                       ->where( "sale_id", $saleDetails[ "sale_id" ] ) as $saleVisit )
-            $formFieldValues[ "visits_ids" ][] = $saleVisit[ "visit_id" ];
+            $formFieldValues[ "visits_ids" ][ "value" ][] = $saleVisit[ "visit_id" ];
+
+        $saleServices = $API->DB->from( "salesProductsList" )
+            ->where( "sale_id", $sale[ "id" ] );
+
+        foreach ( $saleServices as $service )
+            $formFieldValues[ "products_display" ][ "value" ][] = $service[ "title" ];
+
+    }
+
+} else {
+
+    $saleServices = $API->DB->from( "services" )
+        ->innerJoin( "visits_services ON visits_services.service_id = services.id" )
+        ->where( "visits_services.visit_id", $pageDetail[ "row_id" ] );
+
+    foreach ( $saleServices as $service ) {
+
+        $formFieldValues[ "products_display" ][ "value" ][ ] = $service[ "title" ];
+        $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "products" ][] = [
+            "title" => $service[ "title" ],
+            "type" => "service",
+            "cost" => $service[ "price" ],
+            "amount" => 1,
+            "product_id" => $service[ "id" ]
+        ];
 
     }
 
 }
 
-$formFieldValues[ "action" ] = "sell";
-
 if ( $visitDetails[ "status" ] == "ended" ) unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 1 ] );
 if ( $visitDetails[ "status" ] != "ended" ) unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 3 ] );
 
-$pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ "0" ][ "components" ][ "buttons" ] = array_values( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ "0" ][ "components" ][ "buttons" ] );

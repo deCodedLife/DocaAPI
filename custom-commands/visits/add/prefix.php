@@ -37,7 +37,7 @@ if ( $requestData->phone || $requestData->last_name || $requestData->first_name 
 
 }
 
-
+$requestData->client_id = $requestData->clients_id[0];
 function translit ( $value ) {
 
     $converter = array(

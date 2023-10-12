@@ -147,7 +147,7 @@ $API->returnResponse(
         ],
         [
             "size" => 1,
-            "value" => round( $reportStatistic[ "visits_sum"] ),
+            "value" => number_format( round( $reportStatistic[ "visits_sum"] ), 0, '.', ' '),
             "description" => "Поступления",
             "icon" => "",
             "prefix" => "₽",
@@ -162,7 +162,7 @@ $API->returnResponse(
         ],
         [
             "size" => 1,
-            "value" => round( $reportStatistic[ "expenses_sum"] ),
+            "value" => number_format( round( $reportStatistic[ "expenses_sum"] ), 0, '.', ' '),
             "description" => "Расход",
             "icon" => "",
             "prefix" => "₽",
@@ -177,7 +177,7 @@ $API->returnResponse(
         ],
         [
             "size" => 1,
-            "value" => round( $reportStatistic[ "visits_sum" ] - $reportStatistic[ "expenses_sum" ] ),
+            "value" => number_format( round( $reportStatistic[ "visits_sum" ] - $reportStatistic[ "expenses_sum" ] ), 0, '.', ' '),
             "description" => "Итог",
             "icon" => "",
             "prefix" => "₽",

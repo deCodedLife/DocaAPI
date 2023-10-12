@@ -16,6 +16,7 @@
         "filters": [
           {
             "title": "Тема",
+            "placeholder": "Тема",
             "type": "list",
             "required_permissions": [],
             "required_modules": [],

@@ -21,6 +21,18 @@ $promotion_id = $API->DB->insertInto( "promotions" )
     ] )
     ->execute();
 
+$stores = $requestData->stores_id ?? [];
+
+foreach ( $stores as $store ) {
+
+    $API->DB->insertInto( "promotionStores" )
+        ->values( [
+            "promotion_id" => $promotion_id,
+            "store_id" => $store
+        ] )
+        ->execute();
+
+}
 
 
 foreach ( $requestData->services as $service )

@@ -6,6 +6,8 @@
     {
       "title": "Начало рабочего дня",
       "article": "event_from",
+      "size": 2,
+
       "data_type": "time",
       "field_type": "time",
       "is_default_in_list": false,
@@ -26,6 +28,7 @@
     {
       "title": "Окончание рабочего дня",
       "article": "event_to",
+      "size": 2,
       "data_type": "time",
       "field_type": "time",
       "is_default_in_list": false,
@@ -46,6 +49,7 @@
     {
       "title": "Начало рабочего графика",
       "article": "start_from",
+      "size": 2,
       "data_type": "date",
       "field_type": "date",
       "is_default_in_list": false,
@@ -66,6 +70,7 @@
       "title": "Окончание рабочего графика",
       "article": "start_to",
       "data_type": "date",
+      "size": 2,
       "field_type": "date",
       "is_default_in_list": false,
       "is_unique": false,
@@ -89,6 +94,7 @@
       "is_default_in_list": false,
       "is_unique": false,
       "is_autofill": false,
+      "is_variable": false,
       "use_in_commands": [
         "add"
       ],

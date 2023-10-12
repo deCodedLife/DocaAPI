@@ -69,7 +69,7 @@ if ( $requestData->context->block == "print" ) {
 
 
     $filters = [];
-    if ( $requestData->owner_id ) $filters[] = [ "user_id" => $requestData->owner_id ];
+    if ( $requestData->owner_id ) $filters[ "user_id" ] = $requestData->owner_id;
 
     
     $documents_users = $API->DB->from( "documents_users" )
@@ -86,19 +86,13 @@ if ( $requestData->context->block == "print" ) {
 
         } else {
 
-
             $output = false;
 
-            foreach ( $documents_users as $document_user ) {
-
-                if ( $document_user[ "document_id" ] == $publicDocument[ "id" ] ) {
-
+            foreach ( $documents_users as $document_user )
+                if ( $document_user[ "document_id" ] == $publicDocument[ "id" ] )
                     $output = true;
 
-                }
-
-            }
-            if ( $output == true ) {
+            if ( $output ) {
 
                 $publicDocument[ "id" ] = (int) $publicDocument[ "id" ];
 
@@ -111,3 +105,5 @@ if ( $requestData->context->block == "print" ) {
     } // foreach. $publicDocuments
 
 } // if. $requestData->context->block == "print"
+
+

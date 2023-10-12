@@ -1,11 +1,9 @@
 <?php
 
 $reportX = $API->DB->from( "atolOperations" )
-    ->where( "type", "reportX" );
+    ->where( "type", "closeShift" );
 
 foreach ( $reportX as $report ) {
-
-    mysqli_query($API->DB_connection, "DELETE FROM atolOperations");
 
     $request = [
         "request" => [

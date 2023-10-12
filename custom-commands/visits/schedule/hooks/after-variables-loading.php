@@ -26,8 +26,9 @@ if ( $requestData->store_id ) {
 
 if ( !$storeDetail ) $API->returnResponse( "Не определен филиал", 500 );
 
-if ( $requestData->start_at ) $requestData->end_at = date( "Y-m-d 23:59:59", strtotime( $requestData->start_at ) );
-else $requestData->end_at = date("Y-m-d 23:59:59" );
+
+if ( $requestData->start_at ) $requestData->end_at = date( "Y-m-d 23:59:59", strtotime($requestData->start_at ) );
+else $requestData->end_at =  date( "Y-m-d 23:59:59", strtotime( $requestData->start_at) );
 
 /**
  * Увеличение диапазона графика для специальностей
@@ -53,6 +54,10 @@ if ( !$requestData->user_id ) {
 
     foreach ( $users as $user )
         $requestData->user_id[] = $user[ "user_id" ];
+
+} else {
+
+    $requestData->user_id = [ $requestData->user_id ];
 
 } // if ( !$requestData->user_id )
 

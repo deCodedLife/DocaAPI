@@ -36,7 +36,7 @@ $API->returnResponse(
     [
 
         [
-            "value" => $reportStatistic[ "services_sum" ],
+            "value" => number_format( intval( $reportStatistic[ "services_sum" ] ), 0, '.', ' '),
             "description" => "Прибыль",
             "icon" => "",
             "prefix" => "₽",

@@ -47,6 +47,7 @@
                           "title",
                           "category_id",
                           "users_id",
+                          "equipment_id",
                           "secondUsers_id",
                           "is_consider_second_performer_time"
                         ]

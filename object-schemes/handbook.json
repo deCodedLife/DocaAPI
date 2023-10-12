@@ -40,6 +40,9 @@
       "is_default_in_list": false,
       "is_unique": false,
       "is_autofill": true,
+      "settings": {
+        "is_edit": true
+      },
       "use_in_commands": [
         "get",
         "update",

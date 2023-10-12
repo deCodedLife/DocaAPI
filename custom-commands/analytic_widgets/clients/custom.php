@@ -265,7 +265,7 @@ $API->returnResponse(
             ]
         ],
         [
-            "value" => $cashFlow,
+            "value" => number_format( $cashFlow, 0, '.', ' ' ),
             "description" => "Приход",
             "icon" => "",
             "prefix" => "₽",
@@ -291,7 +291,7 @@ $API->returnResponse(
             ]
         ],
         [
-            "value" => round( $averageСheque, 2 ),
+            "value" => number_format( round( $averageСheque, 2 ), 2, '.', ' '),
             "description" => "Средний чек",
             "icon" => "",
             "prefix" => "₽",

@@ -30,8 +30,8 @@
               {
                 "title": "",
                 "fields": [
+                  "products_display",
                   "visits_ids",
-                  "return_services",
                   "pay_method",
                   "sum_cash",
                   "sum_card",

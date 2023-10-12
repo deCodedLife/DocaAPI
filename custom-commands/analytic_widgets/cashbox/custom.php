@@ -4,6 +4,9 @@
 // 2 Получить филлиал
 // 3 Получить данные по филиалу
 
+$start = date( 'Y-m-d' ) . " 00:00:00";
+$end = date( 'Y-m-d' ) . " 23:59:59";
+
 $userDetails = $API->DB->from( "users" )
     ->where( "id", $API::$userDetail->id )
     ->fetch();
@@ -19,11 +22,24 @@ $incomeBalance = $API->DB->from( "cashboxBalances" )
 $payments = $API->DB->from( "salesList" )
     ->where( [
         "action" => "sell",
-        "created_at >= ?" => date( 'Y-m-d' ) . " 00:00:00",
-        "created_at <= ?" => date( 'Y-m-d' ) . " 23:59:59"
+        "created_at >= ?" => $start,
+        "created_at <= ?" => $end
+    ] );
+
+$expenses = $API->DB->from( "expenses" )
+    ->where( [
+        "created_at >= ?" => $start,
+        "created_at <= ?" => $end
     ] );
 
 $summary = 0;
+$expenses_summary = 0;
+
+foreach ( $expenses as $expense ) {
+
+    $expenses_summary += $expense[ "price" ];
+
+}
 
 foreach ( $payments as $payment ) {
 
@@ -32,13 +48,13 @@ foreach ( $payments as $payment ) {
 }
 
 $incomeBalance[ "balance" ] = $incomeBalance[ "balance" ] ?? 0;
-$summary += $incomeBalance[ "balance" ];
+$summary += $incomeBalance[ "balance" ] - $expenses_summary;
 
 $API->returnResponse(
 
     [
         [
-            "value" => $incomeBalance[ "balance" ],
+            "value" => number_format( intval( $incomeBalance[ "balance" ] ), 0, '.', ' ' ),
             "description" => "Входящий остаток",
             "icon" => "",
             "prefix" => "₽",
@@ -52,7 +68,7 @@ $API->returnResponse(
             "detail" => []
         ],
         [
-            "value" => $summary,
+            "value" => number_format( intval( $summary ), 0, '.', ' '),
             "description" => "Исходящий остаток",
             "icon" => "",
             "prefix" => "₽",

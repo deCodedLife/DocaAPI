@@ -76,7 +76,6 @@ class Discount
             ->fetch();
 
 
-
         /**
          * Фильтрация
          * Перебираем все исключения и выбрасываем
@@ -103,11 +102,20 @@ class Discount
 
         } // foreach. $this->DiscountModifiers as $filter
 
+        $excludedSubjectsObjectID = [];
+
+        foreach ( $this->DiscountModifiers as $modifier )
+            $excludedSubjectsObjectID[] = $modifier->ObjectID;
+
 
         $summary = 0;
 
-        foreach ( $this->Subjects as $subject )
+        foreach ( $this->Subjects as $subject ) {
+
+            if ( in_array( $subject->ID, $excludedSubjectsObjectID ) ) continue;
             $summary += $subject->Price;
+
+        }
 
         if ( $summary < $promotion[ "min_order" ] ) return $this->Subjects;
 

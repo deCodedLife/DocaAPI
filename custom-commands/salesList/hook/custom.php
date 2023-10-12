@@ -1,6 +1,6 @@
 <?php
+//ini_set( "display_errors", true );
 
-ini_set( "display_errors", true );
 $amountOfPhysicalPayments = $requestData->summary ?? 0;
 $saleSummary = 0;
 $sum_card = $requestData->sum_card ?? 0;
@@ -23,13 +23,17 @@ if ( $requestData->action !== "deposit" ) {
     require_once( $publicAppPath . '/custom-libs/sales/projects/doca/business_logic.php' );
 
 } else {
+
     $isReturn = false;
     $sum_card = $requestData->sum_card ?? 0;
     $sum_cash = $requestData->sum_cash ?? 0;
-    $sum_entity = $requestData->sum_entity ?? 0;
     $saleSummary = $sum_cash + $sum_card;
-}
 
+} // if ( $requestData->action !== "deposit" )
+
+$clientEntity = $API->DB->from( "legal_entity_clients" )
+    ->where( "client_id", $requestData->client_id )
+    ->fetch();
 
 
 /**
@@ -70,11 +74,19 @@ if ( $requestData->pay_method == "cash" ) {
 
 } // if. $requestData->pay_method == "cash"
 
-if ( $requestData->pay_method == "legalEntity" ) {
+if ( $requestData->pay_method == "legalEntity" && $clientEntity ) {
 
     $formFieldsUpdate[ "sum_card" ][ "is_visible" ] = false;
     $formFieldsUpdate[ "sum_cash" ][ "is_visible" ] = false;
     $formFieldsUpdate[ "sum_entity" ][ "value" ] = $saleSummary;
+    $formFieldsUpdate[ "sum_entity" ][ "is_visible" ] = true;
+
+    $sum_cash = 0;
+    $sum_card = 0;
+
+} else {
+
+    $formFieldsUpdate[ "sum_entity" ][ "is_visible" ] = false;
 
 }
 
@@ -102,6 +114,5 @@ if ( $isReturn ) {
     $formFieldsUpdate[ "sum_bonus" ][ "is_visible" ] = false;
 
 } // if ( isReturn )
-
 
 $API->returnResponse( $formFieldsUpdate );

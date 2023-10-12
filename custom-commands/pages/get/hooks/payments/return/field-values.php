@@ -7,23 +7,92 @@ $formFieldValues = $API->DB->from( "salesList" )
     ->limit( 1 )
     ->fetch();
 
+$formFieldValues[ "pay_method" ] = [
+    "is_disabled" => true,
+    "value" => $formFieldValues[ "pay_method" ]
+];
 $formFieldValues[ "summary" ] = (float) $formFieldValues[ "summary" ];
-$formFieldValues[ "sum_cash" ] = (float) $formFieldValues[ "sum_cash" ];
-$formFieldValues[ "sum_card" ] = (float) $formFieldValues[ "sum_card" ];
-$formFieldValues[ "sum_bonus" ] = (float) $formFieldValues[ "sum_bonus" ];
-$formFieldValues[ "sum_deposit" ] = (float) $formFieldValues[ "sum_deposit" ];
+$formFieldValues[ "sum_cash" ] = [
+    "is_visible" =>  (float) $formFieldValues[ "sum_cash" ] != 0,
+    "value" => (float) $formFieldValues[ "sum_cash" ]
+];
+$formFieldValues[ "sum_card" ] = [
+    "is_visible" =>  (float) $formFieldValues[ "sum_card" ] != 0,
+    "value" => (float) $formFieldValues[ "sum_card" ]
+];
+$formFieldValues[ "sum_bonus" ] = [
+    "title" => "Вернуть бонусов",
+    "is_visible" => (float) $formFieldValues[ "sum_bonus" ] != 0,
+    "value" => (float) $formFieldValues[ "sum_bonus" ]
+];
+$formFieldValues[ "sum_deposit" ] = [
+    "is_visible" => (float) $formFieldValues[ "sum_deposit" ] != 0,
+    "title" => "Вернуть на депозит",
+    "value" => (float) $formFieldValues[ "sum_deposit" ]
+];
 $formFieldValues[ "is_combined" ] = $formFieldValues[ "is_combined" ] == "Y";
 $formFieldValues[ "online_receipt" ] = $formFieldValues[ "online_receipt" ] == "Y";
+
+$formFieldValues[ "return_bonuses" ] = [
+    "is_visible" => (float) $formFieldValues[ "sum_bonus" ][ "value" ] != 0,
+    "value" => true
+];
+$formFieldValues[ "return_deposit" ] = [
+    "is_visible" => (float) $formFieldValues[ "sum_deposit" ][ "value" ] != 0,
+    "value" => true
+];
+
 $formFieldValues[ "action" ] = "sellReturn";
+$formFieldValues[ "terminal_code" ] = [
+    "is_visible" => $formFieldValues[ "terminal_code" ] != "",
+    "value" => $formFieldValues[ "terminal_code" ]
+];
 
-
-foreach ( $API->DB->from( "salesProductsList" )
-              ->where( "sale_id", $saleID ) as $saleService )
-    $formFieldValues[ "return_services" ][ "value" ][] = $saleService[ "product_id" ];
 
 foreach ( $API->DB->from( "saleVisits" )
               ->where( "sale_id", $saleID ) as $saleVisit )
-    $formFieldValues[ "visits_ids" ][] = $saleVisit[ "visit_id" ];
+    $formFieldValues[ "visits_ids" ][ "value" ][] = $saleVisit[ "visit_id" ];
 
-//$API->returnResponse( json_encode( $formFieldValues ), 500 );
-//{"id":"11","status":"done","client_id":"1","store_id":"1","employee_id":"1","action":"sellReturn","pay_method":"card","sum_bonus":0,"sum_deposit":0,"sum_card":2,"sum_cash":0,"terminal_code":null,"created_at":"2023-07-07 13:06:58","online_receipt":true,"summary":2,"error":null,"is_system":"N","is_combined":false,"return_services":{"value":["28"]},"visits_ids":["336"]}
+
+$products = $API->DB->from( "salesProductsList" )
+    ->where( "sale_id", $saleID );
+
+foreach ( $products as $saleService )
+{
+    unset( $saleService[ "id" ] );
+    unset( $saleService[ "sale_id" ] );
+    unset( $saleService[ "is_system" ] );
+
+    $formFieldValues[ "products_display" ][ "value" ][] = $saleService[ "title" ];
+    $pageScheme[ "structure" ][ 1 ][ "settings" ][ "data" ][ "products" ][] = $saleService;
+}
+
+
+if ( $formFieldValues[ "pay_method" ] == "card" ) {
+
+    $formFieldValues[ "sum_cash" ][ "is_visible" ] = false;
+    $formFieldValues[ "sum_card" ][ "is_visible" ] = true;
+
+} // if. $requestData->pay_method == "card"
+
+if ( $formFieldValues[ "pay_method" ] == "parts" ) {
+
+    $formFieldValues[ "sum_card" ][ "is_visible" ] = true;
+    $formFieldValues[ "sum_cash" ][ "is_visible" ] = true;
+    $formFieldValues[ "sum_cash" ][ "is_disabled" ] = false;
+
+} // if. $requestData->pay_method == "parts"
+
+if ( $formFieldValues[ "pay_method" ] == "cash" ) {
+
+    $formFieldValues[ "sum_card" ][ "is_visible" ] = false;
+    $formFieldValues[ "sum_cash" ][ "is_visible" ] = true;
+
+} // if. $requestData->pay_method == "cash"
+
+if ( $formFieldValues[ "pay_method" ] == "legalEntity" ) {
+
+    $formFieldValues[ "sum_card" ][ "is_visible" ] = false;
+    $formFieldValues[ "sum_cash" ][ "is_visible" ] = false;
+
+}

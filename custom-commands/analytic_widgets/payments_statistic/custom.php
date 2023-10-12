@@ -111,7 +111,7 @@ $API->returnResponse(
             "detail" => []
         ],
         [
-            "value" => $clientStatistic[ "visits_sum" ],
+            "value" => number_format( $clientStatistic[ "visits_sum" ], 0, '.', ' ' ),
             "description" => "Сумма посещений",
             "icon" => "",
             "prefix" => "₽",

@@ -141,7 +141,7 @@ if ( $requestData->clients_id ) {
 
 
         if ( $clientDetail[ "phone" ] ) {
-            $API->returnResponse($clientDetail[ "phone" ] );
+//            $API->returnResponse($clientDetail[ "phone" ] );
 
             $phoneFormat = ", +" . sprintf("%s (%s) %s-%s-%s",
                     substr($clientDetail["phone"], 0, 1),

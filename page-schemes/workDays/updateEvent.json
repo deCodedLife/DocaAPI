@@ -11,18 +11,13 @@
         "command": "updateEvent",
         "areas": [
           {
-            "size": 2,
+            "size": 4,
             "blocks": [
               {
                 "title": "",
                 "fields": [
                   "start_from",
-                  "start_to"
-                ]
-              },
-              {
-                "title": "",
-                "fields": [
+                  "start_to",
                   "event_from",
                   "event_to"
                 ]
@@ -30,7 +25,7 @@
             ]
           },
           {
-            "size": 2,
+            "size": 4,
             "blocks": [
               {
                 "title": "",

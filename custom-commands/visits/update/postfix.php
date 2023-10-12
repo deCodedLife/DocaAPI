@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * Обновление кеша пользователя для посещения
+ */
+if ( $requestData->clients_id && $requestData->id ) {
+
+    $API->DB->update( "visits" )
+        ->set( "client_id", intval( $requestData->clients_id[ 0 ] ?? 1 ) )
+        ->where( "id", $requestData->id )
+        ->execute();
+
+} // if ( $requestData->clients_id && $requestData->id )
+
 
 /**
  * Отмена посещения

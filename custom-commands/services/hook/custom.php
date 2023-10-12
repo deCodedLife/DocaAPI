@@ -36,5 +36,7 @@ if ( $requestData->category_id ) {
 
 }
 
+if ( $requestData->is_equipment == 'Y' ) $formFieldsUpdate[ "equipment_id" ][ "is_visible" ] = true;
+else $formFieldsUpdate[ "equipment_id" ][ "is_visible" ] = false;
 
 $API->returnResponse( $formFieldsUpdate );

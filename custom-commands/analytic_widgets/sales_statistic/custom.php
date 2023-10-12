@@ -99,7 +99,7 @@ foreach ( $salesList as $sale ) {
 foreach ( $report as $key => $item ) {
     $statistic[] = [
         "size" => 1,
-        "value" => round($item, 2),
+        "value" =>  number_format( round($item, 2), 0, '.', ' ' ),
         "description" => $key,
         "icon" => "",
         "prefix" => "",

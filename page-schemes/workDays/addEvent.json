@@ -11,18 +11,13 @@
         "command": "addEvent",
         "areas": [
           {
-            "size": 2,
+            "size": 4,
             "blocks": [
               {
                 "title": "",
                 "fields": [
+                  "start_from",
                   "start_to",
-                  "start_from"
-                ]
-              },
-              {
-                "title": "",
-                "fields": [
                   "event_from",
                   "event_to"
                 ]
@@ -30,7 +25,7 @@
             ]
           },
           {
-            "size": 2,
+            "size": 4,
             "blocks": [
               {
                 "title": "",

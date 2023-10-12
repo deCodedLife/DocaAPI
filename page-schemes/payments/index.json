@@ -107,6 +107,7 @@
               "type": "list",
               "size": 4,
               "settings": {
+                "link": false,
                 "object": "salesList"
               },
               "components": {
@@ -247,6 +248,7 @@
               "type": "list",
               "size": 4,
               "settings": {
+                "link": false,
                 "object": "expenses"
               },
               "components": {

@@ -47,7 +47,7 @@
                   "excludedServices",
                   "excludedServicesGroups",
                   "clientsGroups",
-                  "store_id"
+                  "stores_id"
                 ]
               }
             ]

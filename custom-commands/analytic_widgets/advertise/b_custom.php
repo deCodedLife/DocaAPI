@@ -167,7 +167,7 @@ $API->returnResponse(
 
     [
         [
-            "value" => $advertiseStatistic[ "cacheFlow" ],
+            "value" => number_format( intval( $advertiseStatistic[ "cacheFlow" ] ), 0, '.', ' ' ),
             "description" => "Прибыль",
             "icon" => "",
             "prefix" => "₽",

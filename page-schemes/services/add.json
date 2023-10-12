@@ -10,9 +10,9 @@
       "type": "header",
       "size": 4,
       "settings": {
-        "description": "Услуги - Добавление",
+        "description": "Услуги - добавить",
         "title": [
-          "Добавление услуги"
+          "Добавить услугу"
         ]
       },
       "components": {
@@ -36,7 +36,7 @@
                   "article",
                   "title",
                   "category_id",
-                  "user_id",
+                  "users_id",
                   "secondUsers_id",
                   "is_consider_second_performer_time"
                 ]
@@ -64,17 +64,6 @@
                 "fields": [
                   "description",
                   "preparation"
-                ]
-              }
-            ]
-          },
-          {
-            "size": 4,
-            "blocks": [
-              {
-                "title": "Время работы сотрудников",
-                "fields": [
-                  "workingTime"
                 ]
               }
             ]

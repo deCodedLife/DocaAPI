@@ -3,15 +3,62 @@
  * Сформированный список
  */
 $returnVisits = [];
-//$API->returnResponse( "Nyaaa?", 500 );
 
 foreach ( $response[ "data" ] as $visit ) {
-
 
     $user = $API->DB->from( "users" )
         ->where( "id", $visit[ "user_id" ][ "value" ])
         ->limit( 1 )
         ->fetch();
+
+
+    $saleVisits = $API->DB->from( "saleVisits" )
+        ->where( "id", $visit[ "user_id" ][ "value" ] );
+
+    if ( $saleVisits ) {
+
+        foreach ( $saleVisits as $saleVisit ) {
+
+            $saleList = $API->DB->from( "salesList" )
+                ->where( "id", $saleVisit[ "sale_id" ] );
+
+            foreach ( $saleList as $sale ) {
+                
+                if ( $sale[ "sum_entity" ] > 0 ) {
+
+                    $salePayMethod = $API->DB->from( "salePayMethods" )
+                        ->where( "article", "legalEntity" )
+                        ->limit( 1 )
+                        ->fetch();
+
+                    $visit[ "paymentMethod" ] = [
+
+                        "title" => $salePayMethod[ "title" ],
+                        "value" => $salePayMethod[ "id" ]
+
+                    ];
+
+                } else {
+
+                    $salePayMethod = $API->DB->from( "salePayMethods" )
+                        ->where( "article", $sale[ "pay_method" ] )
+                        ->limit( 1 )
+                        ->fetch();
+
+                    $visit[ "paymentMethod" ] = [
+
+                        "title" => $salePayMethod[ "title" ],
+                        "value" => $salePayMethod[ "id" ]
+
+                    ];
+
+                }
+
+            }
+
+        }
+
+    }
 
     if ( $user[ "first_name" ] ){
 
@@ -31,6 +78,16 @@ foreach ( $response[ "data" ] as $visit ) {
         "value" => $visit[ "user_id" ][ "value" ]
 
     ];
+
+    if ( $visit[ "is_payed" ] == "Y" ) {
+
+//        $paymentMethod = $API->DB->from( "paymentMethod" )
+//            ->where( "id", $visit[ "paymentMethod" ] )
+//            ->fetch();
+
+        $visit[ "payed" ] = "Оплачено, ";
+
+    } else $visit[ "payed" ] = "Не оплачено";
 
 
     $visits_services = $API->DB->from( "visits_services" )

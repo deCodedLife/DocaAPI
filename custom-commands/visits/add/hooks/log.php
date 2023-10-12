@@ -1,9 +1,9 @@
 <?php
 
+
 /**
  * Игнорирование исполнителя в логе
  */
-$logData->user_id = null;
 
 
 /**
@@ -32,12 +32,14 @@ $serviceDetail = $API->DB->from( "services" )
  * Получение детальной информации о сотруднике
  */
 
+
 $userDetail = $API->DB->from( "users" )
     ->where( "id", $requestData->user_id )
     ->limit( 1 )
     ->fetch();
 
 $userName = $userDetail[ "last_name" ] . " " . mb_substr( $userDetail[ "first_name" ], 0, 1 ) . ". " . mb_substr( $userDetail[ "patronymic" ], 0, 1 ) . ".";
+
 
 
 /**
@@ -75,6 +77,5 @@ $months = [
 ];
 
 $created_at = date( "d" ) . " " . $months[ date( "n" ) - 1 ] . " " . date( "Y" ) . "г" . " " . date( "H:i:s" );
-
 
 $logDescription = "Добавлено посещение к $userProfession $userName на $created_at, клиент №" . $requestData->clients_id[ 0 ] . " $clientName услуга " . $serviceDetail[ "title" ];
