@@ -42,8 +42,8 @@
         "sales_statistic",
         "visit_clients",
         "client_statistic",
-        "userCalls"
-
+        "userCalls",
+        "advertise_fixed"
       ]
     },
     {
@@ -64,7 +64,8 @@
         "sales_statistic",
         "visit_clients",
         "client_statistic",
-        "userCalls"
+        "userCalls",
+        "advertise_fixed"
       ]
     },
     {
@@ -80,7 +81,8 @@
         "daily_report",
         "userServices",
         "visit_clients",
-        "advertise"
+        "advertise",
+        "advertise_fixed"
       ]
     },
     {
@@ -96,7 +98,8 @@
         "daily_report",
         "userServices",
         "visit_clients",
-        "advertise"
+        "advertise",
+        "advertise_fixed"
       ]
     },
     {
@@ -183,7 +186,8 @@
         "advertise",
         "clients",
         "sales_statistic",
-        "visit_clients"
+        "visit_clients",
+        "advertise_fixed"
       ],
       "list_donor": {
         "table": "stores",
@@ -231,7 +235,8 @@
       "is_unique": false,
       "is_autofill": true,
       "use_in_commands": [
-        "advertise"
+        "advertise",
+        "advertise_fixed"
       ],
       "list_donor": {
         "table": "advertise",

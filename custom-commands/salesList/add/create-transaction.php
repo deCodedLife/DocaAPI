@@ -11,6 +11,21 @@ $userDetails = $API->DB->from( "users" )
 
 if ( !$userDetails[ "store_id" ] ) $userDetails[ "store_id" ] = $API->DB->from( "stores" )->limit( 1 )->fetch()["id"];
 
+if ( $requestData->pay_method == "legalEntity" ) {
+
+    $legalEntityDetails = $API->DB->from( "legal_entities" )
+        ->innerJoin( "legal_entity_clients ON legal_entity_clients.legal_entity_id = legal_entities.id" )
+        ->where( "legal_entity_clients.client_id", $requestData->client_id )
+        ->limit(1)
+        ->fetch();
+
+    $API->DB->update( "legal_entities" )
+        ->set( "balance", $legalEntityDetails[ "balance" ] - $requestData->summary )
+        ->where( "id", $legalEntityDetails[ "id" ] )
+        ->execute();
+
+}
+
 
 
 /**
@@ -47,6 +62,15 @@ foreach ( $requestData->visits_ids ?? [] as $visit ) {
         ] )
         ->execute();
 
+    if ( $requestData->pay_method != "legalEntity" ) continue;
+
+    $API->DB->update( "visits" )
+        ->set( [
+            "visits.is_payed" => 'Y'
+        ] )
+        ->where( "id", $visit )
+        ->execute();
+
 } // foreach. $requestData->visits_ids as $visit
 
 
@@ -59,6 +83,7 @@ foreach ( $requestData->products as $product ) {
         ->values( $product )
         ->execute();
 
+    $API->addEvent( "schedule" );
+    $API->addEvent( "salesList" );
+
 } // foreach. $requestData->pay_object as $service
-
-
