@@ -395,8 +395,8 @@
               "title": "Статистика бонусов",
               "type": "analytic_widgets",
               "size": 4,
-              "hook": "bonusHistory",
               "settings": {
+                "linked_filter": "list_bonusHistory",
                 "widgets_group": "bonus_statistic",
                 "filters": [
                   {
@@ -450,7 +450,6 @@
               "title": "Статистика депозита",
               "type": "analytic_widgets",
               "size": 4,
-              "hook": "salesList",
               "settings": {
                 "widgets_group": "deposit_statistic",
                 "filters": [
@@ -466,7 +465,6 @@
               "title": "Список операций",
               "type": "list",
               "size": 4,
-              "hook": "salesList",
               "settings": {
                 "link": false,
                 "object": "salesList",

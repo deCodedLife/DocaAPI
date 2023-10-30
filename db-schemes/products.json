@@ -2,7 +2,7 @@
   "title": "Товары",
   "properties": [
     {
-      "title": "Название ",
+      "title": "Название",
       "article": "title",
       "type": "varchar(255)",
       "default": null,

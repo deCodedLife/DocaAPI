@@ -19,4 +19,3 @@ if ( $clientDetail[ "is_representative" ] == "Y" ) {
     $formFieldValues[ "present_passport_issued" ][ "is_visible" ] = true;
 
 }
-
