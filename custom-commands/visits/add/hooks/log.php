@@ -78,4 +78,4 @@ $months = [
 
 $created_at = date( "d" ) . " " . $months[ date( "n" ) - 1 ] . " " . date( "Y" ) . "г" . " " . date( "H:i:s" );
 
-$logDescription = "Добавлено посещение к $userProfession $userName на $created_at, клиент №" . $requestData->clients_id[ 0 ] . " $clientName услуга " . $serviceDetail[ "title" ];
+$logDescription = "Добавлено посещение к $userProfession $userName на $created_at, клиент №" . $requestData->clients_id[ 0 ] . " $clientName услуга " . $serviceDetail[ "article" ];

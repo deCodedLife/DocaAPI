@@ -6,7 +6,7 @@
  */
 
 
-$API->DB->update( "visits" )
+$API->DB->update( "equipmentVisits" )
     ->set( [
         "status" => "process"
     ] )
@@ -16,4 +16,3 @@ $API->DB->update( "visits" )
     ->execute();
 
 $API->addEvent( "schedule" );
-$API->addEvent( "day_planning" );

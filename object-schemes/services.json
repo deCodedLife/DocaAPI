@@ -81,6 +81,7 @@
       "is_default_in_list": false,
       "is_unique": false,
       "is_autofill": true,
+      "ignoreInLogs": true,
       "use_in_commands": [
         "add",
         "update",
@@ -182,6 +183,7 @@
       "is_default_in_list": false,
       "is_unique": false,
       "is_autofill": true,
+      "ignoreInLogs": true,
       "use_in_commands": [
         "update",
         "get",

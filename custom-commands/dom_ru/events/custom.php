@@ -69,6 +69,13 @@ if ( $requestData->cmd === "event" ) {
         $API->addEvent( "notifications" );
 
     } // if. $requestData->type === "missed"
+
+
+    if ( $clientDetail[ "id" ] ) $API->addLog( [
+        "table_name" => "clients",
+        "description" => "Звонок сотрудника: $requestData->user",
+        "row_id" => $clientDetail[ "id" ]
+    ], $requestData );
     
     $API->returnResponse( true );
 

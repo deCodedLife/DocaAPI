@@ -1,16 +1,14 @@
 <?php
-
 /**
  * @file
  * Электронная очередь
  */
 
-
 $resultVisits = [];
+ini_set( "disable_functions", "" );
 
 $start = date( "Y-m-d" ) . " 00:00:00";
 $end = date( "Y-m-d" ) . " 23:59:59";
-
 
 $visits = $API->DB->from( "visits" )
     ->where( [
@@ -28,8 +26,6 @@ $visits = $API->DB->from( "visits" )
  */
 
 foreach ( $visits as $visit ) {
-//    $API->returnResponse(date( "Y-m-d" ) . " 00:00:00");
-
 
     $cabinetDetail = $API->DB->from( "cabinets" )
         ->where( "id", $visit[ "cabinet_id" ] )
@@ -93,14 +89,13 @@ foreach ( $visits as $visit ) {
              */
 
             shell_exec( "curl -X POST \
-               -H \"Authorization: Bearer `/var/www/oxapi/data/yandex-cloud/bin/yc iam create-token`\" \
-               --data-urlencode \"text=$synthText\" \\
-               -d \"lang=ru-RU&voice=filipp&folderId=" . $settings[ "folder_id" ] . "&sampleRateHertz=48000&speed=0.8&format=lpcm\" \\
+               -H \"Authorization: Bearer `yandex_cloud iam create-token`\" \
+               --data-urlencode \"text=$synthText\" \
+               -d \"lang=ru-RU&voice=filipp&folderId=" . $settings[ "folder_id" ] . "&sampleRateHertz=48000&speed=0.8&format=lpcm\" \
               \"https://tts.api.cloud.yandex.net/speech/v1/tts:synthesize\" > $talonFilePath/$talonFileName.raw" );
 
             chmod( "$talonFilePath/$talonFileName.raw", 777 );
-
-
+            
             shell_exec("sox -r 48000 -b 16 -e signed-integer -c 1 $talonFilePath/$talonFileName.raw $talonFilePath/$talonFileName.wav" );
             unlink( "$talonFilePath/$talonFileName.raw" );
 
@@ -124,16 +119,12 @@ foreach ( $visits as $visit ) {
      * Получение врача
      */
 
-    $doctorDetail = $API->DB->from( "visits_users" )
-        ->where( "visit_id", $visit[ "id" ] )
-        ->limit( 1 )
-        ->fetch();
-
     $doctorDetail = $API->DB->from( "users" )
-        ->where( "id", $doctorDetail[ "user_id" ] )
+        ->where( "id", $visit[ "user_id" ] )
         ->limit( 1 )
         ->fetch();
 
+    
 
     /**
      * Получение специальности врача
@@ -157,7 +148,7 @@ foreach ( $visits as $visit ) {
         "cabinet" => $cabinetDetail[ "title" ],
         "detail" => [
             $doctorProfession[ "title" ],
-            $doctorDetail[ "last_name" ] . " " . $doctorDetail[ "first_name" ] . " " . $doctorDetail[ "patronymic" ]
+            "{$doctorDetail[ "last_name" ]} {$doctorDetail[ "first_name" ]} {$doctorDetail[ "patronymic" ]}"
         ],
         "voice" => $voice
     ];

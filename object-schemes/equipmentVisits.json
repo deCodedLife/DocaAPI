@@ -4,7 +4,7 @@
   "is_trash": true,
   "properties": [
     {
-      "title": "Дата начала - окончания",
+      "title": "Дата начала",
       "article": "start_at",
       "size": 2,
       "article_modifier": ">= ?",
@@ -26,7 +26,7 @@
       ]
     },
     {
-      "title": "Дата завершиния",
+      "title": "Дата окончания",
       "article": "end_at",
       "size": 2,
       "article_modifier": "<= ?",
@@ -67,12 +67,11 @@
       "field_type": "info_strings",
       "is_default_in_list": false,
       "is_unique": false,
-      "is_autofill": true,
+      "is_autofill": false,
       "use_in_commands": [
         "update",
         "add",
-        "get",
-        "hook"
+        "get"
       ],
       "require_in_commands": [],
       "is_hook": true,
@@ -129,15 +128,20 @@
       "is_disabled": false
     },
     {
-      "title": "Услуги",
-      "article": "services_id",
-      "data_type": "array",
+      "title": "Услуга",
+      "article": "service_id",
+      "data_type": "integer",
+      "joined_field": "user_id",
+      "joined_field_filter": "users_id",
       "field_type": "list",
       "is_default_in_list": true,
-      "joined_field": "user_id",
       "is_unique": false,
       "is_autofill": true,
       "is_hook": true,
+      "search": "services",
+      "settings": {
+        "is_duplicate": true
+      },
       "use_in_commands": [
         "add",
         "update",
@@ -151,14 +155,8 @@
         "table": "services",
         "properties_title": "title"
       },
-      "join": {
-        "connection_table": "visits_services",
-        "donor_table": "services",
-        "property_article": "title",
-        "insert_property": "visit_id",
-        "filter_property": "service_id"
-      },
       "min_value": 0,
+      "is_visible": true,
       "is_disabled": false
     },
     {
@@ -280,8 +278,8 @@
     },
     {
       "title": "Клиент",
-      "article": "clients_id",
-      "data_type": "array",
+      "article": "client_id",
+      "data_type": "integer",
       "field_type": "list",
       "is_default_in_list": false,
       "is_unique": false,
@@ -297,17 +295,10 @@
       "require_in_commands": [
         "add"
       ],
-      "list_donor": {
-        "table": null,
-        "properties_title": null
-      },
       "is_disabled": false,
-      "join": {
-        "connection_table": "visits_clients",
-        "donor_table": "clients",
-        "property_article": "geolocation",
-        "insert_property": "visit_id",
-        "filter_property": "client_id"
+      "list_donor": {
+        "table": "clients",
+        "properties_title": "title"
       },
       "annotation": "",
       "is_hook": true

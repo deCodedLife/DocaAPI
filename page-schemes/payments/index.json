@@ -34,7 +34,8 @@
               "components": {
                 "filters": [
                   {
-                    "title": "Дата (от)",
+                    "title": "Дата",
+                    "placeholder": "От",
                     "type": "date",
                     "settings": {
                       "size": 2,
@@ -42,8 +43,8 @@
                     }
                   },
                   {
-                    "title": "Дата (до)",
                     "type": "date",
+                    "placeholder": "До",
                     "settings": {
                       "size": 2,
                       "recipient_property": "end_at"

@@ -7,7 +7,7 @@
       "type": "header",
       "size": 4,
       "settings": {
-        "description": "Записи к врачам - Редактирование",
+        "description": "Записи на оборудование - Редактирование",
         "title": [
           "Запись № ",
           ":id"
@@ -39,6 +39,7 @@
                         "fields": [
                           "start_at",
                           "end_at",
+                          "equipment_id",
                           "is_earlier",
                           "status"
                         ]
@@ -46,12 +47,11 @@
                       {
                         "title": "",
                         "fields": [
-                          "equipment_id",
                           "user_id",
                           "assist_id",
-                          "clients_id",
+                          "client_id",
                           "clients_info",
-                          "services_id"
+                          "service_id"
                         ]
                       }
                     ]
@@ -64,6 +64,24 @@
                         "fields": [
                           "store_id",
                           "cabinet_id"
+                        ]
+                      },
+                      {
+                        "title": "",
+                        "fields": [
+                          "price",
+                          "is_earlier"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "size": 4,
+                    "blocks": [
+                      {
+                        "title": "",
+                        "fields": [
+                          "comment"
                         ]
                       }
                     ]
@@ -112,7 +130,11 @@
                       "title": "Поставить задачу",
                       "background": "dark",
                       "icon": "",
-                      "page": "tasks/add"
+                      "page": "tasks/add",
+                      "context": {
+                        "form": "clients",
+                        "row_id": ":clients_id"
+                      }
                     }
                   },
                   {
@@ -154,7 +176,7 @@
                     "settings": {
                       "title": "Сохранить",
                       "background": "dark",
-                      "href": ""
+                      "href": "equipmentSchedule"
                     }
                   }
                 ]

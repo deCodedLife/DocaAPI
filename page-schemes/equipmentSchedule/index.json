@@ -60,7 +60,7 @@
             "required_modules": [],
             "settings": {
               "is_search": false,
-              "recipient_property": "clients_id",
+              "recipient_property": "client_id",
               "donor_object": "clients",
               "donor_property_title": "last_name",
               "donor_property_value": "id"

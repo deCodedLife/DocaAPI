@@ -231,6 +231,22 @@
         {
           "title": "Завершено",
           "value": "ended"
+        },
+        {
+          "title": "Завершено",
+          "value": "waited"
+        },
+        {
+          "title": "Завершено",
+          "value": "online"
+        },
+        {
+          "title": "Завершено",
+          "value": "repeated"
+        },
+        {
+          "title": "Завершено",
+          "value": "moved"
         }
       ]
     },
@@ -479,6 +495,7 @@
       "data_type": "string",
       "field_type": "textarea",
       "is_default_in_list": false,
+      "ignoreInLogs": true,
       "is_unique": false,
       "is_autofill": true,
       "is_disabled": false,

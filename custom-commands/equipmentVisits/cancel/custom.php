@@ -5,7 +5,7 @@
  * Отмена записи к врачу
  */
 
-$API->DB->update( "visits" )
+$API->DB->update( "equipmentVisits" )
     ->set( [
         "is_active" => "N"
     ] )
@@ -15,4 +15,3 @@ $API->DB->update( "visits" )
     ->execute();
 
 $API->addEvent( "schedule" );
-$API->addEvent( "day_planning" );

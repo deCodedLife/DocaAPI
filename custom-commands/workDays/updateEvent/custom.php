@@ -33,11 +33,10 @@ $currentScheduleDetail[ "end_at" ] = explode( " ", $currentScheduleDetail[ "even
 if ( !$scheduleFrom ) $scheduleFrom = strtotime( $currentScheduleDetail[ "start_at" ][ 0 ] );
 if ( !$scheduleTo ) $scheduleTo = strtotime( $currentScheduleDetail[ "end_at" ][ 0 ] );
 if ( !$requestData->event_from ) $scheduleTimeFrom = $currentScheduleDetail[ "start_at" ][ 1 ];
-
 if ( !$requestData->event_to ) $scheduleTimeTo = $currentScheduleDetail[ "end_at" ][ 1 ];
 
 if ( $requestData->is_weekend === null ) $eventIsWeekend = $currentScheduleDetail[ "is_weekend" ];
-elseif ( !$requestData->is_weekend ) $eventIsWeekend = "N";
+elseif ( $requestData->is_weekend == "N" ) $eventIsWeekend = "N";
 else $eventIsWeekend = "Y";
 
 if ( !$requestData->store_id ) $eventStoreId = $currentScheduleDetail[ "store_id" ];
@@ -65,14 +64,21 @@ $storeDetails = $API->DB->from( "stores" )
     ->where( "id", $eventStoreId )
     ->fetch();
 
-if ( $requestData->event_from ) {
+if ( $eventIsWeekend == "N" || $requestData->is_weekend == "N" ) {
+    if ( !$requestData->event_from ) $requestData->event_from = $scheduleTimeFrom;
+    if ( !$requestData->event_to ) $requestData->event_to = $scheduleTimeTo;
 
-    if ( strtotime( $requestData->event_from ) < strtotime( $storeDetails[ "schedule_from" ] ) ) $API->returnResponse( "Расписание выходит за рамки графика филиала ${$storeDetails[ "title" ]}", 500 );
+    if ( $requestData->event_from ) {
 
-}
-if ( $requestData->event_to ) {
+        if ( strtotime( $requestData->event_from ) < strtotime( $storeDetails[ "schedule_from" ] ) ) $API->returnResponse( "Расписание выходит за рамки графика филиала ${$storeDetails[ "title" ]}", 500 );
 
-    if ( strtotime( $requestData->event_to )   > strtotime( $storeDetails[ "schedule_to" ] )   ) $API->returnResponse( "Расписание выходит за рамки графика филиала ${$storeDetails[ "title" ]}", 500 );
+    }
+    if ( $requestData->event_to ) {
+
+        if ( strtotime( $requestData->event_to )   > strtotime( $storeDetails[ "schedule_to" ] )   ) $API->returnResponse( "Расписание выходит за рамки графика филиала ${$storeDetails[ "title" ]}", 500 );
+
+    }
+
 
 }
 

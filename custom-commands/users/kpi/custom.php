@@ -1,5 +1,4 @@
 <?php
-// ini_set("display_errors", true);
 
 /**
  * KPI
@@ -52,6 +51,28 @@ $kpiSales = $API->DB->from( "kpi_sales" )
  */
 $kpiServices = $API->DB->from( "kpi_services" )
     ->where( "row_id", $requestData->id );
+
+
+/**
+ * Получение детальной информации о пользователе
+ */
+
+$userDetail = $API->DB->from( "users" )
+    ->where( "id", $requestData->id )
+    ->fetch();
+
+/**
+ * Возвращает пустой массив, если
+ * Тип KPI не Ставка + KPI и
+ * если не настроены услуги
+ */
+
+if ( count( $kpiServices ) == 0 )
+    $API->returnResponse( [] );
+
+if ( $userDetail[ "salary_type" ] != "rate_kpi" )
+    $API->returnResponse( [] );
+
 
 /**
  * Запрос на получение оплаченных продаж услуг сотрудника

@@ -28,7 +28,7 @@ $publicAppPath = $API::$configs[ "paths" ][ "public_app" ];
 $requestData->id = $pageDetail[ "row_id" ];
 $requestData->visits_ids = [ $pageDetail[ "row_id" ] ];
 $requestData->store_id = $visitDetails[ "store_id" ];
-$requestData->client_id = $client[ "client_id" ];
+$requestData->client_id = $pageDetail[ "client_id" ];
 
 /**
  * Вызов скрипта
@@ -45,11 +45,12 @@ $formFieldValues = [
     "action" => "sell",
     "pay_method" => "cash",
     "store_id" => $visitDetails[ "store_id" ],
-    "client_id" => $client[ "client_id" ],
+    "client_id" => $requestData->client_id,
     "online_receipt" => true,
     "summary" => $saleSummary,
     "visits_ids" => [ "value" => $pageDetail[ "row_id" ] ]
 ];
+
 
 /**
  * Получение информации о продаже

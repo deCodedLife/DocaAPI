@@ -15,7 +15,7 @@ $requestData->advert_id = $clientDetail[ "advertise_id" ];
 /**
  * Регистрация клиента при записи с сайта
  */
-if ( $requestData->phone || $requestData->last_name || $requestData->first_name || $requestData->patronymic ) {
+if ( $requestData->phone && $requestData->last_name && $requestData->first_name && $requestData->patronymic ) {
 
     $clientDetail = $API->DB->from( "clients" )
         ->where( "phone", $requestData->phone )

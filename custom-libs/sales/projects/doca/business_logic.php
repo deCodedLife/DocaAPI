@@ -246,8 +246,13 @@ foreach ( $saleServices as $service )
  * Нахождение скидки для товаров по формуле (стоимость со скидками / стоимость без скидок)
  */
 
-$discountPerProduct = $amountOfPhysicalPayments / ( $allServicesPrice + $productsPrice );
+$discountPerProduct = 0;
 
+if ( $allServicesPrice + $productsPrice != 0 ) {
+
+    $discountPerProduct = $amountOfPhysicalPayments / ( $allServicesPrice + $productsPrice );
+
+}
 
 
 /**
@@ -256,6 +261,7 @@ $discountPerProduct = $amountOfPhysicalPayments / ( $allServicesPrice + $product
 
 $amountOfPhysicalPayments = ($saleServicesPrice + $productsPrice) * $discountPerProduct;
 $amountOfPhysicalPayments = round( $amountOfPhysicalPayments, 2 );
+
 
 //$saleSummary = $amountOfPhysicalPayments;
 

@@ -432,10 +432,7 @@
             "article": "service_id",
             "data_type": "integer",
             "field_type": "list",
-            "list_donor": {
-              "table": "services",
-              "properties_title": "title"
-            }
+            "search": "services"
           },
           {
             "size": 1,
@@ -544,10 +541,7 @@
             "article": "service",
             "data_type": "integer",
             "field_type": "list",
-            "list_donor": {
-              "table": "services",
-              "properties_title": "title"
-            }
+            "search": "services"
           },
           {
             "title": "Количество проданных услуг",

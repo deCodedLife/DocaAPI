@@ -29,19 +29,19 @@
                 "title": "",
                 "fields": [
                   "start_at",
-                  "end_at"
+                  "end_at",
+                  "equipment_id"
                 ]
               },
               {
                 "title": "",
                 "fields": [
-                  "equipment_id",
                   "user_id",
                   "author_id",
                   "assist_id",
-                  "clients_id",
+                  "client_id",
                   "clients_info",
-                  "services_id"
+                  "service_id"
                 ]
               }
             ]
@@ -94,7 +94,7 @@
             "settings": {
               "title": "Сохранить",
               "background": "dark",
-              "href": "visits"
+              "href": "equipmentSchedule"
             }
           }
         ]

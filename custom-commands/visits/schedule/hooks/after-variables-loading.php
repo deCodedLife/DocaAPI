@@ -83,3 +83,5 @@ $workdayEnd = strtotime( $storeDetail[ "schedule_to" ] );
  * Отключение фильтрации по тем кто не хочет раньше
  */
 if ( $requestData->is_earlier == "N" ) unset( $requestData->is_earlier );
+
+//$API->returnResponse( $requestData );

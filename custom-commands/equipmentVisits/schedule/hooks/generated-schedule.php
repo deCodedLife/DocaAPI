@@ -230,7 +230,7 @@ foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
         /**
          * Обрезка пустых столбцов, при фильтре по клиенту
          */
-        if ( $requestData->clients_id && $notWorkDay && $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ] )
+        if ( $requestData->client_id && $notWorkDay && $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ] )
             unset( $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ] );
         
     } // foreach. $scheduleDateDetail

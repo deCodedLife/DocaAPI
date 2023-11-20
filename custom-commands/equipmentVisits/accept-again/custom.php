@@ -6,7 +6,7 @@
  */
 
 
-$API->DB->update( "visits" )
+$API->DB->update( "equipmentVisits" )
     ->set([
         "is_alert" => "N"
     ])

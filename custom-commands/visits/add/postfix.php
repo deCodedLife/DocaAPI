@@ -1,6 +1,5 @@
 <?php
 
-
 $requestData->client_id = intval( $requestData->clients_id[ 0 ] ?? 1 );
 
 $API->DB->update( "visits" )

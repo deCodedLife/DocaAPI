@@ -53,18 +53,38 @@ foreach ( $visitClients as $visitClient ) {
 switch ( $event[ "status" ] ) {
 
     case "planning":
-        $eventDetails[ "color" ] = "primary";
+        $eventDetails[ "color" ] = "blue";
         $eventDetails[ "description" ] = "Запланировано";
         break;
 
+    case "ended":
+        $eventDetails[ "color" ] = "red";
+        $eventDetails[ "description" ] = "Завершено";
+        break;
+
     case "process":
-        $eventDetails[ "color" ] = "warning";
+        $eventDetails[ "color" ] = "pink";
         $eventDetails[ "description" ] = "На приеме";
         break;
 
-    case "ended":
-        $eventDetails[ "color" ] = "success";
-        $eventDetails[ "description" ] = "Завершено";
+    case "online":
+        $eventDetails[ "color" ] = "light_blue";
+        $eventDetails[ "description" ] = "Онлайн запись";
+        break;
+
+    case "repeated":
+        $eventDetails[ "color" ] = "yellow";
+        $eventDetails[ "description" ] = "Повторная";
+        break;
+
+    case "moved":
+        $eventDetails[ "color" ] = "orange";
+        $eventDetails[ "description" ] = "Перемещена";
+        break;
+
+    case "waited":
+        $eventDetails[ "color" ] = "green";
+        $eventDetails[ "description" ] = "Ожидание";
         break;
 
 } // switch. $event[ "status" ]

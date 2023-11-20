@@ -1,6 +1,32 @@
 <?php
 
-$API->returnResponse( $API::$userDetail->id );
+$data = (array) $API->sendRequest(
+    "visits",
+    "get",
+    [ "id" => 502172 ],
+    $_SERVER[ "SERVER_NAME" ]
+)[ 0 ];
+
+$API->returnResponse( $data );
+
+//$testQuery = $API->DB->from( "users" )
+//    ->where( "is_active", 'Y' );
+//$ids = [ 1, 2, 120, 121, 123 ];
+//
+//
+//foreach ( $ids as $id ) {
+//    $testQuery->where( "id", $id );
+//}
+//
+//foreach ( $testQuery as $user ) {
+//    $users[] = $user;
+//}
+
+//$API->returnResponse( $users );
+
+
+
+//$API->returnResponse( $API::$userDetail->id );
 
 //$API->DB->insertInto( "atolCashboxes" )
 //    ->values( [

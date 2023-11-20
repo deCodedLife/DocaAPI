@@ -130,6 +130,4 @@ foreach ($joinUserServices as $joinUserService) {
 
 } // foreach. $joinUserServices
 
-$generatedTab[ "structure" ][ 2 ]["settings"]["areas"][0]["blocks"][0]["fields"][2]["value"] = $userServices;
-
-
+$generatedTab["settings"]["areas"][0]["blocks"][0]["fields"][2]["value"] = $userServices;

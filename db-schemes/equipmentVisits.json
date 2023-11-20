@@ -9,6 +9,13 @@
       "default": null
     },
     {
+      "title": "Клиент",
+      "article": "client_id",
+      "type": "int",
+      "default": "1",
+      "is_required": "Y"
+    },
+    {
       "title": "Окончание записи",
       "article": "end_at",
       "type": "datetime",
@@ -186,6 +193,13 @@
     {
       "title": "Автор",
       "article": "author_id",
+      "type": "int",
+      "default": null,
+      "is_required": "N"
+    },
+    {
+      "title": "Услуга",
+      "article": "service_id",
       "type": "int",
       "default": null,
       "is_required": "N"

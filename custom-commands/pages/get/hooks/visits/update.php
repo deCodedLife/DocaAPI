@@ -1,10 +1,5 @@
 <?php
 
-//ini_set( "display_errors", true );
-
-//
-//$clientsInfo = [];
-//
 $clients = $API->DB->from( "visits_clients" )
     ->where( "visit_id", $pageDetail[ "row_id" ] );
 
@@ -104,8 +99,6 @@ if ( $pageDetail[ "row_detail" ][ "status" ]->value === "ended" ) {
     unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 1 ] );
 
 }
-
-
 
 /**
  * Кнопка "Печать договора"

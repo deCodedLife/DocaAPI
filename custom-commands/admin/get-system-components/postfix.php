@@ -12,14 +12,11 @@ $currentUser = $API->getCurrentUser();
 
 if ( $currentUser ) {
 
-    $userSalaryType = $API->DB->from( "users" )
+    $userDetail = $API->DB->from( "users" )
         ->where( "id", $currentUser->id )
-        ->limit( 1 )
-        ->fetch()[ "salary_type" ];
-    
-    if (
-        ( $userSalaryType == "rate_percent" ) ||
-        ( $userSalaryType == "rate_kpi" )
-    ) $response[ "data" ][ "salary_widget" ] = true;
+        ->fetch();
+
+    if ( !$userDetail[ "domru_login" ] || $userDetail[ "domru_login" ] == "" ) unset( $response[ "data" ][ "dom_ru" ] );
+    if ( $userDetail[ "salary_type" ] != "rate_kpi" ) unset( $response[ "data" ][ "salary_widget" ] );
 
 } // if. $currentUser

@@ -1,0 +1,12 @@
+{
+  "title": "История пополнения бонусов",
+  "properties": [
+    {
+      "title": "Тип KPI",
+      "article": "type",
+      "type": "varchar(75)",
+      "default": null,
+      "is_required": "Y"
+    }
+  ]
+}

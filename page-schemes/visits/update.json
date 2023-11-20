@@ -94,8 +94,9 @@
                       "title": "Печать документов",
                       "background": "dark",
                       "data": {
-                        "save_to": {
+                        "script": {
                           "object": "visitReports",
+                          "command": "add",
                           "properties": {
                             "client_id": ":clients_id",
                             "user_id": ":user_id"
@@ -114,6 +115,14 @@
                       "title": "Талон",
                       "background": "dark",
                       "data": {
+                        "script": {
+                          "object": "visits",
+                          "command": "update",
+                          "properties": {
+                            "id": ":id",
+                            "status": "waited"
+                          }
+                        },
                         "document_article": "talon",
                         "is_edit": false,
                         "scheme_name": "visits",
@@ -127,7 +136,11 @@
                       "title": "Поставить задачу",
                       "background": "dark",
                       "icon": "",
-                      "page": "tasks/add"
+                      "page": "tasks/add",
+                      "context": {
+                        "form": "clients",
+                        "row_id": ":clients_id"
+                      }
                     }
                   },
                   {
@@ -195,7 +208,7 @@
                         "title": "",
                         "fields": [
                           "visits_ids",
-                          "products_display",
+                          "doca_services",
                           "pay_method",
                           "action",
                           "sum_cash",

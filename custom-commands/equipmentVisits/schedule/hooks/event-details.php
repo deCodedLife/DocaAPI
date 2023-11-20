@@ -1,41 +1,56 @@
-<?php
+<?php //X
+
 
 /**
  * Определение цвета Записи
  */
-switch ( $event[ "status" ][ "value" ] ) {
+switch ( $event[ "status" ] ) {
 
     case "planning":
-        $event[ "color" ] = "primary";
+        $event[ "color" ] = "blue";
         break;
 
     case "ended":
-        $event[ "color" ] = "danger";
+        $event[ "color" ] = "red";
         break;
 
     case "process":
-        $event[ "color" ] = "warning";
+        $event[ "color" ] = "pink";
         break;
 
+    case "online":
+        $event[ "color" ] = "light_blue";
+        break;
 
+    case "repeated":
+        $event[ "color" ] = "yellow";
+        break;
+
+    case "moved":
+        $event[ "color" ] = "orange";
+        break;
+
+    case "waited":
+        $event[ "color" ] = "green";
+        break;
 
 } // switch. $event[ "status" ][ "value" ]
 
+if ( $event[ "status" ] == "ended" && $event[ "is_payed" ] == "Y" ) $event[ "color" ] = "purple";
 
 /**
  * Определение иконки Записи
  */
 
-if ( $event[ "is_payed" ] ) $event[ "icons" ][] = "shopping-basket";
-if ( $event[ "is_earlier" ] ) $event[ "icons" ][] = "time";
+if ( $event[ "is_payed" ] == "Y" ) $event[ "icons" ][] = "rub";
+if ( $event[ "is_earlier" ] == "Y" ) $event[ "icons" ][] = "time";
 
 
 /**
  * Получение детальной информации о пациенте
  */
 $clientDetail = $API->DB->from( "clients" )
-    ->where( "id", $event[ "clients_id" ][ 0 ][ "value" ] )
-    ->limit( 1 )
+    ->where( "id", $event[ "client_id" ] )
     ->fetch();
 
 /**
@@ -48,16 +63,31 @@ $eventTime =
 /**
  * Получение пациента
  */
-$eventClient = "№ " . $clientDetail[ "id" ] . " " . $clientDetail[ "last_name" ] . " " . mb_substr( $clientDetail[ "first_name" ], 0, 1, "UTF-8" ) . ". " . mb_substr( $clientDetail[ "patronymic" ], 0, 1, "UTF-8") . ".";
-$eventClientDetails = "№ " . $clientDetail[ "id" ] . " " . $clientDetail[ "last_name" ] . " " . $clientDetail[ "first_name" ] . " " . $clientDetail[ "patronymic" ];
+$eventClient = "№" . $clientDetail[ "id" ] . " " . $clientDetail[ "last_name" ] . " " . mb_substr( $clientDetail[ "first_name" ], 0, 1, "UTF-8" ) . ". " . mb_substr( $clientDetail[ "patronymic" ], 0, 1, "UTF-8") . ".";
+$eventClientDetails = "№" . $clientDetail[ "id" ] . " " . $clientDetail[ "last_name" ] . " " . $clientDetail[ "first_name" ] . " " . $clientDetail[ "patronymic" ];
 
 /**
  * Получение услуг
  */
-$eventServices = "";
-foreach ( $event[ "services_id" ] as $eventService ) $eventServices .= $eventService[ "title" ] . ", ";
-if ( $eventServices ) $eventServices = substr( $eventServices, 0, -2 );
+$eventServices = $event[ "service_id" ][ "title" ];
 
+$phone = [];
+if ( $clientDetail[ "phone" ] ) {
+
+    $phoneFormat = "+" . sprintf("%s (%s) %s-%s-%s",
+            substr($clientDetail["phone"], 0, 1),
+            substr($clientDetail["phone"], 1, 3),
+            substr($clientDetail["phone"], 4, 3),
+            substr($clientDetail["phone"], 7, 2),
+            substr($clientDetail["phone"], 9)
+        );
+
+    $phone =  [
+        "icon" => "conversation",
+        "value" => $phoneFormat
+    ];
+
+}
 
 /**
  * Заполнение описания Записи
@@ -77,19 +107,10 @@ $eventDetails = [
         "icon" => "customers",
         "value" => $eventClientDetails
     ],
-    [
-        "icon" => "conversation",
-        "value" => sprintf("+%s (%s) %s-%s-%s",
-            substr( $clientDetail[ "phone" ], 0, 1 ),
-            substr( $clientDetail[ "phone" ], 1, 3 ),
-            substr( $clientDetail[ "phone" ], 4, 3 ),
-            substr( $clientDetail[ "phone" ], 7, 2 ),
-            substr( $clientDetail[ "phone" ], 9 )
-        )
-    ],
+    $phone,
     [
         "icon" => "user",
-        "value" => $event[ "equipment_id" ][ 0 ][ "title" ]
+        "value" => "Кабинет №" . $event[ "user_id" ][ 0 ][ "title" ]
     ],
     [
         "icon" => "stethoscope",
