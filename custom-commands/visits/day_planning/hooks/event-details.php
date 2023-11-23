@@ -94,7 +94,28 @@ switch ( $event[ "status" ] ) {
  * Добавление кнопок
  */
 
-if ( $event[ "status" ] == "planning" ) $eventDetails[ "buttons" ][] = [
+if ( $event[ "status" ] ) $eventDetails[ "buttons" ][] = [
+    "type"=>"print",
+    "settings"=> [
+        "title"=>"Печатать",
+        "background"=>"dark",
+        "icon"=>"print",
+        "data" => [
+            "save_to" => [
+                "object"=> "visitReports",
+                "properties"=> [
+                    "client_id"=> $event[ "clients" ][ 0 ][ "id" ],
+                    "user_id"=> $event[ "user_id" ]
+                ]
+            ],
+            "is_edit"=> true,
+            "scheme_name"=> "visits",
+            "row_id"=> $event[ "id" ]
+        ]
+    ]
+];
+
+if ( $event[ "status" ] == "waited" ) $eventDetails[ "buttons" ][] = [
     "type" => "script",
     "settings" => [
         "title" => "Принять пациента",
@@ -123,26 +144,7 @@ if ( $event[ "status" ] == "process" ) $eventDetails[ "buttons" ][] = [
     ]
 ];
 
-if ( $event[ "status" ] == "process" ) $eventDetails[ "buttons" ][] = [
-    "type"=>"print",
-    "settings"=> [
-        "title"=>"Печатать",
-        "background"=>"dark",
-        "icon"=>"print",
-        "data" => [
-            "save_to" => [
-                "object"=> "visitReports",
-                "properties"=> [
-                    "client_id"=> $event[ "clients" ][ 0 ][ "id" ],
-                    "user_id"=> $event[ "user_id" ]
-                ]
-            ],
-            "is_edit"=> true,
-            "scheme_name"=> "visits",
-            "row_id"=> $event[ "id" ]
-        ]
-    ]
-];
+
 
 if ( $event[ "status" ] == "process" ) $eventDetails[ "buttons" ][] = [
     "type" => "script",

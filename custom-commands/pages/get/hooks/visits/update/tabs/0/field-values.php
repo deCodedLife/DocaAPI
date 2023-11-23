@@ -7,47 +7,39 @@
 /**
  * Сформированный массив клиентов
  */
-$clients = [];
 
-/**
- * Обход списка
- */
+$clients = $API->DB->from( "clients" )
+    ->innerJoin( "visits_clients on visits_clients.client_id = clients.id" )
+    ->where( "visits_clients.visit_id", $pageDetail[ "row_id" ] );
 
-foreach ( $generatedTab[ "settings" ][ "areas" ][ 0 ][ "blocks" ][ 1 ][ "fields" ][ 1 ][ "list" ] as $client ) {
+foreach ( $clients as $client ) {
 
-    /**
-     * Получение детальной информации о клиенте
-     */
-    $clientDetail = $API->DB->from( "clients" )
-        ->where( "id", $client[ "value" ] )
-        ->limit( 1 )
-        ->fetch();
+    if ( $client[ "phone" ] ) {
 
-    /**
-     * Форматирование телефона
-     */
-    $phoneFormat = "+" . sprintf("%s (%s) %s-%s-%s",
-            substr($clientDetail [ "phone" ], 0, 1),
-            substr($clientDetail [ "phone" ], 1, 3),
-            substr($clientDetail [ "phone" ], 4, 3),
-            substr($clientDetail [ "phone" ], 7, 2),
-            substr($clientDetail [ "phone" ], 9)
-        );
+        $phoneFormat = ", +" . sprintf("%s (%s) %s-%s-%s",
+                substr($client["phone"], 0, 1),
+                substr($client["phone"], 1, 3),
+                substr($client["phone"], 4, 3),
+                substr($client["phone"], 7, 2),
+                substr($client["phone"], 9)
+            );
 
-    /**
-     * Форматирование телефона
-     */
-    $clients[] = [
-        "title" => $clientDetail[ "last_name" ] . " " . $clientDetail[ "first_name" ] . " " . $clientDetail[ "patronymic" ] . ", " . $phoneFormat,
-        "value" => $client[ "value" ]
-    ];
+    } else {
 
-}
+        $phoneFormat = "";
+
+    }
+
+    $clientsInfo[] = "№{$client[ "id" ]} {$client[ "last_name" ]} {$client[ "first_name" ]} {$client[ "patronymic" ]} $phoneFormat";
+
+} // foreach. $clients
+
 
 /**
  * Переназначение значений списка
  */
-$generatedTab[ "settings" ][ "areas" ][ 0 ][ "blocks" ][ 1 ][ "fields" ][ 1 ][ "list" ] = $clients;
+$generatedTab[ "settings" ][ "areas" ][ 0 ][ "blocks" ][ 1 ][ "fields" ][ 3 ][ "is_visible" ] = true;
+$generatedTab[ "settings" ][ "areas" ][ 0 ][ "blocks" ][ 1 ][ "fields" ][ 3 ][ "value" ] = $clientsInfo;
 $generatedTab[ "components" ][ "buttons" ][ 0 ][ "settings" ][ "context" ][ "owner_id" ] = $pageDetail[ "row_detail" ][ "user_id" ]->value;
 
 

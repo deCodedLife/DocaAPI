@@ -233,19 +233,19 @@
           "value": "ended"
         },
         {
-          "title": "Завершено",
+          "title": "Ожидает",
           "value": "waited"
         },
         {
-          "title": "Завершено",
+          "title": "Онлайн запись",
           "value": "online"
         },
         {
-          "title": "Завершено",
+          "title": "Повтроное",
           "value": "repeated"
         },
         {
-          "title": "Завершено",
+          "title": "Перенесен",
           "value": "moved"
         }
       ]
