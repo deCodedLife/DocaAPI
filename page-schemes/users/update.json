@@ -51,10 +51,10 @@
                   "add": "workDays/addEvent",
                   "update": "workDays/updateEvent"
                 },
-                "context": {
-                  "form": "users",
-                  "row_id": ":id"
-                }
+                "context_keys": [
+                  "store_id",
+                  "user_id"
+                ]
               },
               "components": {
                 "buttons": [

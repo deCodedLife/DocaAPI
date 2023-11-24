@@ -414,12 +414,10 @@
       "is_unique": false,
       "is_autofill": true,
       "is_visible": false,
-      "is_hook": true,
       "is_variable": false,
       "use_in_commands": [
         "add",
         "update",
-        "hook",
         "get"
       ],
       "require_in_commands": [],

@@ -6,9 +6,6 @@
       "title": "Расписание оборудования",
       "type": "schedule",
       "size": 4,
-      "required_permissions": [
-        "director_schedule"
-      ],
       "required_modules": [],
       "settings": {
         "object": "equipmentVisits",

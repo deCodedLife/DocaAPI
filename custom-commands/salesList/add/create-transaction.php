@@ -71,6 +71,7 @@ foreach ( $requestData->visits_ids ?? [] as $visit ) {
         ->where( "id", $visit )
         ->execute();
 
+
 } // foreach. $requestData->visits_ids as $visit
 
 

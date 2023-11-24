@@ -33,8 +33,8 @@ $requestData->client_id = $pageDetail[ "client_id" ];
 /**
  * Вызов скрипта
  */
-require_once( $publicAppPath . '/custom-libs/sales/include.php' );
-require_once( $publicAppPath . '/custom-libs/sales/projects/doca/business_logic.php' );
+//require_once( $publicAppPath . '/custom-libs/sales/include.php' );
+//require_once( $publicAppPath . '/custom-libs/sales/projects/doca/business_logic.php' );
 
 
 /**
@@ -55,8 +55,10 @@ $formFieldValues = [
 /**
  * Получение информации о продаже
  */
-$saleDetails =  $API->DB->from( "saleVisits" )
-    ->where( "visit_id", $pageDetail[ "row_id" ] )
+$saleDetails = $API->DB->from( "salesList" )
+    ->innerJoin( "saleVisits ON saleVisits.sale_id = salesList.id" )
+    ->where( "saleVisits.visit_id", $pageDetail[ "row_id" ] )
+    ->limit(1)
     ->fetch();
 
 
@@ -69,61 +71,48 @@ if ( $visitDetails[ "is_payed" ] == "Y" || ( $saleDetails && $saleDetails[ "stat
     /**
      * Заполнение полей запросом в таблицу
      */
-    $sale =
-        $API->DB->from( "salesList" )
-            ->innerJoin( "saleVisits ON saleVisits.sale_id = salesList.id" )
-            ->where( "saleVisits.visit_id", $pageDetail[ "row_id" ] )
-            ->fetch();
+    $formFieldValues = $saleDetails;
 
+    /**
+     * Приведение данных к правильным типам
+     */
+    $formFieldValues[ "summary" ] = (float) $formFieldValues[ "summary" ];
+    $formFieldValues[ "sum_cash" ] = (float) $formFieldValues[ "sun_cash" ];
+    $formFieldValues[ "sum_card" ] = (float) $formFieldValues[ "sum_card" ];
+    $formFieldValues[ "sum_bonus" ] = (float) $formFieldValues[ "sum_bonus" ];
+    $formFieldValues[ "sum_deposit" ] = (float) $formFieldValues[ "sum_deposit" ];
+    $formFieldValues[ "is_combined" ] = $formFieldValues[ "is_combined" ] == "Y";
+    $formFieldValues[ "online_receipt" ] = $formFieldValues[ "online_receipt" ] == "Y";
 
-    if ( $sale ) {
+    foreach ( $API->DB->from( "saleVisits" )
+                  ->where( "sale_id", $saleDetails[ "sale_id" ] ) as $saleVisit )
+        $formFieldValues[ "visits_ids" ][ "value" ][] = $saleVisit[ "visit_id" ];
 
-        $formFieldValues = $sale;
+    $saleServices = $API->DB->from( "salesProductsList" )
+        ->where( "sale_id", $saleDetails[ "id" ] );
 
-        /**
-         * Приведение данных к правильным типам
-         */
-        $formFieldValues[ "summary" ] = (float) $formFieldValues[ "summary" ];
-        $formFieldValues[ "sum_cash" ] = (float) $formFieldValues[ "sun_cash" ];
-        $formFieldValues[ "sum_card" ] = (float) $formFieldValues[ "sum_card" ];
-        $formFieldValues[ "sum_bonus" ] = (float) $formFieldValues[ "sum_bonus" ];
-        $formFieldValues[ "sum_deposit" ] = (float) $formFieldValues[ "sum_deposit" ];
-        $formFieldValues[ "is_combined" ] = $formFieldValues[ "is_combined" ] == "Y";
-        $formFieldValues[ "online_receipt" ] = $formFieldValues[ "online_receipt" ] == "Y";
-
-        foreach ( $API->DB->from( "saleVisits" )
-                      ->where( "sale_id", $saleDetails[ "sale_id" ] ) as $saleVisit )
-            $formFieldValues[ "visits_ids" ][ "value" ][] = $saleVisit[ "visit_id" ];
-
-        $saleServices = $API->DB->from( "salesProductsList" )
-            ->where( "sale_id", $sale[ "id" ] );
-
-        foreach ( $saleServices as $service )
-            $formFieldValues[ "products_display" ][ "value" ][] = $service[ "title" ];
-
-    }
+    foreach ( $saleServices as $service )
+        $formFieldValues[ "products_display" ][ "value" ][] = $service[ "title" ];
 
 } else {
 
-    $saleServices = $API->DB->from( "services" )
-        ->innerJoin( "visits_services ON visits_services.service_id = services.id" )
-        ->where( "visits_services.visit_id", $pageDetail[ "row_id" ] );
+//    $saleServices = $API->DB->from( "services" )
+//        ->innerJoin( "visits_services ON visits_services.service_id = services.id" )
+//        ->where( "visits_services.visit_id", $pageDetail[ "row_id" ] );
 
-    foreach ( $saleServices as $service ) {
-
-        $formFieldValues[ "products_display" ][ "value" ][ ] = $service[ "title" ];
-        $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "products" ][] = [
-            "title" => $service[ "title" ],
-            "type" => "service",
-            "cost" => $service[ "price" ],
-            "amount" => 1,
-            "product_id" => $service[ "id" ]
-        ];
-
-    }
+//    foreach ( $saleServices as $service ) {
+//
+//        $formFieldValues[ "products_display" ][ "value" ][ ] = $service[ "title" ];
+//        $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "products" ][] = [
+//            "title" => $service[ "title" ],
+//            "type" => "service",
+//            "cost" => $service[ "price" ],
+//            "amount" => 1,
+//            "product_id" => $service[ "id" ]
+//        ];
+//
+//    }
 
 }
 
-if ( $visitDetails[ "status" ] == "ended" ) unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 1 ] );
-if ( $visitDetails[ "status" ] != "ended" ) unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 3 ] );
 

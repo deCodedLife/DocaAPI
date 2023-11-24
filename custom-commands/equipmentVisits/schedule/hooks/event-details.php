@@ -1,4 +1,6 @@
-<?php //X
+<?php
+
+$API->returnResponse( "What?" );
 
 
 /**

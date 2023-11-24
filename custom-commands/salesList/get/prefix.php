@@ -15,11 +15,13 @@ if ( $requestData->context->block === "list" ) {
 
     $requestSettings[ "filter" ][ "status = ?" ] = "done";
 
+    if ( !$requestData->sort_by ) {
+
+        $requestData->sort_by = "created_at";
+        $requestData->sort_order = "desc";
+
+    }
+
 }
 
-if ( !$requestData->sort_by ) {
 
-    $requestData->sort_by = "created_at";
-    $requestData->sort_order = "desc";
-
-}

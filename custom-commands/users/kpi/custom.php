@@ -67,10 +67,7 @@ $userDetail = $API->DB->from( "users" )
  * если не настроены услуги
  */
 
-if ( count( $kpiServices ) == 0 )
-    $API->returnResponse( [] );
-
-if ( $userDetail[ "salary_type" ] != "rate_kpi" )
+if ( $userDetail[ "salary_type" ] != "rate_kpi" &&  count( $kpiServices ) == 0  )
     $API->returnResponse( [] );
 
 
