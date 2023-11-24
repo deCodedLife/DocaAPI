@@ -7,9 +7,9 @@ $userDetails = $API->DB->from( "users_stores" )
     ->fetch();
 
 $pageScheme[ "structure" ][ 0 ][ "settings" ][ "filters" ] = [
-    "performers_article" => "user_id",
-    "performers_table" => "users",
-    "performers_title" => "first_name",
+    "performers_article" => "equipment_id",
+    "performers_table" => "wearableEquipment",
+    "performers_title" => "title",
     "store_id" => $userDetails[ "store_id" ] ?? $API->DB->from( "stores" )
             ->limit(1)->fetch()[ "id" ],
     "start_at" =>  date( 'Y-m-d' )

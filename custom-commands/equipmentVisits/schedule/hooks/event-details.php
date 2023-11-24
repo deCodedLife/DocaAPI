@@ -1,7 +1,5 @@
 <?php
 
-$API->returnResponse( "What?" );
-
 
 /**
  * Определение цвета Записи
