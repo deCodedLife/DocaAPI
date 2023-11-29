@@ -298,7 +298,7 @@
       "is_disabled": false,
       "list_donor": {
         "table": "clients",
-        "properties_title": "title"
+        "properties_title": "last_name"
       },
       "annotation": "",
       "is_hook": true

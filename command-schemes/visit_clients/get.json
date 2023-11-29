@@ -3,5 +3,6 @@
   "type": "get",
   "object_scheme": "visit_clients",
   "required_permissions": [],
-  "required_modules": []
+  "required_modules": [],
+  "should_log": false
 }

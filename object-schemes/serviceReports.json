@@ -1,7 +1,6 @@
 {
   "title": "Услуги - отчет",
   "table": "services",
-  "is_trash": true,
   "properties": [
     {
       "title": "Сумма (от)",

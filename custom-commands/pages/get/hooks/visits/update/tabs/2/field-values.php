@@ -15,5 +15,9 @@ $clientDetails = $API->DB->from( "clients" )
 
 foreach ( $generatedTab[ "settings" ][ "areas" ] as $areaKey => $area )
     foreach ( $area[ "blocks" ] as $blockKey => $block )
-        foreach ( $block[ "fields" ] as $fieldKey => $field )
+        foreach ( $block[ "fields" ] as $fieldKey => $field ) {
+
             $generatedTab[ "settings" ][ "areas" ][ $areaKey ][ "blocks" ][ $blockKey ][ "fields" ][ $fieldKey ][ "value" ] = $clientDetails[ $field[ "article" ] ];
+            $generatedTab[ "settings" ][ "areas" ][ $areaKey ][ "blocks" ][ $blockKey ][ "fields" ][ $fieldKey ][ "is_disabled" ] = true;
+
+        }

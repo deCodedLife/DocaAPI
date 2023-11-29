@@ -3,5 +3,6 @@
   "type": "remove",
   "object_scheme": "visits_services",
   "required_permissions": [],
-  "required_modules": []
+  "required_modules": [],
+  "should_log": false
 }

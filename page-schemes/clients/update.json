@@ -367,10 +367,10 @@
           ]
         },
         {
-          "title": "Мед. карта",
+          "title": "Мед карта",
           "body": [
             {
-              "title": "Мед. карта",
+              "title": "Мед карта",
               "type": "accordion",
               "size": 4,
               "settings": {
@@ -452,6 +452,7 @@
               "size": 4,
               "settings": {
                 "widgets_group": "deposit_statistic",
+                "linked_filter": "list_salesList",
                 "filters": [
                   {
                     "property": "client_id",

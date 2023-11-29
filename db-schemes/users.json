@@ -145,7 +145,7 @@
       "title": "Выводить в Расписании",
       "article": "is_visible_in_schedule",
       "type": "char(1)",
-      "default": "Y",
+      "default": "N",
       "is_required": "N"
     },
     {

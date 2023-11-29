@@ -33,8 +33,8 @@ $requestData->client_id = $pageDetail[ "client_id" ];
 /**
  * Вызов скрипта
  */
-//require_once( $publicAppPath . '/custom-libs/sales/include.php' );
-//require_once( $publicAppPath . '/custom-libs/sales/projects/doca/business_logic.php' );
+require_once( $publicAppPath . '/custom-libs/sales/include.php' );
+require_once( $publicAppPath . '/custom-libs/sales/projects/doca/business_logic.php' );
 
 
 /**
@@ -96,22 +96,22 @@ if ( $visitDetails[ "is_payed" ] == "Y" || ( $saleDetails && $saleDetails[ "stat
 
 } else {
 
-//    $saleServices = $API->DB->from( "services" )
-//        ->innerJoin( "visits_services ON visits_services.service_id = services.id" )
-//        ->where( "visits_services.visit_id", $pageDetail[ "row_id" ] );
+    $saleServices = $API->DB->from( "services" )
+        ->innerJoin( "visits_services ON visits_services.service_id = services.id" )
+        ->where( "visits_services.visit_id", $pageDetail[ "row_id" ] );
 
-//    foreach ( $saleServices as $service ) {
-//
-//        $formFieldValues[ "products_display" ][ "value" ][ ] = $service[ "title" ];
-//        $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "products" ][] = [
-//            "title" => $service[ "title" ],
-//            "type" => "service",
-//            "cost" => $service[ "price" ],
-//            "amount" => 1,
-//            "product_id" => $service[ "id" ]
-//        ];
-//
-//    }
+    foreach ( $saleServices as $service ) {
+
+        $formFieldValues[ "products_display" ][ "value" ][ ] = $service[ "title" ];
+        $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "products" ][] = [
+            "title" => $service[ "title" ],
+            "type" => "service",
+            "cost" => $service[ "price" ],
+            "amount" => 1,
+            "product_id" => $service[ "id" ]
+        ];
+
+    }
 
 }
 

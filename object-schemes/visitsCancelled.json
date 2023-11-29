@@ -1,7 +1,7 @@
 {
   "title": "Записи к врачу",
   "table": "visits",
-  "is_trash": true,
+  "is_trash": false,
   "properties": [
     {
       "title": "Дата (от)",

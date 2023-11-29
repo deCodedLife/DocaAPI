@@ -1,1 +1,8 @@
-{"title":"Изменение","type":"update","object_scheme":"warehouses","modules":[],"permissions":[]}
+{
+  "title": "Изменение",
+  "type": "update",
+  "object_scheme": "warehouses",
+  "modules": [],
+  "permissions": [],
+  "should_log": false
+}

@@ -26,6 +26,7 @@ $sum_card = $requestData->sum_card ?? 0;
 $sum_cash = $requestData->sum_cash ?? 0;
 $isReturn = ($requestData->action ?? 'sell') === "sellReturn";
 $store_id = $requestData->store_id;
+$employee = $requestData->user_id;
 
 
 /**
@@ -114,6 +115,16 @@ if ( $isReturn ) {
         ->innerJoin( "saleVisits on saleVisits.sale_id = {" . DB_SALES_LIST . "}.id" )
         ->where( "saleVisits.visit_id", $requestData->id )
         ->fetch();
+
+    $personalDetails = $API->DB->from( "workingTime" )
+        ->where( [
+            "row_id" => $saleDetails[ "id" ],
+            "user" => $employee
+        ] )
+        ->fetch();
+
+    if ( $personalDetails )
+        $saleDetails[ "summary" ] = $personalDetails[ "price" ];
 
     $saleSummary = $saleDetails[ "summary" ];
 

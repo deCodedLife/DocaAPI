@@ -15,7 +15,6 @@ $userDetail = $API->DB->from( "users" )
     ->fetch();
 
 
-
 /**
  * Для менеджера и врачей kpi считается по разному
  */
@@ -57,7 +56,7 @@ if ( $userDetail[ "is_visible_in_schedule" ] == 'N' ) {
  * Получаем количество и стоимость услуг
  */
 foreach ( $user_sales as $sale ) {
-
+    
     $sale = $API->DB->from( "salesList" )
         ->where( "id", $sale[ "id" ] )
         ->fetch();

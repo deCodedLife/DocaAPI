@@ -1,2 +1,4 @@
 <?php
-$API->returnResponse( shell_exec( "cd /var/www/docacrm/data/www/admin | git pull" ) );
+
+$output = shell_exec( "/var/www/docacrm/data/www/updateCRM.sh" );
+$API->returnResponse( $output );

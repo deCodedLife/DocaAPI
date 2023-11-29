@@ -3,5 +3,6 @@
   "type": "get",
   "object_scheme": "warehouses",
   "modules": [],
-  "permissions": []
+  "permissions": [],
+  "should_log": false
 }

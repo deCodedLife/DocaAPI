@@ -51,7 +51,7 @@ $services    = $requestData->services_id ?? $services;
 $employee    = $requestData->user_id ?? $employee;
 $assistant   = $requestData->assist_id ?? $assistant;
 $store_id    = $requestData->store_id ?? $store_id;
-
+$use_assistant = false;
 
 
 if ( strtotime( $start_at ) == strtotime( $end_at ) ) {
@@ -175,6 +175,7 @@ function isCabinetOccupied( $cabinetID, $visits ): bool {
 if ( isCabinetOccupied( $cabinet, $existingVisits ) ) $API->returnResponse( "Кабинет занят", 400 );
 
 
+
 /**
  * Проверка на занятость клиента
  * @param $clients
@@ -211,6 +212,7 @@ function isClientBusy( $client, $visits ): int {
 } // function isClientBusy( $clients, $visits )
 
 
+
 /**
  *  Обход всех клиентов
  */
@@ -244,6 +246,7 @@ foreach ( $clients as $client ) {
 } // foreach ( $clients as $client )
 
 
+
 /**
  * Проверка дополнительного сотрудника
  * @param $serviceDetails
@@ -274,6 +277,7 @@ function employeesAccountedFor( $serviceDetails, $employee ): bool {
 } // function employeesAccountedFor( $services, $employees )
 
 
+
 /**
  * Проверка второго исполнителя для каждой услуги
  */
@@ -282,6 +286,8 @@ foreach ( $services as $service ) {
     $serviceDetails = $API->DB->from( "services" )
         ->where( "id", $service )
         ->fetch();
+
+    if ( $serviceDetails[ "is_consider_second_performer_time" ] == "Y" ) $use_assistant = true;
 
     if ( !employeesAccountedFor( $serviceDetails, $assistant ) )
         $API->returnResponse( "Укажите второго исполнителя для услуги {$serviceDetails[ 'title' ]}", 500 );
@@ -293,6 +299,7 @@ foreach ( $services as $service ) {
     if ( $serviceDetails[ "is_consider_second_performer_time" ] == "N" ) $employees = [ $employees[ 0 ] ];
 
 } // foreach ( $services as $service )
+
 
 
 /**
@@ -316,13 +323,10 @@ function isEmployeeBusy( $employee, $visits ): int {
          * Получение всех сотрудников из посещения
          * PS: Запрос $API->DB->from... ->where( "user_id in (?)", join( ... ) ) не отрабатывает(
          */
-        // TODO
-//        $visit_employees = mysqli_query(
-//            $API->DB_connection,
-//            "SELECT * FROM visits_users WHERE visit_id = {$visit[ "id" ]} AND user_id = $employee"
-//        );
 
-//        if ( mysqli_num_rows( $visit_employees ) != 0 ) return $visit[ "id" ];
+        // TODO
+        if ( $visit[ "user_id" ] == $employee ) return $visit[ "id" ];
+        if ( $visit[ "assist_id" ] == $employee ) return $visit[ "id" ];
 
     } // foreach ( $visits as $visit )
 
@@ -332,12 +336,16 @@ function isEmployeeBusy( $employee, $visits ): int {
 
 
 /**
- * Обход сотрудников
- */
-/**
  * Проверка сотрудника на занятость
  */
 $busyVisitID = isEmployeeBusy( $employee, $existingVisits );
+
+if ( $use_assistant ) {
+    $employee = $assistant;
+    $busyVisitID = $busyVisitID != 0 ? $busyVisitID : isEmployeeBusy( $employee, $existingVisits );
+}
+
+
 if ( $busyVisitID != 0 ) {
 
     $employee_details = $API->DB->from( "users" )
@@ -352,4 +360,3 @@ if ( $busyVisitID != 0 ) {
     $API->returnResponse( "Сотрудник {$employee_details[ 'last_name' ]} занят. Филиал ({$store_details[ 'title' ]})", 500 );
 
 }
-

@@ -3,5 +3,6 @@
   "type": "get",
   "object_scheme": "workDays",
   "modules": [],
-  "permissions": []
+  "permissions": [],
+  "should_log": false
 }

@@ -100,7 +100,7 @@
                         "save_to": {
                           "object": "visitReports",
                           "properties": {
-                            "client_id": ":clients_id",
+                            "client_id": ":client_id",
                             "user_id": ":user_id"
                           }
                         },
@@ -133,7 +133,7 @@
                       "page": "tasks/add",
                       "context": {
                         "form": "clients",
-                        "row_id": ":clients_id"
+                        "row_id": ":client_id"
                       }
                     }
                   },
@@ -338,13 +338,13 @@
                         "save_to": {
                           "object": "clientContracts",
                           "properties": {
-                            "row_id": ":clients_id"
+                            "row_id": ":client_id"
                           }
                         },
                         "is_edit": true,
                         "document_article": "services_contract",
                         "scheme_name": "clients",
-                        "row_id": ":clients_id"
+                        "row_id": ":client_id"
                       }
                     }
                   },
@@ -357,7 +357,7 @@
                       "page": "tasks/add",
                       "context": {
                         "form": "clients",
-                        "row_id": ":clients_id"
+                        "row_id": ":client_id"
                       }
                     }
                   }
@@ -380,7 +380,7 @@
                 "filters": [
                   {
                     "property": "client_id",
-                    "value": ":clients_id"
+                    "value": ":client_id"
                   }
                 ]
               },
@@ -399,8 +399,8 @@
                 "object": "visits",
                 "filters": [
                   {
-                    "property": "clients_id",
-                    "value": ":clients_id"
+                    "property": "client_id",
+                    "value": ":client_id"
                   }
                 ]
               },
@@ -421,7 +421,7 @@
                 "filters": [
                   {
                     "property": "client_id",
-                    "value": ":clients_id"
+                    "value": ":client_id"
                   }
                 ]
               },
@@ -441,7 +441,7 @@
                 "filters": [
                   {
                     "property": "client_id",
-                    "value": ":clients_id"
+                    "value": ":client_id"
                   }
                 ]
               },
@@ -461,7 +461,7 @@
                 "filters": [
                   {
                     "property": "client_id",
-                    "value": ":clients_id"
+                    "value": ":client_id"
                   }
                 ]
               },
@@ -476,7 +476,7 @@
                 "filters": [
                   {
                     "property": "client_id",
-                    "value": ":clients_id"
+                    "value": ":client_id"
                   }
                 ],
                 "is_edit": false
@@ -491,7 +491,7 @@
                       "page": "clients/bonus",
                       "context": {
                         "form": "bonus",
-                        "row_id": ":clients_id"
+                        "row_id": ":client_id"
                       }
                     }
                   }
@@ -512,7 +512,7 @@
                 "filters": [
                   {
                     "property": "client_id",
-                    "value": ":clients_id"
+                    "value": ":client_id"
                   }
                 ]
               },
@@ -527,7 +527,7 @@
                 "filters": [
                   {
                     "property": "client_id",
-                    "value": ":clients_id"
+                    "value": ":client_id"
                   },
                   {
                     "property": "action",
@@ -546,7 +546,7 @@
                       "background": "dark",
                       "context": {
                         "form": "deposit",
-                        "row_id": ":clients_id"
+                        "row_id": ":client_id"
                       }
                     }
                   }
@@ -566,8 +566,8 @@
                 "object": "logs",
                 "filters": [
                   {
-                    "property": "clients_id",
-                    "value": ":clients_id"
+                    "property": "client_id",
+                    "value": ":client_id"
                   }
                 ]
               },

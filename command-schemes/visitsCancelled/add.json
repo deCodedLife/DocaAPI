@@ -3,5 +3,6 @@
   "type": "add",
   "object_scheme": "visitsCancelled",
   "required_permissions": [],
-  "required_modules": []
+  "required_modules": [],
+  "should_log": false
 }

@@ -99,7 +99,7 @@ foreach ( $visits as $visit ) {
             shell_exec("sox -r 48000 -b 16 -e signed-integer -c 1 $talonFilePath/$talonFileName.raw $talonFilePath/$talonFileName.wav" );
             unlink( "$talonFilePath/$talonFileName.raw" );
 
-            chmod( "$talonFilePath/$talonFileName.wav", 655 );
+            chmod( "$talonFilePath/$talonFileName.wav", 777 );
 
         } // if. !file_exists( $talonFilePath )
 

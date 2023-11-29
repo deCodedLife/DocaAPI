@@ -173,11 +173,12 @@
                     "required_permissions": [],
                     "required_modules": [],
                     "settings": {
-                      "is_search": false,
+                      "is_search": true,
                       "recipient_property": "id",
                       "donor_object": "services",
                       "donor_property_title": "title",
-                      "donor_property_value": "id"
+                      "donor_property_value": "id",
+                      "joined_field": "category_id"
                     }
                   },
                   {

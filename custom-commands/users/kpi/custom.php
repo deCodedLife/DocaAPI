@@ -72,26 +72,22 @@ if ( $userDetail[ "salary_type" ] != "rate_kpi" &&  count( $kpiServices ) == 0  
 
 
 /**
- * Запрос на получение оплаченных продаж услуг сотрудника
+ * Запрос на получение оплаченных продаж
  */
 $salesList = $API->DB->from( "salesList" )
-    ->leftJoin( "salesProductsList ON salesProductsList.sale_id = salesList.id" )
     ->leftJoin( "saleVisits ON saleVisits.sale_id = salesList.id" )
     ->leftJoin( "visits ON visits.id = saleVisits.visit_id" )
     ->select(null)->select([
         "salesList.id",
         "salesList.status",
         "salesList.created_at",
-        "salesProductsList.product_id",
-        "salesProductsList.cost",
-        "salesProductsList.amount",
-        "visits.user_id",
+        "salesList.summary",
+        "visits.author_id",
         "saleVisits.visit_id",
     ])
     ->where( [
-        "salesProductsList.type" => "service",
         "salesList.status" => "done",
-        "visits.user_id" => $requestData->id,
+        "visits.author_id" => $requestData->id,
         "salesList.created_at >= ?" =>  date( 'Y-m-1' ) . " 00:00:00",
         "salesList.created_at <= ?" =>  date( 'Y-m-d' ) . " 23:59:59"
     ] )
@@ -103,7 +99,7 @@ $salesList = $API->DB->from( "salesList" )
  */
 foreach ( $salesList as $sale ) {
 
-    $sum += $sale[ "cost" ] * $sale[ "amount" ];
+    $sum += $sale[ "summary" ];
 
 }
 
@@ -153,7 +149,7 @@ foreach ( $kpiServices as $kpiService ) {
             "salesProductsList.product_id",
             "salesProductsList.cost",
             "salesProductsList.amount",
-            "visits.user_id",
+            "visits.author_id",
             "saleVisits.visit_id",
         ])
         ->where( [
@@ -162,7 +158,7 @@ foreach ( $kpiServices as $kpiService ) {
             "salesList.status" => "done",
             "salesList.created_at >= ?" =>  date( 'Y-m-1' ) . " 00:00:00",
             "salesList.created_at <= ?" =>  date( 'Y-m-d' ) . " 23:59:59",
-            "visits.user_id" => $requestData->id
+            "visits.author_id" => $requestData->id
         ] )
         ->orderBy( "salesList.created_at desc" )
         ->limit ( 0 );

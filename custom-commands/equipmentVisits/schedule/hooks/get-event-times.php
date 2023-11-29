@@ -17,7 +17,8 @@ foreach ( $performersDetail as $performerId => $performerDetail ) {
     /**
      * Кастомный график работы оборудования на 30 дней
      */
-    $datetime = new DateTime( date( "Y-m-d" ) );
+    if ( $requestData->start_at ) $datetime = new DateTime( $requestData->start_at );
+    else $datetime = new DateTime( date( "Y-m-d" ) );
 
     for ( $day = 0; $day < 30; $day++ ) {
 
