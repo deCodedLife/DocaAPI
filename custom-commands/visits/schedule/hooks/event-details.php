@@ -6,8 +6,10 @@
  */
 switch ( $event[ "status" ] ) {
 
+    case "moved":
+    case "planned":
     case "planning":
-        $event[ "color" ] = "blue";
+        $event[ "color" ] = "orange";
         break;
 
     case "ended":
@@ -24,10 +26,6 @@ switch ( $event[ "status" ] ) {
 
     case "repeated":
         $event[ "color" ] = "yellow";
-        break;
-
-    case "moved":
-        $event[ "color" ] = "orange";
         break;
 
     case "waited":
@@ -53,6 +51,21 @@ if ( $event[ "is_earlier" ] == "Y" ) $event[ "icons" ][] = "time";
 $clientDetail = $API->DB->from( "clients" )
     ->where( "id", $event[ "client_id" ] )
     ->fetch();
+
+if ( $clientDetail[ "present_first_name" ] ) {
+    $presentInfo = $clientDetail[ "present_first_name" ] . " ";
+    $presentInfo .= $clientDetail[ "present_last_name" ] . " ";
+    $presentInfo .= $clientDetail[ "present_patronymic" ];
+}
+
+/**
+ * Получение детальной информации о сотруднике
+ */
+$profession = $API->DB->from( "professions" )
+    ->innerJoin( "users_professions on users_professions.profession_id = professions.id" )
+    ->where( "users_professions.user_id", $event[ "user_id" ] )
+    ->fetch()[ "title" ] ?? "";
+
 
 /**
  * Получение времени начала и конца Записи
@@ -112,9 +125,13 @@ $eventDetails = [
         "value" => $eventClientDetails
     ],
     $phone,
+//    [
+//        "icon" => "user",
+//        "value" => "Кабинет №" . $event[ "user_id" ][ 0 ][ "title" ]
+//    ],
     [
-        "icon" => "user",
-        "value" => "Кабинет №" . $event[ "user_id" ][ 0 ][ "title" ]
+        "icon" => "",
+        "value" => $profession
     ],
     [
         "icon" => "stethoscope",
@@ -123,6 +140,10 @@ $eventDetails = [
     [
         "icon" => "",
         "value" => $event[ "price" ] . "₽"
+    ],
+    [
+        "icon" => "",
+        "value" => $presentInfo ?? ""
     ]
 
 ];

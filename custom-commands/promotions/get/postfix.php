@@ -61,8 +61,18 @@ if ( $requestData->context->block === "list" ) {
             ->limit( 1 )
             ->fetch();
 
+        $start = date( 'Y-m-d', strtotime( $row[ "begin_at" ] ) );
 
-        $row[ "period" ] = date( 'Y-m-d H:i', strtotime( $row[ "begin_at" ] ) ) . " - " . date( 'Y-m-d H:i', strtotime( $row[ "end_at" ] ) );
+        $end = date( 'Y-m-d', strtotime( $row[ "end_at" ] ) );
+
+        if ( $row[ "end_at" ] == null ) {
+
+            $end = "по н.в.";
+
+        }
+
+
+        $row[ "period" ] = $start . " - " . $end ;
 
         if ( $detailPromotion[ "promotion_type" ] == "percent" )
             $row[ "value" ] =  $row[ "value" ] . "%";

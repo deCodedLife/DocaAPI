@@ -496,7 +496,7 @@
             "size": 2,
             "article": "summary",
             "data_type": "integer",
-            "field_type": "integer"
+            "field_type": "price"
           },
           {
             "title": "% Выполнения KPI",

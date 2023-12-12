@@ -49,6 +49,7 @@ $saleID = $API->DB->insertInto( "salesList" )
     ->execute();
 
 
+
 /**
  *  Заполнение посещений транзакции
  */
@@ -75,6 +76,9 @@ foreach ( $requestData->visits_ids ?? [] as $visit ) {
 } // foreach. $requestData->visits_ids as $visit
 
 
+/**
+ * Добавление продуктов к продаже
+ */
 foreach ( $requestData->products as $product ) {
 
     $product = (array) $product;
@@ -84,7 +88,9 @@ foreach ( $requestData->products as $product ) {
         ->values( $product )
         ->execute();
 
-    $API->addEvent( "schedule" );
-    $API->addEvent( "salesList" );
-
 } // foreach. $requestData->pay_object as $service
+
+
+
+$API->addEvent( "schedule" );
+$API->addEvent( "salesList" );

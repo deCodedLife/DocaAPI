@@ -208,7 +208,7 @@
                         "title": "",
                         "fields": [
                           "visits_ids",
-                          "doca_services",
+                          "products_display",
                           "pay_method",
                           "action",
                           "sum_cash",

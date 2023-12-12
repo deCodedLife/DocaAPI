@@ -28,7 +28,7 @@ $publicAppPath = $API::$configs[ "paths" ][ "public_app" ];
 $requestData->id = $pageDetail[ "row_id" ];
 $requestData->visits_ids = [ $pageDetail[ "row_id" ] ];
 $requestData->store_id = $visitDetails[ "store_id" ];
-$requestData->client_id = $pageDetail[ "client_id" ];
+$requestData->client_id = $client[ "client_id" ];
 
 /**
  * Вызов скрипта
@@ -43,7 +43,6 @@ require_once( $publicAppPath . '/custom-libs/sales/projects/doca/business_logic.
 $formFieldValues = [
     "sum_cash" => $amountOfPhysicalPayments,
     "action" => "sell",
-    "pay_method" => "cash",
     "store_id" => $visitDetails[ "store_id" ],
     "client_id" => $requestData->client_id,
     "online_receipt" => true,
@@ -96,22 +95,10 @@ if ( $visitDetails[ "is_payed" ] == "Y" || ( $saleDetails && $saleDetails[ "stat
 
 } else {
 
-    $saleServices = $API->DB->from( "services" )
-        ->innerJoin( "visits_services ON visits_services.service_id = services.id" )
-        ->where( "visits_services.visit_id", $pageDetail[ "row_id" ] );
+    foreach ( $formFieldsUpdate[ "products" ] as $product )
+        $formFieldValues[ "products_display" ][ "value" ][] = $product[ "title" ];
 
-    foreach ( $saleServices as $service ) {
-
-        $formFieldValues[ "products_display" ][ "value" ][ ] = $service[ "title" ];
-        $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "products" ][] = [
-            "title" => $service[ "title" ],
-            "type" => "service",
-            "cost" => $service[ "price" ],
-            "amount" => 1,
-            "product_id" => $service[ "id" ]
-        ];
-
-    }
+    $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "products" ] = $formFieldsUpdate[ "products" ];
 
 }
 

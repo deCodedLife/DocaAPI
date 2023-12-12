@@ -163,11 +163,16 @@ if ( $sort_by == "sum" ) {
 
 }
 
-$response[ "detail" ] = [
+if ( $sort_by ) {
 
-    "pages_count" => ceil(count($response[ "data" ]) / $requestData->limit),
-    "rows_count" => count($response[ "data" ])
 
-];
+    $response[ "detail" ] = [
 
-$response[ "data" ] = array_slice($response[ "data" ], $requestData->limit * $requestData->page - $requestData->limit, $requestData->limit);
+        "pages_count" => ceil(count($response[ "data" ]) / $limit),
+        "rows_count" => count($response[ "data" ])
+
+    ];
+
+    $response[ "data" ] = array_slice($response[ "data" ], $limit * $requestData->page - $limit, $limit);
+
+}

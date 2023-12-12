@@ -39,13 +39,17 @@ if ( $requestData->context->block === "list" ) {
             ->where( "id", $expense[ "user_id" ] )
             ->fetch();
 
+        $rowTitle = $user[ "last_name" ] . " ";
+        if ( $user[ "first_name" ] ) $rowTitle .= mb_substr( $user[ "first_name" ], 0, 1 ) . ". ";
+        if ( $user[ "patronymic" ] ) $rowTitle .= mb_substr( $user[ "patronymic" ], 0, 1 ) . ". ";
+
         $listItem[ "client" ][] = [
-            "title" => $user[ "last_name" ],
+            "title" => $rowTitle,
             "value" => $user[ "id" ]
         ];
 
-        $listItem[ "summary" ] = $expense[ "price" ];
-        $listItem[ "operator" ] = $user[ "last_name" ];
+        $listItem[ "summary" ] = $expense[ "price" ] * -1;
+        $listItem[ "operator" ] = $rowTitle;
 
         $listData[] = $listItem;
 
@@ -69,8 +73,12 @@ if ( $requestData->context->block === "list" ) {
             "SELECT * FROM clients WHERE id = {$payment[ "client_id" ]}"
         ));
 
+        $clientName = $client[ "last_name" ] . " ";
+        if ( $client[ "first_name" ] ) $clientName .= mb_substr( $client[ "first_name" ], 0, 1 ) . ". ";
+        if ( $client[ "patronymic" ] ) $clientName .= mb_substr( $client[ "patronymic" ], 0, 1 ) . ". ";
+
         $listItem[ "client" ][] = [
-            "title" => $client[ "last_name" ],
+            "title" => $clientName,
             "value" => $client[ "id" ]
         ];
 
@@ -78,10 +86,14 @@ if ( $requestData->context->block === "list" ) {
 
         $employee = mysqli_fetch_array( mysqli_query(
             $API->DB_connection,
-            "SELECT * FROM users WHERE id = {$payment[ "employee" ]}"
+            "SELECT * FROM users WHERE id = {$payment[ "employee_id" ]}"
         ) );
 
-        $listItem[ "operator" ] = $employee[ "last_name" ];
+        $userName = $employee[ "last_name" ] . " ";
+        if ( $employee[ "first_name" ] ) $userName .= mb_substr( $employee[ "first_name" ], 0, 1 ) . ". ";
+        if ( $employee[ "patronymic" ] ) $userName .= mb_substr( $employee[ "patronymic" ], 0, 1 ) . ". ";
+
+        $listItem[ "operator" ] = $userName;
         $listData[] = $listItem;
 
     } // foreach ( $payments as $payment )

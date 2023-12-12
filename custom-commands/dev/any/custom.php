@@ -1,13 +1,44 @@
 <?php
 
-$data = (array) $API->sendRequest(
-    "visits",
-    "get",
-    [ "id" => 502172 ],
-    $_SERVER[ "SERVER_NAME" ]
-)[ 0 ];
+ini_set( "display_errors", true );
 
-$API->returnResponse( $data );
+$API->DB->update( "visits" )
+    ->set( "status", "planning" )
+    ->where( "status", "planned" )
+    ->execute();
+
+$sqlQuery = "SELECT * FROM `visits` WHERE (NOT cast(start_at as date) = cast(end_at as date));";
+$visits = mysqli_query(
+    $API->DB_connection,
+    $sqlQuery
+);
+
+foreach ( $visits as $visit ) {
+
+    $visitService = $API->DB->from( "visits_services" )
+        ->where( "visit_id", $visit[ "id" ] )
+        ->limit(1)
+        ->fetch();
+
+    if ( $visit[ "user_id" ] == 217 ) $visit[ "equipment_id" ] = 1;
+    if ( $visit[ "user_id" ] == 293 ) $visit[ "equipment_id" ] = 2;
+    if ( $visit[ "user_id" ] == 294 ) $visit[ "equipment_id" ] = 3;
+
+    $visit[ "user_id" ] = $visit[ "assist_id" ];
+    $visit[ "service_id" ] = $visitService[ "service_id" ];
+
+    unset( $visit[ "advert_id" ] );
+    unset( $visit[ "is_online" ] );
+
+    $API->DB->insertInto( "equipmentVisits" )
+        ->values( $visit )
+        ->execute();
+
+    $API->DB->delete( "visits" )
+        ->where( "id", $visit[ "id" ] )
+        ->execute();
+
+}
 
 //$testQuery = $API->DB->from( "users" )
 //    ->where( "is_active", 'Y' );

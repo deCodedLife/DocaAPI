@@ -28,6 +28,8 @@ if ( $userDetail[ "is_visible_in_schedule" ] == 'N' ) {
         "SELECT id
         FROM   salesList
         WHERE  employee_id = $requestData->user_id
+               AND created_at > '$requestData->start_at' 
+               AND created_at < '$requestData->end_at'
                AND status = 'done'
                AND ( action = 'sell'
                       OR action = 'sellReturn' ) "
@@ -56,13 +58,12 @@ if ( $userDetail[ "is_visible_in_schedule" ] == 'N' ) {
  * Получаем количество и стоимость услуг
  */
 foreach ( $user_sales as $sale ) {
-    
+
     $sale = $API->DB->from( "salesList" )
         ->where( "id", $sale[ "id" ] )
         ->fetch();
 
     if ( !$sale || !$sale[ "action" ] ) continue;
-
 
     $summary = mysqli_fetch_array(
         mysqli_query(
@@ -73,7 +74,7 @@ foreach ( $user_sales as $sale ) {
                    AND type = 'service'"
         )
     )[0];
-
+    
     $count = mysqli_fetch_array(
         mysqli_query(
             $API->DB_connection,

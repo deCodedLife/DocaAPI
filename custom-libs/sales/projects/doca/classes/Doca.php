@@ -11,12 +11,25 @@ class Doca
 
     } // function. getVisitDetails $visitID
 
-    public static function getServiceDetails( $serviceID ) {
+    public static function getServiceDetails( $serviceID, $employee ) {
 
         global $API;
-        return $API->DB->from( "services" )
+
+        $service = $API->DB->from( "services" )
             ->where( "id", $serviceID )
             ->fetch();
+
+        $personalDetails = $API->DB->from( "workingTime" )
+            ->where( [
+                "row_id" => $service[ "id" ],
+                "user" => $employee
+            ] )
+            ->fetch();
+
+        if ( $personalDetails )
+            $service[ "price" ] = $personalDetails[ "price" ];
+
+        return $service;
 
     } // function. getServiceDetails $serviceID
 
@@ -34,7 +47,7 @@ class Doca
                 ->where( "visit_id", $visit[ "id" ] );
 
             foreach ( $visitServices as $visitService ) {
-                $saleServices[] = $this->getServiceDetails( $visitService["service_id"] );
+                $saleServices[] = $this->getServiceDetails( $visitService["service_id"], $visit[ "user_id" ] );
                 $allServices[] = end( $saleServices );
             }
 

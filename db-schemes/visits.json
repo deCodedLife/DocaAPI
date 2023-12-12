@@ -20,7 +20,7 @@
       "article": "status",
       "type": "varchar(255)",
       "is_required": false,
-      "default": "planning"
+      "default": "planned"
     },
     {
       "title": "Талон",

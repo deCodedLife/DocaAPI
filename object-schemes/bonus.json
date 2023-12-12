@@ -1,1 +1,293 @@
-{"title":"Бонусы","table":"bonus","is_trash":false,"properties":[{"title":"Название","article":"title","data_type":"string","field_type":"string","is_default_in_list":true,"is_unique":true,"is_autofill":true,"use_in_commands":["update","add","get"]},{"title":"Срок действия","article":"period","data_type":"string","field_type":"string","is_default_in_list":true,"is_unique":false,"is_autofill":false,"use_in_commands":[],"require_in_commands":[]},{"title":"Начало","article":"start","data_type":"date","field_type":"date","is_default_in_list":false,"is_unique":false,"is_autofill":true,"use_in_commands":["update","get","add"]},{"title":"Окончание","article":"end","data_type":"date","field_type":"date","is_default_in_list":false,"is_unique":false,"is_autofill":true,"use_in_commands":["update","get","add"]},{"title":"Мин. сумма счета","article":"minSumScore","data_type":"float","field_type":"price","is_default_in_list":false,"is_unique":false,"is_autofill":true,"use_in_commands":["update","get","add"]},{"title":"Количество начисленных бонусов","article":"bonusCount","data_type":"integer","field_type":"integer","is_default_in_list":false,"is_unique":false,"is_autofill":true,"use_in_commands":["update","get","add"]},{"title":"Мин. сумма покупки","article":"minSumBy","data_type":"float","field_type":"price","is_default_in_list":false,"is_unique":false,"is_autofill":true,"use_in_commands":["update","add","get"]},{"title":"Кэшбек","article":"cashback","data_type":"boolean","field_type":"checkbox","is_default_in_list":false,"is_unique":false,"is_autofill":true,"use_in_commands":["update","add"]},{"title":"Действует (дней)","article":"works","data_type":"integer","field_type":"integer","is_default_in_list":false,"is_unique":false,"is_autofill":false,"use_in_commands":["add","update"]},{"title":"Комментарий","article":"comment","data_type":"string","field_type":"textarea","is_default_in_list":false,"is_unique":false,"is_autofill":true,"use_in_commands":["update","add"]},{"title":"Тип бонусов","article":"bonusType","data_type":"string","field_type":"list","is_default_in_list":true,"is_unique":false,"is_autofill":true,"custom_list":[{"value":"percent","title":"Процент"},{"title":"Фиксированный","value":"fixed"}],"use_in_commands":["update","add","get"]},{"title":"Группа услуг","article":"servicesGroups","data_type":"array","field_type":"list","is_default_in_list":false,"is_unique":false,"is_autofill":true,"join":{"connection_table":"bonusObjects","donor_table":"serviceGroups","property_article":"title","insert_property":"object_id","filter_property":"promotion_id"},"use_in_commands":["update","get","add"]},{"title":"Обязательные услуги для участия в бонусах","article":"requiredServices","data_type":"array","field_type":"list","is_default_in_list":false,"is_unique":false,"is_autofill":false,"join":{"connection_table":"bonusObjects","donor_table":"services","property_article":"title","insert_property":"object_id","filter_property":"promotion_id"},"use_in_commands":["update","get","add"]},{"title":" Обязательные группы услуг для участия в бонусах","article":"requiredServicesGroups","data_type":"array","field_type":"list","is_default_in_list":false,"is_unique":false,"is_autofill":true,"join":{"connection_table":"bonusObjects","donor_table":"serviceGroups","property_article":"title","insert_property":"object_id","filter_property":"promotion_id"},"use_in_commands":["update","get","add"]},{"title":"Группы клиентов","article":"clientsGroups","data_type":"array","field_type":"list","is_default_in_list":false,"is_unique":false,"is_autofill":true,"join":{"connection_table":"bonusObjects","donor_table":"clientGroups","property_article":"title","insert_property":"object_id","filter_property":"promotion_id"},"use_in_commands":["update","get","add"]},{"title":"Услуги не участвующие в бонусах","article":"excludedServices","data_type":"array","field_type":"list","is_default_in_list":false,"is_unique":false,"is_autofill":true,"join":{"connection_table":"bonusObjects","donor_table":"services","property_article":"title","insert_property":"object_id","filter_property":"promotion_id"},"use_in_commands":["get","update","add"]},{"title":"Группы услуг не участвующие в бонусах","article":"excludedServicesGroups","data_type":"array","field_type":"list","is_default_in_list":false,"is_unique":false,"is_autofill":true,"join":{"connection_table":"bonusObjects","donor_table":"serviceGroups","property_article":"title","insert_property":"object_id","filter_property":"promotion_id"},"use_in_commands":["update","get","add"]}]}
+{
+  "title": "Бонусы",
+  "table": "bonus",
+  "is_trash": false,
+  "properties": [
+    {
+      "title": "Название",
+      "article": "title",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": true,
+      "is_unique": true,
+      "is_autofill": true,
+      "use_in_commands": [
+        "update",
+        "add",
+        "get"
+      ]
+    },
+    {
+      "title": "Срок действия",
+      "article": "period",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [],
+      "require_in_commands": []
+    },
+    {
+      "title": "Начало",
+      "article": "start",
+      "data_type": "date",
+      "field_type": "date",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "update",
+        "get",
+        "add"
+      ]
+    },
+    {
+      "title": "Окончание",
+      "article": "end",
+      "data_type": "date",
+      "field_type": "date",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "update",
+        "get",
+        "add"
+      ]
+    },
+    {
+      "title": "Мин. сумма счета",
+      "article": "minSumScore",
+      "data_type": "float",
+      "field_type": "price",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "update",
+        "get",
+        "add"
+      ]
+    },
+    {
+      "title": "Количество начисленных бонусов",
+      "article": "bonusCount",
+      "data_type": "integer",
+      "field_type": "integer",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "update",
+        "get",
+        "add"
+      ]
+    },
+    {
+      "title": "Мин. сумма покупки",
+      "article": "minSumBy",
+      "data_type": "float",
+      "field_type": "price",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "update",
+        "add",
+        "get"
+      ]
+    },
+    {
+      "title": "Кэшбек",
+      "article": "cashback",
+      "data_type": "boolean",
+      "field_type": "checkbox",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "update",
+        "add"
+      ]
+    },
+    {
+      "title": "Действует (дней)",
+      "article": "works",
+      "data_type": "integer",
+      "field_type": "integer",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "add",
+        "update"
+      ]
+    },
+    {
+      "title": "Комментарий",
+      "article": "comment",
+      "data_type": "string",
+      "field_type": "textarea",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "update",
+        "add"
+      ]
+    },
+    {
+      "title": "Тип бонусов",
+      "article": "bonusType",
+      "data_type": "string",
+      "field_type": "list",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "custom_list": [
+        {
+          "value": "percent",
+          "title": "Процент"
+        },
+        {
+          "title": "Фиксированный",
+          "value": "fixed"
+        }
+      ],
+      "use_in_commands": [
+        "update",
+        "add",
+        "get"
+      ]
+    },
+    {
+      "title": "Группа услуг",
+      "article": "servicesGroups",
+      "data_type": "array",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "join": {
+        "connection_table": "bonusObjects",
+        "donor_table": "serviceGroups",
+        "property_article": "title",
+        "insert_property": "object_id",
+        "filter_property": "promotion_id"
+      },
+      "use_in_commands": [
+        "update",
+        "get",
+        "add"
+      ]
+    },
+    {
+      "title": "Обязательные услуги для участия в бонусах",
+      "article": "requiredServices",
+      "search": "services",
+      "data_type": "array",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "join": {
+        "connection_table": "bonusObjects",
+        "donor_table": "services",
+        "property_article": "title",
+        "insert_property": "object_id",
+        "filter_property": "promotion_id"
+      },
+      "use_in_commands": [
+        "update",
+        "get",
+        "add"
+      ]
+    },
+    {
+      "title": " Обязательные группы услуг для участия в бонусах",
+      "article": "requiredServicesGroups",
+      "data_type": "array",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "join": {
+        "connection_table": "bonusObjects",
+        "donor_table": "serviceGroups",
+        "property_article": "title",
+        "insert_property": "object_id",
+        "filter_property": "promotion_id"
+      },
+      "use_in_commands": [
+        "update",
+        "get",
+        "add"
+      ]
+    },
+    {
+      "title": "Группы клиентов",
+      "article": "clientsGroups",
+      "data_type": "array",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "join": {
+        "connection_table": "bonusObjects",
+        "donor_table": "clientGroups",
+        "property_article": "title",
+        "insert_property": "object_id",
+        "filter_property": "promotion_id"
+      },
+      "use_in_commands": [
+        "update",
+        "get",
+        "add"
+      ]
+    },
+    {
+      "title": "Услуги не участвующие в бонусах",
+      "article": "excludedServices",
+      "search": "services",
+      "data_type": "array",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "join": {
+        "connection_table": "bonusObjects",
+        "donor_table": "services",
+        "property_article": "title",
+        "insert_property": "object_id",
+        "filter_property": "promotion_id"
+      },
+      "use_in_commands": [
+        "get",
+        "update",
+        "add"
+      ]
+    },
+    {
+      "title": "Группы услуг не участвующие в бонусах",
+      "article": "excludedServicesGroups",
+      "data_type": "array",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "join": {
+        "connection_table": "bonusObjects",
+        "donor_table": "serviceGroups",
+        "property_article": "title",
+        "insert_property": "object_id",
+        "filter_property": "promotion_id"
+      },
+      "use_in_commands": [
+        "update",
+        "get",
+        "add"
+      ]
+    }
+  ]
+}

@@ -13,3 +13,5 @@ if ( $alreadyExisits )
 
 if ( !$requestData->owners_id ) $requestData->is_general = "Y";
 else $requestData->is_general = "N";
+
+$requestData->updated_at = date("Y-m-d H:i:s"); 

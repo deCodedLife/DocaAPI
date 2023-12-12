@@ -8,7 +8,6 @@ require_once( $API::$configs[ "paths" ][ "public_modules" ] . "/dom_ru.php" );
  */
 
 $IPCallsHistory = $IPCallsDomRu->getHistory();
-
 if ( $IPCallsHistory === false ) $API->returnResponse( "Something was wrong", 500 );
 
 
@@ -47,7 +46,6 @@ foreach( $IPCallsHistory as $IPCallsHistoryRow ) {
         ->fetch();
 
     if ( $callFromId ) continue;
-
 
     /**
      * Получение сотрудника

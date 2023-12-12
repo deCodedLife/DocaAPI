@@ -65,7 +65,7 @@ while ( $currentScheduleDate <= $scheduleTo ) {
         $currentWeekDay = date( "l", $currentScheduleDate );
 
         if ( !in_array( $currentWeekDay, $requestData->work_days ) ) $isContinue = true;
-        
+
     } // if. !$requestData->work_days
 
 

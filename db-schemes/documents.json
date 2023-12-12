@@ -2,7 +2,7 @@
   "title": "Документы",
   "properties": [
     {
-      "title": "Общий документ",
+      "title": "Общий 1",
       "article": "is_general",
       "type": "char(1)",
       "is_required": false,

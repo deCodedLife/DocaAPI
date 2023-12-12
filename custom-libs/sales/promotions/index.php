@@ -75,7 +75,7 @@ class Discount
             ->where( "id",  $promotionID )
             ->fetch();
 
-
+//        $API->returnResponse( $this->DiscountModifiers, 500 );
         /**
          * Фильтрация
          * Перебираем все исключения и выбрасываем
@@ -120,7 +120,7 @@ class Discount
         if ( $summary < $promotion[ "min_order" ] ) return $this->Subjects;
 
 
-
+//        $API->returnResponse( $promotion, 500 );
         /**
          * Применение скидок
          */
@@ -150,7 +150,7 @@ class Discount
             /**
              * Применяем скидку на объект, если он попадает под условия акции
              */
-
+            $API->returnResponse( $promotion, 500 );
             if ( $promotion[ "promotion_type" ] == "percent" ) $subject->Price -= ( $subject->Price / 100 * $promotion[ "value" ] );
             if ( $promotion[ "promotion_type" ] == "fixed" )   $subject->Price -= $promotion[ "value" ];
 

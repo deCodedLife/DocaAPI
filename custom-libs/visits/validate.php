@@ -80,7 +80,8 @@ if ( strtotime( DateTime::createFromFormat( 'Y-m-d H:i:s', $start_at )->format('
 if ( strtotime( DateTime::createFromFormat( 'Y-m-d H:i:s', $end_at )->format('H:i:s') ) > strtotime( $storeData[ "schedule_to" ] ) ) $isTimeCorrect = false;
 
 if ( !$isTimeCorrect ) $API->returnResponse( "Время посещения выходит за рамки графика работы филиала", 400 );
-
+//$API->returnResponse( [ $start_at, $end_at ], 500 );
+//{"status":500,"data":["2023-12-04 18:11:00","2023-12-04 18:12:00"],"detail":[]}
 
 /**
  * Получение расходников
@@ -125,7 +126,8 @@ $getVisitsQuery = "SELECT * FROM visits WHERE
     reason_id IS NULL AND (
     ( start_at >= '$start_at' and start_at < '$end_at' ) OR
     ( end_at > '$start_at' and end_at < '$end_at' ) OR
-    ( start_at < '$start_at' and end_at > '$end_at' )
+    ( start_at < '$start_at' and end_at > '$end_at' ) AND
+    user_id NOT IN ( 260, 135 )
 )";
 
 /**
@@ -133,11 +135,12 @@ $getVisitsQuery = "SELECT * FROM visits WHERE
  */
 $getVisitsQuery .= $requestData->id ? " AND NOT id = {$requestData->id}" : "";
 
-
 $existingVisits = mysqli_query(
     $API->DB_connection,
     $getVisitsQuery
 );
+
+//$visits = []; foreach ( $existingVisits as $visit ) { $visits[] = $visit; } $API->returnResponse( $visits, 500 );
 
 
 /**
@@ -165,8 +168,16 @@ function isCabinetOccupied( $cabinetID, $visits ): bool {
     /**
      * Проверка занятости
      */
-    foreach ( $visits as $visit )
-        if ( $visit[ "cabinet_id" ] == $cabinetID ) return true;
+    foreach ( $visits as $visit ) {
+
+        if ($visit["cabinet_id"] == $cabinetID) {
+            $API->returnResponse($visit["id"]);
+            return true;
+        }
+
+
+    }
+
 
     return false;
 
@@ -282,14 +293,18 @@ function employeesAccountedFor( $serviceDetails, $employee ): bool {
  * Проверка второго исполнителя для каждой услуги
  */
 foreach ( $services as $service ) {
-
     $serviceDetails = $API->DB->from( "services" )
         ->where( "id", $service )
         ->fetch();
 
     if ( $serviceDetails[ "is_consider_second_performer_time" ] == "Y" ) $use_assistant = true;
 
-    if ( !employeesAccountedFor( $serviceDetails, $assistant ) )
+    $accountedFor = employeesAccountedFor( $serviceDetails, $assistant );
+
+    if ( $assistant && !$accountedFor )
+        $API->returnResponse( "Выбранный ассистент не указан в услуге", 500 );
+
+    if ( !$accountedFor )
         $API->returnResponse( "Укажите второго исполнителя для услуги {$serviceDetails[ 'title' ]}", 500 );
 
     $service_second_employees = $API->DB->from( "services_second_users" )
@@ -313,7 +328,6 @@ foreach ( $services as $service ) {
 function isEmployeeBusy( $employee, $visits ): int {
 
     global $API;
-
     /**
      * Проход по всем посещениям
      */

@@ -32,6 +32,7 @@ $employee = $requestData->user_id;
 /**
  * Получение списка посещений
  */
+
 $Doca->getVisits( $allVisits, $saleVisits, $isReturn );
 $Doca->getServices( $allVisits, $allServices, $saleServices );
 
@@ -116,16 +117,6 @@ if ( $isReturn ) {
         ->where( "saleVisits.visit_id", $requestData->id )
         ->fetch();
 
-    $personalDetails = $API->DB->from( "workingTime" )
-        ->where( [
-            "row_id" => $saleDetails[ "id" ],
-            "user" => $employee
-        ] )
-        ->fetch();
-
-    if ( $personalDetails )
-        $saleDetails[ "summary" ] = $personalDetails[ "price" ];
-
     $saleSummary = $saleDetails[ "summary" ];
 
 } // if ( $isReturn )
@@ -200,6 +191,7 @@ foreach ( Discount::GetActiveDiscounts( DB_PROMOTIONS ) as $discount ) {
     if ( !$Discount->IsValid() ) continue;
     $newSubjects = $Discount->Apply( $discount[ "id" ] );
     $discountSum = 0;
+//    $API->returnResponse( $newSubjects, 500 );
 
     foreach ( $newSubjects as $subject ) {
 

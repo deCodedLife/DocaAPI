@@ -42,6 +42,13 @@ $clientEntity = $API->DB->from( "legal_entity_clients" )
 $formFieldsUpdate[ "sum_cash" ][ "is_disabled" ] = true;
 $formFieldsUpdate[ "sum_card" ][ "is_disabled" ] = true;
 
+if( !$requestData->pay_method ) {
+
+    $formFieldsUpdate[ "sum_card" ][ "is_visible" ] = false;
+    $formFieldsUpdate[ "sum_cash" ][ "is_visible" ] = false;
+
+}
+
 if ( $requestData->pay_method == "card" ) {
 
     $formFieldsUpdate[ "sum_cash" ][ "is_visible" ] = false;

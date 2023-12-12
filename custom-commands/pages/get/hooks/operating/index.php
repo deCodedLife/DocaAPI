@@ -1,4 +1,5 @@
 <?php
+
 $pageScheme[ "structure" ][ 0 ][ "settings" ][ "filters" ] = [
     [
         "property" => "start_at",
@@ -13,3 +14,23 @@ $pageScheme[ "structure" ][ 0 ][ "settings" ][ "filters" ] = [
         "value" => "operating"
     ]
 ];
+
+$stores = $API->DB->from( "stores" )
+    ->where( "is_operating", "Y" );
+
+$storesList = [];
+
+foreach ( $stores as $store ) {
+
+    $storesList[] = [
+
+        "title" => $store[ "title" ],
+        "value" => $store[ "id" ]
+
+    ];
+
+}
+
+$pageScheme[ "structure" ][ 0 ][ "components" ][ "filters" ][ 3 ][ "settings" ][ "list" ] = $stores;
+
+

@@ -65,7 +65,10 @@ if ( $requestData->context->block == "print" ) {
     $response[ "data" ] = [];
 
     $publicDocuments = $API->DB->from( "documents" )
-        ->where( "is_active", "Y" );
+        ->where([
+            "is_active" => "Y",
+            "is_system" => "N"
+        ]);
 
 
     $filters = [];
@@ -78,7 +81,7 @@ if ( $requestData->context->block == "print" ) {
 
     foreach ( $publicDocuments as $publicDocument ) {
 
-        if ( $publicDocument[ "is_general" ] == "Y" ) {
+        if ( $publicDocument[ "is_general" ] == "Y" && $API::$userDetail->role_id == 5) {
 
             $publicDocument[ "id" ] = (int) $publicDocument[ "id" ];
 

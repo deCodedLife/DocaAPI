@@ -6,7 +6,6 @@
 
 $performersWorkSchedule = [];
 
-
 foreach ( $performersDetail as $performerId => $performerDetail ) {
 
     if ( !in_array( $performerId, $requestData->user_id ) ) continue;
@@ -21,7 +20,8 @@ foreach ( $performersDetail as $performerId => $performerDetail ) {
                FROM workDays 
                WHERE event_from >= '$requestData->start_at 00:00:00' 
                  AND event_to <= '$requestData->end_at 23:59:59' 
-                 AND user_id = $performerId");
+                 AND user_id = $performerId 
+               ORDER BY event_from ASC");
 
     foreach ( $performerWorkSchedule as $scheduleEvent ) {
 

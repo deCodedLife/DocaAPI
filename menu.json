@@ -26,7 +26,7 @@
       "href": "operating",
       "children": [],
       "icon": "surgical-instrument",
-      "required_permissions": [ "director_schedule", "manager_schedule" ]
+      "required_permissions": [ "operating" ]
     },
     {
       "title": "Сотрудники",
@@ -131,74 +131,9 @@
       "href": "settings",
       "children": [
         {
-          "title": "Основное",
-          "href": "settings",
-          "required_permissions": [ "settings_main" ]
-        },
-        {
-          "title": "Группы услуг",
-          "href": "serviceGroups",
-          "required_permissions": [ "settings_services_groups" ]
-        },
-        {
-          "title": "Типы справочников",
-          "href": "handbookTypes",
-          "required_permissions": [ "settings_handbook_types" ]
-        },
-        {
-          "title": "Рекламные каналы",
-          "href": "advertise",
-          "required_permissions": [ "settings_advert_types" ]
-        },
-        {
           "title": "Группы клиентов",
           "href": "clientGroups",
           "required_permissions": [ "settings_client_groups" ]
-        },
-        {
-          "title": "Темы задач",
-          "href": "taskGroups",
-          "required_permissions": [ "settings_task_themes" ]
-        },
-        {
-          "title": "Категории расходников",
-          "href": "consumableCategories",
-          "required_permissions": [ "settings_consumable_categories" ]
-        },
-        {
-          "title": "Специальности",
-          "href": "professions",
-          "required_permissions": [ "settings_professions" ]
-        },
-        {
-          "title": "Носимое оборудование",
-          "href": "wearableEquipment",
-          "required_permissions": [ "settings_wearable_equipment" ]
-        },
-        {
-          "title": "Роли",
-          "href": "roles",
-          "required_permissions": [ "settings_roles" ]
-        },
-        {
-          "title": "Кабинеты",
-          "href": "cabinets",
-          "required_permissions": [ "settings_cabinets" ]
-        },
-        {
-          "title": "Филиалы",
-          "href": "stores",
-          "required_permissions": [ "settings_stores" ]
-        },
-        {
-          "title": "Юридические лица",
-          "href": "legalEntities",
-          "required_permissions": [ "settings_stores" ]
-        },
-        {
-          "title": "Типы расходов",
-          "href": "expensTypes",
-          "required_permissions": [ "settings_expense_types" ]
         },
         {
           "title": "Группы расходников",
@@ -211,14 +146,79 @@
           "required_permissions": [ "settings_product_categories" ]
         },
         {
-          "title": "Причины отмены посещений",
-          "href": "cancelReasons",
-          "required_permissions": [ "settings_cancel_reasons" ]
+          "title": "Группы услуг",
+          "href": "serviceGroups",
+          "required_permissions": [ "settings_services_groups" ]
+        },
+        {
+          "title": "Кабинеты",
+          "href": "cabinets",
+          "required_permissions": [ "settings_cabinets" ]
+        },
+        {
+          "title": "Категории расходников",
+          "href": "consumableCategories",
+          "required_permissions": [ "settings_consumable_categories" ]
+        },
+        {
+          "title": "Носимое оборудование",
+          "href": "wearableEquipment",
+          "required_permissions": [ "settings_wearable_equipment" ]
+        },
+        {
+          "title": "Основное",
+          "href": "settings",
+          "required_permissions": [ "settings_main" ]
         },
         {
           "title": "Поставщики",
           "href": "providers",
           "required_permissions": [ "settings_providers" ]
+        },
+        {
+          "title": "Причины отмены посещений",
+          "href": "cancelReasons",
+          "required_permissions": [ "settings_cancel_reasons" ]
+        },
+        {
+          "title": "Рекламные каналы",
+          "href": "advertise",
+          "required_permissions": [ "settings_advert_types" ]
+        },
+        {
+          "title": "Роли",
+          "href": "roles",
+          "required_permissions": [ "settings_roles" ]
+        },
+        {
+          "title": "Специальности",
+          "href": "professions",
+          "required_permissions": [ "settings_professions" ]
+        },
+        {
+          "title": "Типы расходов",
+          "href": "expensTypes",
+          "required_permissions": [ "settings_expense_types" ]
+        },
+        {
+          "title": "Типы справочников",
+          "href": "handbookTypes",
+          "required_permissions": [ "settings_handbook_types" ]
+        },
+        {
+          "title": "Темы задач",
+          "href": "taskGroups",
+          "required_permissions": [ "settings_task_themes" ]
+        },
+        {
+          "title": "Филиалы",
+          "href": "stores",
+          "required_permissions": [ "settings_stores" ]
+        },
+        {
+          "title": "Юридические лица",
+          "href": "legalEntities",
+          "required_permissions": [ "settings_stores" ]
         }
       ],
       "icon": "gear"

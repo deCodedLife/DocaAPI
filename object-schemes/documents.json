@@ -1,9 +1,24 @@
 {
   "title": "Документы",
   "table": "documents",
-  "search": "",
+  "search": true,
   "is_trash": true,
   "properties": [
+    {
+      "title": "Название",
+      "article": "title",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": true,
+      "is_search": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "in_search": true,
+      "required_permissions": [],
+      "required_modules": [],
+      "use_in_commands": [ "add", "update", "search", "get" ],
+      "require_in_commands": [ "add" ]
+    },
     {
       "title": "Сотрудники",
       "article": "owners_id",

@@ -114,6 +114,7 @@
       "article": "services",
       "data_type": "array",
       "field_type": "list",
+      "search": "services",
       "is_default_in_list": false,
       "is_unique": false,
       "is_autofill": true,
@@ -161,6 +162,7 @@
       "article": "requiredServices",
       "data_type": "array",
       "field_type": "list",
+      "search": "services",
       "is_default_in_list": false,
       "is_unique": false,
       "is_autofill": true,
@@ -270,15 +272,6 @@
         "add",
         "update"
       ]
-    },
-    {
-      "title": "Срок действия",
-      "article": "period",
-      "data_type": "string",
-      "field_type": "string",
-      "is_default_in_list": true,
-      "is_unique": false,
-      "is_autofill": false
     },
     {
       "title": "Мин. сумма счета",

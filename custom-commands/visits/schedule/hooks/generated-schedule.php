@@ -91,11 +91,12 @@ foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
                  * Подстановка филиала
                  */
                 $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ][ "initials" ][ "store_id" ] = $requestData->store_id ?? $usersStores[ $schedulePerformerKey ];
-
+                $cabinet_id = null;
 
                 /**
                  * Указание кабинета сотрудника
                  */
+//                $API->returnResponse( $schedulePerformerKey );
                 if ( $performerWorkSchedule[ "cabinet_id" ] ) {
 
                     $cabinetDetail = mysqli_fetch_array(
@@ -108,10 +109,23 @@ foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
 
                     if ( !$isCabinet ) $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ][ "performer_title" ] .= " [Каб. " . $cabinetDetail[ "title" ] . "]";
                     $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ][ "initials" ][ "cabinet_id" ] = $cabinetDetail[ "id" ];
+                    $cabinet_id = $cabinetDetail[ "id" ];
 
                     $isCabinet = true;
 
                 } // if. $performerWorkSchedule[ "cabinet_id" ]
+
+                foreach ( $stepsList as $stepKey => $step )
+                    if (
+                        ( $stepKey >= $workScheduleStepFromKey ) &&
+                        ( $stepKey <= $workScheduleStepToKey ) &&
+                        $cabinet_id
+                    ) {
+                        $workedScheduleStepsWithCabinets[ $scheduleDateKey ][ $schedulePerformerKey ][] = [
+                            "step" => $stepKey,
+                            "cabinet_id" => $cabinet_id
+                        ];
+                    }
 
                 /**
                  * Подстановка сотрудника
@@ -195,6 +209,23 @@ foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
                         "steps" => [ $lastAddedStep, $scheduleBlockStepKey - 1 ],
                         "status" => $currentStatus
                     ];
+                    $scheduleBlockCabinet = null;
+                    
+                    foreach ( $workedScheduleStepsWithCabinets[ $scheduleDateKey ][ $schedulePerformerKey ] as $row ) {
+
+                        if ( $currentStatus != "available" ) break;
+
+                        if ( $row[ "step" ] >= ($scheduleBlockStepKey - 1) ) {
+
+                            $scheduleBlockCabinet = intval( $row[ "cabinet_id" ] );
+                            break;
+
+                        }
+
+                    }
+
+                    if ( $scheduleBlockCabinet )
+                        $updatedSchedule[ $lastAddedStep ][ "initials" ][ "cabinet_id" ] = $scheduleBlockCabinet;
 
 
                     /**
@@ -237,7 +268,7 @@ foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
          */
         if ( $requestData->clients_id && $notWorkDay && $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ] )
             unset( $resultSchedule[ $scheduleDateKey ][ $schedulePerformerKey ] );
-        
+
     } // foreach. $scheduleDateDetail
 
 } // foreach. $resultSchedule

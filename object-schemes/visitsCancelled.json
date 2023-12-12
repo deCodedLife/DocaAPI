@@ -168,10 +168,6 @@
         "update",
         "get"
       ],
-      "list_donor": {
-        "table": "services",
-        "properties_title": "title"
-      },
       "join": {
         "connection_table": "visits_services",
         "donor_table": "services",

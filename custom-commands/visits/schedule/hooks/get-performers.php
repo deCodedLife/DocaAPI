@@ -1,21 +1,19 @@
 <?php
-
-
+//ini_set( "display_errors", true );
 /**
  * Фильтр по Сотруднику
  */
-$users = [];
 
-//foreach ( $performersRows as $performersRow ) $users[] = $performersRow;
-//$API->returnResponse( $requestData->user_id );
-//$API->returnResponse( $users );
+$filteredUsers = [];
+
+foreach ( $performersRows as $performersRow )
+    $filteredUsers[] = $performersRow;
+
+$performersRows = $filteredUsers;
+
+
 
 if ( $requestData->user_id ) {
-
-    /**
-     * Отфильтрованный список сотрудников
-     */
-    $filteredUsers = [];
 
 
     /**
@@ -23,13 +21,7 @@ if ( $requestData->user_id ) {
      * в отфильтрованный список
      */
     foreach ( $performersRows as $performersRowKey => $performersRow )
-        if ( in_array( $performersRow[ "id" ], (array) $requestData->user_id ) ) $filteredUsers[] = $performersRow;
-
-
-    /**
-     * Обновление списка сотрудников
-     */
-    $performersRows = $filteredUsers;
+        if ( !in_array( $performersRow[ "id" ], (array) $requestData->user_id ) ) unset( $performersRows[ $performersRowKey ] );
 
 } // if. $requestData->users_id
 
@@ -39,11 +31,6 @@ if ( $requestData->user_id ) {
  */
 
 if ( $requestData->profession_id ) {
-
-    /**
-     * Отфильтрованный список сотрудников
-     */
-    $filteredUsers = [];
 
 
     /**
@@ -65,13 +52,8 @@ if ( $requestData->profession_id ) {
      * в отфильтрованный список
      */
     foreach ( $performersRows as $performersRowKey => $performersRow )
-        if ( in_array( $performersRow[ "id" ], $usersWithCurrentProfession ) ) $filteredUsers[] = $performersRow;
+        if ( !in_array( $performersRow[ "id" ], $usersWithCurrentProfession ) ) unset( $performersRows[ $performersRowKey ] );
 
-
-    /**
-     * Обновление списка сотрудников
-     */
-    $performersRows = $filteredUsers;
 
 } // if. $requestData->profession_id
 
@@ -80,12 +62,6 @@ if ( $requestData->profession_id ) {
  */
 
 if ( $requestData->store_id ) {
-
-    /**
-     * Отфильтрованный список сотрудников
-     */
-    $filteredUsers = [];
-
 
     /**
      * Добавление сотрудников с указанной специальностью
@@ -100,14 +76,8 @@ if ( $requestData->store_id ) {
             )
         );
 
-        if ( !empty( $userStores ) ) $filteredUsers[] = $performersRow;
+        if ( empty( $userStores ) ) unset( $performersRows[ $performersRowKey ] );
 
     }
-
-
-    /**
-     * Обновление списка сотрудников
-     */
-    $performersRows = $filteredUsers;
 
 } // if. $requestData->users_id

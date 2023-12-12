@@ -22,6 +22,8 @@ if ( $requestData->store_id ) {
         ->limit( 1 )
         ->fetch();
 
+    $requestData->store_id = $storeDetail[ "id" ];
+
 } // if. $requestData->store_id
 
 if ( !$storeDetail ) $API->returnResponse( "Не определен филиал", 500 );
