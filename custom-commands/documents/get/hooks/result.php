@@ -72,7 +72,7 @@ if ( $requestData->context->block == "print" ) {
 
 
     $filters = [];
-    if ( $requestData->owner_id ) $filters[ "user_id" ] = $requestData->owner_id;
+    if ( $requestData->owner_id ) $filters[ "user_id" ] = $API::$userDetail->id;
 
     
     $documents_users = $API->DB->from( "documents_users" )

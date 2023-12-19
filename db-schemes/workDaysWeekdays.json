@@ -1,0 +1,21 @@
+{
+  "title": "Рабочие дни",
+  "properties": [
+    {
+      "title": "ID правила",
+      "article": "workday_id",
+      "type": "int",
+      "is_required": true,
+      "default": null
+    },
+    {
+      "title": "Индекс дня недели",
+      "article": "index",
+      "type": "int",
+      "is_required": true,
+      "default": null
+    }
+  ],
+  "rows_key": "",
+  "rows": []
+}

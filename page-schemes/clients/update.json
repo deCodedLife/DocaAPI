@@ -108,25 +108,6 @@
               "components": {
                 "buttons": [
                   {
-                    "type": "print",
-                    "settings": {
-                      "title": "Печать договора",
-                      "background": "dark",
-                      "data": {
-                        "save_to": {
-                          "object": "clientContracts",
-                          "properties": {
-                            "row_id": ":id"
-                          }
-                        },
-                        "is_edit": true,
-                        "document_article": "services_contract",
-                        "scheme_name": "clients",
-                        "row_id": ":id"
-                      }
-                    }
-                  },
-                  {
                     "type": "submit",
                     "settings": {
                       "title": "Сохранить",
@@ -144,6 +125,30 @@
                       "context": {
                         "form": "clients",
                         "row_id": ":id"
+                      }
+                    }
+                  },
+                  {
+                    "type": "print",
+                    "settings": {
+                      "title": "Договора",
+                      "background": "dark",
+                      "data": {
+                        "is_edit": true,
+                        "document_article": "services_contract",
+                        "scheme_name": "clients"
+                      }
+                    }
+                  },
+                  {
+                    "type": "print",
+                    "required_permissions": [],
+                    "settings": {
+                      "title": "Акт вып. работ",
+                      "background": "dark",
+                      "data": {
+                        "document_article": "act_work_complete",
+                        "is_edit": true
                       }
                     }
                   }

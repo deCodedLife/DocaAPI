@@ -19,7 +19,7 @@
       "href": "equipmentSchedule",
       "children": [],
       "icon": "health",
-      "required_permissions": [ "director_schedule" ]
+      "required_permissions": [ "equipment_schedule" ]
     },
     {
       "title": "Операционная",
