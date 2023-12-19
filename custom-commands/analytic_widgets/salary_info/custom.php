@@ -55,14 +55,9 @@ $additionalWidgetValue = 0;
 $visits = $API->DB->from( "visits" )
     ->where( $filter );
 
-
-$visitsList = [];
-foreach ( $visits as $visit ) $visitsList[] = $visit;
-
-
 if ( $requestData->category ) {
 
-    foreach ( $visitsList as $index => $returnVisit ) {
+    foreach ( $visits as $index => $returnVisit ) {
 
         $visits_services = $API->DB->from( "visits_services" )
             ->where( "visit_id", $returnVisit[ "id" ] );
@@ -81,7 +76,7 @@ if ( $requestData->category ) {
 
         }
 
-        if ( $service_exists == false ) unset( $visitsList[ $index ] );
+        if ( $service_exists == false ) unset( $visits[ $index ] );
 
     }
 
@@ -89,7 +84,7 @@ if ( $requestData->category ) {
 
 if ( $requestData->service && !empty( $requestData->service ) ) {
 
-    foreach ( $visitsList as $index => $returnVisit ) {
+    foreach ( $visits as $index => $returnVisit ) {
 
         $visits_services = $API->DB->from( "visits_services" )
             ->where( "visit_id", $returnVisit[ "id" ] );
@@ -102,7 +97,7 @@ if ( $requestData->service && !empty( $requestData->service ) ) {
                 $service_exists = true;
 
         }
-        if ( $service_exists == false ) unset( $visitsList[ $index ] );
+        if ( $service_exists == false ) unset( $visits[ $index ] );
 
     }
 
@@ -119,17 +114,12 @@ if ( $salaryType == "rate_percent" ) {
      */
     $totalSell = 0;
 
-
-    /**
-     * Список посещений
-     */
-
     /**
      * Обработка услуг
      */
-    if ( !empty($visitsList) ) {
+    if ( !empty($visits) ) {
 
-        foreach ($visitsList as $visit) {
+        foreach ($visits as $visit) {
 
             /**
              * Подсчет колличества посещений
@@ -183,10 +173,10 @@ if ( $salaryType == "rate_percent" ) {
 
 } // if. $userDetail[ "is_percent" ] === "Y"
 
-if ( !empty( $visitsList ) ) {
+if ( !empty( $visits ) ) {
 
 
-    foreach ($visitsList as $visit) {
+    foreach ($visits as $visit) {
 
         /**
          * Подсчет колличества посещений

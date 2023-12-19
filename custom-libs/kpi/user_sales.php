@@ -18,7 +18,7 @@ $userDetail = $API->DB->from( "users" )
 /**
  * Для менеджера и врачей kpi считается по разному
  */
-if ( $userDetail[ "is_visible_in_schedule" ] == 'N' ) {
+if ( $userDetail[ "role_id" ] == 6 ) {
 
     /**
      * Берём продажи непосредственно из таблицы
@@ -51,7 +51,7 @@ if ( $userDetail[ "is_visible_in_schedule" ] == 'N' ) {
                AND is_active = 'Y'"
     );
 
-} // if ( $userDetail[ "is_visible_in_schedule" ] == 'N' )
+} // if ( $userDetail[ "role_id" ] == 6 )
 
 
 /**
