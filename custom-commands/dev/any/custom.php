@@ -2,6 +2,8 @@
 
 ini_set( "display_errors", true );
 
+$API->returnResponse( "test" );
+
 $API->DB->update( "visits" )
     ->set( "status", "planning" )
     ->where( "status", "planned" )

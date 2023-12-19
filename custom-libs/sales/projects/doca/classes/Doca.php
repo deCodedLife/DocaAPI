@@ -67,7 +67,12 @@ class Doca
         if ( !$allVisits ) return;
         $allVisits = [];
 
-        if ( ($requestData->is_combined ?? 'N') == 'Y' ) {
+        if ( ( $requestData->is_combined ?? 'N') == 'Y' ) {
+
+            $start_at = date( "Y-m-d 00:00:00" );
+            $end_at = new DateTime();
+            $end_at->modify( "+1 day" );
+            $end_at = $end_at->format( "Y-m-d 23:59:59" );
 
             /**
              * Получение всех, неоплаченных клиентом, посещений
@@ -76,6 +81,8 @@ class Doca
             $combinedVisits = $API->DB->from( "visits" )
                 ->innerJoin( "visits_clients ON visits_clients.visit_id = visits.id" )
                 ->where( [
+                    "visits.start_at > ?" => $start_at,
+                    "visits.end_at < ?" => $end_at,
                     "visits.store_id" => (int) $requestData->store_id,
                     "visits_clients.client_id" => $requestData->client_id,
                     "visits.is_active" => "Y",
