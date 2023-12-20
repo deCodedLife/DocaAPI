@@ -5,14 +5,14 @@
       "title": "ID правила",
       "article": "workday_id",
       "type": "int",
-      "is_required": true,
+      "is_required": "Y",
       "default": null
     },
     {
       "title": "Индекс дня недели",
-      "article": "index",
+      "article": "weekday_index",
       "type": "int",
-      "is_required": true,
+      "is_required": "Y",
       "default": null
     }
   ],

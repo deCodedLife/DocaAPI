@@ -1,1 +1,75 @@
-{"title":"Бонусы","properties":[{"title":"Название","article":"title","type":"varchar(75)","default":null,"is_required":"Y"},{"title":"Мин. сумма счета","article":"minSumScore","type":"float","default":"0","is_required":"N"},{"title":"Количество начисленных бонусов","article":"bonusCount","type":"int","default":"0","is_required":"Y"},{"title":"Начало","article":"start","type":"date","default":"","is_required":"N"},{"title":"Конец","article":"end","type":"date","default":null,"is_required":"N"},{"title":"Мин. сумма покупки","article":"minSumBy","type":"float","default":"0","is_required":"N"},{"title":"Кэшбек","article":"cashback","type":"char(1)","default":"Y","is_required":"N"},{"title":"Действует (дней)","article":"works","type":"int","default":"1","is_required":"N"},{"title":"Комментарий","article":"comment","type":"text","default":null,"is_required":"N"},{"title":"Тип бонусов","article":"bonusType","type":"varchar(75)","default":"fixed","is_required":"N"}]}
+{
+  "title": "Бонусы",
+  "properties": [
+    {
+      "title": "Название",
+      "article": "title",
+      "type": "varchar(75)",
+      "default": null,
+      "is_required": "Y"
+    },
+    {
+      "title": "Мин. сумма счета",
+      "article": "minSumScore",
+      "type": "float",
+      "default": "0",
+      "is_required": "N"
+    },
+    {
+      "title": "Количество начисленных бонусов",
+      "article": "bonusCount",
+      "type": "int",
+      "default": "0",
+      "is_required": "Y"
+    },
+    {
+      "title": "Начало",
+      "article": "start",
+      "type": "date",
+      "default": "",
+      "is_required": "N"
+    },
+    {
+      "title": "Конец",
+      "article": "end",
+      "type": "date",
+      "default": null,
+      "is_required": "N"
+    },
+    {
+      "title": "Мин. сумма покупки",
+      "article": "minSumBy",
+      "type": "float",
+      "default": "0",
+      "is_required": "N"
+    },
+    {
+      "title": "Кэшбек",
+      "article": "cashback",
+      "type": "char(1)",
+      "default": "Y",
+      "is_required": "N"
+    },
+    {
+      "title": "Действует (дней)",
+      "article": "works",
+      "type": "int",
+      "default": "1",
+      "is_required": "N"
+    },
+    {
+      "title": "Комментарий",
+      "article": "comment",
+      "type": "text",
+      "default": null,
+      "is_required": "N"
+    },
+    {
+      "title": "Тип бонусов",
+      "article": "bonusType",
+      "type": "varchar(75)",
+      "default": "fixed",
+      "is_required": "N"
+    }
+  ]
+}
