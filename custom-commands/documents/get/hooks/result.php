@@ -3,7 +3,6 @@
 /**
  * Вывод шапки документа
  */
-
 if ( $requestData->article ) {
 
     /**
@@ -55,7 +54,6 @@ if ( $requestData->article ) {
 
 } // if. $requestData->article
 
-
 /**
  * Получение общих документов
  */
@@ -63,17 +61,25 @@ if ( $requestData->article ) {
 if ( $requestData->context->block == "print" ) {
 
     $response[ "data" ] = [];
+    if ( $API::$userDetail->role_id == 5 ) {
 
-    $publicDocuments = $API->DB->from( "documents" )
-        ->where([
-            "is_active" => "Y",
-            "is_system" => "N"
-        ]);
+        $publicDocuments = $API->DB->from( "documents" )
+            ->where([
+                "is_active" => "Y"
+            ]);
 
+    } else {
+
+        $publicDocuments = $API->DB->from( "documents" )
+            ->where([
+                "is_active" => "Y",
+                "is_system" => "N"
+            ]);
+
+    }
 
     $filters = [];
     if ( $requestData->owner_id ) $filters[ "user_id" ] = $API::$userDetail->id;
-
     
     $documents_users = $API->DB->from( "documents_users" )
         ->where( $filters );
@@ -81,7 +87,13 @@ if ( $requestData->context->block == "print" ) {
 
     foreach ( $publicDocuments as $publicDocument ) {
 
-        if ( $publicDocument[ "is_general" ] == "Y" && $API::$userDetail->role_id == 5) {
+        if ( $publicDocument[ "is_general" ] == "Y" ) {
+
+            $publicDocument[ "id" ] = (int) $publicDocument[ "id" ];
+
+            $response[ "data" ][] = $publicDocument;
+
+        } else if ( $API::$userDetail->role_id == 5 && $publicDocument[ "is_general" ] == "N" ) {
 
             $publicDocument[ "id" ] = (int) $publicDocument[ "id" ];
 
