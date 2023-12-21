@@ -38,11 +38,64 @@ if ( $end > $begin ) $API->returnResponse( "Период указан некор
  */
 function generateSchedule( array $event ): array {
 
-    global $API;
+    global $API, $requestData;
+
+    $weekdays = [ 'Sunday', 'Monday', 'Tuesday', 'Wednesday','Thursday','Friday', 'Saturday' ];
 
     $generatedEvents = [];
-    $eventWeekdays = $API->DB->from( "workDaysWeekdays" )
-        ->where( "" )
+    $eventWorkdays = [];
+
+
+    /**
+     * Получение дней графика
+     */
+    if ( !$requestData->work_days ) {
+
+        $eventWeekdays = $API->DB->from( "workDaysWeekdays" )
+            ->where( "rule_id", $event[ "id" ] );
+
+        foreach ( $eventWeekdays as $weekday )
+            $eventWeekdays[] = $weekday[ "workday" ];
+
+    } else {
+
+        $eventWeekdays = $requestData->work_days;
+
+    } // if ( !$requestData->work_days )
+
+
+    if ( empty( $eventWeekdays ) ) $eventWeekdays = $weekdays;
+
+
+    /**
+     * Итерация графика по дням
+     */
+    $eventStart = new DateTime( $event[ "event_from" ] );
+    $eventEnd = new DateTime( $event[ "event_to" ] );
+
+    for (
+        $iterator = new DateTime( $event[ "event_from" ] );
+        $iterator < $eventEnd;
+        $iterator->modify( "+1 day" )
+    ) {
+
+        $date = $iterator->format( "Y-m-d" );
+        $weekday = date( "l", $date );
+        if ( !in_array( $weekday, $eventWeekdays ) ) continue;
+
+        $generatedEvents[] = [
+            "id" => $event[ "id" ],
+            "event_from" => $iterator->format( "Y-m-d H:i:s" ),
+            "event_to" => $eventEnd->format( "$date H:i:s" ),
+            "cabinet_id" => $event[ "cabinet_id" ],
+            "is_weekend" => $event[ "is_weekend" ],
+            "user_id" => $event[ "user_id" ]
+        ];
+
+    }
+
+    $API->returnResponse( $generatedEvents );
+
 
     return $generatedEvents;
 

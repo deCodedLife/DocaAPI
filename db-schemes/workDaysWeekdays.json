@@ -3,15 +3,15 @@
   "properties": [
     {
       "title": "ID правила",
-      "article": "workday_id",
+      "article": "rule_id",
       "type": "int",
       "is_required": "Y",
       "default": null
     },
     {
       "title": "Индекс дня недели",
-      "article": "weekday_index",
-      "type": "int",
+      "article": "workday",
+      "type": "varchar(12)",
       "is_required": "Y",
       "default": null
     }
