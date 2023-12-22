@@ -13,12 +13,19 @@ if ( $ruleDetails[ "is_weekend" ] === 'Y' ) {
 
 }
 
-if ( $ruleDetails[ "is_rule" ] === 'Y' ) $formFieldValues[ "work_days" ][ "is_visible" ] = true;
+if ( $ruleDetails[ "is_rule" ] === 'Y' ) {
+
+    $workdaysDetails = $API->DB->from( "workDaysWeekdays" )
+        ->where( "rule_id", $pageDetail[ "row_id" ] );
+
+    $workdays = [];
+    foreach ( $workdaysDetails as $detail ) $workdays[] = $detail[ "workday" ];
+
+    $formFieldValues[ "work_days" ] = [
+        "is_disabled" => false,
+        "is_visible" => true,
+        "value" => $workdays
+    ];
+}
 if ( $ruleDetails[ "is_rule" ] === 'N' ) $formFieldValues[ "work_days" ][ "is_visible" ] = false;
 
-$workdaysDetails = $API->DB->from( "workDaysWeekdays" )
-    ->where( "rule_id", $pageDetail[ "row_id" ] );
-
-$workdays = [];
-foreach ( $workdaysDetails as $detail ) $workdays[] = $detail[ "workday" ];
-$formFieldValues[ "work_days" ][ "value" ] = $workdays;
