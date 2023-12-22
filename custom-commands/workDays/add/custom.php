@@ -22,7 +22,7 @@ unset( $requestData->id );
  */
 $requestData->is_rule = 'Y';
 $requestData->work_days = $requestData->work_days ?? [];
-$requestData->is_weekend = $requestData->is_weekend ?? null;
+$requestData->is_weekend = ( $requestData->is_weekend ? 'Y' : 'N' ) ?? null;
 
 
 /**
@@ -34,11 +34,15 @@ $storeDetails = $API->DB->from( "stores" )
     ->where( "id", $requestData->store_id )
     ->fetch();
 
-if ( strtotime( $storeDetails[ "schedule_from" ] ) > strtotime( $begin->format( "H:i:s" ) ) )
-    $API->returnResponse( "Расписание выходит за рамки графика филиала ${$storeDetails[ "title" ]}", 402 );
+if ( $requestData->is_weekend !== 'Y' ) {
 
-if ( strtotime( $storeDetails[ "schedule_to" ] ) < strtotime( $end->format( "H:i:s" ) ) )
-    $API->returnResponse( "Расписание выходит за рамки графика филиала ${$storeDetails[ "title" ]}", 402 );
+    if ( strtotime( $storeDetails[ "schedule_from" ] ) > strtotime( $begin->format( "H:i:s" ) ) )
+        $API->returnResponse( "Расписание выходит за рамки графика филиала ${$storeDetails[ "title" ]}", 402 );
+
+    if ( strtotime( $storeDetails[ "schedule_to" ] ) < strtotime( $end->format( "H:i:s" ) ) )
+        $API->returnResponse( "Расписание выходит за рамки графика филиала ${$storeDetails[ "title" ]}", 402 );
+
+}
 
 
 
