@@ -46,14 +46,10 @@ $requestData->store_id = $requestData->store_id ?? $ruleDetails[ "store_id" ];
 $requestData->user_id = $requestData->user_id ?? $ruleDetails[ "user_id" ];
 $requestData->cabinet_id = $requestData->cabinet_id ?? $ruleDetails[ "cabinet_id" ];
 
-if ( ( $requestData->is_rule ?? -1 ) == -1 )
-    $requestData->is_rule = ( ( $requestData->is_rule ?? false ) ? 'Y' : 'N' ) ?? $ruleDetails[ "is_rule" ];
-else $requestData->is_rule = $requestData->is_rule ? 'Y' : 'N';
+$requestData->is_rule = $requestData->is_rule ?? $ruleDetails[ "is_rule" ];
+$requestData->is_weekend = $requestData->is_weekend ?? $ruleDetails[ "is_weekend" ];
 
-if ( ( $requestData->is_weekend ?? -1 ) == -1 )
-    $requestData->is_weekend = ( ( $requestData->is_weekend ?? false ) ? 'Y' : 'N' ) ?? $ruleDetails[ "is_weekend" ];
-else $requestData->is_weekend = $requestData->is_weekend ? 'Y' : 'N';
-
+$API->returnResponse( $requestData );
 
 /**
  * Валидация времени
