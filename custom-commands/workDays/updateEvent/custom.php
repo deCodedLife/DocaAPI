@@ -49,8 +49,6 @@ $requestData->cabinet_id = $requestData->cabinet_id ?? $ruleDetails[ "cabinet_id
 $requestData->is_rule = $requestData->is_rule ?? $ruleDetails[ "is_rule" ];
 $requestData->is_weekend = $requestData->is_weekend ?? $ruleDetails[ "is_weekend" ];
 
-$API->returnResponse( $requestData );
-
 /**
  * Валидация времени
  */
