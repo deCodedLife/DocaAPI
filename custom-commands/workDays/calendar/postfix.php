@@ -112,6 +112,10 @@ foreach ( $response[ "data" ] as $eventDate => $events ) {
         foreach ( $ruleEvents as $ruleEvent ) {
 
             $ruleEventDate = date( "Y-m-d", strtotime( $ruleEvent[ "event_from" ] ) );
+
+            $ruleEventDateTimeStart = date( "H:i", strtotime( $ruleEvent[ "event_from" ] ) );
+            $ruleEventDateTimeEnd = date( "H:i", strtotime( $ruleEvent[ "event_to" ] ) );
+
             $newEvent = $event;
             $newEvent[ "is_rule" ] = $eventDetail[ "is_rule" ];
             $newEvent[ "is_weekend" ] = $ruleEvent[ "is_weekend" ];
@@ -128,7 +132,9 @@ foreach ( $response[ "data" ] as $eventDate => $events ) {
                 ->limit( 1 )
                 ->fetch();
 
-            if ( $cabinetDetail )  $newEvent[ "title" ] = " [Каб. " . $cabinetDetail[ "title" ] . "]";
+
+            $newEvent[ "title" ] = "$ruleEventDateTimeStart $ruleEventDateTimeEnd";
+            if ( $cabinetDetail )  $newEvent[ "title" ] .= " [Каб. {$cabinetDetail[ "title" ]} ]";
             if ( $eventDetail[ "is_rule" ] === 'Y' ) $newEvent[ "background" ] = "success";
 
             if ( $ruleEvent[ "is_weekend" ] == "Y" ) {
