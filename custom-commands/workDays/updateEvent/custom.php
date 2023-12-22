@@ -1,143 +1,313 @@
 <?php
 
 /**
- * Дата начала графика
+ * Получение детальной информации о правиле
  */
-$scheduleFrom = strtotime( $requestData->start_from );
-
-/**
- * Дата окончания графика
- */
-$scheduleTo = strtotime( $requestData->start_to );
-
-/**
- * Время начала графика
- */
-$scheduleTimeFrom = $requestData->event_from;
-if ( !$scheduleTimeFrom ) $scheduleTimeFrom = "00:00:00";
-
-/**
- * Время окончания графика
- */
-$scheduleTimeTo = $requestData->event_to;
-if ( !$scheduleTimeTo ) $scheduleTimeTo = "23:59:59";
-
-if ( $requestData->id ) $currentScheduleDetail = $API->DB->from( "workDays" )
+$ruleDetails = $API->DB->from( "workDays" )
     ->where( "id", $requestData->id )
-    ->limit( 1 )
-    ->fetch();
+    ->fetch( );
 
-$currentScheduleDetail[ "start_at" ] = explode( " ", $currentScheduleDetail[ "event_from" ] );
-$currentScheduleDetail[ "end_at" ] = explode( " ", $currentScheduleDetail[ "event_to" ] );
+$ruleWorkDays = [];
+$ruleWorkDaysDetails = $API->DB->from( "workDaysWeekdays" )
+    ->where( "rule_id", $requestData->id );
 
-if ( !$scheduleFrom ) $scheduleFrom = strtotime( $currentScheduleDetail[ "start_at" ][ 0 ] );
-if ( !$scheduleTo ) $scheduleTo = strtotime( $currentScheduleDetail[ "end_at" ][ 0 ] );
-if ( !$requestData->event_from ) $scheduleTimeFrom = $currentScheduleDetail[ "start_at" ][ 1 ];
-if ( !$requestData->event_to ) $scheduleTimeTo = $currentScheduleDetail[ "end_at" ][ 1 ];
+foreach ( $ruleWorkDaysDetails as $workDay )
+    $ruleWorkDays[] = $workDay[ "workday" ];
 
-if ( $requestData->is_weekend === null ) $eventIsWeekend = $currentScheduleDetail[ "is_weekend" ];
-elseif ( $requestData->is_weekend == "N" ) $eventIsWeekend = "N";
-else $eventIsWeekend = "Y";
-
-if ( !$requestData->store_id ) $eventStoreId = $currentScheduleDetail[ "store_id" ];
-else $eventStoreId = $requestData->store_id;
-
-if ( !$requestData->cabinet_id ) $eventCabinetId = $currentScheduleDetail[ "cabinet_id" ];
-else $eventCabinetId = $requestData->cabinet_id;
+/**
+ * Заполнение информации о правиле
+ */
+$requestData->start_from = $requestData->start_from ?? date( 'Y-m-d', strtotime( $ruleDetails[ "event_from" ] ) );
+$requestData->start_to = $requestData->start_to ?? date( 'Y-m-d', strtotime( $ruleDetails[ "event_to" ] ) );
+$requestData->event_from = $requestData->event_from ?? date( 'H:i:s', strtotime( $ruleDetails[ "event_from" ] ) );
+$requestData->event_to = $requestData->event_to ?? date( 'H:i:s', strtotime( $ruleDetails[ "event_to" ] ) );
 
 
 /**
- * Обработанная дата
+ * Получение периода
  */
-$currentScheduleDate = $scheduleFrom;
+$begin = DateTime::createFromFormat( "Y-m-d H:i:s", "$requestData->start_from $requestData->event_from" );
+$end = DateTime::createFromFormat( "Y-m-d H:i:s", "$requestData->start_to  $requestData->event_to" );
 
 /**
- * Текущий график
+ * Перезаписываем объект requestData, чтобы затем использовать для создания записи
+ * $API->DB->insert( "..." )->values( (array) $requestData )
  */
-
-$currentSchedule = [];
+$requestData->event_from = $begin->format( "Y-m-d H:i:s" );
+$requestData->event_to = $end->format( "Y-m-d H:i:s" );
+unset( $requestData->start_from );
+unset( $requestData->start_to );
 
 /**
- * Получение данных о филиале пользователя
+ * Инициализация значений
  */
+$requestData->is_rule = ( $requestData->is_rule ? 'Y' : 'N' ) ?? $ruleDetails[ "is_rule" ];
+$requestData->work_days = $requestData->work_days ?? $ruleWorkDays;
+$requestData->is_weekend = ( $requestData->is_weekend ? 'Y' : 'N' ) ?? $ruleDetails[ "is_weekend" ];
+$requestData->store_id = $requestData->store_id ?? $ruleDetails[ "store_id" ];
+$requestData->user_id = $requestData->user_id ?? $ruleDetails[ "user_id" ];
+$requestData->cabinet_id = $requestData->cabinet_id ?? $ruleDetails[ "cabinet_id" ];
+
+
+/**
+ * Валидация времени
+ */
+if ( $begin > $end ) $API->returnResponse( "Период указан некорректно", 402 );
+
 $storeDetails = $API->DB->from( "stores" )
-    ->where( "id", $eventStoreId )
-    ->fetch();
+    ->where( "id", $requestData->store_id )
+    ->fetch( );
 
-if ( $eventIsWeekend == "N" || $requestData->is_weekend == "N" ) {
-    if ( !$requestData->event_from ) $requestData->event_from = $scheduleTimeFrom;
-    if ( !$requestData->event_to ) $requestData->event_to = $scheduleTimeTo;
 
-    if ( $requestData->event_from ) {
+if ( $requestData->is_weekend !== 'Y' ) {
 
-        if ( strtotime( $requestData->event_from ) < strtotime( $storeDetails[ "schedule_from" ] ) ) $API->returnResponse( "Расписание выходит за рамки графика филиала ${$storeDetails[ "title" ]}", 500 );
+    if ( strtotime( $storeDetails[ "schedule_from" ] ) > strtotime( $begin->format( "H:i:s" ) ) )
+        $API->returnResponse( "Расписание выходит за рамки графика филиала ${$storeDetails[ "title" ]}", 402 );
 
-    }
-    if ( $requestData->event_to ) {
-
-        if ( strtotime( $requestData->event_to )   > strtotime( $storeDetails[ "schedule_to" ] )   ) $API->returnResponse( "Расписание выходит за рамки графика филиала ${$storeDetails[ "title" ]}", 500 );
-
-    }
-
+    if ( strtotime( $storeDetails[ "schedule_to" ] ) < strtotime( $end->format( "H:i:s" ) ) )
+        $API->returnResponse( "Расписание выходит за рамки графика филиала ${$storeDetails[ "title" ]}", 402 );
 
 }
 
-$currentScheduleEvents = $API->DB->from( $API->request->object )
-    ->where( [
-        "event_from >= ?" => $currentScheduleDetail[ "start_at" ][ 0 ],
-        "event_from <= ?" => $currentScheduleDetail[ "end_at" ][ 0 ] . " 23:59:59",
-        "user_id" => $requestData->id
-    ] );
 
-foreach ( $currentScheduleEvents as $currentScheduleEvent )
-    $currentSchedule[
-        date( "Y-m-d", strtotime( $currentScheduleEvent[ "event_from" ] ) )
-    ][] = $currentScheduleEvent[ "id" ];
+/**
+ * Формирование поискового запроса для выявления
+ * корреляций по кабинету и времени в расписании
+ *
+ * В списке также присутствуют графики, которые
+ * частично пересекаются с новым
+ */
+$searchQuery = "SELECT * FROM workDays WHERE 
+    (
+        ( event_from >= '$requestData->event_from' and event_from < '$requestData->event_to' ) OR
+        ( event_to > '$requestData->event_from' and event_to < '$requestData->event_to' ) OR
+        ( event_from < '$requestData->event_from' and event_to > '$requestData->event_to' ) 
+   ) AND 
+    store_id = $requestData->store_id AND
+    ( is_weekend is NULL OR is_weekend = 'N' )";
+
+if ( $requestData->id ) $searchQuery .= " AND NOT id = $requestData->id";
+if ( $requestData->is_rule === 'Y' ) $searchQuery .= " AND is_rule = 'Y'";
+else $searchQuery .= " AND is_rule = 'N'";
 
 
 /**
- * Обход дат расписания
+ * Создание событий для правил.
+ * Создаёт массив объектов - событий
+ *{
+ * "id": ...,
+ * "event_from": "2023-12-04 08:00:00",
+ * "event_to": "2023-12-04 15:00:00",
+ * "cabinet_id": 75,
+ * "is_weekend": "N",
+ * "user_id": 132
+ * }
+ *
+ * @param array $rule
+ * @return array
+ */
+function generateRuleEvents( array $rule ): array
+{
+
+    global $API, $requestData;
+
+    /**
+     * Списки событий
+     */
+    $weekdays = [ 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' ];
+    $generatedEvents = [];
+    $eventWorkdays = $requestData->work_days ?? [];
+
+
+    /**
+     * Подтягиваем дни из связанной таблицы, если правило существует
+     */
+    if (( $requestData->id ?? 0) != 0 ) {
+
+        /**
+         * Получение дней графика
+         */
+        $eventWeekdays = $API->DB->from( "workDaysWeekdays" )
+            ->where( "rule_id" , $rule[ "id" ] );
+
+        foreach ( $eventWeekdays as $weekday)
+            $eventWorkdays[] = $weekday[ "workday" ];
+
+    } // if ( !$requestData->work_days )
+
+    if (empty( $eventWorkdays)) $eventWorkdays = $weekdays;
+
+
+    /**
+     * Итерация графика по дням
+     */
+    $eventEnd = DateTime::createFromFormat( "Y-m-d H:i:s", $rule[ "event_to" ] );
+
+    for (
+        $iterator = DateTime::createFromFormat( "Y-m-d H:i:s", $rule[ "event_from" ] );
+        $iterator < $eventEnd;
+        $iterator->modify( "+1 day" )
+    ) {
+
+        $date = $iterator->format( "Y-m-d" );
+        $weekday = date( "l", strtotime( $date ) );
+        if ( !in_array( $weekday, $eventWorkdays ) ) continue;
+
+        /**
+         * Генерируем событие
+         */
+        $generatedEvents[] = [
+            "id" => $rule[ "id" ] ?? 0,
+            "event_from" => $iterator->format( "Y-m-d H:i:s" ),
+            "event_to" => $eventEnd->format( "$date H:i:s"),
+            "cabinet_id" => $rule[ "cabinet_id" ],
+            "is_weekend" => $rule[ "is_weekend" ] ?? 'N',
+            "user_id" => $rule[ "user_id" ]
+        ];
+
+    } // for days iterator
+
+
+    return $generatedEvents;
+
+} // function generateRuleEvents( int $eventID ): array
+
+
+/**
+ * Поиск корреляций
+ */
+$scheduleRules = mysqli_query( $API->DB_connection, $searchQuery );
+$newSchedule = generateRuleEvents( (array) $requestData );
+
+
+foreach ( $scheduleRules as $rule ) {
+
+    /**
+     * Не проверяем правила на отмену посещений
+     */
+    if ( $requestData->is_weekend === 'Y' ) break;
+    if ( $rule[ "is_weekend" ] === 'Y' ) continue;
+
+    /**
+     * Получаем список событий коррелирующего правила
+     */
+    $ruleEvents = generateRuleEvents( $rule );
+
+    foreach ( $ruleEvents as $ruleEvent ) {
+
+        /**
+         * Получаем время события коррелирующего правила
+         */
+        $eventStartFrom = strtotime( $ruleEvent[ "event_from" ] );
+        $eventEndsAt = strtotime( $ruleEvent[ "event_to" ] );
+
+        /**
+         * Проходимся по событиям нового правила
+         */
+        foreach ( $newSchedule as $newEvent ) {
+
+            /**
+             * Получаем время события нового правила
+             */
+            $newEventStartFrom = strtotime( $newEvent[ "event_from" ] );
+            $newEventEndsAt = strtotime( $newEvent[ "event_to" ] );
+
+            /**
+             * Находим корреляцию по времени
+             */
+            if (
+                ( $eventStartFrom >= $newEventStartFrom and $eventStartFrom < $newEventEndsAt ) or
+                ( $eventEndsAt > $newEventStartFrom and $newEventEndsAt < $newEventStartFrom ) or
+                ( $eventStartFrom < $newEventStartFrom and $eventEndsAt > $newEventEndsAt )
+            ) {
+
+                /**
+                 * Проверяем занят ли кабинет
+                 */
+                if ( $ruleEvent[ "cabinet_id" ] == $newEvent[ "cabinet_id" ] ) {
+
+                    /**
+                     * Получаем информацию по сотруднику в событии коррелирующего правила
+                     */
+                    $employeeDetails = $API->DB->from( "users" )
+                        ->where( "id", $ruleEvent[ "user_id" ] )
+                        ->fetch( );
+
+                    $employeeFio = "{$employeeDetails[ "last_name" ]} ";
+                    $employeeFio .= mb_substr( $employeeDetails[ "first_name" ], 0, 1) . ". ";
+                    $employeeFio .= mb_substr( $employeeDetails[ "patronymic" ], 0, 1) . ". ";
+
+                    $API->returnResponse( "Кабинет занимает врач $employeeFio", 500 );
+
+                } // if ( $ruleEvent[ "cabinet_id" ] == $newEvent[ "cabinet_id" ] ) {
+
+
+                /**
+                 * Если кабинет не занят, то возможной причиной корреляции стало уже
+                 * существующее правило для сотрудника
+                 */
+                if ( $ruleEvent[ "user_id" ] == $newEvent[ "user_id" ] ) {
+
+                    $eventDate = date( "d-m", strtotime( $ruleEvent[ "event_from" ] ) );
+
+                    $eventTimeFrom = date( "H:i", strtotime( $ruleEvent[ "event_from" ] ) );
+                    $eventTimeTo = date( "H:i", strtotime( $ruleEvent[ "event_to"] ) );
+
+                    $API->returnResponse( "У сотрудника уже есть расписание на $eventDate с $eventTimeFrom по $eventTimeTo", 500 );
+
+                } //  if ( $ruleEvent[ "user_id" ] == $newEvent[ "user_id" ] ) {
+
+            } // if ( correlation )
+
+        } // foreach ( $newSchedule as $newEvent ) {
+
+    } // foreach ( $ruleEvents as $ruleEvent ) {
+
+} // foreach ( $scheduleEvents as $event )
+
+
+/**
+ * Если мы находимся тут, то никаких накладок не выявлено
  */
 
-while ( $currentScheduleDate <= $scheduleTo ) {
+/**
+ * Вытаскиваем список дней для последующего добавления
+ * в связанную таблицу workDaysWeekdays
+ */
+$workDays = (array)$requestData->work_days;
+unset( $requestData->work_days );
+unset( $requestData->id );
 
-    /**
-     * Получение текущей даты
-     */
-    $scheduleDate = date( "Y-m-d", $currentScheduleDate );
+
+/**
+ * Изменяем правило из запроса, попутно сохраняя ID
+ * создаваемого объекта
+ */
+$ruleID = $API->DB->update( "workDays" )
+    ->set( (array) $requestData )
+    ->where( "id", $ruleDetails[ "id" ] )
+    ->execute();
 
 
-    /**
-     * Обновление текущей даты
-     */
-    $currentScheduleDate = strtotime( "+1 day", $currentScheduleDate );
+/**
+ * Очистка и запись данных в связанную таблицу
+ */
+$API->DB->deleteFrom( "workDaysWeekdays" )
+    ->where( "rule_id", $ruleDetails[ "id" ] )
+    ->execute();
 
-    /**
-     * Очистка дня
-     */
-    if ( ( $requestData->is_weekend == "Y" ) && $currentSchedule[ $scheduleDate ] ) {
+foreach ( $workDays as $workDay ) {
 
-        foreach ( $currentSchedule[ $scheduleDate ] as $currentDayId )
-            $API->DB->deleteFrom( $API->request->object )
-                ->where( [
-                    "id" => $currentDayId
-                ] )
-                ->execute();
+    $API->DB->insertInto( "workDaysWeekdays" )
+        ->values([
+            "rule_id" => $ruleDetails[ "id" ],
+            "workday" => $workDay
+        ])
+        ->execute( );
 
-    } // if. $currentSchedule[ $scheduleDate ]
-    /**
-     * Добавление дня в график
-     */
-    $API->DB->update( $API->request->object )
-        ->set( [
-            "event_from" => "$scheduleDate $scheduleTimeFrom",
-            "event_to" => "$scheduleDate $scheduleTimeTo",
-            "user_id" => $currentScheduleDetail[ "user_id" ],
-            "is_weekend" => $eventIsWeekend,
-            "store_id" => $eventStoreId,
-            "cabinet_id" => $eventCabinetId
-        ] )
-        ->where( "id", $requestData->id )
-        ->execute();
+}
 
-} // while. $currentScheduleDate <= $scheduleTo
+/**
+ * Блокируем создание записей
+ */
+$API->returnResponse();

@@ -28,7 +28,7 @@ function generateRuleEvents( array $rule ): array {
     /**
      * Списки событий
      */
-    $weekdays = [ 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' ];
+    $weekdays = [ 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' ];
     $generatedEvents = [];
     $eventWorkdays = $requestData->work_days ?? [];
 
