@@ -22,7 +22,7 @@ unset( $requestData->id );
  */
 $requestData->is_rule = 'Y';
 $requestData->work_days = $requestData->work_days ?? [];
-$requestData->is_weekend = ( $requestData->is_weekend ? 'Y' : 'N' ) ?? null;
+$requestData->is_weekend = ( $requestData->is_weekend ?? false ) ? 'Y' : 'N';
 
 
 /**

@@ -20,7 +20,7 @@ unset( $requestData->id );
  * Инициализация значений
  */
 $requestData->is_rule = 'N';
-$requestData->is_weekend = ( $requestData->is_weekend ?? 'N' ) ? 'Y' : 'N';
+$requestData->is_weekend = ( $requestData->is_weekend ?? false ) ? 'Y' : 'N';
 
 
 /**
