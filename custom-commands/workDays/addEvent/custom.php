@@ -3,7 +3,7 @@
 /**
  * Получение периода
  */
-$begin = DateTime::createFromFormat( "Y-m-d H:i:s", "$requestData->start_from $requestData->event_from" );
+$begin = DateTime::createFromFormat( "Y-m-d H:i", "$requestData->start_from $requestData->event_from" );
 $end = DateTime::createFromFormat( "Y-m-d H:i", "$requestData->start_to  $requestData->event_to" );
 
 /**
@@ -20,7 +20,7 @@ unset( $requestData->id );
  * Инициализация значений
  */
 $requestData->is_rule = 'N';
-$requestData->is_weekend = $requestData->is_weekend ?? null;
+$requestData->is_weekend = ( $requestData->is_weekend ?? 'N' ) ? 'Y' : 'N';
 
 
 /**
@@ -32,11 +32,15 @@ $storeDetails = $API->DB->from( "stores" )
     ->where( "id", $requestData->store_id )
     ->fetch();
 
-if ( strtotime( $storeDetails[ "schedule_from" ] ) > strtotime( $begin->format( "H:i:s" ) ) )
-    $API->returnResponse( "Расписание выходит за рамки графика филиала ${$storeDetails[ "title" ]}", 402 );
+if ( $requestData->is_weekend !== 'Y' ) {
 
-if ( strtotime( $storeDetails[ "schedule_to" ] ) < strtotime( $end->format( "H:i:s" ) ) )
-    $API->returnResponse( "Расписание выходит за рамки графика филиала ${$storeDetails[ "title" ]}", 402 );
+    if ( strtotime( $storeDetails[ "schedule_from" ] ) > strtotime( $begin->format( "H:i:s" ) ) )
+        $API->returnResponse( "Расписание выходит за рамки графика филиала ${$storeDetails[ "title" ]}", 402 );
+
+    if ( strtotime( $storeDetails[ "schedule_to" ] ) < strtotime( $end->format( "H:i:s" ) ) )
+        $API->returnResponse( "Расписание выходит за рамки графика филиала ${$storeDetails[ "title" ]}", 402 );
+
+}
 
 
 
