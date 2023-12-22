@@ -8,7 +8,7 @@ $ruleDetails = $API->DB->from( "workDays" )
 
 if ( $ruleDetails[ "is_weekend" ] ) {
 
-    $formFieldsUpdate[ "event_from" ][ "is_visible" ] = false;
-    $formFieldsUpdate[ "event_to" ][ "is_visible" ] = false;
+    $formFieldValues[ "event_from" ][ "is_visible" ] = false;
+    $formFieldValues[ "event_to" ][ "is_visible" ] = false;
 
 }
