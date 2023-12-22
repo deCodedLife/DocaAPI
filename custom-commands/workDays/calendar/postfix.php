@@ -111,34 +111,34 @@ foreach ( $response[ "data" ] as $eventDate => $events ) {
          */
         foreach ( $ruleEvents as $ruleEvent ) {
 
+            $ruleEventDate = date( "Y-m-d", strtotime( $ruleEvent[ "event_from" ] ) );
             $newEvent = $event;
             $newEvent[ "is_rule" ] = $eventDetail[ "is_rule" ];
             $newEvent[ "is_weekend" ] = $ruleEvent[ "is_weekend" ];
+
+            if ( $eventDetail[ "is_rule" ] === 'N' ) {
+
+                $newEvent[ "background" ] = "primary";
+                $generatedGraph[ $ruleEventDate ][ "hasIndividualRule" ] = true;
+
+            }
 
             $cabinetDetail = $API->DB->from( "cabinets" )
                 ->where( "id", $eventDetail[ "cabinet_id" ] )
                 ->limit( 1 )
                 ->fetch();
 
-            if ( $cabinetDetail )
-                $newEvent[ "title" ] = " [Каб. " . $cabinetDetail[ "title" ] . "]";
+            if ( $cabinetDetail )  $newEvent[ "title" ] = " [Каб. " . $cabinetDetail[ "title" ] . "]";
+            if ( $eventDetail[ "is_rule" ] === 'Y' ) $newEvent[ "background" ] = "success";
 
             if ( $ruleEvent[ "is_weekend" ] == "Y" ) {
 
                 $newEvent[ "title" ] = "Отмена приема";
                 $newEvent[ "background" ] = "danger";
 
-            } else {
+            }
 
-                $newEvent[ "background" ] = "success";
-
-            } // if. $eventDetail[ "is_weekend" ] == "Y"
-
-            $ruleEventDate = date( "Y-m-d", strtotime( $ruleEvent[ "event_from" ] ) );
             $generatedGraph[ $ruleEventDate ][ "events" ][] = $newEvent;
-
-            if ( $eventDetail[ "is_rule" ] === 'N' )
-                $generatedGraph[ $ruleEventDate ][ "hasIndividualRule" ] = true;
 
         }
 
