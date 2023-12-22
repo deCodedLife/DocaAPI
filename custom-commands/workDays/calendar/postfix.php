@@ -42,6 +42,8 @@ function generateRuleEvents( array $rule ): array {
     foreach ( $eventWeekdays as $weekday )
         $eventWorkdays[] = $weekday[ "workday" ];
 
+    if ( empty( $eventWorkdays ) ) $eventWorkdays = $weekdays;
+
 
     /**
      * Итерация графика по дням
