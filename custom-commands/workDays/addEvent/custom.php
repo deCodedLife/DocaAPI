@@ -1,10 +1,10 @@
 <?php
-
+ini_set( "display_errors", true );
 /**
  * Получение периода
  */
-$begin = DateTime::createFromFormat( "Y-m-d H:i", "$requestData->start_from $requestData->event_from" );
-$end = DateTime::createFromFormat( "Y-m-d H:i", "$requestData->start_to  $requestData->event_to" );
+$begin = DateTime::createFromFormat( "Y-m-d H:i:s", "$requestData->start_from $requestData->event_from" );
+$end = DateTime::createFromFormat( "Y-m-d H:i:s", "$requestData->start_to  $requestData->event_to" );
 
 /**
  * Перезаписываем объект requestData, чтобы затем использовать для создания записи
