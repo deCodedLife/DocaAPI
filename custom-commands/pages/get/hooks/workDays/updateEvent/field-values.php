@@ -27,5 +27,12 @@ if ( $ruleDetails[ "is_rule" ] === 'Y' ) {
         "value" => $workdays
     ];
 }
-if ( $ruleDetails[ "is_rule" ] === 'N' ) $formFieldValues[ "work_days" ][ "is_visible" ] = false;
+if ( $ruleDetails[ "is_rule" ] === 'N' ) {
+
+    $formFieldValues[ "work_days" ] = [
+        "is_visible" => false,
+        "value" => []
+    ];
+
+}
 
