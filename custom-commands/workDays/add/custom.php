@@ -34,10 +34,10 @@ $storeDetails = $API->DB->from( "stores" )
     ->where( "id", $requestData->store_id )
     ->fetch();
 
-if ( strtotime( $requestData->event_from ) < strtotime( $storeDetails[ "schedule_from" ] ) )
+if ( strtotime( $storeDetails[ "schedule_from" ] ) > strtotime( $begin->format( "H:i:s" ) ) )
     $API->returnResponse( "Расписание выходит за рамки графика филиала ${$storeDetails[ "title" ]}", 402 );
 
-if ( strtotime( $requestData->event_to )   > strtotime( $storeDetails[ "schedule_to" ] ) )
+if ( strtotime( $storeDetails[ "schedule_to" ] ) < strtotime( $end->format( "H:i:s" ) ) )
     $API->returnResponse( "Расписание выходит за рамки графика филиала ${$storeDetails[ "title" ]}", 402 );
 
 
@@ -56,7 +56,7 @@ $searchQuery = "SELECT * FROM workDays WHERE
         ( event_from < '$requestData->event_from' and event_to > '$requestData->event_to' ) 
     ) AND 
     store_id = $requestData->store_id AND
-    is_weekend is NULL AND
+    ( is_weekend is NULL OR is_weekend = 'N' ) AND
     is_rule = 'Y' ";
 
 
@@ -221,7 +221,7 @@ foreach ( $scheduleRules as $rule ) {
                     $eventTimeFrom = date( "H:i", strtotime( $ruleEvent[ "event_from" ] ) );
                     $eventTimeTo = date( "H:i", strtotime( $ruleEvent[ "event_to" ] ) );
 
-                    $API->returnResponse( "У сотрудника уже есть расписание на $eventDate с $eventTimeFrom по $eventTimeTo" );
+                    $API->returnResponse( "У сотрудника уже есть расписание на $eventDate с $eventTimeFrom по $eventTimeTo", 500 );
 
                 } //  if ( $ruleEvent[ "user_id" ] == $newEvent[ "user_id" ] ) {
 
