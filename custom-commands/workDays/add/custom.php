@@ -16,10 +16,30 @@ unset( $requestData->start_from );
 unset( $requestData->start_to );
 unset( $requestData->id );
 
+
+/**
+ * Инициализация значений
+ */
 $requestData->is_rule = 'Y';
 $requestData->work_days = $requestData->work_days ?? [];
 $requestData->is_weekend = $requestData->is_weekend ?? null;
+
+
+/**
+ * Валидация времени
+ */
 if ( $begin > $end ) $API->returnResponse( "Период указан некорректно", 402 );
+
+$storeDetails = $API->DB->from( "stores" )
+    ->where( "id", $requestData->store_id )
+    ->fetch();
+
+if ( strtotime( $requestData->event_from ) < strtotime( $storeDetails[ "schedule_from" ] ) )
+    $API->returnResponse( "Расписание выходит за рамки графика филиала ${$storeDetails[ "title" ]}", 402 );
+
+if ( strtotime( $requestData->event_to )   > strtotime( $storeDetails[ "schedule_to" ] ) )
+    $API->returnResponse( "Расписание выходит за рамки графика филиала ${$storeDetails[ "title" ]}", 402 );
+
 
 
 /**
@@ -52,10 +72,10 @@ $searchQuery = "SELECT * FROM workDays WHERE
      * "user_id": 132
  * }
  *
- * @param array $event
+ * @param array $rule
  * @return array
  */
-function generateSchedule( array $event ): array {
+function generateRuleEvents( array $rule ): array {
 
     global $API, $requestData;
 
@@ -68,12 +88,15 @@ function generateSchedule( array $event ): array {
 
 
     /**
-     * Получение дней графика
+     * Подтягиваем дни из связанной таблицы, если правило существует
      */
     if ( ( $requestData->id ?? 0 ) != 0 ) {
 
+        /**
+         * Получение дней графика
+         */
         $eventWeekdays = $API->DB->from( "workDaysWeekdays" )
-            ->where( "rule_id", $event[ "id" ] );
+            ->where( "rule_id", $rule[ "id" ] );
 
         foreach ( $eventWeekdays as $weekday )
             $eventWorkdays[] = $weekday[ "workday" ];
@@ -86,10 +109,10 @@ function generateSchedule( array $event ): array {
     /**
      * Итерация графика по дням
      */
-    $eventEnd = DateTime::createFromFormat( "Y-m-d H:i:s", $event[ "event_to" ] );
+    $eventEnd = DateTime::createFromFormat( "Y-m-d H:i:s", $rule[ "event_to" ] );
 
     for (
-        $iterator = DateTime::createFromFormat( "Y-m-d H:i:s", $event[ "event_from" ] );
+        $iterator = DateTime::createFromFormat( "Y-m-d H:i:s", $rule[ "event_from" ] );
         $iterator < $eventEnd;
         $iterator->modify( "+1 day" )
     ) {
@@ -102,12 +125,12 @@ function generateSchedule( array $event ): array {
          * Генерируем событие
          */
         $generatedEvents[] = [
-            "id" => $event[ "id" ] ?? 0,
+            "id" => $rule[ "id" ] ?? 0,
             "event_from" => $iterator->format( "Y-m-d H:i:s" ),
             "event_to" => $eventEnd->format( "$date H:i:s" ),
-            "cabinet_id" => $event[ "cabinet_id" ],
-            "is_weekend" => $event[ "is_weekend" ] ?? 'N',
-            "user_id" => $event[ "user_id" ]
+            "cabinet_id" => $rule[ "cabinet_id" ],
+            "is_weekend" => $rule[ "is_weekend" ] ?? 'N',
+            "user_id" => $rule[ "user_id" ]
         ];
 
     } // for days iterator
@@ -115,14 +138,14 @@ function generateSchedule( array $event ): array {
 
     return $generatedEvents;
 
-} // function generateSchedule( int $eventID ): array
+} // function generateRuleEvents( int $eventID ): array
 
 
 /**
  * Поиск корреляций
  */
 $scheduleRules = mysqli_query( $API->DB_connection, $searchQuery );
-$newSchedule = generateSchedule( (array) $requestData );
+$newSchedule = generateRuleEvents( (array) $requestData );
 
 
 foreach ( $scheduleRules as $rule ) {
@@ -136,7 +159,7 @@ foreach ( $scheduleRules as $rule ) {
     /**
      * Получаем список событий коррелирующего правила
      */
-    $ruleEvents = generateSchedule( $rule );
+    $ruleEvents = generateRuleEvents( $rule );
 
     foreach ( $ruleEvents as $ruleEvent ) {
 
