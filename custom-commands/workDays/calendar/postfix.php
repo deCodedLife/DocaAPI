@@ -133,7 +133,7 @@ foreach ( $response[ "data" ] as $eventDate => $events ) {
                 ->fetch();
 
 
-            $newEvent[ "title" ] = "$ruleEventDateTimeStart $ruleEventDateTimeEnd";
+            $newEvent[ "title" ] = "$ruleEventDateTimeStart - $ruleEventDateTimeEnd";
             if ( $cabinetDetail )  $newEvent[ "title" ] .= " [Каб. {$cabinetDetail[ "title" ]} ]";
             if ( $eventDetail[ "is_rule" ] === 'Y' ) $newEvent[ "background" ] = "success";
 
