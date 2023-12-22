@@ -3,7 +3,7 @@
 $formFieldValues[ "cabinet_id" ] = [ "is_visible" => true ];
 
 $ruleDetails = $API->DB->from( "workDays" )
-    ->where( "id", $requestData->context->row_id )
+    ->where( "id", $pageDetail[ "row_id" ] )
     ->fetch();
 
 if ( $ruleDetails[ "is_weekend" ] ) {
