@@ -36,20 +36,11 @@ function generateRuleEvents( array $rule ): array {
     /**
      * Подтягиваем дни из связанной таблицы, если правило существует
      */
-    if ( ( $requestData->id ?? 0 ) != 0 ) {
+    $eventWeekdays = $API->DB->from( "workDaysWeekdays" )
+        ->where( "rule_id", $rule[ "id" ] );
 
-        /**
-         * Получение дней графика
-         */
-        $eventWeekdays = $API->DB->from( "workDaysWeekdays" )
-            ->where( "rule_id", $rule[ "id" ] );
-
-        foreach ( $eventWeekdays as $weekday )
-            $eventWorkdays[] = $weekday[ "workday" ];
-
-    } // if ( !$requestData->work_days )
-
-    if ( empty( $eventWorkdays ) ) $eventWorkdays = $weekdays;
+    foreach ( $eventWeekdays as $weekday )
+        $eventWorkdays[] = $weekday[ "workday" ];
 
 
     /**
