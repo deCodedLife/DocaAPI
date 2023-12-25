@@ -43,6 +43,19 @@ foreach ( $workDays as $workDay ) {
 
 }
 
+if ( $requestData->is_weekend ) {
+
+    $API->DB->deleteFrom( "scheduleEvents" )
+        ->where( [
+            "user_id" => $requestData->user_id,
+            "event_from > ?" => $begin->format( "Y-m-d 00:00:00" ),
+            "event_to < ?" => $begin->format( "Y-m-d 23:59:59" ),
+            "store_id" => $requestData->store_id
+        ] )
+        ->execute();
+
+}
+
 foreach ( $newSchedule as $scheduleEvent ) {
 
     unset( $scheduleEvent[ "id" ] );
