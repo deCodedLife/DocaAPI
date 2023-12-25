@@ -4,6 +4,7 @@
 /**
  * Определение цвета Записи
  */
+
 switch ( $event[ "status" ] ) {
 
     case "moved":

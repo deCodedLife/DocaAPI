@@ -47,7 +47,7 @@ if ( !$requestData->user_id ) {
 
     $users = mysqli_query(
         $API->DB_connection,
-        "SELECT user_id FROM workDays
+        "SELECT user_id FROM scheduleEvents
            WHERE event_from > '$requestData->start_at'
            AND event_to < '$requestData->end_at'
            AND store_id = $requestData->store_id

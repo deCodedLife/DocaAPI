@@ -70,6 +70,7 @@ function generateRuleEvents( array $rule ): array
             "event_from" => $iterator->format( "Y-m-d H:i:s" ),
             "event_to" => $eventEnd->format( "$date H:i:s"),
             "cabinet_id" => $rule[ "cabinet_id" ],
+            "store_id" => $rule[ "store_id" ],
             "is_weekend" => $rule[ "is_weekend" ] ?? 'N',
             "user_id" => $rule[ "user_id" ]
         ];
