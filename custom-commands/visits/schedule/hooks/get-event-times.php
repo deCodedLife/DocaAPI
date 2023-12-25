@@ -17,7 +17,7 @@ foreach ( $performersDetail as $performerId => $performerDetail ) {
     $performerWorkSchedule = mysqli_query(
         $API->DB_connection,
         "SELECT * 
-               FROM workDays 
+               FROM scheduleEvents 
                WHERE event_from >= '$requestData->start_at 00:00:00' 
                  AND event_to <= '$requestData->end_at 23:59:59' 
                  AND user_id = $performerId 

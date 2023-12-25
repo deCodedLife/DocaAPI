@@ -96,7 +96,8 @@
       "is_autofill": false,
       "is_variable": false,
       "use_in_commands": [
-        "add"
+        "add",
+        "updateEvent"
       ],
       "require_in_commands": [],
       "is_hook": false,
