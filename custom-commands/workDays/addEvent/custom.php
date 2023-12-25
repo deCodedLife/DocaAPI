@@ -4,6 +4,7 @@
 /**
  * Вызываем метод создания ячеек и их валидации
  */
+require_once $API::$configs[ "paths" ][ "public_app" ] . "/custom-libs/workdays/createEvents.php";
 require_once $API::$configs[ "paths" ][ "public_app" ] . "/custom-libs/workdays/validate.php";
 
 
