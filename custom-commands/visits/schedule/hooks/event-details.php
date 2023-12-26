@@ -42,9 +42,9 @@ if ( $event[ "status" ] == "ended" && $event[ "is_payed" ] == "Y" ) $event[ "col
  * Определение иконки Записи
  */
 
+if ( $event[ "comment" ] != "" && $event[ "comment" ] != "null" ) $event[ "icons" ][] = "more";
 if ( $event[ "is_payed" ] == "Y" ) $event[ "icons" ][] = "rub";
 if ( $event[ "is_earlier" ] == "Y" ) $event[ "icons" ][] = "time";
-if ( $event[ "comment" ] != "" && $event[ "comment" ] != "null" ) $event[ "icons" ][] = "more";
 
 
 /**
