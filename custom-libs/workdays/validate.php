@@ -29,6 +29,9 @@ $requestData->event_to = $requestData->event_to ?? date( 'H:i:s', strtotime( $ru
  */
 $begin = DateTime::createFromFormat( "Y-m-d H:i:s", "$requestData->start_from $requestData->event_from" );
 $end = DateTime::createFromFormat( "Y-m-d H:i:s", "$requestData->start_to  $requestData->event_to" );
+$limit = DateTime::createFromFormat( "Y-m-d H:i:s", "$requestData->start_from $requestData->event_from" );
+$limit->modify( "+1 month" );
+
 
 
 /**
@@ -58,6 +61,7 @@ if ( $begin->format( "Y-m-d" ) == $end->format( "Y-m-d" ) ) $requestData->is_rul
 /**
  * Валидация времени
  */
+if ( $end > $limit ) $API->returnResponse( "Расписание можно создать не боле чем на месяц", 402 );
 if ( $begin > $end ) $API->returnResponse( "Период указан некорректно", 402 );
 
 $storeDetails = $API->DB->from( "stores" )
@@ -149,6 +153,8 @@ foreach ( $scheduleRules as $rule ) {
                  * Проверяем занят ли кабинет
                  */
                 if ( $ruleEvent[ "cabinet_id" ] == $newEvent[ "cabinet_id" ] ) {
+
+                    if ( !$ruleEvent[ "cabinet_id" ] ) continue;
 
                     /**
                      * Получаем информацию по сотруднику в событии коррелирующего правила
