@@ -55,7 +55,7 @@ $requestData->cabinet_id = $requestData->cabinet_id ?? $ruleDetails[ "cabinet_id
 $requestData->is_rule = $requestData->is_rule ?? $ruleDetails[ "is_rule" ] ?? 'N';
 $requestData->is_weekend = $requestData->is_weekend ?? $ruleDetails[ "is_weekend" ];
 
-if ( $begin->format( "Y-m-d" ) == $end->format( "Y-m-d" ) ) $requestData->is_rule = 'Y';
+if ( $begin->format( "Y-m-d" ) == $end->format( "Y-m-d" ) ) $requestData->is_rule = 'N';
 
 
 /**
