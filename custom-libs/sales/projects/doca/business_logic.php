@@ -1,5 +1,7 @@
 <?php
 
+//ini_set( "display_errors", true );
+
 global $API, $requestData;
 
 
@@ -15,7 +17,8 @@ use Sales\Modifier;
 
 
 $allVisits = $requestData->visits_ids ?? [];
-$allProducts = $requestData->doca_products ?? [];
+$saleProducts = $requestData->doca_products ?? [];
+$allProducts = [];
 $saleVisits = [];
 $allServices = [];
 $saleServices = [];
@@ -35,6 +38,7 @@ $employee = $requestData->user_id;
 
 $Doca->getVisits( $allVisits, $saleVisits, $isReturn );
 $Doca->getServices( $allVisits, $allServices, $saleServices );
+$Doca->getProducts( $allProducts, $saleProducts );
 
 require_once ( 'index.php' );
 
@@ -93,11 +97,7 @@ foreach ( $allVisits as $visit )
 
 foreach ( $allProducts as $product ) {
 
-    $productDetails = $API->DB->from( "products" )
-        ->where( "id", $product->id )
-        ->fetch();
-
-    $productsPrice += $productDetails[ "price" ] * $product->amount;
+    $productsPrice += $product[ "price" ] * $product[ "amount" ];
 
 }
 
@@ -339,6 +339,11 @@ if ( $allServices ) {
 if ( $allProducts ) {
 
     foreach ( $allProducts as $product ) {
+
+        $product = (array) $product;
+        $product = $API->DB->from( "products" )
+            ->where( "id", $product[ "id" ] )
+            ->fetch();
 
         $formFieldsUpdate[ "products" ][] = [
             "title" => $product[ "title" ],

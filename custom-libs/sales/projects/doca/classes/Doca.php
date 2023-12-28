@@ -53,7 +53,24 @@ class Doca
 
         } // foreach. $saleVisits as $saleVisit
 
-    } // public function getServices( $visits ) {
+    } // public function getServices( $visits )
+
+    public function getProducts ( &$allProducts, &$saleProducts ) {
+
+        global $API;
+
+        foreach ( $saleProducts as $product ) {
+
+            $productDetails = $API->DB->from( "products" )
+                ->where( "id", $product->id )
+                ->fetch();
+
+            $productDetails[ "amount" ] = $product->amount ?? 0;
+            $allProducts[] = $productDetails;
+
+        }
+
+    }
 
     public function getVisits( &$allVisits, &$saleVisits, $isReturn ): void {
 
