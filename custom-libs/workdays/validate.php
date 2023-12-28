@@ -52,10 +52,11 @@ $requestData->store_id = $requestData->store_id ?? $ruleDetails[ "store_id" ];
 $requestData->user_id = $requestData->user_id ?? $ruleDetails[ "user_id" ];
 $requestData->cabinet_id = $requestData->cabinet_id ?? $ruleDetails[ "cabinet_id" ];
 
-$requestData->is_rule = $requestData->is_rule ?? $ruleDetails[ "is_rule" ] ?? 'N';
+$requestData->is_rule = $requestData->is_rule ?? $ruleDetails[ "is_rule" ] ?? 'Y';
 $requestData->is_weekend = $requestData->is_weekend ?? $ruleDetails[ "is_weekend" ];
 
 if ( $begin->format( "Y-m-d" ) == $end->format( "Y-m-d" ) ) $requestData->is_rule = 'N';
+else $requestData->is_rule = 'Y';
 
 
 /**
