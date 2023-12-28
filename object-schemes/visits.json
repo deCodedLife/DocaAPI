@@ -61,6 +61,36 @@
       ]
     },
     {
+      "title": "Клиент",
+      "article": "clients_id",
+      "data_type": "array",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "search": "clients",
+      "use_in_commands": [
+        "add",
+        "update",
+        "get",
+        "schedule",
+        "hook"
+      ],
+      "require_in_commands": [
+        "add"
+      ],
+      "is_disabled": false,
+      "join": {
+        "connection_table": "visits_clients",
+        "donor_table": "clients",
+        "property_article": "last_name",
+        "insert_property": "visit_id",
+        "filter_property": "client_id"
+      },
+      "annotation": "",
+      "is_hook": true
+    },
+    {
       "title": "Информация о клиентах",
       "article": "clients_info",
       "data_type": "array",
@@ -79,32 +109,7 @@
       "is_visible": false
     },
     {
-      "title": "Сотрудник",
-      "article": "user_id",
-      "data_type": "integer",
-      "field_type": "list",
-      "is_default_in_list": true,
-      "is_unique": false,
-      "is_autofill": true,
-      "is_hook": true,
-      "use_in_commands": [
-        "add",
-        "update",
-        "get",
-        "hook",
-        "schedule"
-      ],
-      "require_in_commands": [
-        "add"
-      ],
-      "list_donor": {
-        "table": "users",
-        "properties_title": "last_name"
-      },
-      "is_disabled": false
-    },
-    {
-      "title": "Услуга",
+      "title": "Услуги",
       "article": "services_id",
       "data_type": "array",
       "joined_field": "user_id",
@@ -138,6 +143,52 @@
       "is_disabled": false
     },
     {
+      "title": "Сотрудник",
+      "article": "user_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_hook": true,
+      "use_in_commands": [
+        "add",
+        "update",
+        "get",
+        "hook",
+        "schedule"
+      ],
+      "require_in_commands": [
+        "add"
+      ],
+      "list_donor": {
+        "table": "users",
+        "properties_title": "last_name"
+      },
+      "is_disabled": false
+    },
+    {
+      "title": "Администратор",
+      "article": "author_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "list_donor": {
+        "table": "users",
+        "properties_title": "last_name"
+      },
+      "use_in_commands": [
+        "add",
+        "update"
+      ],
+      "require_in_commands": [
+        "add"
+      ],
+      "is_visible": false
+    },
+    {
       "title": "Ассистент",
       "article": "assist_id",
       "data_type": "integer",
@@ -165,7 +216,7 @@
       "article": "price",
       "data_type": "float",
       "field_type": "price",
-      "is_default_in_list": true,
+      "is_default_in_list": false,
       "is_unique": false,
       "is_autofill": true,
       "is_disabled": true,
@@ -209,7 +260,7 @@
       "article": "status",
       "data_type": "string",
       "field_type": "list",
-      "is_default_in_list": true,
+      "is_default_in_list": false,
       "is_unique": false,
       "is_autofill": true,
       "is_disabled": false,
@@ -311,36 +362,6 @@
         "get"
       ],
       "require_in_commands": []
-    },
-    {
-      "title": "Клиент",
-      "article": "clients_id",
-      "data_type": "array",
-      "field_type": "list",
-      "is_default_in_list": false,
-      "is_unique": false,
-      "is_autofill": true,
-      "search": "clients",
-      "use_in_commands": [
-        "add",
-        "update",
-        "get",
-        "schedule",
-        "hook"
-      ],
-      "require_in_commands": [
-        "add"
-      ],
-      "is_disabled": false,
-      "join": {
-        "connection_table": "visits_clients",
-        "donor_table": "clients",
-        "property_article": "last_name",
-        "insert_property": "visit_id",
-        "filter_property": "client_id"
-      },
-      "annotation": "",
-      "is_hook": true
     },
     {
       "title": "Артикул исполнителя",
@@ -701,27 +722,6 @@
         "hook"
       ],
       "is_hook": true
-    },
-    {
-      "title": "Автор",
-      "article": "author_id",
-      "data_type": "integer",
-      "field_type": "list",
-      "is_default_in_list": false,
-      "is_unique": false,
-      "is_autofill": true,
-      "list_donor": {
-        "table": "users",
-        "properties_title": "last_name"
-      },
-      "use_in_commands": [
-        "add",
-        "update"
-      ],
-      "require_in_commands": [
-        "add"
-      ],
-      "is_visible": false
     },
     {
       "title": "Категория для фильтра",
