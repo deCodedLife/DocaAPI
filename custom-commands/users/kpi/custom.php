@@ -87,6 +87,7 @@ $salesList = $API->DB->from( "salesList" )
     ])
     ->where( [
         "salesList.status" => "done",
+        "salesList.action" => "sell",
         "visits.author_id" => $requestData->id,
         "salesList.created_at >= ?" =>  date( 'Y-m-1' ) . " 00:00:00",
         "salesList.created_at <= ?" =>  date( 'Y-m-d' ) . " 23:59:59"

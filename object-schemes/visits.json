@@ -119,7 +119,6 @@
       "is_unique": false,
       "is_autofill": true,
       "is_hook": true,
-      "search": "services",
       "settings": {
         "is_duplicate": true
       },

@@ -8,10 +8,8 @@
 
 $API->DB->update( "salesList" )
     ->set( [
-        "status" => $requestData->status,
-        "error" => $requestData->description
+        "status" => $requestData->status ?? "error",
+        "error" => $requestData->description ?? ""
     ] )
-    ->where( [
-        "id" => $requestData->sale_id
-    ] )
+    ->where( "id", $requestData->sale_id )
     ->execute();

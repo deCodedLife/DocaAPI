@@ -323,7 +323,7 @@ if ( $allServices ) {
 
     foreach ( $allServices as $product ) {
 
-        $formFieldsUpdate[ "products" ][] = [
+        $formFieldsUpdate[ "products" ][ "value" ][] = [
             "title" => $product[ "title" ],
             "type" => "service",
             "cost" => $product[ "price" ],
@@ -333,23 +333,17 @@ if ( $allServices ) {
 
     }
 
-
 }
 
 if ( $allProducts ) {
 
     foreach ( $allProducts as $product ) {
 
-        $product = (array) $product;
-        $product = $API->DB->from( "products" )
-            ->where( "id", $product[ "id" ] )
-            ->fetch();
-
-        $formFieldsUpdate[ "products" ][] = [
+        $formFieldsUpdate[ "products" ][ "value" ][] = [
             "title" => $product[ "title" ],
             "type" => "product",
             "cost" => $product[ "price" ],
-            "amount" => 1,
+            "amount" => $product[ "amount" ],
             "product_id" => $product[ "id" ]
         ];
 
