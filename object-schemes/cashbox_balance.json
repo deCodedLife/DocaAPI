@@ -61,6 +61,23 @@
       "is_default_in_list": true,
       "is_unique": false,
       "is_autofill": true
+    },
+    {
+      "title": "Филиал",
+      "article": "store_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "get"
+      ],
+      "require_in_commands": [],
+      "list_donor": {
+        "table": "stores",
+        "properties_title": "title"
+      }
     }
   ]
 }

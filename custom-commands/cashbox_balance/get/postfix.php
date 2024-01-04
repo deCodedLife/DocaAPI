@@ -4,20 +4,18 @@
 
 $today = new DateTime();
 
+$filters = [
+    "created_at >= ?" => $today->format( "Y-m-d" ) . " 00:00:00",
+    "created_at <= ?" => $today->format( "Y-m-d" ) . " 23:59:59"
+];
+
+if ( $requestData->store_id ) $filters[ "store_id" ] = $requestData->store_id;
+
 /**
  * Получение списка продаж
  */
-$payments = $API->DB->from( "salesList" )
-    ->where( [
-        "created_at >= ?" => $today->format( "Y-m-d" ) . " 00:00:00",
-        "created_at <= ?" => $today->format( "Y-m-d" ) . " 23:59:59"
-    ] );
-
-$expenses = $API->DB->from( "expenses" )
-    ->where( [
-        "created_at >= ?" => $today->format( "Y-m-d" ) . " 00:00:00",
-        "created_at <= ?" => $today->format( "Y-m-d" ) . " 23:59:59"
-    ] );
+$payments = $API->DB->from( "salesList" )->where( $filters );
+$expenses = $API->DB->from( "expenses" )->where( $filters );
 
 
 /**

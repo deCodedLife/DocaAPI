@@ -288,8 +288,24 @@
       }
     },
     {
+      "title": "Тип операции",
+      "article": "pay_method",
+      "data_type": "string",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "sales_statistic"
+      ],
+      "list_donor": {
+        "table": "payment_types",
+        "properties_title": "title"
+      }
+    },
+    {
       "title": "Тип оплаты",
-      "article": "payment_type",
+      "article": "action",
       "data_type": "string",
       "field_type": "list",
       "is_default_in_list": false,

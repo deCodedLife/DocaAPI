@@ -40,6 +40,7 @@ if ( $requestData->action ) $filter[ "action = ?" ] = $requestData->action;
 if ( $requestData->client_id ) $filter[ "client_id = ?" ] = $requestData->client_id;
 if ( $requestData->employee_id ) $filter[ "employee_id = ?" ] = $requestData->employee_id;
 if ( $requestData->store_id ) $filter[ "store_id = ?" ] = $requestData->store_id;
+if ( $requestData->pay_method ) $filter[ "pay_method" ] = $requestData->pay_method;
 
 
 /**
@@ -99,7 +100,7 @@ foreach ( $salesList as $sale ) {
 foreach ( $report as $key => $item ) {
     $statistic[] = [
         "size" => 1,
-        "value" =>  number_format( round($item, 2), 0, '.', ' ' ),
+        "value" =>  number_format( round($item, 2), 2, '.', ' ' ),
         "description" => $key,
         "icon" => "",
         "prefix" => "",

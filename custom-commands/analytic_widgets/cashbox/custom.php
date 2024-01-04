@@ -11,7 +11,7 @@ $userDetails = $API->DB->from( "users" )
     ->where( "id", $API::$userDetail->id )
     ->fetch();
 
-$storeID = $userDetails[ "store_id" ] ?? 1;
+$storeID = $requestData->store_id ?? $userDetails[ "store_id" ] ?? 1;
 
 $incomeBalance = $API->DB->from( "cashboxBalances" )
     ->where( "store_id", $storeID )
@@ -19,18 +19,25 @@ $incomeBalance = $API->DB->from( "cashboxBalances" )
     ->limit( 1 )
     ->fetch();
 
+$filters = [
+    "action" => "sell",
+    "pay_method" => "cash",
+    "status" => "done",
+    "created_at >= ?" => $start,
+    "created_at <= ?" => $end
+];
+
+if ( $requestData->store_id ) $filters[ "store_id" ] = $requestData->store_id;
+
 $payments = $API->DB->from( "salesList" )
-    ->where( [
-        "action" => "sell",
-        "created_at >= ?" => $start,
-        "created_at <= ?" => $end
-    ] );
+    ->where( $filters );
+
+unset( $filters[ "action" ] );
+unset( $filters[ "pay_method" ] );
+unset( $filters[ "status" ] );
 
 $expenses = $API->DB->from( "expenses" )
-    ->where( [
-        "created_at >= ?" => $start,
-        "created_at <= ?" => $end
-    ] );
+    ->where( $filters );
 
 $summary = 0;
 $expenses_summary = 0;
@@ -43,7 +50,7 @@ foreach ( $expenses as $expense ) {
 
 foreach ( $payments as $payment ) {
 
-    $summary += $payment[ "summary" ];
+    $summary += $payment[ "sum_cash" ];
 
 }
 
@@ -54,7 +61,7 @@ $API->returnResponse(
 
     [
         [
-            "value" => number_format( intval( $incomeBalance[ "balance" ] ), 0, '.', ' ' ),
+            "value" => number_format( floatval( $incomeBalance[ "balance" ] ), 2, '.', ' ' ),
             "description" => "Входящий остаток",
             "icon" => "",
             "prefix" => "₽",
@@ -68,7 +75,7 @@ $API->returnResponse(
             "detail" => []
         ],
         [
-            "value" => number_format( intval( $summary ), 0, '.', ' '),
+            "value" => number_format( floatval( $summary ), 2, '.', ' '),
             "description" => "Исходящий остаток",
             "icon" => "",
             "prefix" => "₽",

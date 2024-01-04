@@ -466,7 +466,7 @@
       "article": "pay_method",
       "data_type": "string",
       "field_type": "list",
-      "is_default_in_list": false,
+      "is_default_in_list": true,
       "is_unique": false,
       "is_autofill": true,
       "use_in_commands": [

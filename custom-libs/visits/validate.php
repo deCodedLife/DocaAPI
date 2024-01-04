@@ -59,7 +59,7 @@ if ( strtotime( $start_at ) == strtotime( $end_at ) ) {
 
     $modifiedEndData = new DateTime( $end_at );
     $modifiedEndData->modify( "+1 min" );
-    
+
     $end_at = $modifiedEndData->format( "Y-m-d H:i:s" );
     $requestData->end_at = $end_at;
 
@@ -171,7 +171,7 @@ function isCabinetOccupied( $cabinetID, $visits ): bool {
     foreach ( $visits as $visit ) {
 
         if ($visit["cabinet_id"] == $cabinetID) {
-            $API->returnResponse($visit["id"]);
+            $API->returnResponse($visit["id"], 500);
             return true;
         }
 
