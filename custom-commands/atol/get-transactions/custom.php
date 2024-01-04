@@ -69,7 +69,8 @@ foreach ( $API->DB->from( "salesProductsList" )->where( "sale_id", $processedSal
 }
 
 $summary = $processedSale[ "summary" ] - $processedSale[ "sum_bonus" ];
-$discountPerProduct = $summary / $difference;
+$discountPerProduct = $summary / ($difference == 0 ? 1 : $difference);
+//$discountPerProduct = 1;
 
 
 foreach ( $services as $service ) {
@@ -89,11 +90,9 @@ foreach ( $services as $service ) {
 }
 
 
-
 if ( $processedSale[ "sum_deposit" ] ) $AtolReciept->payments[] = new Сashbox\IPayment( "2", $processedSale[ "sum_deposit" ] );
 if ( $processedSale[ "sum_card" ] ) $AtolReciept->payments[] = new Сashbox\IPayment( "1", $processedSale[ "sum_card" ] );
 if ( $processedSale[ "sum_cash" ] ) $AtolReciept->payments[] = new Сashbox\IPayment( "cash", $processedSale[ "sum_cash" ] );
-
 
 
 $AtolReciept->taxationType = "usnIncomeOutcome";

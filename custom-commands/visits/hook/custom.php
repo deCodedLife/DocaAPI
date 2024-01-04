@@ -116,13 +116,18 @@ if ( $requestData->services_id && $requestData->user_id ) {
         "value" => $visitPrice
     ];
 
-    $formFieldsUpdate[ "end_at" ] = [
-        "value" => date(
-        "Y-m-d H:i:s", strtotime(
-            "+$visitTakeMinutes minutes", strtotime( $requestData->start_at )
+    if ( !$requestData->id ) {
+
+        $formFieldsUpdate[ "end_at" ] = [
+            "value" => date(
+                "Y-m-d H:i:s", strtotime(
+                    "+$visitTakeMinutes minutes", strtotime( $requestData->start_at )
+                )
             )
-        )
-    ];
+        ];
+
+    }
+
 
 } // if. $requestData->services_id && $requestData->users_id
 
@@ -183,14 +188,19 @@ if ( $requestData->start_at ) {
 
         $diff = abs($visits[ "start_at" ] - $visits[ "end_at" ]);
         $minutes = $diff / 60;
-        
-        $formFieldsUpdate[ "end_at" ] = [
-            "value" => date(
-                "Y-m-d H:i:s", strtotime(
-                    "+$minutes minutes", strtotime( $requestData->start_at )
+
+        if ( !$requestData->id ) {
+
+            $formFieldsUpdate[ "end_at" ] = [
+                "value" => date(
+                    "Y-m-d H:i:s", strtotime(
+                        "+$minutes minutes", strtotime( $requestData->start_at )
+                    )
                 )
-            )
-        ];
+            ];
+
+        }
+
 
     }
 

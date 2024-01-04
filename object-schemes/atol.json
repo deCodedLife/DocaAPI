@@ -13,10 +13,12 @@
       "is_autofill": false,
       "use_in_commands": [
         "get-transactions",
+        "get-operations",
         "create-operation"
       ],
       "require_in_commands": [
         "get-transactions",
+        "cashbox_id",
         "nmake-transctio"
       ],
       "list_donor": {
