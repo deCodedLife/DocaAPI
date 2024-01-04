@@ -106,7 +106,7 @@ else $searchQuery .= " AND is_rule = 'N'";
  * Поиск корреляций
  */
 $scheduleRules = mysqli_query( $API->DB_connection, $searchQuery );
-$newSchedule = generateRuleEvents( (array) $requestData );
+$newSchedule = generateRuleEvents( (array) $requestData, $requestData->work_days ?? [] );
 
 
 foreach ( $scheduleRules as $rule ) {
@@ -168,7 +168,8 @@ foreach ( $scheduleRules as $rule ) {
                     $employeeFio .= mb_substr( $employeeDetails[ "first_name" ], 0, 1) . ". ";
                     $employeeFio .= mb_substr( $employeeDetails[ "patronymic" ], 0, 1) . ". ";
 
-                    $API->returnResponse( "Кабинет занимает врач $employeeFio", 500 );
+                    $API->returnResponse( [ $ruleEvents, $newSchedule ] );
+                    $API->returnResponse( "Кабинет занимает врач $employeeFio {$ruleEvent[ "id" ]}", 500 );
 
                 } // if ( $ruleEvent[ "cabinet_id" ] == $newEvent[ "cabinet_id" ] ) {
 

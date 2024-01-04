@@ -10,8 +10,9 @@ $publicAppPath = $API::$configs[ "paths" ][ "public_app" ];
  */
 $requestData->id = $pageDetail[ "row_id" ];
 $requestData->visits_ids = [ $pageDetail[ "row_id" ] ];
-$requestData->store_id = $pageDetail[ "row_detail" ][ "store_id" ];
-$requestData->client_id = $pageDetail[ "row_detail" ][ "client_id" ];
+$requestData->store_id = $pageDetail[ "row_detail" ][ "store_id" ]->value;
+$requestData->client_id = $pageDetail[ "row_detail" ][ "client_id" ]->value;
+$requestData->object = "equipmentVisits";
 
 /**
  * Вызов скрипта
@@ -84,5 +85,8 @@ if ( $pageDetail[ "row_detail" ][ "is_payed" ] == "Y" || ( $saleDetails && $sale
     $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "products" ] = $formFieldsUpdate[ "products" ];
 
 }
+
+$pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "object" ] = "equipmentVisits";
+
 
 

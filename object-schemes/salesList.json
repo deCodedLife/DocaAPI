@@ -518,6 +518,21 @@
       }
     },
     {
+      "title": "Объект",
+      "article": "object",
+      "data_type": "string",
+      "field_type": "string",
+      "is_visible": false,
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "hook",
+        "add",
+        "update"
+      ]
+    },
+    {
       "title": "Товары",
       "article": "doca_products",
       "data_type": "array",

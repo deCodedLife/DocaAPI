@@ -1,25 +1,6 @@
 <?php
 
 /**
- * Получение детальной информации о посещении
- */
-
-$visitDetails = $API->DB->from( "visits" )
-    ->where( "id", $pageDetail[ "row_id" ] )
-    ->limit( 1 )
-    ->fetch();
-
-/**
- * Получение id клиента
- */
-$client = $API->DB->from( "visits_clients" )
-    ->where( "visit_id", $pageDetail[ "row_id" ] )
-    ->limit( 1 )
-    ->fetch();
-
-$pageScheme[ "structure" ][ 1 ][ "settings" ][ 2 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "id" ] = $pageDetail[ "row_detail" ][ "client_id" ];
-
-/**
  * Подключение общего скрипта обработки продаж
  */
 $publicAppPath = $API::$configs[ "paths" ][ "public_app" ];
@@ -29,8 +10,11 @@ $publicAppPath = $API::$configs[ "paths" ][ "public_app" ];
  */
 $requestData->id = $pageDetail[ "row_id" ];
 $requestData->visits_ids = [ $pageDetail[ "row_id" ] ];
-$requestData->store_id = $pageDetail[ "row_detail" ][ "store_id" ];
-$requestData->client_id = $client[ "client_id" ];
+$requestData->store_id = $pageDetail[ "row_detail" ][ "store_id" ]->value;
+$requestData->client_id = $pageDetail[ "row_detail" ][ "client_id" ]->value;
+$requestData->object = "equipmentVisits";
+
+//$API->returnResponse( $pageDetail[ "row_detail" ], 400 );
 
 /**
  * Вызов скрипта
@@ -67,7 +51,7 @@ $saleDetails = $API->DB->from( "salesList" )
  * Заполнение полей из продаж
  */
 
-if ( $visitDetails[ "is_payed" ] == "Y" || ( $saleDetails && $saleDetails[ "status" ] != "error" ) ) {
+if ( $pageDetail[ "row_detail" ][ "is_payed" ] == "Y" || ( $saleDetails && $saleDetails[ "status" ] != "error" ) ) {
 
     /**
      * Заполнение полей запросом в таблицу
@@ -85,7 +69,7 @@ if ( $visitDetails[ "is_payed" ] == "Y" || ( $saleDetails && $saleDetails[ "stat
     $formFieldValues[ "is_combined" ] = $formFieldValues[ "is_combined" ] == "Y";
     $formFieldValues[ "online_receipt" ] = $formFieldValues[ "online_receipt" ] == "Y";
 
-    foreach ( $API->DB->from( "saleVisits" )
+    foreach ( $API->DB->from( "salesEquipmentVisits" )
                   ->where( "sale_id", $saleDetails[ "sale_id" ] ) as $saleVisit )
         $formFieldValues[ "visits_ids" ][ "value" ][] = $saleVisit[ "visit_id" ];
 
@@ -103,7 +87,5 @@ if ( $visitDetails[ "is_payed" ] == "Y" || ( $saleDetails && $saleDetails[ "stat
     $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "products" ] = $formFieldsUpdate[ "products" ];
 
 }
-
-
 
 

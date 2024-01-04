@@ -30,12 +30,14 @@ $sum_cash = $requestData->sum_cash ?? 0;
 $isReturn = ($requestData->action ?? 'sell') === "sellReturn";
 $store_id = $requestData->store_id;
 $employee = $requestData->user_id;
+$object = $requestData->object ?? "visits";
 
 
 /**
  * Получение списка посещений
  */
 
+$Doca->Table = $object;
 $Doca->getVisits( $allVisits, $saleVisits, $isReturn );
 $Doca->getServices( $allVisits, $allServices, $saleServices );
 $Doca->getProducts( $allProducts, $saleProducts );
@@ -127,7 +129,7 @@ if ( $isReturn ) {
  * Получение скидок
  */
 foreach ( Discount::GetActiveDiscounts( DB_PROMOTIONS ) as $discount ) {
-    
+
     // При возврате не считаем скидки
     if ( $isReturn ) continue;
 
@@ -147,7 +149,7 @@ foreach ( Discount::GetActiveDiscounts( DB_PROMOTIONS ) as $discount ) {
 
     if ( !in_array( $store_id, $promotionStores ) ) continue;
 
-    
+
     $servicesGroups = [];
     $Discount = new Discount();
     $Discount->GetModifiers( "promotion_id", $discount[ "id" ] );

@@ -9,9 +9,12 @@ if ( $requestData->cmd === "event" ) {
      * Получение сотрудника
      */
 
+    $query = "SELECT * FROM users WHERE domru_login LIKE '%$requestData->user%' LIMIT 1";
+    $result = mysqli_query( $API->DB_connection, $query );
+    $result = mysqli_fetch_array( $result );
+
     $employeeDetail = $API->DB->from( "users" )
-        ->where( "domru_login", $requestData->user )
-        ->limit( 1 )
+        ->where( "id", $result[ "id" ] )
         ->fetch();
 
     if ( !$employeeDetail ) $API->returnResponse( false );

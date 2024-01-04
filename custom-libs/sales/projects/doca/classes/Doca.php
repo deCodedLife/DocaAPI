@@ -1,11 +1,16 @@
 <?php
 
+//global $TABLE;
+//if ( !$TABLE ) $TABLE = "visits";
+
 class Doca
 {
-    private static function getVisitDetails( $visitID ) {
+    public $Table = "visits";
+
+    private function getVisitDetails( $visitID ) {
 
         global $API;
-        return $API->DB->from( "visits" )
+        return $API->DB->from( $this->Table )
             ->where( "id", $visitID )
             ->fetch();
 
@@ -74,13 +79,13 @@ class Doca
 
     public function getVisits( &$allVisits, &$saleVisits, $isReturn ): void {
 
-        global $API, $requestData;
+        global $API, $requestData, $TABLE;
 
         /**
          * Формирование списка комбинированных посещений
          */
 
-        
+
         if ( !$allVisits ) return;
         $allVisits = [];
 
@@ -95,7 +100,7 @@ class Doca
              * Получение всех, неоплаченных клиентом, посещений
              */
 
-            $combinedVisits = $API->DB->from( "visits" )
+            $combinedVisits = $API->DB->from( $this->Table )
                 ->innerJoin( "visits_clients ON visits_clients.visit_id = visits.id" )
                 ->where( [
                     "visits.start_at > ?" => $start_at,
