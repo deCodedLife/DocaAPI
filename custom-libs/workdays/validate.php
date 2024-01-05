@@ -168,7 +168,6 @@ foreach ( $scheduleRules as $rule ) {
                     $employeeFio .= mb_substr( $employeeDetails[ "first_name" ], 0, 1) . ". ";
                     $employeeFio .= mb_substr( $employeeDetails[ "patronymic" ], 0, 1) . ". ";
 
-                    $API->returnResponse( [ $ruleEvents, $newSchedule ] );
                     $API->returnResponse( "Кабинет занимает врач $employeeFio {$ruleEvent[ "id" ]}", 500 );
 
                 } // if ( $ruleEvent[ "cabinet_id" ] == $newEvent[ "cabinet_id" ] ) {

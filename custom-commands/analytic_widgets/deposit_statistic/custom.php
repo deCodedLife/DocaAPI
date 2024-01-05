@@ -2,31 +2,34 @@
 
 
 /**
-* Отчет "Статистика клиента
-*/
+ * Отчет "Статистика клиента
+ */
 
 /**
-* Статистика клиента
-*/
+ * Статистика клиента
+ */
 $clientStatistic = [
 
     /**
-    * Количество посещений
-    */
+     * Количество посещений
+     */
     "deposit_count" => 0,
 
     /**
-    * Сумма посещений
-    */
+     * Сумма посещений
+     */
     "deposit_sum" => 0,
 
 
 ];
 
+$clientInfo = $API->DB->from( "clients" )
+    ->where( "id", $requestData->client_id )
+    ->fetch();
 
 /**
-* Получение посещений Сотрудника
-*/
+ * Получение посещений Сотрудника
+ */
 $clientVisits = $API->DB->from( "salesList" )
     ->where( [
         "client_id" => $requestData->client_id,
@@ -37,13 +40,13 @@ $clientVisits = $API->DB->from( "salesList" )
 
 
 /**
-* Формирование пополнений
-*/
+ * Формирование пополнений
+ */
 
 foreach ( $clientVisits as $userDepositt ) {
 
-$clientStatistic[ "deposit_count" ]++;
-$clientStatistic[ "deposit_sum" ] += (float) $userDepositt[ "summary" ];
+    $clientStatistic[ "deposit_count" ]++;
+    $clientStatistic[ "deposit_sum" ] += (float) $userDepositt[ "summary" ];
 
 } // foreach. $userDepositt
 
@@ -94,7 +97,7 @@ $API->returnResponse(
             "detail" => []
         ],
         [
-            "value" => number_format ( $clientStatistic[ "deposit_sum" ], 0, '.', ' ' ),
+            "value" => number_format ( $clientInfo[ "deposit" ], 0, '.', ' ' ),
             "description" => "Баланс",
             "icon" => "",
             "prefix" => "₽",

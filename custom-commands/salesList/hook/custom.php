@@ -29,6 +29,14 @@ if ( $requestData->action !== "deposit" ) {
     $sum_cash = $requestData->sum_cash ?? 0;
     $saleSummary = $sum_cash + $sum_card;
 
+    $formFieldsUpdate[ "products" ][ "value" ][] = [
+        "title" => "Пополнение депозита",
+        "type" => "product",
+        "cost" => $saleSummary,
+        "amount" => 1,
+        "product_id" => 0
+    ];
+
 } // if ( $requestData->action !== "deposit" )
 
 $clientEntity = $API->DB->from( "legal_entity_clients" )

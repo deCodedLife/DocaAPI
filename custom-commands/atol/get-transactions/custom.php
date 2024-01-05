@@ -61,6 +61,15 @@ foreach ( $API->DB->from( "salesProductsList" )->where( "sale_id", $processedSal
         ->where( "id", $service[ "product_id" ] )
         ->fetch();
 
+    if ( !$details ) {
+
+        $service[ "price" ] = $service[ "cost" ];
+        $services[] = $service;
+        $difference += $service[ "cost" ];
+        continue;
+
+    }
+
     $details[ "price" ] = $service[ "cost" ];
     $difference += $service[ "cost" ];
 

@@ -22,3 +22,15 @@ $formFieldValues[ "sum_cash" ] = 0;
 $formFieldValues[ "sum_card" ] = 0;
 
 $formFieldValues[ "summary" ] = [ "is_disabled" => false, "value" => 0 ];
+
+$pageScheme[ "structure" ][ 1 ][ "settings" ][ "data" ][ "products" ] = [
+    [
+        "title" => "Пополнение депозита",
+        "type" => "product",
+        "cost" => 0,
+        "amount" => 0,
+        "product_id" => 0
+    ]
+];
+
+$pageScheme[ "structure" ][ 1 ][ "settings" ][ "data" ][ "object" ] = "deposit";
