@@ -97,7 +97,7 @@ if ( $visitDetails[ "is_payed" ] == "Y" || ( $saleDetails && $saleDetails[ "stat
 
 } else {
 
-    foreach ( $formFieldsUpdate[ "products" ] as $product )
+    foreach ( $formFieldsUpdate[ "products" ][ "value" ] as $product )
         $formFieldValues[ "products_display" ][ "value" ][] = $product[ "title" ];
 
     $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "products" ] = $formFieldsUpdate[ "products" ];

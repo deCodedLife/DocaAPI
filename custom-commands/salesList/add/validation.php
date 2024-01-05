@@ -33,7 +33,9 @@ if ( $requestData->sum_bonus > $clientDetails[ "bonuses" ] )
  */
 foreach ( $requestData->visits_ids ?? [] as $visit ) {
 
-    $visitDetails = $API->DB->from( "visits" )
+    $object = $requestData->object ?? "visits";
+
+    $visitDetails = $API->DB->from( $object )
         ->where( "id", $visit )
         ->fetch();
 

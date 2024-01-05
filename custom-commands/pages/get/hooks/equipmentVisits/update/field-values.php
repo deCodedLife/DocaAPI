@@ -79,7 +79,7 @@ if ( $pageDetail[ "row_detail" ][ "is_payed" ] == "Y" || ( $saleDetails && $sale
 
 } else {
 
-    foreach ( $formFieldsUpdate[ "products" ] as $product )
+    foreach ( $formFieldsUpdate[ "products" ][ "value" ] as $product )
         $formFieldValues[ "products_display" ][ "value" ][] = $product[ "title" ];
 
     $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "products" ] = $formFieldsUpdate[ "products" ];
@@ -87,6 +87,7 @@ if ( $pageDetail[ "row_detail" ][ "is_payed" ] == "Y" || ( $saleDetails && $sale
 }
 
 $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "object" ] = "equipmentVisits";
-
+$pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "visits_ids" ] = [ $pageDetail[ "row_id" ] ];
+$formFieldValues[ "store_id" ] = $visitDetails[ "store_id" ];
 
 

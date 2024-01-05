@@ -48,12 +48,27 @@ class Doca
 
         foreach ( $visits as $visit ) {
 
+            if ( $this->Table === "equipmentVisits") {
+
+                $visitService = $API->DB->from( "services" )
+                    ->innerJoin( "equipmentVisits on equipmentVisits.service_id = services.id" )
+                    ->fetch();
+
+                $saleServices[] = $visitService;
+                $allServices[] = end( $saleServices );
+
+                continue;
+
+            }
+
             $visitServices = $API->DB->from( "visits_services" )
                 ->where( "visit_id", $visit[ "id" ] );
 
             foreach ( $visitServices as $visitService ) {
-                $saleServices[] = $this->getServiceDetails( $visitService["service_id"], $visit[ "user_id" ] );
+
+                $saleServices[] = $this->getServiceDetails( $visitService[ "service_id" ], $visit[ "user_id" ] );
                 $allServices[] = end( $saleServices );
+
             }
 
         } // foreach. $saleVisits as $saleVisit

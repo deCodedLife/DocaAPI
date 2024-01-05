@@ -171,7 +171,7 @@ function isCabinetOccupied( $cabinetID, $visits ): bool {
     foreach ( $visits as $visit ) {
 
         if ($visit["cabinet_id"] == $cabinetID) {
-            $API->returnResponse($visit["id"], 500);
+            $API->returnResponse( "Кабинет занят {$visit["id"]}", 500);
             return true;
         }
 
