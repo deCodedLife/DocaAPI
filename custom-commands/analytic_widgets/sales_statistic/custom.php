@@ -17,8 +17,8 @@ $statistic = [];
 $dateFrom = $currentDay->format("Y-m-d") . " 00:00:00";
 $dateTo   = $currentDay->format("Y-m-d") . " 23:59:59";
 
-if ( $requestData->start_at ) $dateFrom = $requestData->start_at;
-if ( $requestData->end_at )   $dateTo   = $requestData->end_at;
+if ( $requestData->start_at ) $dateFrom = $requestData->start_at . " 00:00:00";
+if ( $requestData->end_at )   $dateTo   = $requestData->end_at . " 23:59:59";
 
 
 

@@ -187,7 +187,8 @@
         "clients",
         "sales_statistic",
         "visit_clients",
-        "advertise_fixed"
+        "advertise_fixed",
+        "cashbox"
       ],
       "list_donor": {
         "table": "stores",

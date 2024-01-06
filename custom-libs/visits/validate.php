@@ -53,6 +53,11 @@ $assistant   = $requestData->assist_id ?? $assistant;
 $store_id    = $requestData->store_id ?? $store_id;
 $use_assistant = false;
 
+if ( strtotime( $start_at ) > strtotime( $end_at ) )  {
+
+    $API->returnResponse( "Некорректно указана дата", 500 );
+
+}
 
 if ( strtotime( $start_at ) == strtotime( $end_at ) ) {
 

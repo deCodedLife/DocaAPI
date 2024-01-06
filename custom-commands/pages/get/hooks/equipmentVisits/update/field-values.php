@@ -89,5 +89,5 @@ if ( $pageDetail[ "row_detail" ][ "is_payed" ] == "Y" || ( $saleDetails && $sale
 $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "object" ] = "equipmentVisits";
 $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "visits_ids" ] = [ $pageDetail[ "row_id" ] ];
 $formFieldValues[ "store_id" ] = $visitDetails[ "store_id" ];
-
+$formFieldValues[ "client_id" ] = $requestData->client_id;
 

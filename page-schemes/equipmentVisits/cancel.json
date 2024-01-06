@@ -7,7 +7,7 @@
       "type": "form",
       "size": 4,
       "settings": {
-        "object": "visits",
+        "object": "equipmentVisits",
         "command": "update",
         "areas": [
           {
