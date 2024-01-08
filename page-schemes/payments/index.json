@@ -323,6 +323,23 @@
               "components": {
                 "filters": [
                   {
+                    "title": "Дата",
+                    "placeholder": "От",
+                    "type": "date",
+                    "settings": {
+                      "size": 2,
+                      "recipient_property": "start_at"
+                    }
+                  },
+                  {
+                    "type": "date",
+                    "placeholder": "До",
+                    "settings": {
+                      "size": 2,
+                      "recipient_property": "end_at"
+                    }
+                  },
+                  {
                     "title": "Филиал",
                     "type": "list",
                     "settings": {

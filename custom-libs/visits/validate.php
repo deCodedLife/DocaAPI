@@ -11,6 +11,7 @@ $employee    = 0;
 $assistant   = 0;
 $store_id    = 0;
 $consumables = [];
+$objectTable = $requestData->objectTable ?? "visits";
 
 
 /**
@@ -18,7 +19,7 @@ $consumables = [];
  */
 if ( isset( $requestData->id ) ) {
 
-    $visitDetail = $API->DB->from( "visits" )
+    $visitDetail = $API->DB->from( $objectTable )
         ->where( "id", $requestData->id )
         ->fetch();
 
@@ -51,6 +52,7 @@ $services    = $requestData->services_id ?? $services;
 $employee    = $requestData->user_id ?? $employee;
 $assistant   = $requestData->assist_id ?? $assistant;
 $store_id    = $requestData->store_id ?? $store_id;
+
 $use_assistant = false;
 
 if ( strtotime( $start_at ) > strtotime( $end_at ) )  {
@@ -81,8 +83,12 @@ $storeData = $API->DB->from( "stores" )
 
 $isTimeCorrect = true;
 
-if ( strtotime( DateTime::createFromFormat( 'Y-m-d H:i:s', $start_at )->format('H:i:s') ) < strtotime( $storeData[ "schedule_from" ] ) ) $isTimeCorrect = false;
-if ( strtotime( DateTime::createFromFormat( 'Y-m-d H:i:s', $end_at )->format('H:i:s') ) > strtotime( $storeData[ "schedule_to" ] ) ) $isTimeCorrect = false;
+if ( DateTime::createFromFormat( 'Y-m-d H:i:s', $start_at )->format('Y-m-d') == DateTime::createFromFormat( 'Y-m-d H:i:s', $end_at )->format('Y-m-d') ) {
+
+    if ( strtotime( DateTime::createFromFormat( 'Y-m-d H:i:s', $start_at )->format('H:i:s') ) < strtotime( $storeData[ "schedule_from" ] ) ) $isTimeCorrect = false;
+    if ( strtotime( DateTime::createFromFormat( 'Y-m-d H:i:s', $end_at )->format('H:i:s') ) > strtotime( $storeData[ "schedule_to" ] ) ) $isTimeCorrect = false;
+
+}
 
 if ( !$isTimeCorrect ) $API->returnResponse( "Время посещения выходит за рамки графика работы филиала", 400 );
 //$API->returnResponse( [ $start_at, $end_at ], 500 );
@@ -127,12 +133,13 @@ foreach ( $consumables as $consumable_id => $consumable ) {
  * Ищем все посещения за запрашиваемый период
  * Сорян, но периоды я таки скопировал(
  */
-$getVisitsQuery = "SELECT * FROM visits WHERE 
+$getVisitsQuery = "SELECT * FROM $objectTable WHERE 
     reason_id IS NULL AND (
     ( start_at >= '$start_at' and start_at < '$end_at' ) OR
     ( end_at > '$start_at' and end_at < '$end_at' ) OR
     ( start_at < '$start_at' and end_at > '$end_at' ) AND
-    user_id NOT IN ( 260, 135 )
+    user_id NOT IN ( 260, 135 ) AND
+    is_active = 'Y'
 )";
 
 /**
@@ -145,7 +152,20 @@ $existingVisits = mysqli_query(
     $getVisitsQuery
 );
 
-//$visits = []; foreach ( $existingVisits as $visit ) { $visits[] = $visit; } $API->returnResponse( $visits, 500 );
+
+/**
+ * Проверка на занятость оборудования
+ */
+if ( $objectTable === "equipmentVisits" ) {
+
+    foreach ( $existingVisits as $visit ) {
+
+        if ( $visit[ "equipment_id" ] == $visitDetail[ "equipment_id" ] )
+            $API->returnResponse( "Оборудование занято", 500 );
+
+    }
+
+}
 
 
 /**
@@ -176,7 +196,7 @@ function isCabinetOccupied( $cabinetID, $visits ): bool {
     foreach ( $visits as $visit ) {
 
         if ($visit["cabinet_id"] == $cabinetID) {
-            $API->returnResponse( "Кабинет занят {$visit["id"]}", 500);
+            $API->returnResponse( "Кабинет занят. Посещение {$visit["id"]}", 500);
             return true;
         }
 
@@ -257,7 +277,7 @@ foreach ( $clients as $client ) {
         )
     )[0] ?? "";
 
-    $API->returnResponse( "Клиент {$client_details[ 'last_name' ]} на приёме у врача {$employee_details}", 400 );
+    $API->returnResponse( "Клиент {$client_details[ 'last_name' ]} на приёме у врача {$employee_details}. Посещение $busyVisitID", 400 );
 
 } // foreach ( $clients as $client )
 
@@ -364,8 +384,7 @@ if ( $use_assistant ) {
     $busyVisitID = $busyVisitID != 0 ? $busyVisitID : isEmployeeBusy( $employee, $existingVisits );
 }
 
-
-if ( $busyVisitID != 0 ) {
+if ( $busyVisitID != 0 && $objectTable !== "equipmentVisits" ) {
 
     $employee_details = $API->DB->from( "users" )
         ->where( "id", $employee )
@@ -376,6 +395,6 @@ if ( $busyVisitID != 0 ) {
         ->where( "visits.id", $busyVisitID )
         ->fetch();
 
-    $API->returnResponse( "Сотрудник {$employee_details[ 'last_name' ]} занят. Филиал ({$store_details[ 'title' ]})", 500 );
+    $API->returnResponse( "Сотрудник {$employee_details[ 'last_name' ]} занят. Филиал ({$store_details[ 'title' ]}). Посещение $busyVisitID", 500 );
 
 }

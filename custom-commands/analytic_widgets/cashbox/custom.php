@@ -4,8 +4,8 @@
 // 2 Получить филлиал
 // 3 Получить данные по филиалу
 
-$start = date( 'Y-m-d' ) . " 00:00:00";
-$end = date( 'Y-m-d' ) . " 23:59:59";
+$start = ( $requestData->start_at ?? date( 'Y-m-d' ) ) . " 00:00:00";
+$end = ( $requestData->end_at ?? date( 'Y-m-d' ) ) . " 23:59:59";
 
 $userDetails = $API->DB->from( "users" )
     ->where( "id", $API::$userDetail->id )

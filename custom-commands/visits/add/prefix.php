@@ -5,39 +5,12 @@
  */
 
 $clientDetail = $API->DB->from( "clients" )
-    ->where( "id", $requestData->clients_id[ 0 ] )
+    ->where( "id", $requestData->client_id )
     ->limit( 1 )
     ->fetch();
 
 $requestData->advert_id = $clientDetail[ "advertise_id" ];
 
-
-/**
- * Регистрация клиента при записи с сайта
- */
-if ( $requestData->phone && $requestData->last_name && $requestData->first_name && $requestData->patronymic ) {
-
-    $clientDetail = $API->DB->from( "clients" )
-        ->where( "phone", $requestData->phone )
-        ->limit( 1 )
-        ->fetch();
-
-    if ( !$clientDetail ) {
-
-        $API->DB->insertInto( "clients" )
-            ->values( [
-                "last_name" => $requestData->last_name,
-                "first_name" => $requestData->first_name,
-                "patronymic" => $requestData->patronymic,
-                "phone" => $requestData->phone
-            ] )
-            ->execute();
-
-    }
-
-}
-
-$requestData->client_id = $requestData->clients_id[0];
 function translit ( $value ) {
 
     $converter = array(
@@ -67,22 +40,22 @@ function translit ( $value ) {
  * Валидация посещения
  */
 $publicAppPath = $API::$configs[ "paths" ][ "public_app" ];
-require_once ( $publicAppPath . "/custom-libs/visits/validate.php" );
+require_once ( $publicAppPath . "/custom-libs/visits/validateEquipment.php" );
 
 
 /**
  * Формирование талона
  */
 $serviceDetail = $API->DB->from( "services" )
-    ->where( "id", $requestData->services_id[ 0 ] )
+    ->where( "id", $requestData->service_id )
     ->limit( 1 )
     ->fetch();
 
 $requestData->talon = mb_strtoupper(
-    mb_substr( $serviceDetail[ "title" ], 0, 1 )
-) . " ";
+        mb_substr( $serviceDetail[ "title" ], 0, 1 )
+    ) . " ";
 
-$lastVisitDetail = $API->DB->from( "visits" )
+$lastVisitDetail = $API->DB->from( "equipmentVisits" )
     ->select( null )->select( "id" )
     ->orderBy( "id desc" )
     ->limit( 1 )

@@ -43,7 +43,8 @@
         "visit_clients",
         "client_statistic",
         "userCalls",
-        "advertise_fixed"
+        "advertise_fixed",
+        "cashbox"
       ]
     },
     {
@@ -65,7 +66,8 @@
         "visit_clients",
         "client_statistic",
         "userCalls",
-        "advertise_fixed"
+        "advertise_fixed",
+        "cashbox"
       ]
     },
     {

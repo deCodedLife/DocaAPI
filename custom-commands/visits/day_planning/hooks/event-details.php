@@ -46,6 +46,10 @@ foreach ( $visitClients as $visitClient ) {
 
 } // foreach. $visitClients
 
+$visitDetails = $API->DB->from( "visits" )
+    ->where( "id", $event[ "id" ] )
+    ->fetch();
+
 /**
  * Определение цвета
  */
@@ -94,6 +98,17 @@ switch ( $event[ "status" ] ) {
  * Добавление кнопок
  */
 
+/**
+ * "script": {
+ * "object": "visitReports",
+ * "command": "add",
+ * "properties": {
+ * "client_id": ":clients_id",
+ * "user_id": ":user_id"
+ * }
+ * },
+ */
+
 if ( $event[ "status" ] ) $eventDetails[ "buttons" ][] = [
     "type"=>"print",
     "settings"=> [
@@ -101,6 +116,14 @@ if ( $event[ "status" ] ) $eventDetails[ "buttons" ][] = [
         "background"=>"dark",
         "icon"=>"print",
         "data" => [
+            "script" => [
+                "object" => "visitReports",
+                "command" => "add",
+                "properties" => [
+                    "client_id" => $visitDetails[ "client_id" ],
+                    "user_id" => $visitDetails[ "user_id" ]
+                ]
+            ],
             "save_to" => [
                 "object"=> "visitReports",
                 "properties"=> [
