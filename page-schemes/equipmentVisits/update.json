@@ -39,9 +39,7 @@
                         "fields": [
                           "start_at",
                           "end_at",
-                          "equipment_id",
-                          "is_earlier",
-                          "status"
+                          "equipment_id"
                         ]
                       },
                       {
@@ -117,6 +115,14 @@
                       "title": "Талон",
                       "background": "dark",
                       "data": {
+                        "script": {
+                          "object": "equipmentVisits",
+                          "command": "update",
+                          "properties": {
+                            "id": ":id",
+                            "status": "waited"
+                          }
+                        },
                         "document_article": "talon",
                         "is_edit": false,
                         "scheme_name": "equipmentVisits",

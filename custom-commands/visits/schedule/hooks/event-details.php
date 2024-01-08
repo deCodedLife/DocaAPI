@@ -127,10 +127,6 @@ $eventDetails = [
         "value" => $eventClientDetails
     ],
     $phone,
-//    [
-//        "icon" => "user",
-//        "value" => "Кабинет №" . $event[ "user_id" ][ 0 ][ "title" ]
-//    ],
     [
         "icon" => "",
         "value" => $profession
