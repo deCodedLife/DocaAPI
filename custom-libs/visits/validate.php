@@ -178,6 +178,8 @@ function isCabinetOccupied( $cabinetID, $visits ): bool {
 
     global $API;
 
+    if ( $objectTable === "equipmentVisits" ) return false;
+
     /**
      * Получение информации по кабинету
      */
