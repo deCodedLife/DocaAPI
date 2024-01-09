@@ -1,18 +1,23 @@
 <?php
 
 $requestData->objectTable = "equipmentVisits";
+
+$visitDetail = $API->DB->from( "equipmentVisits" )
+    ->where( "id", $requestData->id )
+    ->fetch();
+
+
+$requestData->services_id = [ $visitDetail[ "service_id" ] ];
+
+
 require_once "validate.php";
 
 /**
  * Проверка на занятость оборудования
  */
-if ( $objectTable === "equipmentVisits" ) {
+foreach ( $existingVisits as $visit ) {
 
-    foreach ( $existingVisits as $visit ) {
-
-        if ( $visit[ "equipment_id" ] == $visitDetail[ "equipment_id" ] )
-            $API->returnResponse( "Оборудование занято", 500 );
-
-    }
+    if ( $visit[ "equipment_id" ] == $visitDetail[ "equipment_id" ] )
+        $API->returnResponse( "Оборудование занято", 500 );
 
 }

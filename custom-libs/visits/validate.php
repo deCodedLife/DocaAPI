@@ -154,21 +154,6 @@ $existingVisits = mysqli_query(
 
 
 /**
- * Проверка на занятость оборудования
- */
-if ( $objectTable === "equipmentVisits" ) {
-
-    foreach ( $existingVisits as $visit ) {
-
-        if ( $visit[ "equipment_id" ] == $visitDetail[ "equipment_id" ] )
-            $API->returnResponse( "Оборудование занято", 500 );
-
-    }
-
-}
-
-
-/**
  * Проверяем кабинет на занятость
  * @param $cabinetID
  * @param $visits
@@ -177,8 +162,6 @@ if ( $objectTable === "equipmentVisits" ) {
 function isCabinetOccupied( $cabinetID, $visits ): bool {
 
     global $API;
-
-    if ( $objectTable === "equipmentVisits" ) return false;
 
     /**
      * Получение информации по кабинету
@@ -197,21 +180,16 @@ function isCabinetOccupied( $cabinetID, $visits ): bool {
      */
     foreach ( $visits as $visit ) {
 
-        if ($visit["cabinet_id"] == $cabinetID) {
-            $API->returnResponse( "Кабинет занят. Посещение {$visit["id"]}", 500);
-            return true;
-        }
-
+        if ( $visit[ "cabinet_id" ] == $cabinetID )
+            $API->returnResponse( "Кабинет занят. Посещение {$visit["id"]}", 500 );
 
     }
-
 
     return false;
 
 } // function isCabinetOccupied( $cabinetID, $visits )
 
-if ( isCabinetOccupied( $cabinet, $existingVisits ) ) $API->returnResponse( "Кабинет занят", 400 );
-
+if ( $objectTable !== "equipmentVisits" ) isCabinetOccupied( $cabinet, $existingVisits );
 
 
 /**
@@ -329,7 +307,8 @@ foreach ( $services as $service ) {
     $accountedFor = employeesAccountedFor( $serviceDetails, $assistant );
 
     if ( $assistant && !$accountedFor )
-        $API->returnResponse( "Выбранный ассистент не указан в услуге", 500 );
+        $API->returnResponse( "Выбранный ассистент ($assistant) не указан в услуге $service", 500 );
+
 
     if ( !$accountedFor )
         $API->returnResponse( "Укажите второго исполнителя для услуги {$serviceDetails[ 'title' ]}", 500 );
