@@ -32,6 +32,9 @@ foreach ( $generatedTab[ "settings" ][ "areas" ] as $areaKey => $area )
 
             }
 
+            if ( $field[ "article" ] == "is_representative" )
+                $clientDetails[ "is_representative" ] = $clientDetails[ "is_representative" ] === 'Y';
+
             $generatedTab[ "settings" ][ "areas" ][ $areaKey ][ "blocks" ][ $blockKey ][ "fields" ][ $fieldKey ][ "value" ] = $clientDetails[ $field[ "article" ] ];
             $generatedTab[ "settings" ][ "areas" ][ $areaKey ][ "blocks" ][ $blockKey ][ "fields" ][ $fieldKey ][ "is_disabled" ] = false;
 

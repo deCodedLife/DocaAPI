@@ -47,7 +47,7 @@ require_once ( $publicAppPath . "/custom-libs/visits/validate.php" );
  * Формирование талона
  */
 $serviceDetail = $API->DB->from( "services" )
-    ->where( "id", $requestData->service_id )
+    ->where( "id", $requestData->services_id[ 0 ] )
     ->limit( 1 )
     ->fetch();
 
@@ -55,7 +55,7 @@ $requestData->talon = mb_strtoupper(
         mb_substr( $serviceDetail[ "title" ], 0, 1 )
     ) . " ";
 
-$lastVisitDetail = $API->DB->from( "equipmentVisits" )
+$lastVisitDetail = $API->DB->from( "visits" )
     ->select( null )->select( "id" )
     ->orderBy( "id desc" )
     ->limit( 1 )

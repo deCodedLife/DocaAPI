@@ -267,8 +267,9 @@
               "type": "form",
               "size": 4,
               "settings": {
+                "close_after_submit": false,
                 "object": "clients",
-                "command": "get",
+                "command": "update",
                 "areas": [
                   {
                     "size": 2,
@@ -365,6 +366,14 @@
                         "form": "clients",
                         "row_id": ":clients_id"
                       }
+                    }
+                  },
+                  {
+                    "type": "submit",
+                    "settings": {
+                      "title": "Сохранить",
+                      "background": "dark",
+                      "href": "dashboard"
                     }
                   }
                 ]
