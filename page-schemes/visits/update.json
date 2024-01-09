@@ -7,7 +7,7 @@
       "type": "header",
       "size": 4,
       "settings": {
-        "description": "Записи на оборудование - Редактирование",
+        "description": "Записи к врачам - Редактирование",
         "title": [
           "Запись № ",
           ":id"
@@ -28,7 +28,7 @@
               "type": "form",
               "size": 4,
               "settings": {
-                "object": "equipmentVisits",
+                "object": "visits",
                 "command": "update",
                 "areas": [
                   {
@@ -38,8 +38,7 @@
                         "title": "",
                         "fields": [
                           "start_at",
-                          "end_at",
-                          "equipment_id"
+                          "end_at"
                         ]
                       },
                       {
@@ -47,9 +46,9 @@
                         "fields": [
                           "user_id",
                           "assist_id",
-                          "client_id",
+                          "clients_id",
                           "clients_info",
-                          "service_id"
+                          "services_id"
                         ]
                       }
                     ]
@@ -95,15 +94,16 @@
                       "title": "Печать документов",
                       "background": "dark",
                       "data": {
-                        "save_to": {
+                        "script": {
                           "object": "visitReports",
+                          "command": "add",
                           "properties": {
-                            "client_id": ":client_id",
+                            "client_id": ":clients_id",
                             "user_id": ":user_id"
                           }
                         },
                         "is_edit": true,
-                        "scheme_name": "equipmentVisits",
+                        "scheme_name": "visits",
                         "row_id": ":id"
                       }
                     }
@@ -115,9 +115,17 @@
                       "title": "Талон",
                       "background": "dark",
                       "data": {
+                        "script": {
+                          "object": "visits",
+                          "command": "update",
+                          "properties": {
+                            "id": ":id",
+                            "status": "waited"
+                          }
+                        },
                         "document_article": "talon",
                         "is_edit": false,
-                        "scheme_name": "equipmentVisits",
+                        "scheme_name": "visits",
                         "row_id": ":id"
                       }
                     }
@@ -131,7 +139,7 @@
                       "page": "tasks/add",
                       "context": {
                         "form": "clients",
-                        "row_id": ":client_id"
+                        "row_id": ":clients_id"
                       }
                     }
                   },
@@ -144,7 +152,7 @@
                       "data": {
                         "document_article": "act_work_complete",
                         "is_edit": true,
-                        "scheme_name": "equipmentVisits",
+                        "scheme_name": "visits",
                         "row_id": ":id"
                       }
                     }
@@ -157,11 +165,11 @@
                     "settings": {
                       "title": "Удалить посещение",
                       "background": "danger",
-                      "page": "equipmentVisits/cancel",
+                      "page": "visits/cancel",
                       "close_previous_modal": true,
                       "modal_size": "sm",
                       "context": {
-                        "form": "equipmentVisits",
+                        "form": "visits",
                         "row_id": ":id"
                       }
                     }
@@ -174,7 +182,7 @@
                     "settings": {
                       "title": "Сохранить",
                       "background": "dark",
-                      "href": "equipmentSchedule"
+                      "href": ""
                     }
                   }
                 ]
@@ -200,7 +208,7 @@
                         "title": "",
                         "fields": [
                           "visits_ids",
-                          "products_display",
+                          "doca_services",
                           "pay_method",
                           "action",
                           "sum_cash",
@@ -336,13 +344,13 @@
                         "save_to": {
                           "object": "clientContracts",
                           "properties": {
-                            "row_id": ":client_id"
+                            "row_id": ":clients_id"
                           }
                         },
                         "is_edit": true,
                         "document_article": "services_contract",
                         "scheme_name": "clients",
-                        "row_id": ":client_id"
+                        "row_id": ":clients_id"
                       }
                     }
                   },
@@ -355,7 +363,7 @@
                       "page": "tasks/add",
                       "context": {
                         "form": "clients",
-                        "row_id": ":client_id"
+                        "row_id": ":clients_id"
                       }
                     }
                   }
@@ -378,7 +386,7 @@
                 "filters": [
                   {
                     "property": "client_id",
-                    "value": ":client_id"
+                    "value": ":clients_id"
                   }
                 ]
               },
@@ -394,11 +402,11 @@
               "type": "list",
               "size": 4,
               "settings": {
-                "object": "equipmentVisits",
+                "object": "visits",
                 "filters": [
                   {
-                    "property": "client_id",
-                    "value": ":client_id"
+                    "property": "clients_id",
+                    "value": ":clients_id"
                   }
                 ]
               },
@@ -419,7 +427,7 @@
                 "filters": [
                   {
                     "property": "client_id",
-                    "value": ":client_id"
+                    "value": ":clients_id"
                   }
                 ]
               },
@@ -439,7 +447,7 @@
                 "filters": [
                   {
                     "property": "client_id",
-                    "value": ":client_id"
+                    "value": ":clients_id"
                   }
                 ]
               },
@@ -459,7 +467,7 @@
                 "filters": [
                   {
                     "property": "client_id",
-                    "value": ":client_id"
+                    "value": ":clients_id"
                   }
                 ]
               },
@@ -474,7 +482,7 @@
                 "filters": [
                   {
                     "property": "client_id",
-                    "value": ":client_id"
+                    "value": ":clients_id"
                   }
                 ],
                 "is_edit": false
@@ -489,7 +497,7 @@
                       "page": "clients/bonus",
                       "context": {
                         "form": "bonus",
-                        "row_id": ":client_id"
+                        "row_id": ":clients_id"
                       }
                     }
                   }
@@ -510,7 +518,7 @@
                 "filters": [
                   {
                     "property": "client_id",
-                    "value": ":client_id"
+                    "value": ":clients_id"
                   }
                 ]
               },
@@ -525,7 +533,7 @@
                 "filters": [
                   {
                     "property": "client_id",
-                    "value": ":client_id"
+                    "value": ":clients_id"
                   },
                   {
                     "property": "action",
@@ -539,12 +547,12 @@
                   {
                     "type": "modal",
                     "settings": {
-                      "title": "Пополнить",
+                      "title": "Изменить баланс",
                       "page": "clients/deposit",
                       "background": "dark",
                       "context": {
                         "form": "deposit",
-                        "row_id": ":client_id"
+                        "row_id": ":clients_id"
                       }
                     }
                   }
@@ -564,8 +572,8 @@
                 "object": "logs",
                 "filters": [
                   {
-                    "property": "client_id",
-                    "value": ":client_id"
+                    "property": "clients_id",
+                    "value": ":clients_id"
                   }
                 ]
               },
