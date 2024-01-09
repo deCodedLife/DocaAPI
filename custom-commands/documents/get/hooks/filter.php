@@ -3,6 +3,8 @@
 /**
  * Фильтр документов при печати
  */
+$requestData->limit = 999;
+
 if ( $requestData->context->block == "print" ) {
 
     $requestData->is_system = 'Y';

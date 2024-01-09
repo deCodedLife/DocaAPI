@@ -105,8 +105,8 @@ foreach ( $allProducts as $product ) {
 
 $saleSummary += $productsPrice;
 
-if ( $requestData->discount_type ?? "" === "fixed"   ) $saleSummary -= ( $requestData->discount_value ?? 0 );
-if ( $requestData->discount_type ?? "" === "percent" ) $saleSummary -= ( $saleSummary / 100 ) * ( $requestData->discount_value ?? 0 );
+if ( ( $requestData->discount_type ?? "" ) === "fixed"   ) $saleSummary -= ( $requestData->discount_value ?? 0 );
+if ( ( $requestData->discount_type ?? "" ) === "percent" ) $saleSummary -= ( $saleSummary / 100 ) * ( $requestData->discount_value ?? 0 );
 
 $saleSummary = max( $saleSummary, 0 );
 

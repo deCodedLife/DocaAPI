@@ -8,7 +8,7 @@
       "size": 4,
       "settings": {
         "object": "visits",
-        "command": "update",
+        "command": "cancel",
         "areas": [
           {
             "size": 4,

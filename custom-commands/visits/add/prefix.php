@@ -40,7 +40,7 @@ function translit ( $value ) {
  * Валидация посещения
  */
 $publicAppPath = $API::$configs[ "paths" ][ "public_app" ];
-require_once ( $publicAppPath . "/custom-libs/visits/validateEquipment.php" );
+require_once ( $publicAppPath . "/custom-libs/visits/validate.php" );
 
 
 /**
