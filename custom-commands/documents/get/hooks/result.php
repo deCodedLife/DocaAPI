@@ -5,15 +5,20 @@
  */
 if ( $requestData->article ) {
 
+    $documentDetail = $API->DB->from( "document" )
+        ->where( "article", $requestData->article )
+        ->limit(1)
+        ->fetch();
+
     /**
      * Исключения
      */
-    if ( $requestData->article != "talon" ) {
+    if ( $requestData->article != "talon" && $documentDetail[ "use_header" ] === 'N' ) {
 
         /**
          * Сформированный документ
          */
-        $resultDocument = "";
+        $headerBody = "";
 
 
         /**
@@ -43,12 +48,12 @@ if ( $requestData->article ) {
             /**
              * Добавление блока документа в структуру
              */
-            $resultDocument = $documentBlockDetail[ "document_body" ];
+            $headerBody = $documentBlockDetail[ "document_body" ];
 
         } // foreach. $documentHeaderBlocks
 
 
-        $response[ "data" ][ 0 ][ "structure" ][ 0 ][ "settings" ][ "document_body" ] = $resultDocument . $response[ "data" ][ 0 ][ "structure" ][ 0 ][ "settings" ][ "document_body" ];
+        $response[ "data" ][ 0 ][ "structure" ][ 0 ][ "settings" ][ "document_body" ] = $headerBody . $response[ "data" ][ 0 ][ "structure" ][ 0 ][ "settings" ][ "document_body" ];
 
     } // if. $requestData->article != "talon"
 

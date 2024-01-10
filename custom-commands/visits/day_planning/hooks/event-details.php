@@ -41,7 +41,7 @@ foreach ( $visitClients as $visitClient ) {
 
     $eventDetails[ "links" ][] = [
         "title" => $visitClientDetail[ "last_name" ] . " " . $visitClientDetail[ "first_name" ] . " " . $visitClientDetail[ "patronymic" ],
-        "link" => "clients/update/" . $visitClientDetail[ "id" ]
+        "link" => "visits/update/" . $event[ "id" ]
     ];
 
 } // foreach. $visitClients

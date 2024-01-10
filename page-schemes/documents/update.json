@@ -27,7 +27,8 @@
         "object": "documents",
         "command": "update",
         "fields_list": [
-          "owners_id"
+          "owners_id",
+          "use_header"
         ]
       }
     }

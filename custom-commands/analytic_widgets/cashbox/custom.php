@@ -11,17 +11,30 @@ $userDetails = $API->DB->from( "users" )
     ->where( "id", $API::$userDetail->id )
     ->fetch();
 
-$storeID = $requestData->store_id ?? $userDetails[ "store_id" ] ?? 1;
+$storeID = $requestData->store_id ?? $userDetails[ "store_id" ] ?? 62;
+
+$cashboxFilter = [
+    "store_id" => $storeID
+];
+
+if ( $requestData->start_at ) {
+
+    $dayCount = 1;
+    $cashboxDate = DateTime::createFromFormat( "Y-m-d", $requestData->start_at );
+    if ( date( "l", strtotime( $start ) ) === "Monday" ) $dayCount = 2;
+    $cashboxDate->modify( "-$dayCount day" );
+    $cashboxFilter[ "created_at" ] = $cashboxDate->format( "Y-m-d 00:00:00" );
+
+}
 
 $incomeBalance = $API->DB->from( "cashboxBalances" )
-    ->where( "store_id", $storeID )
+    ->where( $cashboxFilter )
     ->orderBy( "created_at DESC" )
     ->limit( 1 )
     ->fetch();
 
 $filters = [
     "action" => "sell",
-    "pay_method" => "cash",
     "status" => "done",
     "created_at >= ?" => $start,
     "created_at <= ?" => $end
