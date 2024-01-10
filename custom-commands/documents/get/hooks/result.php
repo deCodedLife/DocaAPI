@@ -5,7 +5,7 @@
  */
 if ( $requestData->article ) {
 
-    $documentDetail = $API->DB->from( "document" )
+    $documentDetail = $API->DB->from( "documents" )
         ->where( "article", $requestData->article )
         ->limit(1)
         ->fetch();
@@ -13,7 +13,7 @@ if ( $requestData->article ) {
     /**
      * Исключения
      */
-    if ( $requestData->article != "talon" && $documentDetail[ "use_header" ] === 'N' ) {
+    if ( $requestData->article != "talon" && $documentDetail[ "use_header" ] === 'Y' ) {
 
         /**
          * Сформированный документ

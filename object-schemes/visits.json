@@ -626,7 +626,8 @@
       "use_in_commands": [
         "update",
         "get",
-        "remove"
+        "remove",
+        "cancel"
       ],
       "list_donor": {
         "table": "cancelReasons",
