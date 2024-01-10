@@ -39,8 +39,8 @@ $formFieldValues = [
  * Получение информации о продаже
  */
 $saleDetails = $API->DB->from( "salesList" )
-    ->innerJoin( "saleVisits ON saleVisits.sale_id = salesList.id" )
-    ->where( "saleVisits.visit_id", $pageDetail[ "row_id" ] )
+    ->innerJoin( "salesEquipmentVisits ON salesEquipmentVisits.sale_id = salesList.id" )
+    ->where( "salesEquipmentVisits.visit_id", $pageDetail[ "row_id" ] )
     ->limit(1)
     ->fetch();
 
@@ -85,6 +85,9 @@ if ( $pageDetail[ "row_detail" ][ "is_payed" ] == "Y" || ( $saleDetails && $sale
     $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "products" ] = $formFieldsUpdate[ "products" ];
 
 }
+
+if ( $visitDetails[ "assist_id" ] ) $formFieldsUpdate[ "assist_id" ][ "is_visible" ] = true;
+
 
 $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "object" ] = "equipmentVisits";
 $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "visits_ids" ] = [ $pageDetail[ "row_id" ] ];

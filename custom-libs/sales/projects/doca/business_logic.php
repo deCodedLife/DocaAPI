@@ -36,7 +36,7 @@ $object = $requestData->object ?? "visits";
 /**
  * Получение списка посещений
  */
-
+//$API->returnResponse( $object, 500 );
 $Doca->Table = $object;
 $Doca->getVisits( $allVisits, $saleVisits, $isReturn );
 $Doca->getServices( $allVisits, $allServices, $saleServices );

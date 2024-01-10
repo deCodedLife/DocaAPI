@@ -56,7 +56,9 @@ $saleID = $API->DB->insertInto( "salesList" )
 
 foreach ( $requestData->visits_ids ?? [] as $visit ) {
 
-    $API->DB->insertInto( "saleVisits" )
+    $table = ( $requestData->object ?? "visits" ) === "equipmentVisits" ? "salesEquipmentVisits" : "saleVisits";
+
+    $API->DB->insertInto( $table )
         ->values( [
             "sale_id" => $saleID,
             "visit_id" => $visit
