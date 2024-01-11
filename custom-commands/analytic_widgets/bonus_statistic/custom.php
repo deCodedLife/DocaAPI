@@ -1,32 +1,35 @@
 <?php
 
 /**
-* Отчет "Статистика клиента
-*/
+ * Отчет "Статистика клиента
+ */
 
 
 /**
-* Статистика клиента
-*/
+ * Статистика клиента
+ */
 $clientStatistic = [
 
     /**
-    * Количество посещений
-    */
+     * Количество посещений
+     */
     "deposit_count" => 0,
 
     /**
-    * Сумма посещений
-    */
+     * Сумма посещений
+     */
     "deposit_sum" => 0,
 
 
 ];
 
+$clientInfo = $API->DB->from( "clients" )
+    ->where( "id", $requestData->client_id )
+    ->fetch();
 
 /**
-* Получение посещений Сотрудника
-*/
+ * Получение посещений Сотрудника
+ */
 $clientVisits = $API->DB->from( "bonusHistory" )
     ->where( [
         "client_id" => $requestData->client_id
@@ -35,13 +38,13 @@ $clientVisits = $API->DB->from( "bonusHistory" )
 
 
 /**
-* Формирование пополнений
-*/
+ * Формирование пополнений
+ */
 
 foreach ( $clientVisits as $userBonus ) {
 
-$clientStatistic[ "bonus_count" ]++;
-$clientStatistic[ "bonus_sum" ] += (float) $userBonus[ "replenished" ];
+    $clientStatistic[ "bonus_count" ]++;
+    $clientStatistic[ "bonus_sum" ] += (float) $userBonus[ "replenished" ];
 
 } // foreach. $userBonus
 
@@ -92,7 +95,7 @@ $API->returnResponse(
             "detail" => []
         ],
         [
-            "value" => number_format ( $clientStatistic[ "bonus_sum" ], 0, '.', ' ' ),
+            "value" => number_format ( $clientInfo[ "bonuses" ], 0, '.', ' ' ),
             "description" => "Баланс",
             "icon" => "",
             "prefix" => "₽",

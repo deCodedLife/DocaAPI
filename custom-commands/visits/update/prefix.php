@@ -10,6 +10,6 @@ if ( !$requestData->is_alert )
      * Валидация посещения
      */
     $publicAppPath = $API::$configs[ "paths" ][ "public_app" ];
-    require_once ( $publicAppPath . '/custom-libs/visits/validate.php' );
+    require_once ( $publicAppPath . "/custom-libs/visits/validate.php" );
 }
 

@@ -1,115 +1,72 @@
 <?php
 
-
 /**
- * Дата начала графика
+ * Вызываем метод создания ячеек и их валидации
  */
-$scheduleFrom = strtotime( $requestData->start_from );
-
-/**
- * Дата окончания графика
- */
-$scheduleTo = strtotime( $requestData->start_to );
-
-/**
- * Обработанная дата
- */
-$currentScheduleDate = $scheduleFrom;
-
-/**
- * Текущий график
- */
-
-$currentSchedule = [];
-
-$currentScheduleEvents = $API->DB->from( $API->request->object )
-    ->where( [
-        "event_from >= ?" => $requestData->start_from,
-        "event_from <= ?" => $requestData->start_to . " 23:59:59"
-    ] );
-
-foreach ( $currentScheduleEvents as $currentScheduleEvent )
-
-$currentSchedule[
-    date( "Y-m-d", strtotime( $currentScheduleEvent[ "start_from" ] ) )
-    ][] = [
-        "from" => date( "H:i:s", strtotime( $currentScheduleEvent[ "event_from" ] ) ),
-        "to" => date( "H:i:s", strtotime( $currentScheduleEvent[ "event_to" ] ) ),
-    ];
+require_once $API::$configs[ "paths" ][ "public_app" ] . "/custom-libs/workdays/createEvents.php";
+require_once $API::$configs[ "paths" ][ "public_app" ] . "/custom-libs/workdays/validate.php";
 
 
 /**
- * Обход дат расписания
+ * Если мы находимся тут, то никаких накладок не выявлено
  */
 
-while ( $currentScheduleDate <= $scheduleTo ) {
-
-    /**
-     * Получение текущей даты
-     */
-
-    $scheduleDate = date( "Y-m-d", $currentScheduleDate );
-
-    $isContinue = false;
+/**
+ * Вытаскиваем список дней для последующего добавления
+ * в связанную таблицу workDaysWeekdays
+ */
+$workDays = (array) $requestData->work_days;
+unset( $requestData->work_days );
+unset( $requestData->id );
 
 
-    /**
-     * Проверка дня недели
-     */
-
-    if ( $requestData->work_days ) {
-
-        /**
-         * Получение дня недели текущей даты
-         */
-        $currentWeekDay = date( "l", $currentScheduleDate );
-
-        if ( !in_array( $currentWeekDay, $requestData->work_days ) ) $isContinue = true;
-
-    } // if. !$requestData->work_days
+/**
+ * Добавляем правило из запроса, попутно сохраняя ID
+ * создаваемого объекта
+ */
+$ruleID = $API->DB->insertInto( "workDays" )
+    ->values( (array) $requestData )
+    ->execute();
 
 
-    /**
-     * Обновление текущей даты
-     */
-    $currentScheduleDate = strtotime( "+1 day", $currentScheduleDate );
-    if ( $isContinue ) continue;
+/**
+ * Запись данных в связанную таблицу
+ */
+foreach ( $workDays as $workDay ) {
 
-
-    /**
-     * Проверка на свободность графика
-     */
-    if ( $currentSchedule[ $scheduleDate ] ) {
-
-        foreach ( $currentSchedule[ $scheduleDate ] as $dayWorkSchedule )
-            if (
-                (
-                    ( $requestData->event_from >= $dayWorkSchedule[ "from" ] ) &&
-                    ( $requestData->event_from <= $dayWorkSchedule[ "to" ] )
-                ) ||
-                (
-                    ( $requestData->event_to >= $dayWorkSchedule[ "from" ] ) &&
-                    ( $requestData->event_to <= $dayWorkSchedule[ "to" ] )
-                )
-            ) $isContinue = true;
-
-        if ( $isContinue ) continue;
-
-    } // if. $currentSchedule[ $scheduleDate ]
-
-
-    /**
-     * Добавление дня в график
-     */
-    $API->DB->insertInto( $API->request->object )
+    $API->DB->insertInto( "workDaysWeekdays" )
         ->values( [
-            "event_from" => "$scheduleDate $requestData->event_from",
-            "event_to" => "$scheduleDate $requestData->event_to",
-            "user_id" => $requestData->id,
-            "is_weekend" => $requestData->is_weekend,
-            "store_id" => $requestData->store_id,
-            "cabinet_id" => $requestData->cabinet_id
+            "rule_id" => $ruleID,
+            "workday" => $workDay
         ] )
         ->execute();
 
-} // while. $currentScheduleDate <= $scheduleTo
+}
+
+if ( $requestData->is_weekend ) {
+
+    $API->DB->deleteFrom( "scheduleEvents" )
+        ->where( [
+            "user_id" => $requestData->user_id,
+            "event_from > ?" => $begin->format( "Y-m-d 00:00:00" ),
+            "event_to < ?" => $begin->format( "Y-m-d 23:59:59" ),
+            "store_id" => $requestData->store_id
+        ] )
+        ->execute();
+
+}
+
+foreach ( $newSchedule as $scheduleEvent ) {
+
+    unset( $scheduleEvent[ "id" ] );
+
+    $API->DB->insertInto( "scheduleEvents" )
+        ->values( $scheduleEvent )
+        ->execute();
+
+}
+
+/**
+ * Блокируем создание записей
+ */
+$API->returnResponse();

@@ -23,9 +23,9 @@ function shouldHideButton(): bool {
     /**
      * Получение информации из таблицы продаж
      */
-    $listedInSales = $API->DB->from( "salesList" )
-        ->innerJoin( "saleVisits ON saleVisits.sale_id = salesList.id" )
-        ->where( "saleVisits.visit_id", $pageDetail[ "row_detail" ][ "id" ] )
+    $listedInSales = $API->DB->from( "salesEquipmentVisits" )
+        ->innerJoin( "salesEquipmentVisits ON salesEquipmentVisits.sale_id = salesList.id" )
+        ->where( "salesEquipmentVisits.visit_id", $pageDetail[ "row_detail" ][ "id" ] )
         ->limit( 1 )
         ->fetch();
 

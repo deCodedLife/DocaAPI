@@ -17,6 +17,8 @@ $client = $API->DB->from( "visits_clients" )
     ->limit( 1 )
     ->fetch();
 
+$pageScheme[ "structure" ][ 1 ][ "settings" ][ 2 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "id" ] = $pageDetail[ "row_detail" ][ "client_id" ];
+
 /**
  * Подключение общего скрипта обработки продаж
  */
@@ -27,7 +29,7 @@ $publicAppPath = $API::$configs[ "paths" ][ "public_app" ];
  */
 $requestData->id = $pageDetail[ "row_id" ];
 $requestData->visits_ids = [ $pageDetail[ "row_id" ] ];
-$requestData->store_id = $visitDetails[ "store_id" ];
+$requestData->store_id = $pageDetail[ "row_detail" ][ "store_id" ];
 $requestData->client_id = $client[ "client_id" ];
 
 /**
@@ -43,11 +45,11 @@ require_once( $publicAppPath . '/custom-libs/sales/projects/doca/business_logic.
 $formFieldValues = [
     "sum_cash" => $amountOfPhysicalPayments,
     "action" => "sell",
-    "store_id" => $visitDetails[ "store_id" ],
+    "store_id" => $pageDetail[ "row_detail" ][ "store_id" ],
     "client_id" => $requestData->client_id,
     "online_receipt" => true,
     "summary" => $saleSummary,
-    "visits_ids" => [ "value" => $pageDetail[ "row_id" ] ]
+    "visits_ids" => [ "value" => [ $pageDetail[ "row_id" ] ] ]
 ];
 
 
@@ -95,11 +97,12 @@ if ( $visitDetails[ "is_payed" ] == "Y" || ( $saleDetails && $saleDetails[ "stat
 
 } else {
 
-    foreach ( $formFieldsUpdate[ "products" ] as $product )
+    foreach ( $formFieldsUpdate[ "products" ][ "value" ] as $product )
         $formFieldValues[ "products_display" ][ "value" ][] = $product[ "title" ];
 
     $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "products" ] = $formFieldsUpdate[ "products" ];
 
 }
 
-
+$pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "visits_ids" ] = [ $pageDetail[ "row_id" ] ];
+$formFieldValues[ "store_id" ] = $visitDetails[ "store_id" ];

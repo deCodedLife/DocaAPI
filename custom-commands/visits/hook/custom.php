@@ -108,7 +108,6 @@ if ( $requestData->services_id && $requestData->user_id ) {
 
     } // foreach. $requestData->services_id
 
-
     /**
      * Обновление полей формы
      */
@@ -117,13 +116,18 @@ if ( $requestData->services_id && $requestData->user_id ) {
         "value" => $visitPrice
     ];
 
-    $formFieldsUpdate[ "end_at" ] = [
-        "value" => date(
-        "Y-m-d H:i:s", strtotime(
-            "+$visitTakeMinutes minutes", strtotime( $requestData->start_at )
+    if ( !$requestData->id ) {
+
+        $formFieldsUpdate[ "end_at" ] = [
+            "value" => date(
+                "Y-m-d H:i:s", strtotime(
+                    "+$visitTakeMinutes minutes", strtotime( $requestData->start_at )
+                )
             )
-        )
-    ];
+        ];
+
+    }
+
 
 } // if. $requestData->services_id && $requestData->users_id
 
@@ -168,6 +172,40 @@ if ( $requestData->clients_id ) {
     $formFieldsUpdate[ "clients_info" ] = [ "is_visible" => false ];
 
 }
+
+
+if ( $requestData->start_at ) {
+
+    if ( !$visitTakeMinutes ) {
+
+        $visits = $API->DB->from( "visits" )
+            ->where( "id", $requestData->id )
+            ->limit( 1 )
+            ->fetch();
+
+        $visits[ "start_at" ] = strtotime($visits[ "start_at" ]);
+        $visits[ "end_at" ] = strtotime($visits[ "end_at" ]);
+
+        $diff = abs($visits[ "start_at" ] - $visits[ "end_at" ]);
+        $minutes = $diff / 60;
+
+        if ( !$requestData->id ) {
+
+            $formFieldsUpdate[ "end_at" ] = [
+                "value" => date(
+                    "Y-m-d H:i:s", strtotime(
+                        "+$minutes minutes", strtotime( $requestData->start_at )
+                    )
+                )
+            ];
+
+        }
+
+
+    }
+
+}
+
 
 if ( $hasAssist ) $formFieldsUpdate[ "assist_id" ][ "is_visible" ] = true;
 else $formFieldsUpdate[ "assist_id" ][ "is_visible" ] = false;

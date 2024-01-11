@@ -32,7 +32,7 @@ foreach ( $performersDetail as $performerId => $performerDetail ) {
                 "event_to" => $datetime->format( "Y-m-d  {$store[ "schedule_to" ]}" ),
                 "is_system" => "N",
                 "equipment_id" => $performerId,
-                "is_weekend" => $datetime->format('N') >= 7,
+                "is_weekend" => 'N',
                 "store_id" => $store[ "id" ],
                 "cabinet_id" => null
             ];

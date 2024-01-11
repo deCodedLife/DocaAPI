@@ -13,11 +13,13 @@
       "is_autofill": false,
       "use_in_commands": [
         "get-transactions",
+        "get-operations",
         "create-operation"
       ],
       "require_in_commands": [
         "get-transactions",
-        "make-transction"
+        "cashbox_id",
+        "nmake-transctio"
       ],
       "list_donor": {
         "table": "atolCashboxes",
@@ -33,7 +35,9 @@
       "is_unique": false,
       "is_autofill": false,
       "use_in_commands": [
-        "confirm-transaction"
+        "confirm-transaction",
+        "decline-transaction",
+        "get-transactions"
       ],
       "require_in_commands": [
         "make-transaction"
@@ -47,9 +51,12 @@
       "is_default_in_list": false,
       "is_unique": false,
       "is_autofill": false,
-      "use_in_commands": [],
+      "use_in_commands": [
+        "decline-transaction",
+        "confirm-transaction"
+      ],
       "require_in_commands": [
-        "make-transaction"
+        "confirm-transaction"
       ]
     },
     {

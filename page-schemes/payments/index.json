@@ -109,7 +109,8 @@
               "size": 4,
               "settings": {
                 "link": false,
-                "object": "salesList"
+                "object": "salesList",
+                "linked_filter": "analytic_widgets_sales_statistic"
               },
               "components": {
                 "buttons": [
@@ -319,7 +320,37 @@
               "settings": {
                 "widgets_group": "cashbox"
               },
-              "components": []
+              "components": {
+                "filters": [
+                  {
+                    "title": "Дата",
+                    "placeholder": "От",
+                    "type": "date",
+                    "settings": {
+                      "size": 2,
+                      "recipient_property": "start_at"
+                    }
+                  },
+                  {
+                    "type": "date",
+                    "placeholder": "До",
+                    "settings": {
+                      "size": 2,
+                      "recipient_property": "end_at"
+                    }
+                  },
+                  {
+                    "title": "Филиал",
+                    "type": "list",
+                    "settings": {
+                      "donor_object": "stores",
+                      "donor_property_title": "title",
+                      "donor_property_value": "id",
+                      "recipient_property": "store_id"
+                    }
+                  }
+                ]
+              }
             },
             {
               "title": "Все операции",
@@ -327,6 +358,7 @@
               "size": 4,
               "settings": {
                 "link": false,
+                "linked_filter": "analytic_widgets_cashbox",
                 "object": "cashbox_balance"
               },
               "components": []

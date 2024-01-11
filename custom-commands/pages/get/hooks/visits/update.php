@@ -1,6 +1,8 @@
 <?php
 
 
+
+
 /**
  * Отключение кнопок "Удалить посещение", "Сохранить" и "Оплатить"
  */
@@ -98,3 +100,14 @@ foreach ( $pageDetail[ "row_detail" ][ "services_id" ] as $service ) {
         $response[ "detail" ][ "modal_info" ] = $serviceDetail[ "preparation" ];
 
 } // foreach. $pageDetail[ "row_detail" ][ "services_id" ]
+
+if ( $API::$userDetail->role_id == 6 ) {
+
+    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ] );
+    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 5 ] );
+    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 6 ] );
+    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 7 ] );
+    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 8 ] );
+    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 9 ] );
+
+}

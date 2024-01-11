@@ -7,8 +7,8 @@
       "type": "form",
       "size": 4,
       "settings": {
-        "object": "visits",
-        "command": "update",
+        "object": "equipmentVisits",
+        "command": "cancel",
         "areas": [
           {
             "size": 4,

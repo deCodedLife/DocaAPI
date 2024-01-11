@@ -3,18 +3,22 @@
 /**
  * Вывод шапки документа
  */
-
 if ( $requestData->article ) {
+
+    $documentDetail = $API->DB->from( "documents" )
+        ->where( "article", $requestData->article )
+        ->limit(1)
+        ->fetch();
 
     /**
      * Исключения
      */
-    if ( $requestData->article != "talon" ) {
+    if ( $requestData->article != "talon" && $documentDetail[ "use_header" ] === 'Y' ) {
 
         /**
          * Сформированный документ
          */
-        $resultDocument = "";
+        $headerBody = "";
 
 
         /**
@@ -44,69 +48,13 @@ if ( $requestData->article ) {
             /**
              * Добавление блока документа в структуру
              */
-            $resultDocument = $documentBlockDetail[ "document_body" ];
+            $headerBody = $documentBlockDetail[ "document_body" ];
 
         } // foreach. $documentHeaderBlocks
 
 
-        $response[ "data" ][ 0 ][ "structure" ][ 0 ][ "settings" ][ "document_body" ] = $resultDocument . $response[ "data" ][ 0 ][ "structure" ][ 0 ][ "settings" ][ "document_body" ];
+        $response[ "data" ][ 0 ][ "structure" ][ 0 ][ "settings" ][ "document_body" ] = $headerBody . $response[ "data" ][ 0 ][ "structure" ][ 0 ][ "settings" ][ "document_body" ];
 
     } // if. $requestData->article != "talon"
 
 } // if. $requestData->article
-
-
-/**
- * Получение общих документов
- */
-
-if ( $requestData->context->block == "print" ) {
-
-    $response[ "data" ] = [];
-
-    $publicDocuments = $API->DB->from( "documents" )
-        ->where([
-            "is_active" => "Y",
-            "is_system" => "N"
-        ]);
-
-
-    $filters = [];
-    if ( $requestData->owner_id ) $filters[ "user_id" ] = $requestData->owner_id;
-
-    
-    $documents_users = $API->DB->from( "documents_users" )
-        ->where( $filters );
-
-
-    foreach ( $publicDocuments as $publicDocument ) {
-
-        if ( $publicDocument[ "is_general" ] == "Y" && $API::$userDetail->role_id == 5) {
-
-            $publicDocument[ "id" ] = (int) $publicDocument[ "id" ];
-
-            $response[ "data" ][] = $publicDocument;
-
-        } else {
-
-            $output = false;
-
-            foreach ( $documents_users as $document_user )
-                if ( $document_user[ "document_id" ] == $publicDocument[ "id" ] )
-                    $output = true;
-
-            if ( $output ) {
-
-                $publicDocument[ "id" ] = (int) $publicDocument[ "id" ];
-
-                $response[ "data" ][] = $publicDocument;
-
-            }
-
-        }
-
-    } // foreach. $publicDocuments
-
-} // if. $requestData->context->block == "print"
-
-

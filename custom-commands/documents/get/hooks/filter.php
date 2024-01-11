@@ -3,10 +3,19 @@
 /**
  * Фильтр документов при печати
  */
+$requestData->limit = 999;
 
 if ( $requestData->context->block == "print" ) {
 
-    if ( $requestData->context->owner_id )
-        $requestData->owner_id = $requestData->context->owner_id;
+    $requestData->is_system = 'Y';
+    $requestData->is_general = 'Y';
+
+    if ( $API::$userDetail->role_id == 6 ) {
+
+        $requestData->is_system = 'N';
+        $requestData->is_general = 'N';
+        $requestData->owners_id[] = $API::$userDetail->id;
+
+    }
 
 }

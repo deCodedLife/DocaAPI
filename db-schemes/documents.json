@@ -7,6 +7,13 @@
       "type": "char(1)",
       "is_required": false,
       "default": "N"
+    },
+    {
+      "title": "Печатать с шапкой",
+      "article": "use_header",
+      "type": "char(1)",
+      "is_required": false,
+      "default": "Y"
     }
   ],
   "rows_key": "article",

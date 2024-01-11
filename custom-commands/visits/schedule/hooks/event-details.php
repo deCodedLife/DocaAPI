@@ -4,6 +4,7 @@
 /**
  * Определение цвета Записи
  */
+
 switch ( $event[ "status" ] ) {
 
     case "moved":
@@ -41,9 +42,8 @@ if ( $event[ "status" ] == "ended" && $event[ "is_payed" ] == "Y" ) $event[ "col
  * Определение иконки Записи
  */
 
+if ( $event[ "comment" ] != "" && $event[ "comment" ] != "null" ) $event[ "icons" ][] = "more";
 if ( $event[ "is_payed" ] == "Y" ) $event[ "icons" ][] = "rub";
-if ( $event[ "is_earlier" ] == "Y" ) $event[ "icons" ][] = "time";
-
 
 /**
  * Получение детальной информации о пациенте
@@ -115,35 +115,34 @@ $eventDescription = [ $eventClient, $eventTime ];
  * Заполнение детальной информации о Записи к врачу
  */
 
-$eventDetails = [
-    [
-        "icon" => "schedule",
-        "value" => $eventTime
-    ],
-    [
-        "icon" => "customers",
-        "value" => $eventClientDetails
-    ],
-    $phone,
-//    [
-//        "icon" => "user",
-//        "value" => "Кабинет №" . $event[ "user_id" ][ 0 ][ "title" ]
-//    ],
-    [
-        "icon" => "",
-        "value" => $profession
-    ],
-    [
-        "icon" => "stethoscope",
-        "value" => $eventServices
-    ],
-    [
-        "icon" => "",
-        "value" => $event[ "price" ] . "₽"
-    ],
-    [
-        "icon" => "",
-        "value" => $presentInfo ?? ""
-    ]
+if ( $eventTime ) $eventDetails[] = [
+    "icon" => "schedule",
+    "value" => $eventTime
+];
 
+if ( $eventClientDetails ) $eventDetails[] = [
+    "icon" => "customers",
+    "value" => $eventClientDetails
+];
+
+if ( $phone ) $eventDetails[] = $phone;
+
+if ( $profession ) $eventDetails[] = [
+    "icon" => "",
+    "value" => $profession
+];
+
+$eventDetails[] = [
+    "icon" => "",
+    "value" => $event[ "price" ] . "₽"
+];
+
+if ( $presentInfo ) $eventDetails[] = [
+    "icon" => "",
+    "value" => $presentInfo ?? ""
+];
+
+if ( $event[ "comment" ] ) $eventDetails[] = [
+    "icon" => "",
+    "value" => $event[ "comment" ]
 ];

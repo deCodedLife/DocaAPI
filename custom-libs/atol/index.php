@@ -36,6 +36,7 @@ class Atol
     public string $sale_type;
     public array $clientInfo;
     public bool $electronically;
+    public float $summary;
 
 
 
@@ -65,12 +66,21 @@ class Atol
      */
     private function getItemsSummary(): float
     {
-
+        global $API;
         $summary = 0;
 
-        foreach ( $this->items as $item )
+        foreach ( $this->items as $item ) {
             $summary += $item->amount ?? 0;
+        }
 
+        if ( $summary != $this->summary ) {
+
+            $difference = $this->summary - $summary;
+            $this->items[ 0 ]->amount += $difference;
+            $this->items[ 0 ]->amount = round( $this->items[ 0 ]->amount, 2 );
+            $summary += $difference;
+
+        }
 
         return $summary;
     } //  function. getItemsSummary

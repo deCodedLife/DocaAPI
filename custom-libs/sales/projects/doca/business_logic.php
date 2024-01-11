@@ -1,5 +1,7 @@
 <?php
 
+//ini_set( "display_errors", true );
+
 global $API, $requestData;
 
 
@@ -15,7 +17,8 @@ use Sales\Modifier;
 
 
 $allVisits = $requestData->visits_ids ?? [];
-$allProducts = $requestData->doca_products ?? [];
+$saleProducts = $requestData->doca_products ?? [];
+$allProducts = [];
 $saleVisits = [];
 $allServices = [];
 $saleServices = [];
@@ -27,14 +30,17 @@ $sum_cash = $requestData->sum_cash ?? 0;
 $isReturn = ($requestData->action ?? 'sell') === "sellReturn";
 $store_id = $requestData->store_id;
 $employee = $requestData->user_id;
+$object = $requestData->object ?? "visits";
 
 
 /**
  * Получение списка посещений
  */
-
+//$API->returnResponse( $object, 500 );
+$Doca->Table = $object;
 $Doca->getVisits( $allVisits, $saleVisits, $isReturn );
 $Doca->getServices( $allVisits, $allServices, $saleServices );
+$Doca->getProducts( $allProducts, $saleProducts );
 
 require_once ( 'index.php' );
 
@@ -93,18 +99,14 @@ foreach ( $allVisits as $visit )
 
 foreach ( $allProducts as $product ) {
 
-    $productDetails = $API->DB->from( "products" )
-        ->where( "id", $product->id )
-        ->fetch();
-
-    $productsPrice += $productDetails[ "price" ] * $product->amount;
+    $productsPrice += $product[ "price" ] * $product[ "amount" ];
 
 }
 
 $saleSummary += $productsPrice;
 
-if ( $requestData->discount_type ?? "" === "fixed"   ) $saleSummary -= ( $requestData->discount_value ?? 0 );
-if ( $requestData->discount_type ?? "" === "percent" ) $saleSummary -= ( $saleSummary / 100 ) * ( $requestData->discount_value ?? 0 );
+if ( ( $requestData->discount_type ?? "" ) === "fixed"   ) $saleSummary -= ( $requestData->discount_value ?? 0 );
+if ( ( $requestData->discount_type ?? "" ) === "percent" ) $saleSummary -= ( $saleSummary / 100 ) * ( $requestData->discount_value ?? 0 );
 
 $saleSummary = max( $saleSummary, 0 );
 
@@ -127,7 +129,7 @@ if ( $isReturn ) {
  * Получение скидок
  */
 foreach ( Discount::GetActiveDiscounts( DB_PROMOTIONS ) as $discount ) {
-    
+
     // При возврате не считаем скидки
     if ( $isReturn ) continue;
 
@@ -147,7 +149,7 @@ foreach ( Discount::GetActiveDiscounts( DB_PROMOTIONS ) as $discount ) {
 
     if ( !in_array( $store_id, $promotionStores ) ) continue;
 
-    
+
     $servicesGroups = [];
     $Discount = new Discount();
     $Discount->GetModifiers( "promotion_id", $discount[ "id" ] );
@@ -323,7 +325,7 @@ if ( $allServices ) {
 
     foreach ( $allServices as $product ) {
 
-        $formFieldsUpdate[ "products" ][] = [
+        $formFieldsUpdate[ "products" ][ "value" ][] = [
             "title" => $product[ "title" ],
             "type" => "service",
             "cost" => $product[ "price" ],
@@ -333,18 +335,17 @@ if ( $allServices ) {
 
     }
 
-
 }
 
 if ( $allProducts ) {
 
     foreach ( $allProducts as $product ) {
 
-        $formFieldsUpdate[ "products" ][] = [
+        $formFieldsUpdate[ "products" ][ "value" ][] = [
             "title" => $product[ "title" ],
             "type" => "product",
             "cost" => $product[ "price" ],
-            "amount" => 1,
+            "amount" => $product[ "amount" ],
             "product_id" => $product[ "id" ]
         ];
 

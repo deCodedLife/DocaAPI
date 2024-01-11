@@ -1,22 +1,25 @@
 <?php
 
 $reportX = $API->DB->from( "atolOperations" )
-    ->where( "type", "closeShift" );
+    ->where( "cashbox_id", $requestData->cashbox_id )
+    ->limit(1)
+    ->fetch();
 
-foreach ( $reportX as $report ) {
+if ( !$reportX ) $API->returnResponse();
 
-    $request = [
-        "request" => [
-            "uuid" => "doca-" . $report[ "type" ] . "-id-" . $report[ "id" ],
-            "type" => $report[ "type" ],
-            "operator" => [
-                "name" => "Миннахматовна Э. Ц.",
-                "vatin" => "123654789507"
-            ]
+$request = [
+    "request" => [
+        "uuid" => "doca-" . $reportX[ "type" ] . "-id-" . $reportX[ "id" ],
+        "type" => $reportX[ "type" ],
+        "operator" => [
+            "name" => "Миннахматовна Э. Ц.",
+            "vatin" => "123654789507"
         ]
-    ];
+    ]
+];
 
-    $API->returnResponse( $request );
+$API->DB->deleteFrom( "atolOperations" )
+    ->where( "id", $reportX[ "id" ] )
+    ->execute();
 
-}
-
+$API->returnResponse( $request );

@@ -12,6 +12,7 @@
       "is_unique": false,
       "is_autofill": false,
       "is_variable": true,
+      "is_visible": false,
       "use_in_commands": [
         "update",
         "get"

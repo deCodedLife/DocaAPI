@@ -43,7 +43,8 @@
         "visit_clients",
         "client_statistic",
         "userCalls",
-        "advertise_fixed"
+        "advertise_fixed",
+        "cashbox"
       ]
     },
     {
@@ -65,7 +66,8 @@
         "visit_clients",
         "client_statistic",
         "userCalls",
-        "advertise_fixed"
+        "advertise_fixed",
+        "cashbox"
       ]
     },
     {
@@ -187,7 +189,8 @@
         "clients",
         "sales_statistic",
         "visit_clients",
-        "advertise_fixed"
+        "advertise_fixed",
+        "cashbox"
       ],
       "list_donor": {
         "table": "stores",
@@ -288,8 +291,24 @@
       }
     },
     {
+      "title": "Тип операции",
+      "article": "pay_method",
+      "data_type": "string",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "sales_statistic"
+      ],
+      "list_donor": {
+        "table": "payment_types",
+        "properties_title": "title"
+      }
+    },
+    {
       "title": "Тип оплаты",
-      "article": "payment_type",
+      "article": "action",
       "data_type": "string",
       "field_type": "list",
       "is_default_in_list": false,

@@ -20,6 +20,21 @@
       "require_in_commands": [ "add" ]
     },
     {
+      "title": "Печать с шапкой",
+      "article": "use_header",
+      "data_type": "boolean",
+      "field_type": "checkbox",
+      "is_default_in_list": true,
+      "is_search": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "in_search": true,
+      "required_permissions": [],
+      "required_modules": [],
+      "use_in_commands": [ "add", "update" ],
+      "require_in_commands": [ "add" ]
+    },
+    {
       "title": "Сотрудники",
       "article": "owners_id",
       "data_type": "array",

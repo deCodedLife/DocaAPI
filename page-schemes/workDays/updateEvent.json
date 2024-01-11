@@ -33,6 +33,7 @@
                   "user_id",
                   "store_id",
                   "cabinet_id",
+                  "work_days",
                   "is_weekend"
                 ]
               }

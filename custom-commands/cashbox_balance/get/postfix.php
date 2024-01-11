@@ -4,20 +4,26 @@
 
 $today = new DateTime();
 
+$start = ( $requestData->start_at ?? $today->format( "Y-m-d" ) ) . " 00:00:00";
+$end = ( $requestData->end_at ?? $today->format( "Y-m-d" ) ) . " 23:59:59";
+
+$filters = [
+    "created_at >= ?" => $start,
+    "created_at <= ?" => $end
+];
+
+if ( $requestData->store_id ) $filters[ "store_id" ] = $requestData->store_id;
+
 /**
  * Получение списка продаж
  */
 $payments = $API->DB->from( "salesList" )
-    ->where( [
-        "created_at >= ?" => $today->format( "Y-m-d" ) . " 00:00:00",
-        "created_at <= ?" => $today->format( "Y-m-d" ) . " 23:59:59"
-    ] );
+    ->where( $filters )
+    ->orderBy( "created_at DESC" );
 
 $expenses = $API->DB->from( "expenses" )
-    ->where( [
-        "created_at >= ?" => $today->format( "Y-m-d" ) . " 00:00:00",
-        "created_at <= ?" => $today->format( "Y-m-d" ) . " 23:59:59"
-    ] );
+    ->where( $filters )
+    ->orderBy( "created_at DESC" );
 
 
 /**
@@ -60,6 +66,9 @@ if ( $requestData->context->block === "list" ) {
      */
     foreach ( $payments as $payment ) {
 
+        if ( in_array( $payment[ "pay_method" ], [ "card", "legalEntity" ] ) ) continue;
+        if ( $payment[ "status" ] != "done" ) continue;
+
         $listItem = [];
         $listItem[ "date" ] = $payment[ "created_at" ];
 
@@ -82,7 +91,7 @@ if ( $requestData->context->block === "list" ) {
             "value" => $client[ "id" ]
         ];
 
-        $listItem[ "summary" ] = $payment[ "summary" ];
+        $listItem[ "summary" ] = $payment[ "sum_cash" ];
 
         $employee = mysqli_fetch_array( mysqli_query(
             $API->DB_connection,

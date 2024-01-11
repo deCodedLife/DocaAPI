@@ -1,10 +1,22 @@
 <?php
 
+/**
+ * Обновление кеша пользователя для посещения
+ */
+if ( $requestData->clients_id && $requestData->id ) {
+
+    $API->DB->update( "equipmentVisits" )
+        ->set( "client_id", intval( $requestData->clients_id[ 0 ] ?? 1 ) )
+        ->where( "id", $requestData->id )
+        ->execute();
+
+} // if ( $requestData->clients_id && $requestData->id )
+
 
 /**
  * Отмена посещения
  */
-if ( $requestData->id && $requestData->reason_id ) $API->DB->update( "visits" )
+if ( $requestData->id && $requestData->reason_id ) $API->DB->update( "equipmentVisits" )
     ->set( [
         "is_active" => "N",
         "reason_id" => $requestData->reason_id,
@@ -16,6 +28,7 @@ if ( $requestData->id && $requestData->reason_id ) $API->DB->update( "visits" )
         "is_system" => "N"
     ] )
     ->execute();
+
 
 /**
  * Отправка события об обновлении расписания

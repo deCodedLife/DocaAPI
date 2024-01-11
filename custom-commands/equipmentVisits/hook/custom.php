@@ -8,12 +8,18 @@ $formFieldsUpdate = [];
 $hasAssist = false;
 
 
+/**
+ * Проход
+ */
+foreach ( $requestData->services_id as $service ) {
 
-$serviceDetail = $API->DB->from( "services" )
-    ->where( "id", $requestData->service_id )
-    ->fetch();
+    $serviceDetail = $API->DB->from( "services" )
+        ->where( "id", $service )
+        ->fetch();
 
-if ( $serviceDetail[ "preparation" ] ) $formFieldsUpdate[ "modal_info" ][] = $serviceDetail[ "preparation" ];
+    if ( $serviceDetail[ "preparation" ] ) $formFieldsUpdate[ "modal_info" ][] = $serviceDetail[ "preparation" ];
+
+}
 
 
 /**
@@ -36,6 +42,12 @@ if ( $requestData->service_id && $requestData->user_id ) {
      * Проверка наличия обязательных св-в
      */
     if ( !$requestData->start_at ) $API->returnResponse( [] );
+
+
+    $second_users = $API->DB->from( "services_second_users" )
+        ->where( "service_id", $requestData->service_id );
+
+    if ( count( $second_users ) != 0 ) $hasAssist = true;
 
 
     /**
@@ -149,6 +161,9 @@ if ( $requestData->client_id ) {
     $formFieldsUpdate[ "clients_info" ] = [ "is_visible" => false ];
 
 }
+
+if ( $hasAssist ) $formFieldsUpdate[ "assist_id" ][ "is_visible" ] = true;
+else $formFieldsUpdate[ "assist_id" ][ "is_visible" ] = false;
 
 
 $API->returnResponse( $formFieldsUpdate );

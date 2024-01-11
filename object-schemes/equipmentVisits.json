@@ -180,7 +180,7 @@
         "table": "users",
         "properties_title": "last_name"
       },
-      "is_visible": false
+      "is_visible": true
     },
     {
       "title": "Стоимость",
@@ -563,7 +563,8 @@
       "use_in_commands": [
         "update",
         "get",
-        "remove"
+        "remove",
+        "cancel"
       ],
       "list_donor": {
         "table": "cancelReasons",

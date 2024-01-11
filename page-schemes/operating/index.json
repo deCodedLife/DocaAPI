@@ -46,15 +46,15 @@
             }
           },
           {
-            "title": "Услуга",
+            "title": "Клиент",
             "type": "list",
             "required_permissions": [],
             "required_modules": [],
             "settings": {
               "is_search": false,
-              "recipient_property": "services_id",
-              "donor_object": "services",
-              "donor_property_title": "title",
+              "recipient_property": "clients_id",
+              "donor_object": "clients",
+              "donor_property_title": "last_name",
               "donor_property_value": "id"
             }
           },
@@ -72,15 +72,15 @@
             }
           },
           {
-            "title": "Клиент",
+            "title": "Услуга",
             "type": "list",
             "required_permissions": [],
             "required_modules": [],
             "settings": {
               "is_search": false,
-              "recipient_property": "clients_id",
-              "donor_object": "clients",
-              "donor_property_title": "last_name",
+              "recipient_property": "services_id",
+              "donor_object": "services",
+              "donor_property_title": "title",
               "donor_property_value": "id"
             }
           }

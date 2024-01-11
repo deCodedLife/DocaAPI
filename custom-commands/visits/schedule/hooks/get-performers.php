@@ -12,9 +12,7 @@ foreach ( $performersRows as $performersRow )
 $performersRows = $filteredUsers;
 
 
-
 if ( $requestData->user_id ) {
-
 
     /**
      * Добавление сотрудников с указанной специальностью

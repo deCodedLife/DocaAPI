@@ -466,7 +466,7 @@
       "article": "pay_method",
       "data_type": "string",
       "field_type": "list",
-      "is_default_in_list": false,
+      "is_default_in_list": true,
       "is_unique": false,
       "is_autofill": true,
       "use_in_commands": [
@@ -516,6 +516,21 @@
         "table": "services",
         "properties_title": "title"
       }
+    },
+    {
+      "title": "Объект",
+      "article": "object",
+      "data_type": "string",
+      "field_type": "string",
+      "is_visible": false,
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "hook",
+        "add",
+        "update"
+      ]
     },
     {
       "title": "Товары",
