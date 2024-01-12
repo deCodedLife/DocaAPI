@@ -46,6 +46,7 @@ $incomeCall = $API->DB->from( "callHistory" )
         "user_id" => $requestData->user_id,
         "status" => "INCOMING"
     ] )
+    ->orderBy( "created_at ASC" )
     ->limit( 1 )
     ->fetch();
 
@@ -56,7 +57,7 @@ $incomeCall = $API->DB->from( "callHistory" )
 
 $clientDetail = $API->DB->from( "clients" )
     ->where( "phone", $incomeCall[ "client_phone" ] )
-    ->limit( 1 )
+    ->orderBy( 1 )
     ->fetch();
 
 if ( !$clientDetail ) $clientDetail[ "id" ] = null;

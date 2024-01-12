@@ -8,14 +8,16 @@ $visits = $API->DB->from( "visits" )
     ->where( [
         "user_id" => $workdayInfo[ "user_id" ],
         "start_at >= ?" => $workdayInfo[ "event_from" ],
-        "end_at <= ?" => $workdayInfo[ "event_to" ]
+        "end_at <= ?" => $workdayInfo[ "event_to" ],
+        "is_active" => 'Y'
     ] );
 
 $visit = $API->DB->from( "visits" )
     ->where( [
         "user_id" => $workdayInfo[ "user_id" ],
         "start_at >= ?" => $workdayInfo[ "event_from" ],
-        "end_at <= ?" => $workdayInfo[ "event_to" ]
+        "end_at <= ?" => $workdayInfo[ "event_to" ],
+        "is_active" => 'Y'
     ] )
     ->limit( 1 )
     ->fetch();

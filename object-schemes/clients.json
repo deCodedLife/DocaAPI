@@ -416,6 +416,9 @@
         "table": "advertise",
         "properties_title": "title"
       },
+      "require_in_commands": [
+        "add"
+      ],
       "use_in_commands": [
         "update",
         "get",

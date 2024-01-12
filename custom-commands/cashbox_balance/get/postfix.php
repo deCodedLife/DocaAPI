@@ -91,7 +91,7 @@ if ( $requestData->context->block === "list" ) {
             "value" => $client[ "id" ]
         ];
 
-        $listItem[ "summary" ] = $payment[ "sum_cash" ];
+        $listItem[ "summary" ] = round( $payment[ "sum_cash" ], 2 );
 
         $employee = mysqli_fetch_array( mysqli_query(
             $API->DB_connection,

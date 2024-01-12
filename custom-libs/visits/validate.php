@@ -1,5 +1,8 @@
 <?php
 
+$publicAppPath = $API::$configs[ "paths" ][ "public_app" ];
+require_once( $publicAppPath . '/custom-libs/workdays/createEvents.php' );
+
 global $API, $requestData;
 
 $start_at    = "";
@@ -354,6 +357,76 @@ function isEmployeeBusy( $employee, $visits ): int {
 
 } // function isEmployeeBusy( $employees, $visits ): bool
 
+/**
+ * Проверка графика работы исполнителя
+ */
+function checkWorkDays( $employee_id, $store_id, $start, $end ): void {
+
+    global $API;
+
+    $userDetails = $API->DB->from( "users" )
+        ->where( "id", $employee_id )
+        ->fetch();
+
+    $query = "
+    SELECT * 
+    FROM workDays 
+    WHERE 
+        (
+            ( event_from >= '$start' and event_from < '$end' ) OR
+            ( event_to > '$start' and event_to < '$end' ) OR
+            ( event_from < '$start' and event_to > '$end' ) 
+        ) AND
+        user_id = $employee_id AND
+        store_id = $store_id";
+
+
+    $start = strtotime( $start );
+    $end = strtotime( $end );
+
+    $employeeWorkdays = mysqli_query( $API->DB_connection, $query );
+    $is_correct = false;
+
+    foreach ( $employeeWorkdays as $workday ) {
+
+        if ( $workday[ "is_rule" ] === 'N' ) {
+
+            $is_correct = true;
+            continue;
+
+        }
+
+        $events = generateRuleEvents( $workday );
+
+        foreach ( $events as $event ) {
+
+            if ( $workday[ "id" ] == 448577 )
+                $API->returnResponse( $event );
+
+            $from = strtotime( $event[ "event_from" ] );
+            $to = strtotime( $event[ "event_to" ] );
+
+            if (
+                ( $from >= $start && $to < $end ) ||
+                ( $from > $start  && $to < $end ) ||
+                ( $from < $start && $to > $end )
+            ) {
+
+                $is_correct = true;
+
+            }
+
+        }
+
+
+    }
+
+    if ( !$is_correct ) $API->returnResponse( "У сотрудника {$userDetails[ "last_name" ]} нет графика на выбранную дату", 500 );
+
+}
+
+checkWorkDays( $employee, $store_id, $start_at, $end_at );
+
 
 /**
  * Проверка сотрудника на занятость
@@ -379,3 +452,5 @@ if ( $busyVisitID != 0 && $objectTable !== "equipmentVisits" ) {
     $API->returnResponse( "Сотрудник {$employee_details[ 'last_name' ]} занят. Филиал ({$store_details[ 'title' ]}). Посещение $busyVisitID", 500 );
 
 }
+
+

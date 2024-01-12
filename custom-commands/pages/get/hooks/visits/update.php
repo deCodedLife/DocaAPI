@@ -1,17 +1,20 @@
 <?php
 
 
-
-
 /**
  * Отключение кнопок "Удалить посещение", "Сохранить" и "Оплатить"
  */
+
+
 if ( $pageDetail[ "row_detail" ][ "is_payed" ] == true ) {
 
+    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 4 ] );
     unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 5 ] );
     unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 0 ] );
 
 }
+
+
 
 /**
  * Определение того, стоит ли скрывать кнопку оплаты
@@ -100,6 +103,7 @@ foreach ( $pageDetail[ "row_detail" ][ "services_id" ] as $service ) {
         $response[ "detail" ][ "modal_info" ] = $serviceDetail[ "preparation" ];
 
 } // foreach. $pageDetail[ "row_detail" ][ "services_id" ]
+
 
 if ( $API::$userDetail->role_id == 6 ) {
 

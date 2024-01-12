@@ -176,9 +176,6 @@
                   },
                   {
                     "type": "submit",
-                    "required_permissions": [
-                      "manager_schedule"
-                    ],
                     "settings": {
                       "title": "Сохранить",
                       "background": "dark",

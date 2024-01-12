@@ -58,9 +58,9 @@ foreach ( $response[ "data" ] as $user ) {
     $returnServices[$user["id"]]["count_one"] = 0;
     $returnServices[$user["id"]]["count_two"] = 0;
     $returnServices[$user["id"]]["count_three"] = 0;
-    $returnServices[$user["id"]]["sum_one"] = "0";
-    $returnServices[$user["id"]]["sum_two"] = "0";
-    $returnServices[$user["id"]]["sum_three"] = "0";
+    $returnServices[$user["id"]]["sum_one"] = 0;
+    $returnServices[$user["id"]]["sum_two"] = 0;
+    $returnServices[$user["id"]]["sum_three"] = 0;
 
 
     /**
