@@ -50,7 +50,17 @@ unset( $requestData->start_to );
 $requestData->work_days = $requestData->work_days ?? $ruleWorkDays;
 $requestData->store_id = $requestData->store_id ?? $ruleDetails[ "store_id" ];
 $requestData->user_id = $requestData->user_id ?? $ruleDetails[ "user_id" ];
-$requestData->cabinet_id = $requestData->cabinet_id ?? $ruleDetails[ "cabinet_id" ];
+
+
+if ( !property_exists( $API->request->data, "cabinet_id" ) ) {
+
+    $requestData->cabinet_id = $requestData->cabinet_id ?? $ruleDetails[ "cabinet_id" ];
+
+} else {
+
+    if ( is_null( $API->request->data->cabinet_id ) ) $requestData->cabinet_id = null;
+
+}
 
 $requestData->is_rule = $requestData->is_rule ?? $ruleDetails[ "is_rule" ] ?? 'Y';
 $requestData->is_weekend = $requestData->is_weekend ?? $ruleDetails[ "is_weekend" ];
@@ -92,14 +102,14 @@ $searchQuery = "SELECT * FROM workDays WHERE
     (
         ( event_from >= '$requestData->event_from' and event_from < '$requestData->event_to' ) OR
         ( event_to > '$requestData->event_from' and event_to < '$requestData->event_to' ) OR
-        ( event_from < '$requestData->event_from' and event_to > '$requestData->event_to' ) 
+        ( event_from < '$requestData->event_from' and event_to >= '$requestData->event_to' ) 
    ) AND 
     store_id = $requestData->store_id AND
     ( is_weekend is NULL OR is_weekend = 'N' )";
 
 if ( $requestData->id ) $searchQuery .= " AND NOT id = $requestData->id";
-if ( $requestData->is_rule === 'Y' ) $searchQuery .= " AND is_rule = 'Y'";
-else $searchQuery .= " AND is_rule = 'N'";
+//if ( $requestData->is_rule === 'Y' ) $searchQuery .= " AND is_rule = 'Y'";
+//else $searchQuery .= " AND is_rule = 'N'";
 
 
 /**
@@ -107,6 +117,9 @@ else $searchQuery .= " AND is_rule = 'N'";
  */
 $scheduleRules = mysqli_query( $API->DB_connection, $searchQuery );
 $newSchedule = generateRuleEvents( (array) $requestData, $requestData->work_days ?? [] );
+
+
+//$API->returnResponse( $newSchedule );
 
 
 foreach ( $scheduleRules as $rule ) {
@@ -146,16 +159,18 @@ foreach ( $scheduleRules as $rule ) {
              */
             if (
                 ( $eventStartFrom >= $newEventStartFrom and $eventStartFrom < $newEventEndsAt ) or
-                ( $eventEndsAt > $newEventStartFrom and $newEventEndsAt < $newEventStartFrom ) or
-                ( $eventStartFrom < $newEventStartFrom and $eventEndsAt > $newEventEndsAt )
+                ( $eventEndsAt > $newEventStartFrom and $eventEndsAt < $newEventEndsAt ) or
+                ( $eventStartFrom < $newEventStartFrom and $eventEndsAt >= $newEventEndsAt )
             ) {
+
+                if ( $ruleEvent[ "user_id" ] === $newEvent[ "user_id" ] )
+                    if ( $ruleEvent[ "is_rule" ] != $newEvent[ "is_rule" ] ) continue;
+
 
                 /**
                  * Проверяем занят ли кабинет
                  */
-                if ( $ruleEvent[ "cabinet_id" ] == $newEvent[ "cabinet_id" ] ) {
-
-                    if ( !$ruleEvent[ "cabinet_id" ] ) continue;
+                if ( $ruleEvent[ "cabinet_id" ] == $newEvent[ "cabinet_id" ] && !is_null( $ruleEvent[ "cabinet_id" ] ) ) {
 
                     /**
                      * Получаем информацию по сотруднику в событии коррелирующего правила
@@ -177,7 +192,7 @@ foreach ( $scheduleRules as $rule ) {
                  * Если кабинет не занят, то возможной причиной корреляции стало уже
                  * существующее правило для сотрудника
                  */
-                if ( $ruleEvent[ "user_id" ] == $newEvent[ "user_id" ] ) {
+                if ( $ruleEvent[ "user_id" ] === $newEvent[ "user_id" ] ) {
 
                     $eventDate = date( "d-m", strtotime( $ruleEvent[ "event_from" ] ) );
 

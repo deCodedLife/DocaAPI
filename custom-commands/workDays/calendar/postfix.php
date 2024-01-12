@@ -24,8 +24,6 @@ foreach ( $response[ "data" ] as $eventDate => $events ) {
          */
         $ruleEvents = generateRuleEvents( $eventDetail );
 
-        if ( $requestData->user_id == 314 ) $API->returnResponse( $eventDetail );
-
 
         /**
          * Подготавливаем события к выдаче

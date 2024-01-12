@@ -14,14 +14,33 @@ foreach ( $performersDetail as $performerId => $performerDetail ) {
      * Обход графика работы Сотрудника
      */
 
-    $performerWorkSchedule = mysqli_query(
-        $API->DB_connection,
-        "SELECT * 
-               FROM scheduleEvents 
-               WHERE event_from >= '$requestData->start_at 00:00:00' 
-                 AND event_to <= '$requestData->end_at 23:59:59' 
-                 AND user_id = $performerId 
-               ORDER BY event_from ASC");
+    /**
+     * Обход графика работы Сотрудника
+     */
+    $filters = [
+        "event_from >= ?" => "$requestData->start_at 00:00:00",
+        "event_to <= ?" => "$requestData->end_at 23:59:59",
+        "user_id" => $performerId,
+        "is_weekend" => 'Y'
+    ];
+
+    $is_weekend = $API->DB->from( "scheduleEvents" )
+        ->where( $filters )
+        ->fetch();
+
+    if ( $is_weekend ) continue;
+    unset( $filters[ "is_weekend" ] );
+    $filters[ "is_rule" ] = 'N';
+
+    $hasEvents = $API->DB->from( "scheduleEvents" )
+        ->where( $filters )
+        ->fetch();
+
+    if ( !$hasEvents ) unset( $filters[ "is_rule" ] );
+
+    $performerWorkSchedule = $API->DB->from( "scheduleEvents" )
+        ->where( $filters )
+        ->orderBy( "event_from ASC" );
 
     foreach ( $performerWorkSchedule as $scheduleEvent ) {
 

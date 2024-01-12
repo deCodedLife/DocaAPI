@@ -1,5 +1,7 @@
 <?php
 
+require_once $API::$configs[ "paths" ][ "public_app" ] . "/custom-libs/workdays/createEvents.php";
+
 $workdayInfo = $API->DB->from( "workDays" )
     ->where( "id", $requestData->id )
     ->fetch();
@@ -31,11 +33,11 @@ $API->DB->deleteFrom( "workDaysWeekdays" )
 $begin = DateTime::createFromFormat( "Y-m-d H:i:s", "{$workdayInfo[ "event_from" ]}" );
 $end = DateTime::createFromFormat( "Y-m-d H:i:s", "{$workdayInfo[ "event_to" ]}" );
 
-$API->DB->deleteFrom( "scheduleEvents" )
-    ->where( [
-        "user_id" => $workdayInfo[ "user_id" ],
-        "event_from > ?" => $begin->format( "Y-m-d 00:00:00" ),
-        "event_to < ?" => $begin->format( "Y-m-d 23:59:59" ),
-        "store_id" => $workdayInfo[ "store_id" ]
-    ] )
-    ->execute();
+removeEvents(
+    $begin->format( "Y-m-d H:i:s" ),
+    $end->format( "Y-m-d H:i:s" ),
+    $workdayInfo[ "store_id" ],
+    $workdayInfo[ "user_id" ],
+    $workdayInfo[ "is_rule" ],
+    $workdayInfo[ "is_weekend" ]
+);

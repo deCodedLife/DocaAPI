@@ -360,7 +360,7 @@ function isEmployeeBusy( $employee, $visits ): int {
 /**
  * Проверка графика работы исполнителя
  */
-function checkWorkDays( $employee_id, $store_id, $start, $end ): void {
+function checkWorkDays( $employee_id, $store_id, $start_at, $end_at ): void {
 
     global $API;
 
@@ -373,16 +373,16 @@ function checkWorkDays( $employee_id, $store_id, $start, $end ): void {
     FROM workDays 
     WHERE 
         (
-            ( event_from >= '$start' and event_from < '$end' ) OR
-            ( event_to > '$start' and event_to < '$end' ) OR
-            ( event_from < '$start' and event_to > '$end' ) 
+            ( event_from >= '$start_at' and event_from < '$end_at' ) OR
+            ( event_to > '$start_at' and event_to < '$end_at' ) OR
+            ( event_from < '$start_at' and event_to >= '$end_at' ) 
         ) AND
         user_id = $employee_id AND
         store_id = $store_id";
 
 
-    $start = strtotime( $start );
-    $end = strtotime( $end );
+    $start =  strtotime( $start_at );
+    $end =  strtotime( $end_at );
 
     $employeeWorkdays = mysqli_query( $API->DB_connection, $query );
     $is_correct = false;
@@ -396,20 +396,15 @@ function checkWorkDays( $employee_id, $store_id, $start, $end ): void {
 
         }
 
-        $events = generateRuleEvents( $workday );
-
-        foreach ( $events as $event ) {
-
-            if ( $workday[ "id" ] == 448577 )
-                $API->returnResponse( $event );
+        foreach ( generateRuleEvents( $workday ) as $event ) {
 
             $from = strtotime( $event[ "event_from" ] );
-            $to = strtotime( $event[ "event_to" ] );
+            $to =  strtotime( $event[ "event_to" ] );
 
             if (
-                ( $from >= $start && $to < $end ) ||
-                ( $from > $start  && $to < $end ) ||
-                ( $from < $start && $to > $end )
+                ( $from >= $start and $from < $end ) or
+                ( $to > $start and $to < $end ) or
+                ( $from < $start and $to > $end )
             ) {
 
                 $is_correct = true;

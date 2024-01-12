@@ -3,10 +3,6 @@
 
 foreach ( $response[ "data" ] as $key => $row ) {
 
-    if ( $row[ "sum_bonus" ] == 0 ) {
-
-    }
-
     $with_discount = round( $row[ "sum_deposit" ] + $row[ "sum_card" ] + $row[ "sum_cash" ] + $row[ "sum_entity" ], 2 );
     $without_discount = round( $with_discount + $row[ "sum_bonus" ], 2 );
 
