@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Вызываем метод создания ячеек и их валидации
  */
@@ -17,19 +16,17 @@ unset( $requestData->id );
  */
 if ( !$requestData->is_weekend ) $requestData->is_weekend = 'N';
 
-$API->DB->insertInto( "workDays" )
+$rowID = $API->DB->insertInto( "workDays" )
     ->values( (array) $requestData )
     ->execute();
 
-removeEvents(
-    $begin->format( "Y-m-d H:i:s" ),
-    $end->format( "Y-m-d H:i:s" ),
-    $requestData->store_id,
-    $requestData->user_id,
-    $requestData->is_rule,
-    $requestData->is_weekend
-);
-
+$requestData->rule_id = $rowID;
 $API->DB->insertInto( "scheduleEvents" )
     ->values( (array) $requestData )
     ->execute();
+
+/**
+ * Отправка события об обновлении расписания
+ */
+$API->addEvent( "schedule" );
+$API->addEvent( "day_planning" );

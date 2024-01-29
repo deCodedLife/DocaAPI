@@ -11,6 +11,19 @@
  */
 $formFieldsUpdate = [];
 
+if ( $requestData->phone && count( $requestData->phone ) != 11 ) {
+
+    $clientDetails = $API->DB->from( "clients" )
+        ->where( "phone", $requestData->phone )
+        ->fetch();
+
+    if ( $clientDetails ) {
+
+        $formFieldsUpdate[ "modal_info" ][] = "Пользователь с таким номером уже существует ${clientDetails[ "last_name" ]} ${clientDetails[ "first_name" ]} ${clientDetails[ "patronymic" ]}";
+
+    }
+
+}
 
 /**
  * Определение пола по Отчеству

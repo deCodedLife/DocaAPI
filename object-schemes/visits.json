@@ -126,7 +126,8 @@
         "add",
         "update",
         "hook",
-        "get"
+        "get",
+        "variables"
       ],
       "require_in_commands": [
         "add"
@@ -236,6 +237,19 @@
       "is_default_in_list": false,
       "is_unique": false,
       "is_autofill": false,
+      "use_in_commands": [
+        "update",
+        "get"
+      ]
+    },
+    {
+      "title": "Клиент прозвонен",
+      "article": "is_called",
+      "data_type": "boolean",
+      "field_type": "checkbox",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
       "use_in_commands": [
         "update",
         "get"

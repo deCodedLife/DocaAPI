@@ -16,9 +16,8 @@ if ( $API::$userDetail->role_id != 6 ) {
      * Заполнение описаний полей "Списать бонусов" и "Списать с депозита"
      */
 
-
     $client = $API->DB->from( "clients" )
-        ->where( "clients.id", $pageDetail[ "row_detail" ]["clients_id"] )
+        ->where( "id", $pageDetail[ "row_detail" ][ "clients_id" ][0]->value )
         ->fetch();
 
 

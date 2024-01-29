@@ -128,7 +128,7 @@
       "is_disabled": false
     },
     {
-      "title": "Услуга",
+      "title": "Услуги",
       "article": "service_id",
       "data_type": "integer",
       "joined_field": "user_id",
@@ -138,7 +138,6 @@
       "is_unique": false,
       "is_autofill": true,
       "is_hook": true,
-      "search": "services",
       "settings": {
         "is_duplicate": true
       },
@@ -146,7 +145,8 @@
         "add",
         "update",
         "hook",
-        "get"
+        "get",
+        "variables"
       ],
       "require_in_commands": [
         "add"
@@ -156,7 +156,6 @@
         "properties_title": "title"
       },
       "min_value": 0,
-      "is_visible": true,
       "is_disabled": false
     },
     {
@@ -227,6 +226,22 @@
         {
           "title": "Завершено",
           "value": "ended"
+        },
+        {
+          "title": "Ожидает",
+          "value": "waited"
+        },
+        {
+          "title": "Онлайн запись",
+          "value": "online"
+        },
+        {
+          "title": "Повторное",
+          "value": "repeated"
+        },
+        {
+          "title": "Перенесен",
+          "value": "moved"
         }
       ]
     },

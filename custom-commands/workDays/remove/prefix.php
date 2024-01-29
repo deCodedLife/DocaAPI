@@ -2,42 +2,48 @@
 
 require_once $API::$configs[ "paths" ][ "public_app" ] . "/custom-libs/workdays/createEvents.php";
 
+
 $workdayInfo = $API->DB->from( "workDays" )
     ->where( "id", $requestData->id )
     ->fetch();
 
-$visits = $API->DB->from( "visits" )
-    ->where( [
-        "user_id" => $workdayInfo[ "user_id" ],
-        "start_at >= ?" => $workdayInfo[ "event_from" ],
-        "end_at <= ?" => $workdayInfo[ "event_to" ],
-        "is_active" => 'Y'
-    ] );
+if ( !$workdayInfo ) $API->returnResponse();
 
-$visit = $API->DB->from( "visits" )
-    ->where( [
-        "user_id" => $workdayInfo[ "user_id" ],
-        "start_at >= ?" => $workdayInfo[ "event_from" ],
-        "end_at <= ?" => $workdayInfo[ "event_to" ],
-        "is_active" => 'Y'
-    ] )
-    ->limit( 1 )
-    ->fetch();
+$newSchedule = generateRuleEvents( $workdayInfo );
 
-if ( count( $visits ) != 0 ) $API->returnResponse( "У сотрудника есть посещения ${$visit[ "id" ]}", 500 );
+foreach ( $newSchedule as $schedule ) {
+
+    $searchQuery = "
+    SELECT * 
+    FROM visits 
+    WHERE 
+        (
+            ( start_at >= '{$schedule[ "event_from" ]}' and start_at < '{$schedule[ "event_to" ]}' ) OR
+            ( end_at > '{$schedule[ "event_from" ]}' and end_at < '{$schedule[ "event_to" ]}' ) OR
+            ( start_at < '{$schedule[ "event_from" ]}' and end_at >= '{$schedule[ "event_to" ]}' ) 
+       ) AND 
+        user_id = {$schedule[ "user_id" ]} AND
+        is_active = 'Y' AND
+        store_id = {$schedule[ "store_id" ]}";
+
+    $visit_id = false;
+    $visits = mysqli_query( $API->DB_connection, $searchQuery );
+
+    foreach ( $visits as $visit ) $visit_id = $visit[ "id" ];
+    if ( $visit_id ) $API->returnResponse( "У сотрудника есть посещения $visit_id", 500 );
+
+}
 
 $API->DB->deleteFrom( "workDaysWeekdays" )
     ->where( "rule_id", $requestData->id )
     ->execute();
 
-$begin = DateTime::createFromFormat( "Y-m-d H:i:s", "{$workdayInfo[ "event_from" ]}" );
-$end = DateTime::createFromFormat( "Y-m-d H:i:s", "{$workdayInfo[ "event_to" ]}" );
+$API->DB->deleteFrom( "scheduleEvents" )
+    ->where( "rule_id", $requestData->id )
+    ->execute();
 
-removeEvents(
-    $begin->format( "Y-m-d H:i:s" ),
-    $end->format( "Y-m-d H:i:s" ),
-    $workdayInfo[ "store_id" ],
-    $workdayInfo[ "user_id" ],
-    $workdayInfo[ "is_rule" ],
-    $workdayInfo[ "is_weekend" ]
-);
+/**
+ * Отправка события об обновлении расписания
+ */
+$API->addEvent( "schedule" );
+$API->addEvent( "day_planning" );

@@ -1,4 +1,5 @@
 <?php
+ini_set( "display_errors", true );
 
 /**
  * Вызываем метод создания ячеек и их валидации
@@ -43,24 +44,22 @@ foreach ( $workDays as $workDay ) {
 
 }
 
-removeEvents(
-    $begin->format( "Y-m-d H:i:s" ),
-    $end->format( "Y-m-d H:i:s" ),
-    $requestData->store_id,
-    $requestData->user_id,
-    $requestData->is_rule,
-    $requestData->is_weekend
-);
-
 foreach ( $newSchedule as $scheduleEvent ) {
 
     unset( $scheduleEvent[ "id" ] );
+    $scheduleEvent[ "rule_id" ] = $ruleID; 
 
     $API->DB->insertInto( "scheduleEvents" )
         ->values( $scheduleEvent )
         ->execute();
 
 }
+
+/**
+ * Отправка события об обновлении расписания
+ */
+$API->addEvent( "schedule" );
+$API->addEvent( "day_planning" );
 
 /**
  * Блокируем создание записей

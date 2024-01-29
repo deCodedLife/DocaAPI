@@ -27,7 +27,6 @@ if ( $requestData->pay_method == "legalEntity" ) {
 }
 
 
-
 /**
  *  Создание транзакции
  */

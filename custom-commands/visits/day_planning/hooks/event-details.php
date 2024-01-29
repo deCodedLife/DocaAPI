@@ -141,8 +141,8 @@ if ( $event[ "status" ] ) $eventDetails[ "buttons" ][] = [
 if ( $event[ "status" ] == "waited" ) $eventDetails[ "buttons" ][] = [
     "type" => "script",
     "settings" => [
-        "title" => "Принять пациента",
-        "background" => "dark",
+        "title" => "Ожидает вызова",
+        "background" => "danger",
         "icon"=>"megaphone",
         "object" => "visits",
         "command" => "accept-patient",
@@ -157,7 +157,7 @@ if ( $event[ "status" ] == "process" ) $eventDetails[ "buttons" ][] = [
     "type" => "script",
     "settings" => [
         "title" => "Принять повторно",
-        "background" => "dark",
+        "background" => "danger",
         "icon"=>"megaphone",
         "object" => "visits",
         "command" => "accept-again",

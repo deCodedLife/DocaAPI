@@ -32,7 +32,7 @@ if ( $requestData->action !== "deposit" ) {
     $formFieldsUpdate[ "products" ][ "value" ][] = [
         "title" => "Пополнение депозита",
         "type" => "product",
-        "cost" => $saleSummary,
+        "cost" => $requestData->summary,
         "amount" => 1,
         "product_id" => 0
     ];

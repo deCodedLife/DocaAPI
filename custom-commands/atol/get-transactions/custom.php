@@ -43,12 +43,16 @@ if ( $processedSale[ "online_receipt" ] === "Y" ) {
         ->where( "id", $processedSale[ "client_id" ] )
         ->fetch();
 
-    $AtolReciept->clientInfo = [
-        "name" => $clientDetails[ "last_name" ] . " " . $clientDetails[ "first_name" ] . " " . $clientDetails[ "patronymic" ],
-        "emailOrPhone" => $clientDetails[ "email" ],
-    ];
+    if ( $clientDetails[ "email" ] ) {
 
-    $AtolReciept->electronically = true;
+        $AtolReciept->clientInfo = [
+            "name" => $clientDetails[ "last_name" ] . " " . $clientDetails[ "first_name" ] . " " . $clientDetails[ "patronymic" ],
+            "emailOrPhone" => $clientDetails[ "email" ],
+        ];
+
+        $AtolReciept->electronically = true;
+
+    }
 
 }
 
@@ -83,6 +87,7 @@ foreach ( $API->DB->from( "salesProductsList" )->where( "sale_id", $processedSal
     $services[] = $details;
 
 }
+
 
 $summary = $processedSale[ "summary" ] - $processedSale[ "sum_bonus" ];
 $discountPerProduct = $summary / ( $difference == 0 ? 1 : $difference );

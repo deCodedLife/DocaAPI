@@ -1,5 +1,11 @@
 <?php
 
+//ini_set( "display_errors", true );
+
+//if ( $API::$userDetail->id === 260 ) {
+//    $pageScheme[ "" ]
+//}
+
 
 /**
  * Отключение кнопок "Удалить посещение", "Сохранить" и "Оплатить"
@@ -76,8 +82,8 @@ if ( $pageDetail[ "row_detail" ][ "status" ]->value === "ended" ) {
 /**
  * Кнопка "Печать договора"
  */
-if ( $clientDetail[ "is_contract" ] == "Y" )
-    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 2 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 0 ] );
+//if ( $clientDetail[ "is_contract" ] == "Y" )
+//    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 2 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 0 ] );
 
 
 /**

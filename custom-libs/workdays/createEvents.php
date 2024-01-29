@@ -70,10 +70,10 @@ function generateRuleEvents( array $rule, $customWorkdays = [] ): array
         $generatedEvents[] = [
             "id" => $rule[ "id" ] ?? 0,
             "event_from" => $iterator->format( "Y-m-d H:i:s" ),
-            "event_to" => $eventEnd->format( "$date H:i:s"),
+            "event_to" => $eventEnd->format( "$date H:i:s" ),
             "cabinet_id" => intval( $rule[ "cabinet_id" ] ),
             "store_id" => $rule[ "store_id" ],
-            "is_weekend" => ($rule[ "is_weekend" ] ?? 'N'),
+            "is_weekend" => ( $rule[ "is_weekend" ] ?? 'N' ),
             "is_rule" => $rule[ "is_rule" ],
             "user_id" => intval( $rule[ "user_id" ] )
         ];
@@ -84,30 +84,3 @@ function generateRuleEvents( array $rule, $customWorkdays = [] ): array
     return $generatedEvents;
 
 } // function generateRuleEvents( int $eventID ): array
-
-function removeEvents(
-    $start_at,
-    $end_at,
-    $store_id,
-    $user_id,
-    $is_rule = 'N',
-    $is_weekend = 'N'
-) {
-
-    global $API;
-
-    $query = " DELETE FROM scheduleEvents
-    WHERE 
-        (
-            ( event_from >= '$start_at' AND event_from < '$end_at' ) OR
-            ( event_to > '$start_at' AND event_to < '$end_at' ) OR 
-            ( event_from < '$start_at' AND event_to >= '$end_at' )   
-        ) AND
-        store_id = $store_id AND
-        user_id = $user_id AND
-        is_rule = '$is_rule' AND
-        is_weekend = '$is_weekend'";
-
-    mysqli_query( $API->DB_connection, $query );
-
-}

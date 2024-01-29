@@ -253,9 +253,7 @@
         },
         {
           "title": "Детальная информация по зарплате",
-          "required_permissions": [
-            "users_tab_salary"
-          ],
+          "required_permissions": [],
           "body": [
             {
               "title": "Виджет информации о зарплате",

@@ -63,7 +63,7 @@ if ( !property_exists( $API->request->data, "cabinet_id" ) ) {
 }
 
 $requestData->is_rule = $requestData->is_rule ?? $ruleDetails[ "is_rule" ] ?? 'Y';
-$requestData->is_weekend = $requestData->is_weekend ?? $ruleDetails[ "is_weekend" ];
+$requestData->is_weekend = $requestData->is_weekend ?? $ruleDetails[ "is_weekend" ] ?? 'N';
 
 if ( $begin->format( "Y-m-d" ) == $end->format( "Y-m-d" ) ) $requestData->is_rule = 'N';
 else $requestData->is_rule = 'Y';
@@ -170,7 +170,7 @@ foreach ( $scheduleRules as $rule ) {
                 /**
                  * Проверяем занят ли кабинет
                  */
-                if ( $ruleEvent[ "cabinet_id" ] == $newEvent[ "cabinet_id" ] && !is_null( $ruleEvent[ "cabinet_id" ] ) ) {
+                if ( $ruleEvent[ "cabinet_id" ] == $newEvent[ "cabinet_id" ] && $ruleEvent[ "cabinet_id" ] != 0  ) {
 
                     /**
                      * Получаем информацию по сотруднику в событии коррелирующего правила

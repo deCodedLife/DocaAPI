@@ -329,6 +329,7 @@ if ( $allServices ) {
             "title" => $product[ "title" ],
             "type" => "service",
             "cost" => $product[ "price" ],
+            "discount" => round( $product[ "price" ] - ( $product[ "price" ] * $discountPerProduct ), 2 ),
             "amount" => 1,
             "product_id" => $product[ "id" ]
         ];
@@ -345,6 +346,7 @@ if ( $allProducts ) {
             "title" => $product[ "title" ],
             "type" => "product",
             "cost" => $product[ "price" ],
+            "discount" => round( $product[ "price" ] - ( $product[ "price" ] * $discountPerProduct ), 2 ),
             "amount" => $product[ "amount" ],
             "product_id" => $product[ "id" ]
         ];

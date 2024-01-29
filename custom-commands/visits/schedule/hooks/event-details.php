@@ -43,7 +43,8 @@ if ( $event[ "status" ] == "ended" && $event[ "is_payed" ] == "Y" ) $event[ "col
  */
 
 if ( $event[ "comment" ] != "" && $event[ "comment" ] != "null" ) $event[ "icons" ][] = "more";
-if ( $event[ "is_payed" ] == "Y" ) $event[ "icons" ][] = "rub";
+if ( $event[ "is_called" ] === 'N' ) $event[ "icons" ][] = "phone";
+if ( $event[ "is_payed" ] === 'Y' ) $event[ "icons" ][] = "rub";
 
 /**
  * Получение детальной информации о пациенте

@@ -86,6 +86,7 @@ if ( $visitDetails[ "is_payed" ] == "Y" || ( $saleDetails && $saleDetails[ "stat
     $formFieldValues[ "sum_deposit" ] = (float) $formFieldValues[ "sum_deposit" ];
     $formFieldValues[ "is_combined" ] = $formFieldValues[ "is_combined" ] == "Y";
     $formFieldValues[ "online_receipt" ] = $formFieldValues[ "online_receipt" ] == "Y";
+    unset( $formFieldValues[ "store_id" ] );
 
     foreach ( $API->DB->from( "saleVisits" )
                   ->where( "sale_id", $saleDetails[ "sale_id" ] ) as $saleVisit )

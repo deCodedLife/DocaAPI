@@ -51,6 +51,36 @@
       ]
     },
     {
+      "title": "Скидка",
+      "article": "discount",
+      "data_type": "float",
+      "field_type": "price",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "add",
+        "update",
+        "get"
+      ],
+      "require_in_commands": []
+    },
+    {
+      "title": "Стоимость со скидкой",
+      "article": "with_discount",
+      "data_type": "float",
+      "field_type": "price",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "add",
+        "update",
+        "get"
+      ],
+      "require_in_commands": []
+    },
+    {
       "title": "Группа услуги",
       "article": "category_id",
       "data_type": "integer",
@@ -320,6 +350,18 @@
     }
   ],
   "action_buttons": [
+    {
+      "type": "href",
+      "settings": {
+        "title": "Посмотреть",
+        "page": [
+          "services/info/",
+          ":id"
+        ],
+        "icon": "info",
+        "background": "dark"
+      }
+    },
     {
       "type": "href",
       "settings": {

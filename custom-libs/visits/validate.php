@@ -375,7 +375,7 @@ function checkWorkDays( $employee_id, $store_id, $start_at, $end_at ): void {
         (
             ( event_from >= '$start_at' and event_from < '$end_at' ) OR
             ( event_to > '$start_at' and event_to < '$end_at' ) OR
-            ( event_from < '$start_at' and event_to >= '$end_at' ) 
+            ( event_from <= '$start_at' and event_to >= '$end_at' ) 
         ) AND
         user_id = $employee_id AND
         store_id = $store_id";
@@ -420,7 +420,8 @@ function checkWorkDays( $employee_id, $store_id, $start_at, $end_at ): void {
 
 }
 
-checkWorkDays( $employee, $store_id, $start_at, $end_at );
+if ( $requestData->objectTable !== "equipmentVisits" )
+    checkWorkDays( $employee, $store_id, $start_at, $end_at );
 
 
 /**

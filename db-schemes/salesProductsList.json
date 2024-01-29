@@ -18,7 +18,14 @@
     {
       "title": "Стоимость",
       "article": "cost",
-      "type": "float",
+      "type": "double",
+      "default": 0,
+      "is_required": "N"
+    },
+    {
+      "title": "Сумма скидки",
+      "article": "discount",
+      "type": "double",
       "default": 0,
       "is_required": "N"
     },
