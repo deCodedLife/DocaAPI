@@ -394,6 +394,28 @@
           ]
         },
         {
+          "title": "Договора",
+          "body": [
+            {
+              "title": "Мед карта",
+              "type": "accordion",
+              "size": 4,
+              "settings": {
+                "object": "clientContracts",
+                "property_title": "title",
+                "property_body": "body",
+                "filters": [
+                  {
+                    "property": "client_id",
+                    "value": ":id"
+                  }
+                ]
+              },
+              "components": []
+            }
+          ]
+        },
+        {
           "title": "Бонусы",
           "body": [
             {

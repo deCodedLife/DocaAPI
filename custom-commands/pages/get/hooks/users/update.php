@@ -1,4 +1,5 @@
 <?php
+//ini_set( "display_errors", true );
 
 $pageScheme[ "structure" ][ 1 ][ "settings" ][ 3 ][ "body" ][ 0 ][ "settings" ][ "filters" ] = [
     [
@@ -91,9 +92,38 @@ if ( $userStores ) {
 
 }
 
+$removeEquipment = true;
+$equipmentIndex = 2;
+
 if ( $user[ "salary_type" ] != "rate_kpi" ) {
 
     unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 3 ][ "body" ][ 1 ] );
+    $pageScheme[ "structure" ][ 1 ][ "settings" ][ 3 ][ "body" ] = array_values( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 3 ][ "body" ] );
+    $equipmentIndex -= 1;
+
+} else {
+
+    $removeEquipment = false;
+
+}
+
+$equipmentServices = $API->DB->from( "services_users" )
+    ->innerJoin( "service_equipment on service_equipment.service_id = services_users.service_id" )
+    ->innerJoin( "services_second_users on services_second_users.service_id = service_equipment.service_id" );
+
+foreach ( $equipmentServices as $service ) {
+
+    if ( $service[ "user_id" ] == $pageDetail[ "row_detail" ][ "id" ]) {
+
+        $removeEquipment = false;
+
+    }
+
+}
+
+if ( $removeEquipment ) {
+
+    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 3 ][ "body" ][ $equipmentIndex ] );
     $pageScheme[ "structure" ][ 1 ][ "settings" ][ 3 ][ "body" ] = array_values( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 3 ][ "body" ] );
 
 }

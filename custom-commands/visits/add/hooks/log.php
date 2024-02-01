@@ -58,8 +58,7 @@ if ( $userProfessionDetail ) $userProfessionDetail = $API->DB->from( "profession
     ->limit( 1 )
     ->fetch();
 
-if ( $userProfessionDetail ) $userProfession = mb_strtolower( $userProfessionDetail[ "title" ] ) . "у";
-
+if ( $userProfessionDetail ) $userProfession = mb_strtolower( $userProfessionDetail[ "title" ] );
 
 $months = [
     "янв.",
@@ -78,4 +77,4 @@ $months = [
 
 $created_at = date( "d" ) . " " . $months[ date( "n" ) - 1 ] . " " . date( "Y" ) . "г" . " " . date( "H:i:s" );
 
-$logDescription = "Добавлено посещение к $userProfession $userName на $created_at, клиент №" . $requestData->clients_id[ 0 ] . " $clientName услуга " . $serviceDetail[ "article" ];
+$logDescription = "Добавлено посещение к $userName на $created_at, клиент №" . $requestData->clients_id[ 0 ] . " $clientName услуга " . $serviceDetail[ "title" ];

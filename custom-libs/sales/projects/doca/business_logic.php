@@ -328,10 +328,10 @@ if ( $allServices ) {
         $formFieldsUpdate[ "products" ][ "value" ][] = [
             "title" => $product[ "title" ],
             "type" => "service",
-            "cost" => $product[ "price" ],
+            "cost" => floatval( $product[ "price" ] ),
             "discount" => round( $product[ "price" ] - ( $product[ "price" ] * $discountPerProduct ), 2 ),
             "amount" => 1,
-            "product_id" => $product[ "id" ]
+            "product_id" => intval( $product[ "id" ] )
         ];
 
     }
@@ -345,10 +345,10 @@ if ( $allProducts ) {
         $formFieldsUpdate[ "products" ][ "value" ][] = [
             "title" => $product[ "title" ],
             "type" => "product",
-            "cost" => $product[ "price" ],
+            "cost" => floatval( $product[ "price" ] ),
             "discount" => round( $product[ "price" ] - ( $product[ "price" ] * $discountPerProduct ), 2 ),
             "amount" => $product[ "amount" ],
-            "product_id" => $product[ "id" ]
+            "product_id" => intval( $product[ "id" ] )
         ];
 
     }

@@ -20,7 +20,18 @@ if ( $requestData->clients_id ) {
 
         $isContinue = true;
 
-        foreach ( $event[ "clients_id" ] as $eventClient )
+        if ( !is_array( $event[ "client_id" ] ) ) {
+
+            $arrayClients = [];
+            $arrayClients[] = [ "value" => $event[ "client_id" ] ];
+
+            $event[ "client_id" ] = $arrayClients;
+
+        }
+
+        foreach ( $event[ "client_id" ] as $eventClient )
+
+
             if ( $eventClient[ "value" ] == $requestData->clients_id ) $isContinue = false;
 
         if ( !$isContinue ) $filteredEvents[] = $event;

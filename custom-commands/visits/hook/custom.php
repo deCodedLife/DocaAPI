@@ -172,7 +172,10 @@ if ( $requestData->clients_id ) {
 
         }
 
-        $clientsInfo[] = "№{$clientDetail[ "id" ]} {$clientDetail[ "last_name" ]} {$clientDetail[ "first_name" ]} {$clientDetail[ "patronymic" ]} $phoneFormat";
+        $clientsInfo[] = [
+            "link" => "clients/card/$clientId",
+            "title" => "№{$clientDetail[ "id" ]} {$clientDetail[ "last_name" ]} {$clientDetail[ "first_name" ]} {$clientDetail[ "patronymic" ]} $phoneFormat"
+        ];
 
     }
 

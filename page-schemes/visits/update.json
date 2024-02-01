@@ -222,7 +222,7 @@
                         "title": "",
                         "fields": [
                           "visits_ids",
-                          "doca_services",
+                          "products_display",
                           "pay_method",
                           "action",
                           "sum_cash",
@@ -644,8 +644,8 @@
                 "object": "logs",
                 "filters": [
                   {
-                    "property": "clients_id",
-                    "value": ":clients_id"
+                    "property": "row_id",
+                    "value": ":id"
                   }
                 ]
               },

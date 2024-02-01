@@ -8,12 +8,6 @@
 $returnServices = [];
 
 /**
- * Получение групп услуг
- */
-$serviceGroups = $API->DB->from( "serviceGroups" )
-    ->where( "is_active", "Y" );
-
-/**
  * Получение текущего времени
  */
 $currentDateTime = new DateTime();
@@ -79,6 +73,7 @@ $salesList = mysqli_query(
             LEFT JOIN serviceGroups ON serviceGroups.id = services.category_id
             WHERE salesList.status = 'done'
               AND salesProductsList.type = 'service'
+              AND serviceGroups.is_active = 'Y'
               AND salesList.action = 'sell'
               AND salesList.created_at >= '$beforeLastStart'
               AND salesList.created_at <= '$currentEnd'
@@ -92,6 +87,8 @@ $servicesDetail = [];
  * Обход продаж
  */
 foreach ( $salesList as $sale ) {
+
+    if ( $requestData->category_id && (int)$requestData->category_id != (int)$sale[ "id" ] ) { break; }
 
     if ( !$returnServices[ $sale[ "id" ]][ "sum_one" ] ) $returnServices[ $sale[ "id" ]][ "sum_one" ] = "0";
     if ( !$returnServices[ $sale[ "id" ]][ "sum_two" ] ) $returnServices[ $sale[ "id" ]][ "sum_two" ] = "0";

@@ -55,6 +55,36 @@
       "require_in_commands": []
     },
     {
+      "title": "Дата и время последнего уведомления",
+      "article": "reminderDate",
+      "data_type": "datetime",
+      "field_type": "datetime",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add",
+        "update",
+        "get"
+      ],
+      "require_in_commands": []
+    },
+    {
+      "title": "Уведомлять каждые (мин)",
+      "article": "notifyEvery",
+      "data_type": "integer",
+      "field_type": "integer",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add",
+        "update",
+        "get"
+      ],
+      "require_in_commands": []
+    },
+    {
       "title": "Статус",
       "article": "status",
       "data_type": "string",

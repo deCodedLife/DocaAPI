@@ -53,6 +53,7 @@
                         "title": "",
                         "fields": [
                           "deadline",
+                          "notifyEvery",
                           "status",
                           "taskGroup_id"
                         ]

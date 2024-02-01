@@ -3,13 +3,83 @@
 /**
  * Период, за который высчитывается зарплата
  */
-//ini_set("display_errors", true);
-$filter = [];
-if ( $requestData->start_at ) $filter[ "start_at >= ?" ] = $requestData->start_at;
-if ( $requestData->end_at ) $filter[ "end_at <= ?" ] = $requestData->end_at;
-if ( $requestData->user_id ) $filter[ "user_id" ] = $requestData->user_id;
-$filter[ "status" ] = "ended";
 
+global $visits_ids;
+
+$sqlFilter = [];
+
+function getServicesIds( $category ): array {
+
+    global $API;
+
+    $sqlFilter = "SELECT id FROM services WHERE category_id = $category";
+    $servicesList = mysqli_query( $API->DB_connection, $sqlFilter );
+    $services_ids = [];
+
+    foreach ( $servicesList as $service ) $services_ids[] = intval( $service[ "id" ] );
+    return $services_ids;
+
+}
+
+function getVisitsIds( $table, $start_at, $end_at, $user_id ): array {
+
+    global $API;
+
+    $sqlFilter = "
+    SELECT $table.id as id 
+    FROM $table 
+    WHERE 
+        start_at >= '$start_at' AND 
+        end_at <= '$end_at' AND 
+        ( user_id = $user_id OR assist_id = $user_id ) AND
+        is_active = 'Y' AND
+        is_payed = 'Y' AND
+        status = 'ended'";
+    $visitsList = mysqli_query( $API->DB_connection, $sqlFilter );
+    $visits_ids = [];
+
+    foreach ( $visitsList as $visit ) $visits_ids[] = intval( $visit[ "id" ] );
+    return $visits_ids;
+
+}
+
+function getPaymentServices( $type, $sqlFilter, $start_at, $end_at, $user_id ): array {
+
+    global $API, $visits_ids;
+
+    $table = $type == "equipmentVisits" ? "salesEquipmentVisits" : "saleVisits";
+    $sqlFilter[ "$table.visit_id" ] = getVisitsIds( $type, $start_at, $end_at, $user_id );
+
+    $visits_ids += count( $sqlFilter[ "$table.visit_id" ] );
+    if ( empty( $sqlFilter[ "$table.visit_id" ] ) ) $sqlFilter[ "$table.visit_id" ] = [ 0 ];
+
+    $allServices = $API->DB->from( "salesProductsList" )
+        ->innerJoin( "salesList on salesList.id = salesProductsList.sale_id" )
+        ->innerJoin( "$table on $table.sale_id = salesList.id" )
+        ->where( $sqlFilter );
+
+    foreach ( $allServices as $service ) $servicesList[] = $service;
+    return  $servicesList ?? [];
+
+}
+
+$sqlFilter = [
+    "salesList.action" => "sell",
+    "salesList.status" => "done"
+];
+
+if ( $requestData->start_at ) $sqlFilter[ "salesList.created_at >= ?" ] = $requestData->start_at;
+if ( $requestData->end_at ) $sqlFilter[ "salesList.created_at <= ?" ] = $requestData->end_at;
+
+if ( $requestData->category ) $sqlFilter[ "salesProductsList.product_id" ] = getServicesIds( $requestData->category );
+if ( $requestData->service )  $sqlFilter[ "salesProductsList.product_id" ] = $requestData->service;
+
+$allServices = array_merge(
+    getPaymentServices( "visits", $sqlFilter, $requestData->start_at, $requestData->end_at, $requestData->user_id ),
+    getPaymentServices( "equipmentVisits", $sqlFilter, $requestData->start_at, $requestData->end_at, $requestData->user_id ),
+);
+
+//$API->returnResponse( $allServices );
 
 /**
  * Фиксированная часть зарплаты
@@ -26,25 +96,15 @@ $salary_kpi_percent = 0;
  */
 $salary_kpi_value = 0;
 
-/**
- * Колличество услуг
- */
-$services_count = 0;
-
-/**
- * Колличество посещений
- */
-
-$visits_count = 0;
 
 /**
  * Детальная информация о пользователе
  */
-
 $userDetail = $API->DB->from( "users" )
     ->where( "id", $requestData->user_id )
     ->limit( 1 )
     ->fetch();
+
 
 $salaryType = $userDetail[ "salary_type" ];
 $salary_fixed = $userDetail[ "salary" ];
@@ -52,54 +112,72 @@ $salary_fixed = $userDetail[ "salary" ];
 $additionalWidgetTitle = "% от продаж";
 $additionalWidgetValue = 0;
 
-$visits = $API->DB->from( "visits" )
-    ->where( $filter );
+$services_count = count( $allServices );
+$visits_count = $visits_ids;
 
-if ( $requestData->category ) {
+//-------------------------------------------------------------------------------------
 
-    foreach ( $visits as $index => $returnVisit ) {
 
-        $visits_services = $API->DB->from( "visits_services" )
-            ->where( "visit_id", $returnVisit[ "id" ] );
 
-        $service_exists = false;
 
-        foreach ( $visits_services as $visit_service) {
+function rate_percent ( $user_id, $visitsServices ): float {
 
-            $service = $API->DB->from( "services" )
-                ->where( "id", $visit_service[ "service_id" ] )
-                ->limit( 1 )
-                ->fetch();
+    global $API;
 
-            if ( $service[ "category_id" ] == $requestData->category )
-                $service_exists = true;
+    /**
+     * Общая сумма продаж
+     */
+    $total = 0;
+
+    $sales_percent = [];
+    $sales_fixed = [];
+
+    /**
+     * Получение списка kpi по услугам
+     */
+    $userServices = $API->DB->from( "services_user_percents" )
+        ->where( "row_id", $user_id );
+
+    foreach ( $userServices as $service ) {
+
+        if ( $service[ "percent" ] ) {
+
+            $sales_percent[ $service[ "service_id" ] ] = intval( $service[ "percent" ] );
+            continue;
+
+        }
+
+        if ( $service[ "fix_sum" ] ) {
+
+            $sales_fixed[ $service[ "service_id" ] ] = intval( $service[ "fix_sum" ] );
 
         }
 
-        if ( $service_exists == false ) unset( $visits[ $index ] );
-
     }
 
-}
+    foreach ( $visitsServices as $visitsService ) {
 
-if ( $requestData->service && !empty( $requestData->service ) ) {
+        if ( isset( $sales_percent[ $visitsService[ "product_id" ] ] ) ) {
 
-    foreach ( $visits as $index => $returnVisit ) {
+            $servicePercent = $sales_percent[ $visitsService[ "product_id" ] ];
 
-        $visits_services = $API->DB->from( "visits_services" )
-            ->where( "visit_id", $returnVisit[ "id" ] );
-
-        $service_exists = false;
-
-        foreach ( $visits_services as $visit_service) {
-
-            if ( in_array( (int)$visit_service[ "service_id" ], $requestData->service  ) )
-                $service_exists = true;
+            $price = intval( $visitsService[ "cost" ] * $visitsService[ "amount" ] );
+            $total += $price / 100 * $servicePercent;
+            continue;
 
         }
-        if ( $service_exists == false ) unset( $visits[ $index ] );
 
-    }
+        if ( isset( $sales_fixed[ $visitsService[ "product_id" ] ] ) ) {
+
+            $servicePercent = $sales_fixed[ $visitsService[ "product_id" ] ];
+            $total += $servicePercent;
+
+        }
+
+    } // foreach. $visits
+
+
+    return $total;
 
 }
 
@@ -109,95 +187,15 @@ if ( $requestData->service && !empty( $requestData->service ) ) {
 
 if ( $salaryType == "rate_percent" ) {
 
-    /**
-     * Общая сумма продаж
-     */
-    $totalSell = 0;
-
-    /**
-     * Обработка услуг
-     */
-    if ( !empty($visits) ) {
-
-        foreach ($visits as $visit) {
-
-            /**
-             * Подсчет колличества посещений
-             */
-            $visits_count++;
-
-            $visitServices = $API->DB->from("visits_services")
-                ->where("visit_id", $visit["id"]);
-
-            foreach ($visitServices as $service) {
-
-                /**
-                 * Подсчет колличества услуг
-                 */
-                $services_count++;
-
-                /**
-                 * Детальная информация об услуге
-                 */
-
-                $serviceDetail = $API->DB->from("services")
-                    ->where("id", $service["service_id"])
-                    ->limit(1)
-                    ->fetch();
-
-                /**
-                 * Процент услуги
-                 */
-                $servicePercent = $API->DB->from("services_user_percents")
-                    ->where([
-                        "row_id" => $requestData->user_id,
-                        "service_id" => $service["service_id"]
-                    ])
-                    ->limit(1)
-                    ->fetch();
-
-                if (!$servicePercent) continue;
-
-
-                if ($servicePercent["fix_sum"]) $salary_kpi_value += $servicePercent["fix_sum"];
-                if ($servicePercent["percent"]) $salary_kpi_percent += $serviceDetail["price"] / 100 * $servicePercent["percent"];
-
-            } // foreach. $visit[ "services_id" ]
-
-        } // foreach. $visits
-
-        $additionalWidgetTitle = "% от продаж";
-        $additionalWidgetValue = $salary_kpi_value + $salary_kpi_percent;
-
-    }
+    $additionalWidgetTitle = "% от продаж";
+    $additionalWidgetValue = rate_percent( $requestData->user_id, $allServices );
+    $salary_kpi_value = $additionalWidgetValue;
 
 } // if. $userDetail[ "is_percent" ] === "Y"
 
-if ( !empty( $visits ) ) {
 
+//-------------------------------------------------------------------------------------
 
-    foreach ($visits as $visit) {
-
-        /**
-         * Подсчет колличества посещений
-         */
-        $visits_count++;
-
-        $visitServices = $API->DB->from("visits_services")
-            ->where("visit_id", $visit["id"]);
-
-        foreach ($visitServices as $service) {
-
-            /**
-             * Подсчет колличества услуг
-             */
-            $services_count++;
-
-        } // foreach. $visit[ "services_id" ]
-
-    } // foreach. $visits
-
-}
 
 if ( $salaryType == "rate_kpi" ) {
 
@@ -226,6 +224,7 @@ if ( $salaryType == "rate_kpi" ) {
 
 }
 
+//$API->returnResponse( $additionalWidgetValue );
 $additionalWidgetValue = number_format( $additionalWidgetValue, 0, ".", " " );
 
 

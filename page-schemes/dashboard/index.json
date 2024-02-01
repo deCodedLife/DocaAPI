@@ -71,10 +71,26 @@
       ],
       "settings": {
         "is_edit": false,
-        "link": "serviceGroupsReport",
+        "link": "serviceGroups",
         "object": "serviceGroupsReport"
       },
-      "components": []
+      "components": {
+        "filters": [
+          {
+            "title": "Группа услуг",
+            "type": "list",
+            "required_permissions": [],
+            "required_modules": [],
+            "settings": {
+              "is_search": false,
+              "recipient_property": "category_id",
+              "donor_object": "serviceGroups",
+              "donor_property_title": "title",
+              "donor_property_value": "id"
+            }
+          }
+        ]
+      }
     },
     {
       "title": "Сотрудники",

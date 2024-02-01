@@ -13,13 +13,20 @@ $formFieldsUpdate = [];
 
 if ( $requestData->phone && count( $requestData->phone ) != 11 ) {
 
+    $filters = [
+        "phone" => $requestData->phone,
+        "is_active" => "Y"
+    ];
+
+    if ( isset( $requestData->id ) ) $filters[ "not id" ] = intval( $requestData->id );
+
     $clientDetails = $API->DB->from( "clients" )
-        ->where( "phone", $requestData->phone )
+        ->where( $filters )
         ->fetch();
 
     if ( $clientDetails ) {
 
-        $formFieldsUpdate[ "modal_info" ][] = "Пользователь с таким номером уже существует ${clientDetails[ "last_name" ]} ${clientDetails[ "first_name" ]} ${clientDetails[ "patronymic" ]}";
+        $formFieldsUpdate[ "modal_info" ][] = "Пользователь с таким номером уже существует ${clientDetails[ "id" ]} ${clientDetails[ "last_name" ]} ${clientDetails[ "first_name" ]} ${clientDetails[ "patronymic" ]}";
 
     }
 

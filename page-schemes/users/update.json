@@ -326,9 +326,23 @@
               "type": "list",
               "size": 4,
               "settings": {
+                "is_infinite": true,
                 "link": false,
                 "is_edit": false,
                 "object": "kpi",
+                "linked_filter": "analytic_widgets_salary_info",
+                "filters": []
+              },
+              "components": []
+            },
+            {
+              "title": "Список оборудования",
+              "type": "list",
+              "size": 4,
+              "settings": {
+                "object": "visitsEquipmentSalary",
+                "is_edit": false,
+                "link": false,
                 "linked_filter": "analytic_widgets_salary_info",
                 "filters": []
               },
@@ -339,7 +353,8 @@
               "type": "list",
               "size": 4,
               "settings": {
-                "object": "visits",
+                "is_infinite": true,
+                "object": "visitsSalary",
                 "is_edit": false,
                 "link": false,
                 "linked_filter": "analytic_widgets_salary_info",

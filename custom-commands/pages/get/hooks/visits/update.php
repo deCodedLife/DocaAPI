@@ -121,3 +121,22 @@ if ( $API::$userDetail->role_id == 6 ) {
     unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 9 ] );
 
 }
+
+if ( $pageDetail[ "row_detail" ][  "is_called" ] === true ) {
+
+    $pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 11 ] = [
+
+        "type" => "script",
+        "settings" => [
+            "title" => "Сбросить прозвон",
+            "background" => "dark",
+            "object" => "visits",
+            "command" => "callReset",
+            "data" =>
+                [
+                    "id" => ":id"
+                ],
+            ]
+        ];
+
+}
