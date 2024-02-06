@@ -2,45 +2,127 @@
 
 ini_set( "display_errors", true );
 
-$API->returnResponse( "test" );
+$start_at = "2024-01-01 00:00:00";
+$end_at = "2024-01-12 23:00:00";
 
-$API->DB->update( "visits" )
-    ->set( "status", "planning" )
-    ->where( "status", "planned" )
-    ->execute();
+$sqlFilters = [
+    "start_at >= ?" => $start_at,
+    "end_at <= ?" => $end_at,
+    "is_payed" => "Y",
+    "is_active" => "Y"
+];
 
-$sqlQuery = "SELECT * FROM `visits` WHERE (NOT cast(start_at as date) = cast(end_at as date));";
-$visits = mysqli_query(
-    $API->DB_connection,
-    $sqlQuery
-);
+$visitList = $API->DB->from( "visits" )
+    ->where( $sqlFilters );
 
-foreach ( $visits as $visit ) {
+foreach ( $visitList as $visit ) {
 
-    $visitService = $API->DB->from( "visits_services" )
-        ->where( "visit_id", $visit[ "id" ] )
-        ->limit(1)
-        ->fetch();
+    $services = $API->DB->from( "visits_services" )
+        ->where( "visit_id", $visit[ "id" ] );
 
-    if ( $visit[ "user_id" ] == 217 ) $visit[ "equipment_id" ] = 1;
-    if ( $visit[ "user_id" ] == 293 ) $visit[ "equipment_id" ] = 2;
-    if ( $visit[ "user_id" ] == 294 ) $visit[ "equipment_id" ] = 3;
+    if ( count( $services ) != 0 ) continue;
+    if ( $visit[ "id" ] == "523801" ) continue;
+    if ( $visit[ "id" ] == "523802" ) continue;
+    if ( $visit[ "id" ] == "523809" ) continue;
+    if ( $visit[ "id" ] == "523810" ) continue;
+    if ( $visit[ "id" ] == "523813" ) continue;
+    if ( $visit[ "id" ] == "523814" ) continue;
 
-    $visit[ "user_id" ] = $visit[ "assist_id" ];
-    $visit[ "service_id" ] = $visitService[ "service_id" ];
+    $saleServices = $API->DB->from( "salesProductsList" )
+        ->innerJoin( "salesList on salesList.id = salesProductsList.sale_id" )
+        ->innerJoin( "saleVisits on saleVisits.sale_id = salesList.id" )
+        ->where( "saleVisits.visit_id", $visit[ "id" ] );
 
-    unset( $visit[ "advert_id" ] );
-    unset( $visit[ "is_online" ] );
+    foreach ( $saleServices as $service ) {
 
-    $API->DB->insertInto( "equipmentVisits" )
-        ->values( $visit )
-        ->execute();
+        $API->DB->insertInto( "visits_services" )
+            ->values( [
+                "visit_id" => $visit[ "id" ],
+                "service_id" => $service[ "product_id" ]
+            ] )
+            ->execute();
 
-    $API->DB->delete( "visits" )
-        ->where( "id", $visit[ "id" ] )
-        ->execute();
+    };
 
 }
+
+
+
+
+
+
+// Пересоздать эвенты для расписания
+//require_once $API::$configs[ "paths" ][ "public_app" ] . "/custom-libs/workdays/createEvents.php";
+//
+//foreach ( $API->DB->from( "users" ) as $userDetails ) {
+//
+//    $schedule = $API->DB->from( "workDays" )
+//        ->where( "user_id", $userDetails[ "id" ] );
+//
+//    $API->DB->deleteFrom( "scheduleEvents" )
+//        ->where( "user_id", $userDetails[ "id" ] )
+//        ->execute();
+//
+//    foreach ( $schedule as $day ) {
+//
+//        $newSchedule = generateRuleEvents( $day );
+//
+//        foreach ( $newSchedule as $item ) {
+//
+//            $item[ "rule_id" ] = $item[ "id" ];
+//            unset( $item[ "id" ] );
+//
+//            $API->DB->insertInto( "scheduleEvents" )
+//                ->values( $item )
+//                ->execute();
+//
+//        }
+//
+//    }
+//
+//}
+
+
+
+
+//
+//$API->DB->update( "visits" )
+//    ->set( "status", "planning" )
+//    ->where( "status", "planned" )
+//    ->execute();
+//
+//$sqlQuery = "SELECT * FROM `visits` WHERE (NOT cast(start_at as date) = cast(end_at as date));";
+//$visits = mysqli_query(
+//    $API->DB_connection,
+//    $sqlQuery
+//);
+//
+//foreach ( $visits as $visit ) {
+//
+//    $visitService = $API->DB->from( "visits_services" )
+//        ->where( "visit_id", $visit[ "id" ] )
+//        ->limit(1)
+//        ->fetch();
+//
+//    if ( $visit[ "user_id" ] == 217 ) $visit[ "equipment_id" ] = 1;
+//    if ( $visit[ "user_id" ] == 293 ) $visit[ "equipment_id" ] = 2;
+//    if ( $visit[ "user_id" ] == 294 ) $visit[ "equipment_id" ] = 3;
+//
+//    $visit[ "user_id" ] = $visit[ "assist_id" ];
+//    $visit[ "service_id" ] = $visitService[ "service_id" ];
+//
+//    unset( $visit[ "advert_id" ] );
+//    unset( $visit[ "is_online" ] );
+//
+//    $API->DB->insertInto( "equipmentVisits" )
+//        ->values( $visit )
+//        ->execute();
+//
+//    $API->DB->delete( "visits" )
+//        ->where( "id", $visit[ "id" ] )
+//        ->execute();
+//
+//}
 
 //$testQuery = $API->DB->from( "users" )
 //    ->where( "is_active", 'Y' );

@@ -2,6 +2,13 @@
   "title": "Рабочие дни",
   "properties": [
     {
+      "title": "ID правила",
+      "article": "rule_id",
+      "type": "int",
+      "default": null,
+      "is_required": "Y"
+    },
+    {
       "title": "Начало рабочего дня",
       "article": "event_from",
       "type": "datetime",
@@ -26,7 +33,7 @@
       "title": "Нет приема",
       "article": "is_weekend",
       "type": "char(1)",
-      "is_required": false,
+      "is_required": true,
       "default": "N"
     },
     {

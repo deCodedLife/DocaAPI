@@ -1,17 +1,26 @@
 <?php
 
+//ini_set( "display_errors", true );
 
+//if ( $API::$userDetail->id === 260 ) {
+//    $pageScheme[ "" ]
+//}
 
 
 /**
  * Отключение кнопок "Удалить посещение", "Сохранить" и "Оплатить"
  */
+
+
 if ( $pageDetail[ "row_detail" ][ "is_payed" ] == true ) {
 
+    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 4 ] );
     unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 5 ] );
     unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 0 ] );
 
 }
+
+
 
 /**
  * Определение того, стоит ли скрывать кнопку оплаты
@@ -73,8 +82,8 @@ if ( $pageDetail[ "row_detail" ][ "status" ]->value === "ended" ) {
 /**
  * Кнопка "Печать договора"
  */
-if ( $clientDetail[ "is_contract" ] == "Y" )
-    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 2 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 0 ] );
+//if ( $clientDetail[ "is_contract" ] == "Y" )
+//    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 2 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 0 ] );
 
 
 /**
@@ -101,6 +110,7 @@ foreach ( $pageDetail[ "row_detail" ][ "services_id" ] as $service ) {
 
 } // foreach. $pageDetail[ "row_detail" ][ "services_id" ]
 
+
 if ( $API::$userDetail->role_id == 6 ) {
 
     unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ] );
@@ -109,5 +119,24 @@ if ( $API::$userDetail->role_id == 6 ) {
     unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 7 ] );
     unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 8 ] );
     unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 9 ] );
+
+}
+
+if ( $pageDetail[ "row_detail" ][  "is_called" ] === true ) {
+
+    $pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 11 ] = [
+
+        "type" => "script",
+        "settings" => [
+            "title" => "Сбросить прозвон",
+            "background" => "dark",
+            "object" => "visits",
+            "command" => "callReset",
+            "data" =>
+                [
+                    "id" => ":id"
+                ],
+            ]
+        ];
 
 }

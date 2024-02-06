@@ -10,17 +10,17 @@
         "director_schedule"
       ],
       "settings": {
-          "widgets_group": "daily_report",
-          "filters": [
-            {
-              "property": "start_at",
-              "value": ":date()"
-            },
-            {
-              "property": "end_at",
-              "value": ":date()"
-            }
-          ]
+        "widgets_group": "daily_report",
+        "filters": [
+          {
+            "property": "start_at",
+            "value": ":date()"
+          },
+          {
+            "property": "end_at",
+            "value": ":date()"
+          }
+        ]
       },
       "components": {
         "filters": [
@@ -197,4 +197,3 @@
   ],
   "subpages": []
 }
-

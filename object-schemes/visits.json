@@ -126,7 +126,8 @@
         "add",
         "update",
         "hook",
-        "get"
+        "get",
+        "variables"
       ],
       "require_in_commands": [
         "add"
@@ -136,7 +137,11 @@
         "donor_table": "services",
         "property_article": "title",
         "insert_property": "visit_id",
-        "filter_property": "service_id"
+        "filter_property": "service_id",
+        "select": [
+          "title",
+          "price"
+        ]
       },
       "min_value": 0,
       "is_disabled": false
@@ -236,6 +241,19 @@
       "is_default_in_list": false,
       "is_unique": false,
       "is_autofill": false,
+      "use_in_commands": [
+        "update",
+        "get"
+      ]
+    },
+    {
+      "title": "Клиент прозвонен",
+      "article": "is_called",
+      "data_type": "boolean",
+      "field_type": "checkbox",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
       "use_in_commands": [
         "update",
         "get"

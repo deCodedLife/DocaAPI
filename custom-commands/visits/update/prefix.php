@@ -13,3 +13,21 @@ if ( !$requestData->is_alert )
     require_once ( $publicAppPath . "/custom-libs/visits/validate.php" );
 }
 
+if ( !$requestData->clients_id )
+{
+
+    $visits_clients = $API->DB->from( "visits_clients")->
+        where( "visit_id", $requestData->id );
+
+    $clients = [];
+
+    foreach ( $visits_clients as $visits_client ) {
+
+        $clients[] = (int)$visits_client[ "client_id" ];
+
+    }
+
+    $requestData->clients_id = $clients;
+
+}
+

@@ -26,7 +26,7 @@
       "title": "Нет приема",
       "article": "is_weekend",
       "type": "char(1)",
-      "is_required": false,
+      "is_required": true,
       "default": "N"
     },
     {

@@ -5,14 +5,22 @@
       "title": "Dashboard",
       "href": "dashboard",
       "children": [],
-      "icon": "dashboard"
+      "icon": "dashboard",
+      "required_permissions":[ "director_schedule" ]
+    },
+    {
+      "title": "Расписание",
+      "href": "dashboard",
+      "children": [],
+      "icon": "schedule",
+      "required_permissions":[ "doctor_schedule" ]
     },
     {
       "title": "Расписание",
       "href": "managerSchedule",
       "children": [],
       "icon": "schedule",
-      "required_permissions": [ "director_schedule" ]
+      "required_permissions": [ "manager_schedule" ]
     },
     {
       "title": "Оборудование",

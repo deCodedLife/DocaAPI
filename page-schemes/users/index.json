@@ -19,6 +19,7 @@
       "type": "list",
       "size": 4,
       "settings": {
+        "is_infinite": true,
         "object": "users"
       },
       "components": {

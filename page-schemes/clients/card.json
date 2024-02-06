@@ -1,0 +1,247 @@
+{
+  "required_modules": [],
+  "required_permissions": [],
+  "structure": [
+    {
+      "title": "Шапка",
+      "type": "header",
+      "size": 4,
+      "settings": {
+        "description": "Карточка клиента",
+        "title": [
+          "Клиент № ",
+          ":id"
+        ]
+      },
+      "components": []
+    },
+    {
+      "title": "Табы",
+      "type": "tabs",
+      "size": 4,
+      "settings": [
+        {
+          "title": "Основная информация",
+          "body": [
+            {
+              "title": "Форма клиента",
+              "type": "form",
+              "size": 4,
+              "settings": {
+                "close_after_submit": false,
+                "object": "clients",
+                "command": "update",
+                "areas": [
+                  {
+                    "size": 2,
+                    "blocks": [
+                      {
+                        "title": "Основное",
+                        "fields": [
+                          "last_name",
+                          "first_name",
+                          "patronymic",
+                          "gender",
+                          "birthday"
+                        ]
+                      },
+                      {
+                        "title": "Контакты",
+                        "fields": [
+                          "phone",
+                          "second_phone",
+                          "email",
+                          "address",
+                          "client_groups"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "size": 2,
+                    "blocks": [
+                      {
+                        "title": "Документы",
+                        "fields": [
+                          "passport_series",
+                          "passport_number",
+                          "passport_issued",
+                          "is_representative"
+                        ]
+                      },
+                      {
+                        "title": "Законный представитель",
+                        "fields": [
+                          "present_last_name",
+                          "present_first_name",
+                          "present_patronymic",
+                          "present_passport_series",
+                          "present_passport_number",
+                          "present_passport_issued"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "size": 4,
+                    "blocks": [
+                      {
+                        "title": "",
+                        "fields": [
+                          "comment"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "components": {
+                "buttons": [
+                  {
+                    "type": "print",
+                    "settings": {
+                      "title": "Печать договора",
+                      "background": "dark",
+                      "data": {
+                        "script": {
+                          "object": "clientContracts",
+                          "command": "add",
+                          "properties": {
+                            "client_id": ":id",
+                            "user_id": ":user_id",
+                            "document_id": "17"
+                          }
+                        },
+                        "is_edit": true,
+                        "document_article": "17",
+                        "scheme_name": "visits",
+                        "row_id": ":id"
+                      }
+                    }
+                  },
+                  {
+                    "type": "modal",
+                    "settings": {
+                      "title": "Добавить задачу",
+                      "background": "dark",
+                      "icon": "",
+                      "page": "tasks/add",
+                      "context": {
+                        "form": "clients",
+                        "row_id": ":id"
+                      }
+                    }
+                  },
+                  {
+                    "type": "submit",
+                    "settings": {
+                      "title": "Сохранить",
+                      "background": "dark",
+                      "href": "dashboard"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "title": "Мед карта",
+          "body": [
+            {
+              "title": "Мед карта",
+              "type": "accordion",
+              "size": 4,
+              "settings": {
+                "object": "visitReports",
+                "property_title": "title",
+                "property_body": "body",
+                "filters": [
+                  {
+                    "property": "client_id",
+                    "value": ":id"
+                  }
+                ]
+              },
+              "components": []
+            }
+          ]
+        },
+        {
+          "title": "Договора",
+          "body": [
+            {
+              "title": "Мед карта",
+              "type": "accordion",
+              "size": 4,
+              "settings": {
+                "object": "clientContracts",
+                "property_title": "title",
+                "property_body": "body",
+                "filters": [
+                  {
+                    "property": "client_id",
+                    "value": ":id"
+                  }
+                ]
+              },
+              "components": []
+            }
+          ]
+        },
+        {
+          "title": "История посещений",
+          "body": [
+            {
+              "title": "История посещений",
+              "type": "list",
+              "size": 4,
+              "settings": {
+                "object": "visits",
+                "filters": [
+                  {
+                    "property": "clients_id",
+                    "value": ":id"
+                  }
+                ]
+              },
+              "components": []
+            }
+          ]
+        },
+        {
+          "title": "Логи",
+          "body": [
+            {
+              "title": "Логи",
+              "type": "logs",
+              "size": 4,
+              "settings": {
+                "object": "logs",
+                "filters": [
+                  {
+                    "property": "clients_id",
+                    "value": ":id"
+                  }
+                ]
+              },
+              "components": {
+                "filters": [
+                  {
+                    "title": "Дата",
+                    "type": "date",
+                    "required_permissions": [],
+                    "required_modules": [],
+                    "settings": {
+                      "recipient_property": "created_at"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -74,9 +74,10 @@
       "is_autofill": true,
       "is_hook": true,
       "use_in_commands": [
+        "get",
+        "hook",
         "add",
-        "update",
-        "hook"
+        "update"
       ]
     },
     {
@@ -100,13 +101,14 @@
       "field_type": "phone",
       "is_default_in_list": true,
       "is_unique": true,
+      "is_hook": true,
       "is_autofill": true,
       "use_in_commands": [
         "add",
+        "hook",
         "update"
       ],
       "require_in_commands": [
-        "add"
       ]
     },
     {
@@ -158,6 +160,7 @@
       "is_autofill": true,
       "use_in_commands": [
         "add",
+        "hook",
         "update"
       ],
       "custom_list": [
@@ -201,7 +204,7 @@
       "title": "Кем выдан паспорт",
       "article": "passport_issued",
       "data_type": "string",
-      "field_type": "string",
+      "field_type": "dadata_passport",
       "is_default_in_list": false,
       "is_unique": false,
       "is_autofill": true,
@@ -285,7 +288,7 @@
       "title": "Кем выдан паспорт представителя",
       "article": "present_passport_issued",
       "data_type": "string",
-      "field_type": "string",
+      "field_type": "dadata_passport",
       "is_default_in_list": false,
       "is_unique": false,
       "is_autofill": true,
@@ -416,6 +419,9 @@
         "table": "advertise",
         "properties_title": "title"
       },
+      "require_in_commands": [
+        "add"
+      ],
       "use_in_commands": [
         "update",
         "get",

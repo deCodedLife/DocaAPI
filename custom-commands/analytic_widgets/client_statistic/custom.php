@@ -42,7 +42,8 @@ $clientStatistic = [
 ];
 
 $filters = [
-    "visits_clients.client_id" => $requestData->client_id
+    "visits_clients.client_id" => $requestData->client_id,
+    "is_payed" => 'Y'
 ];
 
 if ( $requestData->start_at ) $filters[ "start_at >= ?" ] = $requestData->start_at . " 00:00:00";

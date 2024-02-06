@@ -24,7 +24,7 @@
       "article": "use_header",
       "data_type": "boolean",
       "field_type": "checkbox",
-      "is_default_in_list": true,
+      "is_default_in_list": false,
       "is_search": true,
       "is_unique": false,
       "is_autofill": true,

@@ -37,6 +37,7 @@ $API->DB->deleteFrom( "workDaysWeekdays" )
     ->where( "rule_id", $ruleDetails[ "id" ] )
     ->execute();
 
+
 foreach ( $workDays as $workDay ) {
 
     $API->DB->insertInto( "workDaysWeekdays" )
@@ -48,28 +49,28 @@ foreach ( $workDays as $workDay ) {
 
 }
 
-if ( $requestData->is_weekend ) {
+$API->DB->deleteFrom( "scheduleEvents" )
+    ->where( "rule_id", $ruleDetails[ "id" ] )
+    ->execute();
 
-    $API->DB->deleteFrom( "scheduleEvents" )
-        ->where( [
-            "user_id" => $requestData->user_id,
-            "event_from > ?" => $begin->format( "Y-m-d 00:00:00" ),
-            "event_to < ?" => $begin->format( "Y-m-d 23:59:59" ),
-            "store_id" => $requestData->store_id
-        ] )
-        ->execute();
-
-}
 
 foreach ( $newSchedule as $scheduleEvent ) {
 
     unset( $scheduleEvent[ "id" ] );
+    $scheduleEvent[ "rule_id" ] = $ruleDetails[ "id" ];
 
     $API->DB->insertInto( "scheduleEvents" )
         ->values( $scheduleEvent )
         ->execute();
 
 }
+
+/**
+ * Отправка события об обновлении расписания
+ */
+$API->addEvent( "schedule" );
+$API->addEvent( "day_planning" );
+
 
 /**
  * Блокируем создание записей

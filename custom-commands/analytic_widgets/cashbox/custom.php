@@ -34,7 +34,6 @@ $incomeBalance = $API->DB->from( "cashboxBalances" )
     ->fetch();
 
 $filters = [
-    "action" => "sell",
     "status" => "done",
     "created_at >= ?" => $start,
     "created_at <= ?" => $end
@@ -63,6 +62,10 @@ foreach ( $expenses as $expense ) {
 
 foreach ( $payments as $payment ) {
 
+    if ( $payment[ "action" ] !== "sell" ) {
+        $summary -= $payment[ "sum_cash" ];
+        continue;
+    };
     $summary += $payment[ "sum_cash" ];
 
 }

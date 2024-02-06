@@ -46,6 +46,7 @@ foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
         /**
          * Учет графика работ Исполнителя
          */
+//        $API->returnResponse( $schedulePerformerDetail );
 
         foreach ( $performerSchedule as $performerEventKey => $performerEvent ) {
 
@@ -79,7 +80,7 @@ foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
             foreach ( $performersWorkSchedule[ $schedulePerformerKey ][ $scheduleDateKey ] as $performerWorkSchedule ) {
 
                 $workScheduleStepFromKey = getStepKey( $performerWorkSchedule[ "from" ] );
-                $workScheduleStepToKey = getStepKey( $performerWorkSchedule[ "to" ] );
+                $workScheduleStepToKey = getStepKey( $performerWorkSchedule[ "to" ] ) - 1;
 
                 foreach ( $stepsList as $stepKey => $step )
                     if (
@@ -210,10 +211,15 @@ foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
                         "status" => $currentStatus
                     ];
                     $scheduleBlockCabinet = null;
-                    
+
                     foreach ( $workedScheduleStepsWithCabinets[ $scheduleDateKey ][ $schedulePerformerKey ] as $row ) {
 
                         if ( $currentStatus != "available" ) break;
+
+                        $updatedSchedule[ $lastAddedStep ] = [
+                            "steps" => [ $lastAddedStep, $scheduleBlockStepKey - 1 ],
+                            "status" => $currentStatus
+                        ];
 
                         if ( $row[ "step" ] >= ($scheduleBlockStepKey - 1) ) {
 

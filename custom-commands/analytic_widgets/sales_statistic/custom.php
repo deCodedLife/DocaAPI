@@ -79,6 +79,7 @@ foreach ( $salesList as $sale ) {
  * Получение списка возвратов
  */
 unset( $filter[ "not action = ?" ] );
+//$filter[ "not action = ?" ] = "sale";
 $filter[ "action = ?" ] = "sellReturn";
 $salesList =  $API->DB->from( "salesList" )->where( $filter );
 

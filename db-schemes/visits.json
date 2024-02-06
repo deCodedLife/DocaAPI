@@ -93,6 +93,13 @@
       "default": "N"
     },
     {
+      "title": "Клиент прозвонен (Y/N)",
+      "article": "is_called",
+      "type": "char(1)",
+      "is_required": false,
+      "default": "N"
+    },
+    {
       "title": "Активность (Y/N)",
       "article": "is_active",
       "type": "char(1)",

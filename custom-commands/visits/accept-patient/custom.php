@@ -18,6 +18,7 @@ $visits = $API->DB->from( "visits" )
             "start_at >= ?" => date("Y-m-d") . " 00:00:00",
             "start_at <= ?" => date("Y-m-d") . " 23:59:59",
             "status" => "process",
+            "is_active" => 'Y'
         ]
     );
 

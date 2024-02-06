@@ -79,7 +79,7 @@ foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
             foreach ( $performersWorkSchedule[ $schedulePerformerKey ][ $scheduleDateKey ] as $performerWorkSchedule ) {
 
                 $workScheduleStepFromKey = getStepKey( $performerWorkSchedule[ "from" ] );
-                $workScheduleStepToKey = getStepKey( $performerWorkSchedule[ "to" ] );
+                $workScheduleStepToKey = getStepKey( $performerWorkSchedule[ "to" ] ) - 1;
 
 
                 foreach ( $stepsList as $stepKey => $step )

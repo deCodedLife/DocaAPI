@@ -116,6 +116,14 @@ if ( $requestData->services_id && $requestData->user_id ) {
         "value" => $visitPrice
     ];
 
+//    $formFieldsUpdate[ "end_at" ] = [
+//        "value" => date(
+//            "Y-m-d H:i:s", strtotime(
+//                "+$visitTakeMinutes minutes", strtotime( $requestData->start_at )
+//            )
+//        )
+//    ];
+
     if ( !$requestData->id ) {
 
         $formFieldsUpdate[ "end_at" ] = [
@@ -127,6 +135,9 @@ if ( $requestData->services_id && $requestData->user_id ) {
         ];
 
     }
+
+
+
 
 
 } // if. $requestData->services_id && $requestData->users_id
@@ -161,7 +172,10 @@ if ( $requestData->clients_id ) {
 
         }
 
-        $clientsInfo[] = "№{$clientDetail[ "id" ]} {$clientDetail[ "last_name" ]} {$clientDetail[ "first_name" ]} {$clientDetail[ "patronymic" ]} $phoneFormat";
+        $clientsInfo[] = [
+            "link" => "clients/card/$clientId",
+            "title" => "№{$clientDetail[ "id" ]} {$clientDetail[ "last_name" ]} {$clientDetail[ "first_name" ]} {$clientDetail[ "patronymic" ]} $phoneFormat"
+        ];
 
     }
 

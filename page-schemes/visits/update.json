@@ -95,7 +95,7 @@
                       "background": "dark",
                       "data": {
                         "script": {
-                          "object": "visitReports",
+                          "object": "clientContracts",
                           "command": "add",
                           "properties": {
                             "client_id": ":clients_id",
@@ -131,15 +131,24 @@
                     }
                   },
                   {
-                    "type": "modal",
+                    "type": "print",
+                    "required_permissions": [],
                     "settings": {
-                      "title": "Поставить задачу",
+                      "title": "Печать ИДС",
                       "background": "dark",
-                      "icon": "",
-                      "page": "tasks/add",
-                      "context": {
-                        "form": "clients",
-                        "row_id": ":clients_id"
+                      "data": {
+                        "script": {
+                          "object": "clientContracts",
+                          "command": "add",
+                          "properties": {
+                            "client_id": ":clients_id",
+                            "user_id": ":user_id"
+                          }
+                        },
+                        "document_article": "ids",
+                        "is_edit": true,
+                        "scheme_name": "visits",
+                        "row_id": ":id"
                       }
                     }
                   },
@@ -150,6 +159,14 @@
                       "title": "Акт вып. работ",
                       "background": "dark",
                       "data": {
+                        "script": {
+                          "object": "clientContracts",
+                          "command": "add",
+                          "properties": {
+                            "client_id": ":clients_id",
+                            "user_id": ":user_id"
+                          }
+                        },
                         "document_article": "act_work_complete",
                         "is_edit": true,
                         "scheme_name": "visits",
@@ -176,9 +193,6 @@
                   },
                   {
                     "type": "submit",
-                    "required_permissions": [
-                      "manager_schedule"
-                    ],
                     "settings": {
                       "title": "Сохранить",
                       "background": "dark",
@@ -208,7 +222,7 @@
                         "title": "",
                         "fields": [
                           "visits_ids",
-                          "doca_services",
+                          "products_display",
                           "pay_method",
                           "action",
                           "sum_cash",
@@ -246,6 +260,30 @@
               },
               "components": {
                 "buttons": [
+                  {
+                    "type": "print",
+                    "required_permissions": [],
+                    "settings": {
+                      "title": "Акт вып. работ",
+                      "background": "dark",
+                      "visible": false,
+                      "afterSubmit": true,
+                      "data": {
+                        "script": {
+                          "object": "clientContracts",
+                          "command": "add",
+                          "properties": {
+                            "client_id": ":clients_id",
+                            "user_id": ":user_id"
+                          }
+                        },
+                        "document_article": "act_work_complete",
+                        "is_edit": true,
+                        "scheme_name": "visits",
+                        "row_id": ":id"
+                      }
+                    }
+                  },
                   {
                     "type": "submit",
                     "settings": {
@@ -342,16 +380,19 @@
                       "title": "Печать договора",
                       "background": "dark",
                       "data": {
-                        "save_to": {
+                        "script": {
                           "object": "clientContracts",
+                          "command": "add",
                           "properties": {
-                            "row_id": ":clients_id"
+                            "client_id": ":clients_id",
+                            "user_id": ":user_id",
+                            "document_id": "17"
                           }
                         },
                         "is_edit": true,
-                        "document_article": "services_contract",
-                        "scheme_name": "clients",
-                        "row_id": ":clients_id"
+                        "document_article": "17",
+                        "scheme_name": "visits",
+                        "row_id": ":id"
                       }
                     }
                   },
@@ -390,6 +431,28 @@
               "size": 4,
               "settings": {
                 "object": "visitReports",
+                "property_title": "title",
+                "property_body": "body",
+                "filters": [
+                  {
+                    "property": "client_id",
+                    "value": ":clients_id"
+                  }
+                ]
+              },
+              "components": []
+            }
+          ]
+        },
+        {
+          "title": "Договора",
+          "body": [
+            {
+              "title": "Мед карта",
+              "type": "accordion",
+              "size": 4,
+              "settings": {
+                "object": "clientContracts",
                 "property_title": "title",
                 "property_body": "body",
                 "filters": [
@@ -581,8 +644,8 @@
                 "object": "logs",
                 "filters": [
                   {
-                    "property": "clients_id",
-                    "value": ":clients_id"
+                    "property": "row_id",
+                    "value": ":id"
                   }
                 ]
               },

@@ -1,5 +1,7 @@
 <?php
 
+//ini_set( "display_errors", true );
+
 /**
  * Вывод шапки документа
  */

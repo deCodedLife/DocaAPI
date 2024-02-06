@@ -29,7 +29,7 @@ $publicAppPath = $API::$configs[ "paths" ][ "public_app" ];
  */
 $requestData->id = $pageDetail[ "row_id" ];
 $requestData->visits_ids = [ $pageDetail[ "row_id" ] ];
-$requestData->store_id = $pageDetail[ "row_detail" ][ "store_id" ];
+$requestData->store_id = $pageDetail[ "row_detail" ][ "store_id" ]->value;
 $requestData->client_id = $client[ "client_id" ];
 
 /**
@@ -45,7 +45,6 @@ require_once( $publicAppPath . '/custom-libs/sales/projects/doca/business_logic.
 $formFieldValues = [
     "sum_cash" => $amountOfPhysicalPayments,
     "action" => "sell",
-    "store_id" => $pageDetail[ "row_detail" ][ "store_id" ],
     "client_id" => $requestData->client_id,
     "online_receipt" => true,
     "summary" => $saleSummary,
@@ -58,7 +57,10 @@ $formFieldValues = [
  */
 $saleDetails = $API->DB->from( "salesList" )
     ->innerJoin( "saleVisits ON saleVisits.sale_id = salesList.id" )
-    ->where( "saleVisits.visit_id", $pageDetail[ "row_id" ] )
+    ->where( [
+        "saleVisits.visit_id" => $pageDetail[ "row_id" ],
+        "salesList.action" => "sell"
+    ] )
     ->limit(1)
     ->fetch();
 
@@ -84,6 +86,7 @@ if ( $visitDetails[ "is_payed" ] == "Y" || ( $saleDetails && $saleDetails[ "stat
     $formFieldValues[ "sum_deposit" ] = (float) $formFieldValues[ "sum_deposit" ];
     $formFieldValues[ "is_combined" ] = $formFieldValues[ "is_combined" ] == "Y";
     $formFieldValues[ "online_receipt" ] = $formFieldValues[ "online_receipt" ] == "Y";
+    unset( $formFieldValues[ "store_id" ] );
 
     foreach ( $API->DB->from( "saleVisits" )
                   ->where( "sale_id", $saleDetails[ "sale_id" ] ) as $saleVisit )
@@ -105,4 +108,4 @@ if ( $visitDetails[ "is_payed" ] == "Y" || ( $saleDetails && $saleDetails[ "stat
 }
 
 $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "visits_ids" ] = [ $pageDetail[ "row_id" ] ];
-$formFieldValues[ "store_id" ] = $visitDetails[ "store_id" ];
+$pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "id" ] = $pageDetail[ "row_id" ];

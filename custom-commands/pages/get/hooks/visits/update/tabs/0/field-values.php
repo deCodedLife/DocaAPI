@@ -30,7 +30,10 @@ foreach ( $clients as $client ) {
 
     }
 
-    $clientsInfo[] = "№{$client[ "id" ]} {$client[ "last_name" ]} {$client[ "first_name" ]} {$client[ "patronymic" ]} $phoneFormat";
+    $clientsInfo[] = [
+        "link" => "clients/card/{$client[ "id" ]}",
+        "title" => "№{$client[ "id" ]} {$client[ "last_name" ]} {$client[ "first_name" ]} {$client[ "patronymic" ]} $phoneFormat"
+    ];
 
 } // foreach. $clients
 

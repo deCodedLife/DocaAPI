@@ -70,11 +70,12 @@ function generateRuleEvents( array $rule, $customWorkdays = [] ): array
         $generatedEvents[] = [
             "id" => $rule[ "id" ] ?? 0,
             "event_from" => $iterator->format( "Y-m-d H:i:s" ),
-            "event_to" => $eventEnd->format( "$date H:i:s"),
-            "cabinet_id" => $rule[ "cabinet_id" ],
+            "event_to" => $eventEnd->format( "$date H:i:s" ),
+            "cabinet_id" => intval( $rule[ "cabinet_id" ] ),
             "store_id" => $rule[ "store_id" ],
-            "is_weekend" => $rule[ "is_weekend" ] ?? 'N',
-            "user_id" => $rule[ "user_id" ]
+            "is_weekend" => ( $rule[ "is_weekend" ] ?? 'N' ),
+            "is_rule" => $rule[ "is_rule" ],
+            "user_id" => intval( $rule[ "user_id" ] )
         ];
 
     } // for days iterator

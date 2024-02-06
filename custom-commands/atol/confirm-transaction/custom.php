@@ -84,6 +84,36 @@ if ( $saleDetails[ "action" ] == "sellReturn" ) {
 } // if ( $saleDetails[ "action" ] == "sellReturn" )
 
 
+/**
+ * Получение детальной информации о клиенте
+ */
+
+$clientDetail = $API->DB->from( "clients" )
+    ->where( "id", $saleDetails[ "client_id" ] )
+    ->limit( 1 )
+    ->fetch();
+
+$clientName = $clientDetail[ "last_name" ] . " " . mb_substr( $clientDetail[ "first_name" ], 0, 1 ) . ". " . mb_substr( $clientDetail[ "patronymic" ], 0, 1 ) . ".";
+
+/**
+ * Получение детальной информации о сотруднике
+ */
+
+$visitID = $API->DB->from( "saleVisits" )
+    ->where( "sale_id", $saleDetails[ "id" ] )
+    ->fetch();
+
+
+$userDetail = $API->DB->from( "users" )
+    ->where( "id", $saleDetails[ "employee_id" ] )
+    ->limit( 1 )
+    ->fetch();
+
+$userName = $userDetail[ "last_name" ] . " " . mb_substr( $userDetail[ "first_name" ], 0, 1 ) . ". " . mb_substr( $userDetail[ "patronymic" ], 0, 1 ) . ".";
+$transactionTime = date( "Y-m-d H:i:s" );
+
+$logDescription = "Посещение {$visitID[ "visit_id" ]} оплачено в $transactionTime сотрудником $userName, клиент №{$clientDetails[ "id" ]} $clientName $clientName";
+
 
 $API->addEvent( "schedule" );
 $API->addEvent( "day_planning" );

@@ -3,6 +3,5 @@
   "type": "get",
   "object_scheme": "users",
   "required_permissions": [],
-  "required_modules": [],
-  "no_limit": true
+  "required_modules": []
 }

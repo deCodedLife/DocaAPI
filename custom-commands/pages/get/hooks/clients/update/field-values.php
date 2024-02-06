@@ -10,7 +10,7 @@ $clientDetail = $API->DB->from( "clients" )
     ->fetch();
 
 if ( $clientDetail[ "is_representative" ] == "Y" ) {
-    
+
     $formFieldValues[ "present_last_name" ][ "is_visible" ] = true;
     $formFieldValues[ "present_first_name" ][ "is_visible" ] = true;
     $formFieldValues[ "present_patronymic" ][ "is_visible" ] = true;

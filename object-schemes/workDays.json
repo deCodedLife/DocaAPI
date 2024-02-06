@@ -18,7 +18,8 @@
         "calendar",
         "addEvent",
         "updateEvent",
-        "hook"
+        "hook",
+        "addCabinet"
       ],
       "require_in_commands": [
         "add"
@@ -187,7 +188,8 @@
         "hook",
         "updateEvent",
         "get",
-        "export"
+        "export",
+        "addCabinet"
       ],
       "require_in_commands": [
         "add",
@@ -215,7 +217,8 @@
         "get",
         "addEvent",
         "hook",
-        "updateEvent"
+        "updateEvent",
+        "addCabinet"
       ],
       "is_hook": true,
       "is_visible": true,
