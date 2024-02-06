@@ -68,15 +68,18 @@ $sqlFilter = [
     "salesList.status" => "done"
 ];
 
-if ( $requestData->start_at ) $sqlFilter[ "salesList.created_at >= ?" ] = $requestData->start_at;
-if ( $requestData->end_at ) $sqlFilter[ "salesList.created_at <= ?" ] = $requestData->end_at;
+$start_at = date( "Y-m-d", strtotime( $requestData->start_at ) ) . " 00:00:00";
+$end_at = date( "Y-m-d", strtotime( $requestData->end_at ) ) . " 23:59:59";
+
+if ( $requestData->start_at ) $sqlFilter[ "salesList.created_at >= ?" ] = $start_at;
+if ( $requestData->end_at ) $sqlFilter[ "salesList.created_at <= ?" ] = $end_at;
 
 if ( $requestData->category ) $sqlFilter[ "salesProductsList.product_id" ] = getServicesIds( $requestData->category );
 if ( $requestData->service )  $sqlFilter[ "salesProductsList.product_id" ] = $requestData->service;
 
 $allServices = array_merge(
-    getPaymentServices( "visits", $sqlFilter, $requestData->start_at, $requestData->end_at, $requestData->user_id ),
-    getPaymentServices( "equipmentVisits", $sqlFilter, $requestData->start_at, $requestData->end_at, $requestData->user_id ),
+    getPaymentServices( "visits", $sqlFilter, $start_at, $end_at, $requestData->user_id ),
+    getPaymentServices( "equipmentVisits", $sqlFilter, $start_at, $end_at, $requestData->user_id ),
 );
 
 //$API->returnResponse( $allServices );

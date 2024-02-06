@@ -137,7 +137,11 @@
         "donor_table": "services",
         "property_article": "title",
         "insert_property": "visit_id",
-        "filter_property": "service_id"
+        "filter_property": "service_id",
+        "select": [
+          "title",
+          "price"
+        ]
       },
       "min_value": 0,
       "is_disabled": false

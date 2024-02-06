@@ -36,10 +36,13 @@ function getVisitsIds( $table, $start_at, $end_at, $user_id ): array {
 
 }
 
+$start_at = date( "Y-m-d", strtotime( $requestData->start_at ) ) . " 00:00:00";
+$end_at = date( "Y-m-d", strtotime( $requestData->end_at ) ) . " 23:59:59";
+
 $requestData->id = getVisitsIds(
     "equipmentVisits",
-    $requestData->start_at,
-    $requestData->end_at,
+    $start_at,
+    $end_at,
     $requestData->user_id
 );
 

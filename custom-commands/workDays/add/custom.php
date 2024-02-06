@@ -1,5 +1,5 @@
 <?php
-ini_set( "display_errors", true );
+//ini_set( "display_errors", true );
 
 /**
  * Вызываем метод создания ячеек и их валидации

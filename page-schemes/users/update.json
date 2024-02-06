@@ -49,7 +49,7 @@
                 "event_page": "workDays/addEvent",
                 "events": {
                   "add": "workDays/addEvent",
-                  "update": "workDays/updateEvent"
+                  "update": "workDays/updateActions"
                 },
                 "context_keys": [
                   "store_id",
