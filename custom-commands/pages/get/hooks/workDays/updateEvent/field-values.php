@@ -1,9 +1,10 @@
 <?php
 
 $formFieldValues[ "cabinet_id" ] = [ "is_visible" => true ];
+$pageScheme[ "structure" ][ 0 ][ "settings" ][ "data" ][ "id" ] = $requestData->context->rule_id;
 
 $ruleDetails = $API->DB->from( "workDays" )
-    ->where( "id", $pageDetail[ "row_id" ] )
+    ->where( "id", $requestData->context->rule_id )
     ->fetch();
 
 if ( $ruleDetails[ "is_weekend" ] === 'Y' ) {
@@ -16,7 +17,7 @@ if ( $ruleDetails[ "is_weekend" ] === 'Y' ) {
 if ( $ruleDetails[ "is_rule" ] === 'Y' ) {
 
     $workdaysDetails = $API->DB->from( "workDaysWeekdays" )
-        ->where( "rule_id", $pageDetail[ "row_id" ] );
+        ->where( "rule_id", $requestData->context->rule_id );
 
     foreach ( $workdaysDetails as $detail )
         $workdays[] = $detail[ "workday" ];
