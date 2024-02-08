@@ -87,6 +87,7 @@
         "insert_property": "visit_id",
         "filter_property": "client_id",
         "select": [
+          "id",
           "last_name",
           "first_name",
           "patronymic",
