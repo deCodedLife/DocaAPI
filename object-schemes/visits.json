@@ -85,7 +85,13 @@
         "donor_table": "clients",
         "property_article": "last_name",
         "insert_property": "visit_id",
-        "filter_property": "client_id"
+        "filter_property": "client_id",
+        "select": [
+          "last_name",
+          "first_name",
+          "patronymic",
+          "phone"
+        ]
       },
       "annotation": "",
       "is_hook": true

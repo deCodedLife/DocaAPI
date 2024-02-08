@@ -142,7 +142,8 @@ $getVisitsQuery = "SELECT * FROM $objectTable WHERE
     ( end_at > '$start_at' and end_at < '$end_at' ) OR
     ( start_at < '$start_at' and end_at > '$end_at' ) AND
     user_id NOT IN ( 260, 135 ) AND
-    is_active = 'Y'
+    is_active = 'Y' AND
+    store_id = $store_id
 )";
 
 /**

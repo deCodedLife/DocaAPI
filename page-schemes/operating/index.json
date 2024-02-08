@@ -9,7 +9,6 @@
       "required_permissions": [],
       "required_modules": [],
       "settings": {
-        "link": false,
         "sort_by": "period",
         "sort_order": "desc",
         "is_edit": false,
@@ -20,6 +19,9 @@
             "value": "operating"
           }
         ]
+      },
+      "headers": {
+        "clients_id": "link_list"
       },
       "components": {
         "filters": [
