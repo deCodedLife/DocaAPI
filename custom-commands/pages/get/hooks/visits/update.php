@@ -58,7 +58,7 @@ function shouldHideButton(): bool {
  */
 
 if ( shouldHideButton() )
-    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 0 ] );
+    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 1 ] );
 
 
 /**

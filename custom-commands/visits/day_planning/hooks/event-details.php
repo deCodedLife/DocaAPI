@@ -93,6 +93,8 @@ switch ( $event[ "status" ] ) {
 
 } // switch. $event[ "status" ]
 
+//$eventDetails[ "description" ] = $eventDetails[ "description" ] . "\n" . $event[ "comment" ];
+$eventDetails[ "description" ] = $event[ "comment" ];
 
 /**
  * Добавление кнопок
@@ -121,7 +123,8 @@ if ( $event[ "status" ] ) $eventDetails[ "buttons" ][] = [
                 "command" => "add",
                 "properties" => [
                     "client_id" => $visitDetails[ "client_id" ],
-                    "user_id" => $visitDetails[ "user_id" ]
+                    "user_id" => $visitDetails[ "user_id" ],
+                    "visit_id" => $visitDetails[ "id" ],
                 ]
             ],
             "save_to" => [

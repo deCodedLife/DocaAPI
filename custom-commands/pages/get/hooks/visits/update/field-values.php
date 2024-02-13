@@ -88,6 +88,9 @@ if ( $visitDetails[ "is_payed" ] == "Y" || ( $saleDetails && $saleDetails[ "stat
     $formFieldValues[ "online_receipt" ] = $formFieldValues[ "online_receipt" ] == "Y";
     unset( $formFieldValues[ "store_id" ] );
 
+    if ( $formFieldValues[ "sum_cash" ] != 0 ) $formFieldsUpdate[ "sum_cash" ][ "is_visible" ] = true;
+    if ( $formFieldValues[ "sum_card" ] != 0 ) $formFieldsUpdate[ "sum_card" ][ "is_visible" ] = true;
+
     foreach ( $API->DB->from( "saleVisits" )
                   ->where( "sale_id", $saleDetails[ "sale_id" ] ) as $saleVisit )
         $formFieldValues[ "visits_ids" ][ "value" ][] = $saleVisit[ "visit_id" ];
@@ -107,5 +110,6 @@ if ( $visitDetails[ "is_payed" ] == "Y" || ( $saleDetails && $saleDetails[ "stat
 
 }
 
+$pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "employee_id" ] = intval( $API::$userDetail->id );
 $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "visits_ids" ] = [ $pageDetail[ "row_id" ] ];
 $pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "id" ] = $pageDetail[ "row_id" ];

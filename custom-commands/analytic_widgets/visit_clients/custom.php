@@ -27,6 +27,9 @@ $reportStatistic = [
 
 ];
 
+$requestData->limit = 1000000;
+$requestData->page = 1;
+
 /**
  * Получение списка посещений
  */
@@ -51,8 +54,7 @@ foreach ( $visitsClients as $visitsClient ) {
         $servicesUserPercents = $API->DB->from( "services_user_percents" )
             ->where( [
                 "service_id" => $visitService->value,
-                "row_id" => $visitsClient->user_id,
-                "created_at <=?" => $visitsClient->start_at
+                "row_id" => $visitsClient->user_id
             ] )
             ->limit( 1 )
             ->fetch();
@@ -61,7 +63,7 @@ foreach ( $visitsClients as $visitsClient ) {
          * Обход услуг сотрудника с процентом от продаж
          */
         if ( $servicesUserPercents &&  $servicesUserPercents[ "percent" ] != 0 ) {
-
+            
             /**
              * Получение продажи посещения
              */

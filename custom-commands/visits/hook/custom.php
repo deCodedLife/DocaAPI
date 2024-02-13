@@ -17,7 +17,18 @@ foreach ( $requestData->services_id as $service ) {
         ->where( "id", $service )
         ->fetch();
 
-    if ( $serviceDetail[ "preparation" ] ) $formFieldsUpdate[ "modal_info" ][] = $serviceDetail[ "preparation" ];
+//    $servicesCount = count( array_filter( $requestData->services_id, function ( $item ) use ($service) {
+//        return $item == $service;
+//    } ) );
+    $modalExists = false;
+
+    foreach ( $formFieldsUpdate[ "modal_info" ] as $info ) {
+
+        if ( $info == $serviceDetail[ "preparation" ] ) $modalExists = true;
+
+    }
+
+    if ( !$modalExists && $serviceDetail[ "preparation" ] ) $formFieldsUpdate[ "modal_info" ][] = $serviceDetail[ "preparation" ];
 
 }
 

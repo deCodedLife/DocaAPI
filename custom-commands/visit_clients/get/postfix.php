@@ -41,7 +41,7 @@ foreach ( $response[ "data" ] as $visit ) {
             ->limit( 1 )
             ->fetch();
 
-        $services[$visit[ "id" ]] = [
+        $services[] = [
 
             "title" => $service[ "title" ],
             "value" => (int)$service[ "id" ]
@@ -75,9 +75,10 @@ foreach ( $response[ "data" ] as $visit ) {
     $returnVisits[] = [
 
         "id" => $visit[ "id" ],
+        "user_id" => $visit[ "user_id" ],
         "client_id" => $clients[ 0 ][ "id" ],
         "fio" => $clients[ 0 ][ "fio" ],
-        "services_id" => $services[$visit[ "id" ]],
+        "services_id" => array_values($services),
         "price" => $visit[ "price" ],
         "period" => date( 'Y-m-d H:i', strtotime( $visit[ "start_at" ] ) ) . " - " . date( "H:i", strtotime( $visit[ "end_at" ] ) )
 

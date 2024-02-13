@@ -11,6 +11,11 @@ $formFieldValues[ "pay_method" ] = [
     "is_disabled" => true,
     "value" => $formFieldValues[ "pay_method" ]
 ];
+$formFieldValues[ "employee_id" ] = [
+    "is_visible" =>  false,
+    "value" => $API::$userDetail->id
+];
+
 $formFieldValues[ "summary" ] = (float) $formFieldValues[ "summary" ];
 $formFieldValues[ "sum_cash" ] = [
     "is_visible" =>  (float) $formFieldValues[ "sum_cash" ] != 0,

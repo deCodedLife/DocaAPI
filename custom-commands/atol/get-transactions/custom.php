@@ -37,24 +37,24 @@ if ( $requestData->sale_id ) {
 
 if ( !$processedSale ) $API->returnResponse( [] );
 
-if ( $processedSale[ "online_receipt" ] === "Y" ) {
-
-    $clientDetails = $API->DB->from( "clients" )
-        ->where( "id", $processedSale[ "client_id" ] )
-        ->fetch();
-
-    if ( $clientDetails[ "email" ] ) {
-
-        $AtolReciept->clientInfo = [
-            "name" => $clientDetails[ "last_name" ] . " " . $clientDetails[ "first_name" ] . " " . $clientDetails[ "patronymic" ],
-            "emailOrPhone" => $clientDetails[ "email" ],
-        ];
-
-        $AtolReciept->electronically = true;
-
-    }
-
-}
+//if ( $processedSale[ "online_receipt" ] === "Y" ) {
+//
+//    $clientDetails = $API->DB->from( "clients" )
+//        ->where( "id", $processedSale[ "client_id" ] )
+//        ->fetch();
+//
+//    if ( $clientDetails[ "email" ] ) {
+//
+//        $AtolReciept->clientInfo = [
+//            "name" => $clientDetails[ "last_name" ] . " " . $clientDetails[ "first_name" ] . " " . $clientDetails[ "patronymic" ],
+//            "emailOrPhone" => $clientDetails[ "email" ],
+//        ];
+//
+//        $AtolReciept->electronically = true;
+//
+//    }
+//
+//}
 
 $paymentSales = [];
 $paymentSales[] = $processedSale;
@@ -87,6 +87,8 @@ foreach ( $API->DB->from( "salesProductsList" )->where( "sale_id", $processedSal
     $services[] = $details;
 
 }
+
+if ( !$services ) $API->returnResponse( "Продажа {$processedSale[ "id" ]} не имеет услуг" );
 
 
 $summary = $processedSale[ "summary" ] - $processedSale[ "sum_bonus" ];

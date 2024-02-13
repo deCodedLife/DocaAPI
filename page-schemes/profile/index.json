@@ -1,13 +1,16 @@
 {
   "required_modules": [],
-  "required_permissions": [],
+  "required_permissions": [
+    "users_get",
+    "users_update"
+  ],
   "structure": [
     {
       "title": "Шапка",
       "type": "header",
       "size": 4,
       "settings": {
-        "description": "Сотрудник - Просмотр",
+        "description": "Сотрудники - Просмотр",
         "title": [
           "Ваш профиль"
         ]
@@ -17,82 +20,210 @@
       }
     },
     {
-      "title": "Форма",
-      "type": "info",
+      "title": "Табы",
+      "type": "tabs",
       "size": 4,
-      "settings": {
-        "object": "users",
-        "areas": [
-          {
-            "size": 2,
-            "blocks": [
-              {
-                "title": "Основное",
-                "fields": [
-                  "last_name",
-                  "first_name",
-                  "patronymic",
-                  "birthday",
-                  "gender",
-                  "salary"
+      "settings": [
+        {
+          "title": "Основная информация",
+          "body": [
+            {
+              "title": "Форма",
+              "type": "form",
+              "size": 4,
+              "settings": {
+                "object": "users",
+                "command": "update",
+                "areas": [
+                  {
+                    "size": 2,
+                    "blocks": [
+                      {
+                        "title": "Основное",
+                        "fields": [
+                          "avatar",
+                          "last_name",
+                          "first_name",
+                          "patronymic",
+                          "birthday",
+                          "gender",
+                          "domru_login"
+                        ]
+                      },
+                      {
+                        "title": "Доступы",
+                        "fields": [
+                          "role_id",
+                          "professions_id",
+                          "email",
+                          "password"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "size": 2,
+                    "blocks": [
+                      {
+                        "title": "Документы",
+                        "fields": [
+                          "passport_series",
+                          "passport_number",
+                          "passport_issued",
+                          "snils",
+                          "inn"
+                        ]
+                      },
+                      {
+                        "title": "Контакты",
+                        "fields": [
+                          "phone",
+                          "second_phone",
+                          "address"
+                        ]
+                      },
+                      {
+                        "title": "",
+                        "fields": [
+                          "stores_id",
+                          "is_visible_in_schedule"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "size": 4,
+                    "blocks": [
+                      {
+                        "title": "",
+                        "fields": [
+                          "comment"
+                        ]
+                      }
+                    ]
+                  }
                 ]
               },
-              {
-                "title": "Доступы",
-                "fields": [
-                  "role_id",
-                  "professions_id",
-                  "email",
-                  "password"
-                ]
+              "components": {
+                "buttons": []
               }
-            ]
-          },
-          {
-            "size": 2,
-            "blocks": [
-              {
-                "title": "Документы",
-                "fields": [
-                  "passport_series",
-                  "passport_number",
-                  "passport_issued",
-                  "snils",
-                  "inn"
+            }
+          ]
+        },
+        {
+          "title": "Детальная информация по зарплате",
+          "required_permissions": [],
+          "body": [
+            {
+              "title": "Виджет информации о зарплате",
+              "type": "analytic_widgets",
+              "size": 4,
+              "settings": {
+                "widgets_group": "salary_info",
+                "filters": [
+                  {
+                    "property": "user_id",
+                    "value": ":id"
+                  }
                 ]
               },
-              {
-                "title": "Контакты",
-                "fields": [
-                  "phone",
-                  "second_phone",
-                  "address"
+              "components": {
+                "filters": [
+                  {
+                    "title": "Дата (от)",
+                    "type": "date",
+                    "required_permissions": [],
+                    "required_modules": [],
+                    "settings": {
+                      "size": 2,
+                      "is_search": false,
+                      "recipient_property": "start_at"
+                    }
+                  },
+                  {
+                    "title": "Дата (до)",
+                    "type": "date",
+                    "required_permissions": [],
+                    "required_modules": [],
+                    "settings": {
+                      "size": 2,
+                      "is_search": false,
+                      "recipient_property": "end_at"
+                    }
+                  },
+                  {
+                    "title": "Группа услуг",
+                    "type": "list",
+                    "required_permissions": [],
+                    "required_modules": [],
+                    "settings": {
+                      "is_search": false,
+                      "recipient_property": "category",
+                      "donor_object": "serviceGroups",
+                      "donor_property_title": "title",
+                      "donor_property_value": "id"
+                    }
+                  },
+                  {
+                    "title": "Услуга",
+                    "type": "list",
+                    "required_permissions": [],
+                    "required_modules": [],
+                    "settings": {
+                      "is_search": false,
+                      "recipient_property": "service",
+                      "donor_object": "services",
+                      "donor_property_title": "title",
+                      "donor_property_value": "id"
+                    }
+                  }
                 ]
+              }
+            },
+            {
+              "title": "KPI",
+              "type": "list",
+              "size": 4,
+              "settings": {
+                "is_infinite": true,
+                "link": false,
+                "is_edit": false,
+                "object": "kpi",
+                "linked_filter": "analytic_widgets_salary_info",
+                "filters": []
               },
-              {
-                "title": "",
-                "fields": [
-                  "store_id",
-                  "is_visible_in_schedule"
-                ]
-              }
-            ]
-          },
-          {
-            "size": 4,
-            "blocks": [
-              {
-                "title": "",
-                "fields": [
-                  "comment"
-                ]
-              }
-            ]
-          }
-        ],
-        "command": "get"
-      },
-      "components": []
+              "components": []
+            },
+            {
+              "title": "Список оборудования",
+              "type": "list",
+              "size": 4,
+              "settings": {
+                "object": "visitsEquipmentSalary",
+                "is_edit": false,
+                "link": false,
+                "linked_filter": "analytic_widgets_salary_info",
+                "filters": []
+              },
+              "components": []
+            },
+            {
+              "title": "Список транзакций",
+              "type": "list",
+              "size": 4,
+              "settings": {
+                "is_infinite": true,
+                "object": "visitsSalary",
+                "is_edit": false,
+                "link": false,
+                "linked_filter": "analytic_widgets_salary_info",
+                "filters": []
+              },
+              "components": []
+            }
+          ]
+        }
+      ]
     }
   ]
 }

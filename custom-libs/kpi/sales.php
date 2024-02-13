@@ -3,8 +3,6 @@
 global $API, $requestData;
 require_once( __DIR__ . "/user_sales.php" );
 
-$API->returnResponse( "Ne ne ojii-san" );
-
 
 /**
  *  Определение переменных

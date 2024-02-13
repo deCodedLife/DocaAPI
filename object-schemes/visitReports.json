@@ -23,6 +23,21 @@
       "require_in_commands": []
     },
     {
+      "title": "Посещение",
+      "article": "visit_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "add",
+        "update",
+        "get"
+      ],
+      "require_in_commands": []
+    },
+    {
       "title": "Сотрудник",
       "article": "user_id",
       "data_type": "integer",

@@ -28,6 +28,7 @@
               "type": "form",
               "size": 4,
               "settings": {
+                "close_after_submit": false,
                 "object": "visits",
                 "command": "update",
                 "areas": [
@@ -278,7 +279,7 @@
                           }
                         },
                         "document_article": "act_work_complete",
-                        "is_edit": true,
+                        "is_edit": false,
                         "scheme_name": "visits",
                         "row_id": ":id"
                       }

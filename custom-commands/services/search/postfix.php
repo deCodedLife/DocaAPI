@@ -1,5 +1,5 @@
 <?php
-
+global $API;
 
 foreach ( $response[ "data" ] as $row ) $services_ids[] = intval( $row[ "value" ] );
 
@@ -15,13 +15,13 @@ foreach ( $servicesRows as $row ) $servicesDetails[ intval( $row[ "id" ] ) ] = $
 foreach ( $customPriceRows as $row ) $servicesDetails[ intval( $row[ "row_id" ] ) ][ "price" ] = $row[ "price" ];
 foreach ( $response[ "data" ] as $key => $row ) {
 
-
     /**
      * Формирование title записи
      */
-    if ( isset( $servicesDetails[ intval( $row[ "value" ] ) ] ) ) {
+    if ( isset( $servicesDetails[ intval( $row[ "id" ] ?? $row[ "value" ] ) ] ) ) {
 
-        $row[ "title" ] = "{$row[ "title" ]} ({$servicesDetails[ intval( $row[ "value" ] ) ][ "price" ]}₽)";
+        $row[ "price" ] = $servicesDetails[ intval( $row[ "id" ] ?? $row[ "value" ] ) ][ "price" ];
+//        $row[ "title" ] = "{$row[ "title" ]} ({$servicesDetails[ intval( $row[ "id" ] ?? $row[ "value" ] ) ][ "price" ]}₽)";
         $response[ "data" ][ $key ] = $row;
 
     }
