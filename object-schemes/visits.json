@@ -90,6 +90,12 @@
           "id",
           "last_name",
           "first_name",
+          "patronymic"
+        ],
+        "select_menu": [
+          "id",
+          "last_name",
+          "first_name",
           "patronymic",
           "phone"
         ]
@@ -146,6 +152,11 @@
         "insert_property": "visit_id",
         "filter_property": "service_id",
         "select": [
+          "article",
+          "title",
+          "price"
+        ],
+        "select_menu": [
           "article",
           "title",
           "price"

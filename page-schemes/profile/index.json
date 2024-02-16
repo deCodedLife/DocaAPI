@@ -32,6 +32,7 @@
               "type": "form",
               "size": 4,
               "settings": {
+		"is_disabled": true,
                 "object": "users",
                 "command": "update",
                 "areas": [

@@ -21,7 +21,8 @@ foreach ( $response[ "data" ] as $key => $row ) {
     if ( isset( $servicesDetails[ intval( $row[ "id" ] ?? $row[ "value" ] ) ] ) ) {
 
         $row[ "price" ] = $servicesDetails[ intval( $row[ "id" ] ?? $row[ "value" ] ) ][ "price" ];
-//        $row[ "title" ] = "{$row[ "title" ]} ({$servicesDetails[ intval( $row[ "id" ] ?? $row[ "value" ] ) ][ "price" ]}₽)";
+        $row[ "menu_title " ] = "{$row[ "title" ]} ({$servicesDetails[ intval( $row[ "id" ] ?? $row[ "value" ] ) ][ "price" ]}₽)";
+        $row[ "title " ] = "{$row[ "title" ]} ({$servicesDetails[ intval( $row[ "id" ] ?? $row[ "value" ] ) ][ "price" ]}₽)";
         $response[ "data" ][ $key ] = $row;
 
     }

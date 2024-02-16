@@ -29,6 +29,9 @@
               "size": 4,
               "settings": {
                 "close_after_submit": false,
+                "data": {
+                  "id": ":id"
+                },
                 "object": "clients",
                 "command": "update",
                 "areas": [

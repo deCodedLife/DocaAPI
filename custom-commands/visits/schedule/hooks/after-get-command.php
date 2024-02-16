@@ -3,7 +3,6 @@
  * Фильтр Записей по Клиентам
  */
 
-
 if ( $requestData->clients_id ) {
 
     /**
@@ -31,8 +30,13 @@ if ( $requestData->clients_id ) {
 
         foreach ( $event[ "client_id" ] as $eventClient )
 
+            $eventClient[ "value" ] = [ $eventClient[ "value" ] ];
 
-            if ( $eventClient[ "value" ] == $requestData->clients_id ) $isContinue = false;
+        if ( $eventClient[ "value" ] == $requestData->clients_id ) {
+
+            $isContinue = false;
+
+        }
 
         if ( !$isContinue ) $filteredEvents[] = $event;
 

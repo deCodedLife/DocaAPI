@@ -11,6 +11,14 @@ $API->DB->update( "salesList" )
     ->where( "id", $requestData->sale_id )
     ->execute();
 
+/**
+ * Списание бонусов и депозита
+ */
+
+$saleDetails = $API->DB->from( "salesList" )
+    ->where( "id", $requestData->sale_id )
+    ->fetch();
+
 
 /**
  * Изменение статуса посещений
@@ -21,19 +29,10 @@ $sale_visits = $API->DB->from( "saleVisits" )
 
 $API->DB->update( "visits" )
     ->innerJoin( "saleVisits ON saleVisits.visit_id = visits.id" )
-    ->set( "visits.is_payed", 'Y' )
+    ->set( "visits.is_payed", $saleDetails[ "action" ] == "sellReturn" ? 'N' : 'Y' )
     ->where( "saleVisits.sale_id", $requestData->sale_id )
     ->execute();
 
-
-
-/**
- * Списание бонусов и депозита
- */
-
-$saleDetails = $API->DB->from( "salesList" )
-    ->where( "id", $requestData->sale_id )
-    ->fetch();
 
 $clientDetails = $API->DB->from( "clients" )
     ->where( "id", $saleDetails[ "client_id" ] )

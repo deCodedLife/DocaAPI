@@ -11,11 +11,6 @@ $formFieldValues[ "pay_method" ] = [
     "is_disabled" => true,
     "value" => $formFieldValues[ "pay_method" ]
 ];
-$formFieldValues[ "employee_id" ] = [
-    "is_visible" =>  false,
-    "value" => $API::$userDetail->id
-];
-
 $formFieldValues[ "summary" ] = (float) $formFieldValues[ "summary" ];
 $formFieldValues[ "sum_cash" ] = [
     "is_visible" =>  (float) $formFieldValues[ "sum_cash" ] != 0,
@@ -101,3 +96,5 @@ if ( $formFieldValues[ "pay_method" ] == "legalEntity" ) {
     $formFieldValues[ "sum_cash" ][ "is_visible" ] = false;
 
 }
+
+$pageScheme[ "structure" ][ 1 ][ "settings" ][ "data" ][ "employee_id" ] = $API::$userDetail->id;
