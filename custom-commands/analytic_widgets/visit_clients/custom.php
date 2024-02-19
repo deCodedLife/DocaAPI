@@ -33,7 +33,6 @@ $reportStatistic = [
 
 //$requestData->limit = 0;
 //$start = microtime( true );
-//$visitsClients = $API->sendRequest( "visit_clients", "get", $requestData );
 //$end = microtime( true );
 //$API->returnResponse( $visitsClients );
 //ini_set( "display_errors", 1 );
@@ -90,14 +89,57 @@ $reportStatistic = [
 //
 //} // foreach .$userServices
 
+//$visitsClients = $API->sendRequest( "visit_clients", "get", $requestData );
 
 
+if ( $requestData->user_id ) $filters[ "visits.user_id" ] = $requestData->user_id;
+if ( $requestData->start_price ) $filters[ "visits.price >= ?" ] = $requestData->start_price;
+if ( $requestData->end_price ) $filters[ "visits.price <= ?" ] = $requestData->end_price;
+if ( $requestData->start_at ) $filters[ "visits.start_at >= ?" ] = $requestData->start_at;
+if ( $requestData->end_at ) $filters[ "visits.end_at <= ?" ] = $requestData->end_at;
+$filters[ "visits.status" ] = "ended";
+$filters[ "visits.is_payed" ] = "Y";
+
+$servicesUserPercents = $API->DB->from( "services_user_percents")
+    ->where( "row_id", $requestData->user_id );
+
+$services = [];
+
+foreach ( $servicesUserPercents as $servicesUserPercent)
+    $services[] = $servicesUserPercent[ "service_id" ];
+
+$visitsList = $API->DB->from( "visits" )
+    ->select( null )->select(
+        [
+            "salesProductsList.product_id",
+            "salesProductsList.cost",
+            "saleVisits.visit_id",
+            "saleVisits.sale_id",
+            "visits.user_id",
+        ]
+    )
+    ->innerJoin( "saleVisits on saleVisits.visit_id = visits.id" )
+    ->innerJoin( "salesProductsList on salesProductsList.sale_id = saleVisits.sale_id" )
+    ->where( $filters );
+
+$visits = [];
+
+foreach ( $visitsList as $visit ) {
+
+    if ( in_array( $visit[ "product_id" ], $services )  ) {
+
+        $reportStatistic[ "services_user_percents" ] += $visit[ "cost" ];
+
+    }
+    $visits[] = $visit[ "visit_id" ];
+    $reportStatistic[ "visits_sum" ] += $visit[ "cost" ];
+}
 
 $API->returnResponse(
 
     [
         [
-            "value" => number_format( intval( $reportStatistic["visits_sum"] ), 0, '.', ' ' ),
+            "value" => number_format( intval( $reportStatistic[ "visits_sum" ] ), 0, '.', ' ' ),
             "description" => "Сумма продаж",
             "size" => "1",
             "icon" => "",
@@ -127,7 +169,7 @@ $API->returnResponse(
             "detail" => []
         ],
         [
-            "value" => $reportStatistic[ "clients_count" ],
+            "value" => count(array_unique($visits)),
             "description" => "Количество клиентов",
             "icon" => "",
             "size" => "1",
