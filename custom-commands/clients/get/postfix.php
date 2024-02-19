@@ -4,13 +4,9 @@
  * Подстановка ФИО
  */
 
-$returnRows = [];
-
-foreach ( $response[ "data" ] as $row ) {
+foreach ( $response[ "data" ] as $key => $row ) {
 
     $row[ "fio" ] = $row[ "last_name" ] . " " . $row[ "first_name" ] . " " . $row[ "patronymic" ];
-    $returnRows[] = $row;
+    $response[ "data" ][ $key ] = $row;
 
 } // foreach. $response[ "data" ]
-
-$response[ "data" ] = $returnRows;

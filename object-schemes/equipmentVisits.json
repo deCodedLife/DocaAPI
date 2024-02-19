@@ -123,7 +123,13 @@
       ],
       "list_donor": {
         "table": "users",
-        "properties_title": "last_name"
+        "properties_title": "last_name",
+        "select": [
+          "id",
+          "last_name",
+          "first_name",
+          "patronymic"
+        ]
       },
       "is_disabled": false
     },
@@ -153,7 +159,17 @@
       ],
       "list_donor": {
         "table": "services",
-        "properties_title": "title"
+        "properties_title": "title",
+        "select": [
+          "article",
+          "title",
+          "price"
+        ],
+        "select_menu": [
+          "article",
+          "title",
+          "price"
+        ]
       },
       "min_value": 0,
       "is_disabled": false
@@ -177,7 +193,13 @@
       "require_in_commands": [],
       "list_donor": {
         "table": "users",
-        "properties_title": "last_name"
+        "properties_title": "last_name",
+        "select": [
+          "id",
+          "last_name",
+          "first_name",
+          "patronymic"
+        ]
       },
       "is_visible": true
     },
@@ -313,7 +335,20 @@
       "is_disabled": false,
       "list_donor": {
         "table": "clients",
-        "properties_title": "last_name"
+        "properties_title": "last_name",
+        "select": [
+          "id",
+          "last_name",
+          "first_name",
+          "patronymic"
+        ],
+        "select_menu": [
+          "id",
+          "last_name",
+          "first_name",
+          "patronymic",
+          "phone"
+        ]
       },
       "annotation": "",
       "is_hook": true

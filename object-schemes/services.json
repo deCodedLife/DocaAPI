@@ -154,7 +154,13 @@
         "donor_table": "users",
         "property_article": "last_name",
         "insert_property": "service_id",
-        "filter_property": "user_id"
+        "filter_property": "user_id",
+        "select": [
+          "id",
+          "last_name",
+          "first_name",
+          "patronymic"
+        ]
       },
       "is_disabled": false,
       "min_value": 0,
@@ -202,7 +208,13 @@
         "donor_table": "users",
         "filter_property": "user_id",
         "insert_property": "service_id",
-        "property_article": "last_name"
+        "property_article": "last_name",
+        "select": [
+          "id",
+          "last_name",
+          "first_name",
+          "patronymic"
+        ]
       }
     },
     {
@@ -246,7 +258,13 @@
             "data_type": "integer",
             "list_donor": {
               "table": "users",
-              "properties_title": "last_name"
+              "properties_title": "last_name",
+              "select": [
+                "id",
+                "last_name",
+                "first_name",
+                "patronymic"
+              ]
             }
           },
           {

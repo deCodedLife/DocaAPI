@@ -186,7 +186,13 @@
       ],
       "list_donor": {
         "table": "users",
-        "properties_title": "last_name"
+        "properties_title": "last_name",
+        "select": [
+          "id",
+          "last_name",
+          "first_name",
+          "patronymic"
+        ]
       },
       "is_disabled": false
     },
@@ -230,7 +236,13 @@
       "require_in_commands": [],
       "list_donor": {
         "table": "users",
-        "properties_title": "last_name"
+        "properties_title": "last_name",
+        "select": [
+          "id",
+          "last_name",
+          "first_name",
+          "patronymic"
+        ]
       },
       "is_visible": false
     },

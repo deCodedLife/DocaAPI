@@ -56,7 +56,11 @@
               "is_search": true,
               "recipient_property": "clients_id",
               "donor_object": "clients",
-              "donor_property_title": "last_name",
+              "donor_property_title": [
+                "last_name",
+                "first_name",
+                "patronymic"
+              ],
               "donor_property_value": "id"
             }
           },
