@@ -46,9 +46,7 @@
             "settings": {
               "title": "Добавить",
               "background": "dark",
-              "page": [
-                "products/add"
-              ]
+              "page": "products/add"
             }
           }
         ]

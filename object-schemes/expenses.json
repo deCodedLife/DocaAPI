@@ -95,7 +95,13 @@
       "list_donor": {
         "table": "users",
         "properties_title": "last_name",
-        "filters": []
+        "filters": [],
+        "select": [
+          "id",
+          "last_name",
+          "first_name",
+          "patronymic"
+        ]
       },
       "require_in_commands": [
         "add"

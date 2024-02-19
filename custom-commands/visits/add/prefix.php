@@ -50,21 +50,13 @@ require_once ( $publicAppPath . "/custom-libs/visits/validate.php" );
 foreach ( $requestData->clients_id as $clientId ) {
 
     /**
-     * Время действия статуса "Повторное" у Записей
-     */
-    $repeatStatusFrom = date(
-        "Y-m-d", strtotime( "-30 days", strtotime( date( "Y-m-d" ) ) )
-    );
-
-    /**
      * Получение посещений Клиента
      */
     
     $clientVisits = $API->DB->from( "visits" )
-        ->leftJoin( "visits_clients ON visits_clients.visit_id = visits.id" )
+        ->innerJoin( "visits_clients ON visits_clients.visit_id = visits.id" )
         ->where( [
             "visits_clients.client_id" => intval( $clientId ),
-            "visits.start_at > ?" => "$repeatStatusFrom 00:00:00",
             "visits.status" => "ended",
             "visits.is_active" => "Y"
         ] );

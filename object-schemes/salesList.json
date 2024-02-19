@@ -137,7 +137,14 @@
       "is_disabled": false,
       "list_donor": {
         "table": "clients",
-        "properties_title": "last_name"
+        "properties_title": "last_name",
+        "select": [
+          "id",
+          "last_name",
+          "first_name",
+          "patronymic",
+          "phone"
+        ]
       },
       "annotation": "",
       "is_hook": true,
@@ -153,7 +160,13 @@
       "is_autofill": true,
       "list_donor": {
         "table": "users",
-        "properties_title": "last_name"
+        "properties_title": "last_name",
+        "select": [
+          "id",
+          "last_name",
+          "first_name",
+          "patronymic"
+        ]
       },
       "use_in_commands": [
         "add",

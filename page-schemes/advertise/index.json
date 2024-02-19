@@ -28,9 +28,7 @@
             "settings": {
               "title": "Добавить рекламный канал",
               "background": "dark",
-              "page": [
-                "advertise/add"
-              ]
+              "page": "advertise/add"
             }
           }
         ]
