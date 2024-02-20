@@ -128,7 +128,7 @@ if ( $pageDetail[ "row_detail" ][  "is_called" ] === true ) {
 
         "type" => "script",
         "settings" => [
-            "title" => "Сбросить прозвон",
+            "title" => "Обновить статус звонка",
             "background" => "dark",
             "object" => "visits",
             "command" => "callReset",

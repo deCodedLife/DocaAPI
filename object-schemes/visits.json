@@ -97,7 +97,8 @@
           "last_name",
           "first_name",
           "patronymic",
-          "phone"
+          "phone",
+          "second_phone"
         ]
       },
       "annotation": "",
