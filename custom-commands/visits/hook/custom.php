@@ -7,6 +7,15 @@
 $formFieldsUpdate = [];
 $hasAssist = false;
 
+//$API->returnResponse( $requestData );
+//$API->returnResponse( $API->request );
+
+if ( $requestData->context->trigger == "store_id" ) {
+
+    $formFieldsUpdate[ "cabinet_id" ][ "value" ] = null;
+
+}
+
 
 /**
  * Проход

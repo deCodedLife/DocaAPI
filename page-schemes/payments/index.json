@@ -358,6 +358,7 @@
               "size": 4,
               "settings": {
                 "link": false,
+                "is_edit": false,
                 "linked_filter": "analytic_widgets_cashbox",
                 "object": "cashbox_balance"
               },

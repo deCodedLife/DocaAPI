@@ -4,6 +4,12 @@
  * Расчет свободности Исполнителей, Клиентов и Кабинетов
  */
 
+if ( property_exists( $API->request->data, "cabinet_id" ) ) {
+
+    if ( !$requestData->cabinet_id ) $API->returnResponse( "Выберите кабинет!", 500 );
+
+}
+
 if ( !$requestData->is_alert )
 {
     /**

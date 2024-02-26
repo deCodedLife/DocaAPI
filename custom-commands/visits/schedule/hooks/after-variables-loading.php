@@ -32,6 +32,7 @@ if ( !$storeDetail ) $API->returnResponse( "Не определен филиал
 if ( $requestData->start_at ) $requestData->end_at = date( "Y-m-d 23:59:59", strtotime($requestData->start_at ) );
 else $requestData->end_at =  date( "Y-m-d 23:59:59", strtotime( $requestData->start_at) );
 
+
 /**
  * Увеличение диапазона графика для специальностей
  */
@@ -42,6 +43,29 @@ if ( $requestData->profession_id || $requestData->user_id ) {
     );
 
 } // if. $requestData->profession_id || $requestData->users_id
+
+
+/**
+ * Увеличение диапазона графика для специальностей
+ */
+if ( $requestData->clients_id ) {
+
+    $requestData->end_at = date(
+        "Y-m-d", strtotime( "+15 days", strtotime( $requestData->start_at ) )
+    );
+
+    if ( $requestData->user_id ) {
+
+        $requestData->end_at = date(
+            "Y-m-d", strtotime( "+30 days", strtotime( $requestData->start_at ) )
+        );
+
+    }
+
+} // if ( $requestData->clients_id )
+
+
+
 
 if ( !$requestData->user_id ) {
 
