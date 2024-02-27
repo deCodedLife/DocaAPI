@@ -206,6 +206,7 @@ if ( $salaryType == "rate_kpi" ) {
     $kpi = [];
 
     $publicApp = $API::$configs[ "paths" ][ "public_app" ];
+    require_once( "$publicApp/custom-libs/kpi/visits.php" );
     require_once( "$publicApp/custom-libs/kpi/sales.php" );
     require_once( "$publicApp/custom-libs/kpi/services.php" );
     require_once( "$publicApp/custom-libs/kpi/promotions.php" );

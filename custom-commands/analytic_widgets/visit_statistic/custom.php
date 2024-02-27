@@ -41,10 +41,7 @@ $clientStatistic = [
 
 ];
 
-$filters = [
-    "visits_clients.client_id" => $requestData->client_id
-];
-$filters[ "is_payed" ] = "Y";
+$filters[ "client_id" ] = $requestData->client_id;
 if ( $requestData->start_at ) $filters[ "start_at >= ?" ] = $requestData->start_at . " 00:00:00";
 if ( $requestData->end_at )   $filters[ "end_at <= ?" ]   = $requestData->end_at   . " 23:59:59";
 
@@ -52,12 +49,7 @@ if ( $requestData->end_at )   $filters[ "end_at <= ?" ]   = $requestData->end_at
 * Получение посещений Сотрудника
 */
 $clientVisits = $API->DB->from( "visits" )
-    ->leftJoin( "visits_clients ON visits_clients.visit_id = visits.id" )
-    ->select( null )->select( [  "visits.id", "visits.start_at", "visits.is_active", "visits.status", "visits.price"  ] )
-    ->where( $filters )
-    ->orderBy( "visits.start_at desc" )
-    ->limit( 0 );
-
+    ->where( $filters );
 
 /**
 * Формирование графика посещений

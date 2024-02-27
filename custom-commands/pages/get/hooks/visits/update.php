@@ -38,11 +38,13 @@ function shouldHideButton(): bool {
     $listedInSales = $API->DB->from( "salesList" )
         ->innerJoin( "saleVisits ON saleVisits.sale_id = salesList.id" )
         ->where( "saleVisits.visit_id", $pageDetail[ "row_detail" ][ "id" ] )
+        ->orderBy( "id DESC" )
         ->limit( 1 )
         ->fetch();
 
     if ( !$listedInSales ) return false;
 
+    if ( $listedInSales[ "action" ] == "sellReturn" ) return false;
     if ( $listedInSales[ "status" ] == "done" ) return true;
     if ( $listedInSales[ "status" ] == "waiting" ) return true;
 

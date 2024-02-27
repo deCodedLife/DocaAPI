@@ -9,7 +9,7 @@ if (!$requestData->user_id) $API->returnResponse([]);
 /**
  * Сформированный список
  */
-$returnVisits = [];
+$returnData= [];
 
 /**
  * Фильтр Услуг
@@ -21,22 +21,24 @@ $servicesFilter = [];
  */
 $salesFilter = [];
 
-$visitsList = $API->DB->from( "services" )
+$visitsList = $API->DB->from( "salesList" )
     ->select( null )->select(
         [
+            "salesList.id",
             "salesProductsList.product_id",
-            "salesProductsList.cost",
             "saleVisits.visit_id",
-            "salesList.summary"
+            "services.title",
+            "salesProductsList.cost"
         ]
     )
-    ->innerJoin( "salesProductsList on salesProductsList.product_id = services.id" )
-    ->innerJoin( "salesList on salesList.id = salesProductsList.sale_id" )
-    ->innerJoin( "saleVisits on saleVisits.sale_id = salesProductsList.sale_id" );
+    ->innerJoin( "salesProductsList on salesProductsList.sale_id = salesList.id" )
+    ->innerJoin( "services on services.id = salesProductsList.product_id" )
+    ->innerJoin( "saleVisits on saleVisits.sale_id = salesList.id" )
+    ->limit(10);
 
 
-foreach ($visitsList as $visit) {
+foreach ( $visitsList as $visit ) {
 
-    $API->returnResponse($visit, 400);
+    $API->returnResponse( $visit, 400);
 
 }

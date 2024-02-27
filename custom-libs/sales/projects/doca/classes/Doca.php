@@ -107,9 +107,7 @@ class Doca
         if ( ( $requestData->is_combined ?? 'N') == 'Y' ) {
 
             $start_at = date( "Y-m-d 00:00:00" );
-            $end_at = new DateTime();
-            $end_at->modify( "+1 day" );
-            $end_at = $end_at->format( "Y-m-d 23:59:59" );
+            $end_at = date( "Y-m-d 23:59:59" );
 
             /**
              * Получение всех, неоплаченных клиентом, посещений

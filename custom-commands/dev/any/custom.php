@@ -2,49 +2,56 @@
 
 ini_set( "display_errors", true );
 
-$start_at = "2024-01-01 00:00:00";
-$end_at = "2024-01-12 23:00:00";
 
-$sqlFilters = [
-    "start_at >= ?" => $start_at,
-    "end_at <= ?" => $end_at,
-    "is_payed" => "Y",
-    "is_active" => "Y"
-];
 
-$visitList = $API->DB->from( "visits" )
-    ->where( $sqlFilters );
 
-foreach ( $visitList as $visit ) {
 
-    $services = $API->DB->from( "visits_services" )
-        ->where( "visit_id", $visit[ "id" ] );
 
-    if ( count( $services ) != 0 ) continue;
-    if ( $visit[ "id" ] == "523801" ) continue;
-    if ( $visit[ "id" ] == "523802" ) continue;
-    if ( $visit[ "id" ] == "523809" ) continue;
-    if ( $visit[ "id" ] == "523810" ) continue;
-    if ( $visit[ "id" ] == "523813" ) continue;
-    if ( $visit[ "id" ] == "523814" ) continue;
 
-    $saleServices = $API->DB->from( "salesProductsList" )
-        ->innerJoin( "salesList on salesList.id = salesProductsList.sale_id" )
-        ->innerJoin( "saleVisits on saleVisits.sale_id = salesList.id" )
-        ->where( "saleVisits.visit_id", $visit[ "id" ] );
-
-    foreach ( $saleServices as $service ) {
-
-        $API->DB->insertInto( "visits_services" )
-            ->values( [
-                "visit_id" => $visit[ "id" ],
-                "service_id" => $service[ "product_id" ]
-            ] )
-            ->execute();
-
-    };
-
-}
+//
+//$start_at = "2024-01-01 00:00:00";
+//$end_at = "2024-01-12 23:00:00";
+//
+//$sqlFilters = [
+//    "start_at >= ?" => $start_at,
+//    "end_at <= ?" => $end_at,
+//    "is_payed" => "Y",
+//    "is_active" => "Y"
+//];
+//
+//$visitList = $API->DB->from( "visits" )
+//    ->where( $sqlFilters );
+//
+//foreach ( $visitList as $visit ) {
+//
+//    $services = $API->DB->from( "visits_services" )
+//        ->where( "visit_id", $visit[ "id" ] );
+//
+//    if ( count( $services ) != 0 ) continue;
+//    if ( $visit[ "id" ] == "523801" ) continue;
+//    if ( $visit[ "id" ] == "523802" ) continue;
+//    if ( $visit[ "id" ] == "523809" ) continue;
+//    if ( $visit[ "id" ] == "523810" ) continue;
+//    if ( $visit[ "id" ] == "523813" ) continue;
+//    if ( $visit[ "id" ] == "523814" ) continue;
+//
+//    $saleServices = $API->DB->from( "salesProductsList" )
+//        ->innerJoin( "salesList on salesList.id = salesProductsList.sale_id" )
+//        ->innerJoin( "saleVisits on saleVisits.sale_id = salesList.id" )
+//        ->where( "saleVisits.visit_id", $visit[ "id" ] );
+//
+//    foreach ( $saleServices as $service ) {
+//
+//        $API->DB->insertInto( "visits_services" )
+//            ->values( [
+//                "visit_id" => $visit[ "id" ],
+//                "service_id" => $service[ "product_id" ]
+//            ] )
+//            ->execute();
+//
+//    };
+//
+//}
 
 
 
