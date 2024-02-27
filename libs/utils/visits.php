@@ -41,13 +41,13 @@ function GetVisitsIDsByAuthor( $table, $start_at, $end_at, $operator_id ): array
     ]);
 }
 
-function getSalesByVisits( array $visits_ids ): array
+function getSalesByVisits( string $table, array $visits_ids ): array
 {
     global $API;
     $sales = $API->DB->from( "salesList" )
-        ->innerJoin( "saleVisits ON saleVisits.sale_id = salesList.id" )
+        ->innerJoin( "$table ON $table.sale_id = salesList.id" )
         ->where( [
-            "saleVisits.visit_id" => $visits_ids,
+            "$table.visit_id" => $visits_ids,
             "salesList.action" => "sell",
             "salesList.status" => "done"
         ] );

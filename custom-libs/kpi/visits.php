@@ -2,12 +2,23 @@
 
 $visits_ids = utils\GetVisitsIDsByAuthor(
     "visits",
-    $requestData->start_at,
-    $requestData->end_at,
+    $requestData->start_at . " 00:00:00",
+    $requestData->end_at . " 23:59:59",
     $requestData->user_id
 );
 
-$sales_ids = utils\getSalesByVisits( $visits_ids );
+$equipment = utils\GetVisitsIDsByAuthor(
+    "equipmentVisits",
+    $requestData->start_at . " 00:00:00",
+    $requestData->end_at . " 23:59:59",
+    $requestData->user_id
+);
+
+$sales_ids = array_merge(
+    utils\getSalesByVisits( "saleVisits", $visits_ids ),
+    utils\getSalesByVisits( "salesEquipmentVisits", $equipment ),
+);
+
 
 
 $salesInfo = mysqli_fetch_array( mysqli_query( $API->DB_connection, "
@@ -22,7 +33,8 @@ WHERE
 	status = 'done'"
 ) ) ?? [];
 
-$visits_count = count( $visits_ids );
+
+$visits_count = count( $visits_ids ) + count( $equipment );
 $sales_summary = $salesInfo[ "summary" ] ?? 0;
 $sales_count = $salesInfo[ "count" ] ?? 0;
 $services_count = mysqli_fetch_array( mysqli_query( $API->DB_connection, "
