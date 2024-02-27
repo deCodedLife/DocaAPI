@@ -11,11 +11,6 @@ function sql_constructor( string $table, array $request ): array
     FROM $table
     WHERE \n" . join( " AND\n\t", $request ) );
 
-    $API->returnResponse( "
-    SELECT $table.id as id
-    FROM $table
-    WHERE \n" . join( " AND\n\t", $request ) );
-
     foreach ( $visitsList as $visit ) $visits_ids[] = intval( $visit[ "id" ] );
     return $visits_ids ?? [];
 }

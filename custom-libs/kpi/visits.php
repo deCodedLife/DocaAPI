@@ -7,8 +7,6 @@ $visits_ids = utils\GetVisitsIDsByAuthor(
     $requestData->user_id
 );
 
-$API->returnResponse( $visits_ids );
-
 $sales_ids = utils\getSalesByVisits( $visits_ids );
 
 
@@ -23,8 +21,6 @@ WHERE
 	action = 'sell' AND
 	status = 'done'"
 ) ) ?? [];
-
-$API->returnResponse( [ $salesInfo, $sales_ids ] );
 
 $visits_count = count( $visits_ids );
 $sales_summary = $salesInfo[ "summary" ] ?? 0;
