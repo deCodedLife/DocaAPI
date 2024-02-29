@@ -26,7 +26,7 @@ foreach ( $kpi_sales as $kpi_sale ) {
     $kpi[] = [
         "type" => "$kpi_type {$kpi_sale[ "required_value" ]}%",
         "services_summary" => $sales_summary,
-        "services_count" => $sales_count,
+        "services_count" => $services_count,
         "percent" => ( $sales_summary * 100 / $kpi_sale[ "summary" ] ),
         "promotion" => "-",
         "bonus" => $sales_summary < $kpi_sale[ "summary" ] ? "0" : $kpi_sale[ "kpi_value" ],

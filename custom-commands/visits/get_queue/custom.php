@@ -4,8 +4,11 @@
  * Электронная очередь
  */
 
-$resultVisits = [];
+
+$resultVisits = $API->sendRequest( "equipmentVisits", "get_queue", (array) $requestData );
+$API->returnResponse( $resultVisits );
 ini_set( "disable_functions", "" );
+
 
 $start = date( "Y-m-d" ) . " 00:00:00";
 $end = date( "Y-m-d" ) . " 23:59:59";
@@ -146,6 +149,7 @@ foreach ( $visits as $visit ) {
     $resultVisits[] = [
         "id" => $visit[ "id" ],
         "is_alert" => $isAlert,
+        "object" => "visits", // Обязательный
         "talon" => $visit[ "talon" ],
         "cabinet" => $cabinetDetail[ "title" ],
         "detail" => [

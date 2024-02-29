@@ -26,11 +26,11 @@ function getVisitsIds( $table, $start_at, $end_at, $user_id ): array {
     global $API;
 
     $sqlFilter = "
-    SELECT $table.id as id 
-    FROM $table 
-    WHERE 
-        start_at >= '$start_at' AND 
-        end_at <= '$end_at' AND 
+    SELECT $table.id as id
+    FROM $table
+    WHERE
+        start_at >= '$start_at' AND
+        end_at <= '$end_at' AND
         ( user_id = $user_id OR assist_id = $user_id ) AND
         is_active = 'Y' AND
         is_payed = 'Y' AND
@@ -206,6 +206,7 @@ if ( $salaryType == "rate_kpi" ) {
     $kpi = [];
 
     $publicApp = $API::$configs[ "paths" ][ "public_app" ];
+    require_once( "$publicApp/custom-libs/kpi/visits.php" );
     require_once( "$publicApp/custom-libs/kpi/sales.php" );
     require_once( "$publicApp/custom-libs/kpi/services.php" );
     require_once( "$publicApp/custom-libs/kpi/promotions.php" );

@@ -4,11 +4,11 @@
 $pageScheme[ "structure" ][ 1 ][ "settings" ][ 3 ][ "body" ][ 0 ][ "settings" ][ "filters" ] = [
     [
         "property" => "start_at",
-        "value" => date( 'Y-m-d', strtotime("-1 months") ) . " 00:00:00",
+        "value" => date( 'Y-m-d', strtotime("-1 months") ),
     ],
     [
         "property" => "end_at",
-        "value" => date( 'Y-m-d' ) . " 23:59:59"
+        "value" => date( 'Y-m-d' )
     ],
     [
         "property" => "status",
@@ -24,11 +24,11 @@ $pageScheme[ "structure" ][ 1 ][ "settings" ][ 3 ][ "body" ][ 0 ][ "settings" ][
 $pageScheme[ "structure" ][ 1 ][ "settings" ][ 3 ][ "body" ][ 1 ][ "settings" ][ "filters" ] = [
     [
         "property" => "start_at",
-        "value" => date( 'Y-m-d', strtotime("-1 months") ) . " 00:00:00",
+        "value" => date( 'Y-m-d', strtotime("-1 months") ),
     ],
     [
         "property" => "end_at",
-        "value" => date( 'Y-m-d' ) . " 23:59:59"
+        "value" => date( 'Y-m-d' )
     ],
     [
         "property" => "status",
@@ -44,11 +44,11 @@ $pageScheme[ "structure" ][ 1 ][ "settings" ][ 3 ][ "body" ][ 1 ][ "settings" ][
 $pageScheme[ "structure" ][ 1 ][ "settings" ][ 3 ][ "body" ][ 2 ][ "settings" ][ "filters" ] = [
     [
         "property" => "start_at",
-        "value" => date( 'Y-m-d', strtotime("-1 months") ) . " 00:00:00",
+        "value" => date( 'Y-m-d', strtotime("-1 months") ),
     ],
     [
         "property" => "end_at",
-        "value" => date( 'Y-m-d' ) . " 23:59:59"
+        "value" => date( 'Y-m-d' )
     ],
     [
 

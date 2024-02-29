@@ -206,7 +206,7 @@
               "type": "list",
               "size": 4,
               "settings": {
-                "object": "visits",
+                "object": "history_visits",
                 "link": false,
                 "is_edit": false,
                 "filters": [

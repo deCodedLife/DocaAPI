@@ -96,3 +96,5 @@ if ( $formFieldValues[ "pay_method" ] == "legalEntity" ) {
     $formFieldValues[ "sum_cash" ][ "is_visible" ] = false;
 
 }
+
+$pageScheme[ "structure" ][ 1 ][ "settings" ][ "data" ][ "employee_id" ] = $API::$userDetail->id;

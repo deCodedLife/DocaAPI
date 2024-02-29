@@ -44,6 +44,38 @@ require_once ( $publicAppPath . "/custom-libs/visits/validate.php" );
 
 
 /**
+ * Статус "Повторное" у Посещения и Клиентов
+ */
+
+foreach ( $requestData->clients_id as $clientId ) {
+
+    /**
+     * Получение посещений Клиента
+     */
+    
+    $clientVisits = $API->DB->from( "visits" )
+        ->innerJoin( "visits_clients ON visits_clients.visit_id = visits.id" )
+        ->where( [
+            "visits_clients.client_id" => intval( $clientId ),
+            "visits.status" => "ended",
+            "visits.is_active" => "Y"
+        ] );
+
+    if ( count( $clientVisits ) > 0 ) {
+
+        $requestData->status = "repeated";
+
+        $API->DB->update( "clients" )
+            ->set( "is_repeat", "Y" )
+            ->where( "id", $clientId )
+            ->execute();
+
+    }
+
+} // foreach. $requestData->clients_id
+
+
+/**
  * Формирование талона
  */
 $serviceDetail = $API->DB->from( "services" )

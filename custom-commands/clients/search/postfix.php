@@ -1,4 +1,5 @@
 <?php
+global $API;
 
 /**
  * Подстановка ФИО
@@ -36,10 +37,11 @@ foreach ( $response[ "data" ] as $row ) {
 //
 //    if ( $fio[ 1 ] ) $row[ "title" ] .= " " . mb_substr( $fio[ 1 ], 0, 1 ) . ".";
 //    if ( $fio[ 2 ] ) $row[ "title" ] .= " " . mb_substr( $fio[ 2 ], 0, 1 ) . ".";
-
+//
+//
     $row[ "fio" ] = $client;
     $row[ "menu_title" ] = "$client $phoneFormat";
-
+    $row[ "title" ] = "$client";
     $returnRows[] = $row;
 
 } // foreach. $response[ "data" ]

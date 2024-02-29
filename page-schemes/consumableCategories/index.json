@@ -18,9 +18,7 @@
                         "type": "href",
                         "settings": {
                             "title": "Добавить",
-                            "page": [
-                                "consumableCategories/add"
-                            ]
+                            "page": "consumableCategories/add"
                         }
                     }
                 ]

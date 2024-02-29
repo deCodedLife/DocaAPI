@@ -1,6 +1,7 @@
 <?php
 
 $requestData->is_payed = "Y";
+$requestData->is_active = "Y";
 
 
 if ( $requestData->start_price ) $requestSettings[ "filter" ][ "price >= ?" ] = $requestData->start_price;

@@ -30,85 +30,116 @@ $reportStatistic = [
 /**
  * Получение списка посещений
  */
-$visitsClients = $API->sendRequest( "visit_clients", "get", $requestData );
 
-/**
- * Обрабботка списка
- */
-foreach ( $visitsClients as $visitsClient ) {
+//$requestData->limit = 0;
+//$start = microtime( true );
+//$end = microtime( true );
+//$API->returnResponse( $visitsClients );
+//ini_set( "display_errors", 1 );
+//if ( $requestData->user_id ) $filters[ "visits.user_id" ] = $requestData->user_id;
+//if ( $requestData->start_price ) $filters[ "visits.price >= ?" ] = $requestData->start_price;
+//if ( $requestData->end_price ) $filters[ "visits.price <= ?" ] = $requestData->end_price;
+//if ( $requestData->start_at ) $filters[ "visits.start_at >= ?" ] = $requestData->start_at;
+//if ( $requestData->end_at ) $filters[ "visits.end_at <= ?" ] = $requestData->end_at;
+//$filters[ "visits.status <= ?" ] = "ended";
+//$filters[ "visits.is_payed" ] = "Y";
+//
+//$start = microtime( true );
+//$visitsList = $API->DB->from( "visits" )
+//    ->innerJoin( "visits_services on visits_services.visit_id = visits.id" )
+//    ->select( "service_id as service_id" )
+//    ->where( $filters );
+//
+//foreach ( $visitsList as $visit ) {
+//
+//    $visitServices[ $visit[ "service_id" ] ]++;
+//    $reportStatistic[ "visits_sum" ] += $visit[ "price" ];
+//
+//}
+//
+//$servicesUserPercents = $API->DB->from( "services_user_percents")
+//    ->where( "row_id", $requestData->user_id );
+//
+//$services = [];
+//
+//foreach ( $servicesUserPercents as $servicesUserPercent)
+//    $services[] = $servicesUserPercent[ "service_id" ];
+//
+//
+//
+//$reportStatistic[ "clients_count" ] += count( $visitServices );
+//
+///**
+// * Обрабботка списка
+// */
+//foreach ( $visitsList as $visit ) {
+//
+//
+//
+//    foreach ( $visitsClient->services_id as $service ) {
+//
+//        if ( in_array( $service->value, $services ) ) {
+//
+//            $reportStatistic[ "services_user_percents" ] += $visitsClient->price;
+//
+//        }
+//
+//    }
+//
+//
+//} // foreach .$userServices
 
-    $reportStatistic[ "visits_sum" ] += $visitsClient->price;
-    $reportStatistic[ "clients_count" ]++;
-
-    /**
-     * Обход услуг в посещении
-     */
-    foreach ( $visitsClient->services_id as $visitService ) {
-
-        /**
-         * Получение услуг сотрудника с процентом от продаж
-         */
-        $servicesUserPercents = $API->DB->from( "services_user_percents" )
-            ->where( [
-                "service_id" => $visitService->value,
-                "row_id" => $visitsClient->user_id,
-                "created_at <=?" => $visitsClient->start_at
-            ] )
-            ->limit( 1 )
-            ->fetch();
-
-        /**
-         * Обход услуг сотрудника с процентом от продаж
-         */
-        if ( $servicesUserPercents &&  $servicesUserPercents[ "percent" ] != 0 ) {
-
-            /**
-             * Получение продажи посещения
-             */
-            $saleVisits = $API->DB->from( "saleVisits" )
-                ->where( [
-                    "visit_id" => $visitsClient->id,
-                ] );
-
-            foreach ( $saleVisits as $saleVisit ) {
-
-                /**
-                 * Получение услуг в продаже
-                 */
-                $salesProductsList = $API->DB->from( "salesProductsList" )
-                    ->where( [
-                        "sale_id" => $saleVisit[ "sale_id" ],
-                        "product_id" => $visitService->value
-                    ] )
-                    ->limit( 1 )
-                    ->fetch();
+//$visitsClients = $API->sendRequest( "visit_clients", "get", $requestData );
 
 
-                /**
-                 * Подсчет суммы продаж с %
-                 */
-                $reportStatistic[ "services_user_percents" ] += $salesProductsList[ "cost" ];
+if ( $requestData->user_id ) $filters[ "visits.user_id" ] = $requestData->user_id;
+if ( $requestData->start_price ) $filters[ "visits.price >= ?" ] = $requestData->start_price;
+if ( $requestData->end_price ) $filters[ "visits.price <= ?" ] = $requestData->end_price;
+if ( $requestData->start_at ) $filters[ "visits.start_at >= ?" ] = $requestData->start_at;
+if ( $requestData->end_at ) $filters[ "visits.end_at <= ?" ] = $requestData->end_at;
+$filters[ "visits.status" ] = "ended";
+$filters[ "visits.is_payed" ] = "Y";
 
-            } // foreach .$saleVisits
+$servicesUserPercents = $API->DB->from( "services_user_percents")
+    ->where( "row_id", $requestData->user_id );
 
-        } else if ( $servicesUserPercents && $servicesUserPercents[ "fix_sum" ] != 0 ) {
+$services = [];
 
-            /**
-             * Подсчет суммы продаж если фикс
-             */
-            $reportStatistic["services_user_percents"] += $servicesUserPercents[ "fix_sum" ];
+foreach ( $servicesUserPercents as $servicesUserPercent)
+    $services[] = $servicesUserPercent[ "service_id" ];
 
-        } // if ( $servicesUserPercents &&  $servicesUserPercents[ "percent" ] != 0 )
+$visitsList = $API->DB->from( "visits" )
+    ->select( null )->select(
+        [
+            "salesProductsList.product_id",
+            "salesProductsList.cost",
+            "saleVisits.visit_id",
+            "saleVisits.sale_id",
+            "visits.user_id",
+        ]
+    )
+    ->innerJoin( "saleVisits on saleVisits.visit_id = visits.id" )
+    ->innerJoin( "salesProductsList on salesProductsList.sale_id = saleVisits.sale_id" )
+    ->where( $filters );
+
+$visits = [];
+
+foreach ( $visitsList as $visit ) {
+
+    if ( in_array( $visit[ "product_id" ], $services )  ) {
+
+        $reportStatistic[ "services_user_percents" ] += $visit[ "cost" ];
 
     }
-
-} // foreach .$userServices
+    $visits[] = $visit[ "visit_id" ];
+    $reportStatistic[ "visits_sum" ] += $visit[ "cost" ];
+}
 
 $API->returnResponse(
 
     [
         [
-            "value" => number_format( intval( $reportStatistic["visits_sum"] ), 0, '.', ' ' ),
+            "value" => number_format( intval( $reportStatistic[ "visits_sum" ] ), 0, '.', ' ' ),
             "description" => "Сумма продаж",
             "size" => "1",
             "icon" => "",
@@ -138,7 +169,7 @@ $API->returnResponse(
             "detail" => []
         ],
         [
-            "value" => $reportStatistic[ "clients_count" ],
+            "value" => count(array_unique($visits)),
             "description" => "Количество клиентов",
             "icon" => "",
             "size" => "1",

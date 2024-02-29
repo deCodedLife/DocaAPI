@@ -38,6 +38,12 @@ foreach ( $visits as $visit ) {
 
 if ( $solo ) {
 
+    $API->addLog( [
+        "table_name" => "visits",
+        "description" => "Клиент зашел в кабинет (" . date("d.m.Y H:i") . ")",
+        "row_id" => $visitDetail[ "id" ]
+    ], $requestData );
+
     $API->DB->update( "visits" )
         ->set( [
             "status" => "process"
@@ -46,6 +52,7 @@ if ( $solo ) {
             "id" => $requestData->id
         ] )
         ->execute();
+
 
 } else {
 

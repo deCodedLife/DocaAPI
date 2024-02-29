@@ -8,16 +8,31 @@ $formFieldsUpdate = [];
 $hasAssist = false;
 
 
+if ( $requestData->context->trigger == "store_id" ) $formFieldsUpdate[ "cabinet_id" ][ "value" ] = null;
+
+
 /**
  * Проход
  */
 foreach ( $requestData->services_id as $service ) {
 
-    $serviceDetail = $API->DB->from( "services" )
-        ->where( "id", $service )
-        ->fetch();
+    if ( $requestData->context->trigger == "services_id" ) {
 
-    if ( $serviceDetail[ "preparation" ] ) $formFieldsUpdate[ "modal_info" ][] = $serviceDetail[ "preparation" ];
+        $serviceDetail = $API->DB->from( "services" )
+            ->where( "id", $service )
+            ->fetch();
+
+        $modalExists = false;
+
+        foreach ( $formFieldsUpdate[ "modal_info" ] as $info ) {
+
+            if ( $info == $serviceDetail[ "preparation" ] ) $modalExists = true;
+
+        }
+
+        if ( !$modalExists && $serviceDetail[ "preparation" ] ) $formFieldsUpdate[ "modal_info" ][] = $serviceDetail[ "preparation" ];
+
+    }
 
 }
 
@@ -165,5 +180,12 @@ if ( $requestData->client_id ) {
 if ( $hasAssist ) $formFieldsUpdate[ "assist_id" ][ "is_visible" ] = true;
 else $formFieldsUpdate[ "assist_id" ][ "is_visible" ] = false;
 
+/**
+ * Зачищать ассистента при изменении услуги
+ */
+if (
+    $requestData->context->trigger == "services_id" &&
+    !$hasAssist
+) $formFieldsUpdate[ "assist_id" ][ "value" ] = false;
 
 $API->returnResponse( $formFieldsUpdate );

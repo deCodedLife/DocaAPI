@@ -7,7 +7,7 @@
       "type": "schedule",
       "size": 4,
       "required_permissions": [
-        "manager_schedule"
+        "manager_section"
       ],
       "required_modules": [],
       "settings": {
@@ -72,7 +72,12 @@
               "is_search": true,
               "recipient_property": "clients_id",
               "donor_object": "clients",
-              "donor_property_title": "last_name",
+              "donor_property_title": [
+                "last_name",
+                "first_name",
+                "patronymic",
+                "phone"
+              ],
               "donor_property_value": "id"
             }
           },

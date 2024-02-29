@@ -19,3 +19,5 @@ if ( $clientDetail[ "is_representative" ] == "Y" ) {
     $formFieldValues[ "present_passport_issued" ][ "is_visible" ] = true;
 
 }
+
+$pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "id" ] = intval( $pageDetail[ "row_id" ] );

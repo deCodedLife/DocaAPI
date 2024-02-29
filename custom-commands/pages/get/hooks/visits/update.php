@@ -38,11 +38,13 @@ function shouldHideButton(): bool {
     $listedInSales = $API->DB->from( "salesList" )
         ->innerJoin( "saleVisits ON saleVisits.sale_id = salesList.id" )
         ->where( "saleVisits.visit_id", $pageDetail[ "row_detail" ][ "id" ] )
+        ->orderBy( "id DESC" )
         ->limit( 1 )
         ->fetch();
 
     if ( !$listedInSales ) return false;
 
+    if ( $listedInSales[ "action" ] == "sellReturn" ) return false;
     if ( $listedInSales[ "status" ] == "done" ) return true;
     if ( $listedInSales[ "status" ] == "waiting" ) return true;
 
@@ -58,7 +60,7 @@ function shouldHideButton(): bool {
  */
 
 if ( shouldHideButton() )
-    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 0 ] );
+    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 1 ] );
 
 
 /**
@@ -128,7 +130,7 @@ if ( $pageDetail[ "row_detail" ][  "is_called" ] === true ) {
 
         "type" => "script",
         "settings" => [
-            "title" => "Сбросить прозвон",
+            "title" => "Обновить статус звонка",
             "background" => "dark",
             "object" => "visits",
             "command" => "callReset",

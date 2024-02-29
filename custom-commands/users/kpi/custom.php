@@ -71,49 +71,24 @@ if ( $userDetail[ "salary_type" ] != "rate_kpi" &&  count( $kpiServices ) == 0  
     $API->returnResponse( [] );
 
 
-/**
- * Запрос на получение оплаченных продаж
- */
-$salesList = $API->DB->from( "salesList" )
-    ->leftJoin( "saleVisits ON saleVisits.sale_id = salesList.id" )
-    ->leftJoin( "visits ON visits.id = saleVisits.visit_id" )
-    ->select(null)->select([
-        "salesList.id",
-        "salesList.status",
-        "salesList.created_at",
-        "salesList.summary",
-        "visits.author_id",
-        "saleVisits.visit_id",
-    ])
-    ->where( [
-        "salesList.status" => "done",
-        "salesList.action" => "sell",
-        "visits.author_id" => $requestData->id,
-        "salesList.created_at >= ?" =>  date( 'Y-m-1' ) . " 00:00:00",
-        "salesList.created_at <= ?" =>  date( 'Y-m-d' ) . " 23:59:59"
-    ] )
-    ->orderBy( "salesList.created_at desc" )
-    ->limit ( 0 );
+$start_at = date( 'Y-m-01' );
+$end_at = date( 'Y-m-d' );
+$user_id = $requestData->id;
 
-/**
- * Обход продаж
- */
-foreach ( $salesList as $sale ) {
+$publicApp = $API::$configs[ "paths" ][ "public_app" ];
+require_once( "$publicApp/custom-libs/kpi/visits.php" );
 
-    $sum += $sale[ "summary" ];
-
-}
 
 /**
  * Обход KPI
  */
 foreach ( $kpiSales as $kpiSale ) {
 
-    $percent = ( $sum * 100 ) / $kpiSale[ "summary" ];
+    $percent = ( $sales_summary * 100 ) / $kpiSale[ "summary" ];
 
     $progressbar[ "values" ][] = [
 
-        "title" => $sum . " руб.",
+        "title" => $sales_summary . " руб.",
         "percent" => (int)$percent,
         "reward" => $kpiSale[ "kpi_value" ] . " руб.",
 
@@ -131,47 +106,21 @@ $returnKpi[] = $progressbar;
  */
 foreach ( $kpiServices as $kpiService ) {
 
-    /**
-     * Колличество проданных услуг
-     */
-    $countSaleProducts = 0;
+    $service = $kpiService[ "service" ];
 
-    /**
-     * Список прожад сотрудника
-     */
-    $salesList = $API->DB->from( "salesList" )
-        ->leftJoin( "salesProductsList ON salesProductsList.sale_id = salesList.id" )
-        ->leftJoin( "saleVisits ON saleVisits.sale_id = salesList.id" )
-        ->leftJoin( "visits ON visits.id = saleVisits.visit_id" )
-        ->select(null)->select([
-            "salesList.id",
-            "salesList.status",
-            "salesList.created_at",
-            "salesProductsList.product_id",
-            "salesProductsList.cost",
-            "salesProductsList.amount",
-            "visits.author_id",
-            "saleVisits.visit_id",
-        ])
-        ->where( [
-            "salesProductsList.product_id" => $kpiService[ "service" ],
-            "salesProductsList.type" => "service",
-            "salesList.status" => "done",
-            "salesList.created_at >= ?" =>  date( 'Y-m-1' ) . " 00:00:00",
-            "salesList.created_at <= ?" =>  date( 'Y-m-d' ) . " 23:59:59",
-            "visits.author_id" => $requestData->id
-        ] )
-        ->orderBy( "salesList.created_at desc" )
-        ->limit ( 0 );
-
-    /**
-     * Обход прожад сотрудника
-     */
-    foreach ( $salesList as $sale ) {
-
-        $countSaleProducts += $sale[ "amount" ];
-
-    }
+    $services_count = mysqli_fetch_array( mysqli_query( $API->DB_connection, "
+    SELECT 
+        COUNT( salesProductsList.id ) as count
+    FROM 
+        salesList
+    INNER JOIN 
+        salesProductsList ON salesProductsList.sale_id = salesList.id
+    WHERE 
+        salesList.id IN ( " . join( ",", $sales_ids ) . " ) AND
+        salesProductsList.product_id = $service AND
+        salesProductsList.type = 'service' AND
+        salesList.action = 'sell'",
+        ) )[ "count" ] ?? 0;
 
     /**
      * Получение детальной информации об услуги
@@ -187,7 +136,7 @@ foreach ( $kpiServices as $kpiService ) {
     $range[ "values" ][] = [
 
         "title" => $serviceDetail[ "title" ],
-        "current" => $countSaleProducts,
+        "current" => $services_count,
         "reach" => (int) $kpiService[ "required_value" ],
         "reward" => $kpiService[ "kpi_value" ] . " руб."
 

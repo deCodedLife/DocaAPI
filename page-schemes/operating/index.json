@@ -1,5 +1,5 @@
 {
-  "required_permissions": [ "operating" ],
+  "required_permissions": [ "operating_section" ],
   "required_modules": [],
   "structure": [
     {
@@ -9,7 +9,6 @@
       "required_permissions": [],
       "required_modules": [],
       "settings": {
-        "link": false,
         "sort_by": "period",
         "sort_order": "desc",
         "is_edit": false,
@@ -20,6 +19,9 @@
             "value": "operating"
           }
         ]
+      },
+      "headers": {
+        "clients_id": "link_list"
       },
       "components": {
         "filters": [
@@ -54,7 +56,11 @@
               "is_search": true,
               "recipient_property": "clients_id",
               "donor_object": "clients",
-              "donor_property_title": "last_name",
+              "donor_property_title": [
+                "last_name",
+                "first_name",
+                "patronymic"
+              ],
               "donor_property_value": "id"
             }
           },

@@ -24,6 +24,17 @@ $services = $API->DB->from( "visits_services" )
         "visit_id" => $requestData->id,
     ] );
 
+$visitDetail = $API->DB->from( "visits" )
+    ->where( "id", $requestData->id)
+    ->limit( 1 )
+    ->fetch();
+
+
+$API->addLog( [
+    "table_name" => "visits",
+    "description" => "Клиент вышел из кабинета (" . date("d.m.Y H:i") . ")",
+    "row_id" => $visitDetail[ "id" ]
+], $requestData );
 
 foreach ( $services as $service ) {
 

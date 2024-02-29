@@ -1,100 +1,86 @@
 <?php
-
-global $API, $requestData;
-
-
-$sales_summary = 0;
-$sales_count = 0;
-
-
-/**
- * Получаем информацию о сотруднике
- */
-$userDetail = $API->DB->from( "users" )
-    ->where( "id", $requestData->user_id )
-    ->fetch();
-
-
-/**
- * Для менеджера и врачей kpi считается по разному
- */
-if ( $userDetail[ "role_id" ] == 6 ) {
-
-    /**
-     * Берём продажи непосредственно из таблицы
-     */
-    $user_sales = mysqli_query(
-        $API->DB_connection,
-        "SELECT id
-        FROM   salesList
-        WHERE  employee_id = $requestData->user_id
-               AND created_at > '$requestData->start_at' 
-               AND created_at < '$requestData->end_at'
-               AND status = 'done'
-               AND ( action = 'sell'
-                      OR action = 'sellReturn' ) "
-    );
-
-} else {
-
-    /**
-     * Достаём id продаж из посещений
-     */
-    $user_sales = mysqli_query(
-        $API->DB_connection,
-        "SELECT saleVisits.sale_id AS id
-        FROM   visits
-               INNER JOIN saleVisits
-                       ON visits.id = saleVisits.visit_id
-        WHERE  visits.user_id = $requestData->user_id
-               AND is_payed = 'Y'
-               AND is_active = 'Y'"
-    );
-
-} // if ( $userDetail[ "role_id" ] == 6 )
-
-
-/**
- * Получаем количество и стоимость услуг
- */
-foreach ( $user_sales as $sale ) {
-
-    $sale = $API->DB->from( "salesList" )
-        ->where( "id", $sale[ "id" ] )
-        ->fetch();
-
-    if ( !$sale || !$sale[ "action" ] ) continue;
-
-    $summary = mysqli_fetch_array(
-        mysqli_query(
-            $API->DB_connection,
-            "SELECT Sum(( amount * cost ))
-            FROM   salesProductsList
-            WHERE  sale_id = {$sale[ "id" ]}
-                   AND type = 'service'"
-        )
-    )[0];
-    
-    $count = mysqli_fetch_array(
-        mysqli_query(
-            $API->DB_connection,
-            "SELECT Sum(amount)
-            FROM   salesProductsList
-            WHERE  sale_id = {$sale[ "id" ]}
-                   AND type = 'service'; "
-        )
-    )[0];
-
-
-    if ( $sale[ "action" ] == "sellReturn" ) {
-
-        $summary = -$summary;
-        $count = -$count;
-
-    } // if ( $sale[ "action" ] == "sellReturn" )
-
-    $sales_summary += $summary;
-    $sales_count += $count;
-
-
-} // foreach ( $user_sales as $sale )
+//
+//global $API, $requestData;
+//
+//
+//$sales_summary = 0;
+//$sales_count = 0;
+//
+//$services = [];
+//
+//$sales_ids = [];
+//
+//
+///**
+// * Получаем информацию о сотруднике
+// */
+//$userDetail = $API->DB->from( "users" )
+//    ->where( "id", $requestData->user_id )
+//    ->fetch();
+//
+///**
+// * Берём продажи непосредственно из таблицы
+// */
+//
+//
+//function getSales( $user_id, $start_at, $end_at, $action ): array {
+//
+//    global $API;
+//
+//    $user_sales = mysqli_query(
+//        $API->DB_connection, "
+//        SELECT  *
+//        FROM    salesList
+//        WHERE   employee_id = $user_id
+//                AND created_at > '$start_at'
+//                AND created_at < '$end_at'
+//                AND status = 'done'
+//                AND action = '$action'"
+//    );
+//
+//    foreach ( $user_sales as $sale ) $sales_ids[ $sale[ "id" ] ] = $sale;
+//    return $sales_ids ?? [];
+//
+//}
+//
+//function getSummary( $sales_ids ): float {
+//
+//    global $API;
+//
+//    $sales_ids = join( ",", array_keys( $sales_ids ?? [] ) );
+//    return floatval( mysqli_fetch_array(
+//        mysqli_query(
+//            $API->DB_connection,
+//            "SELECT Sum( (amount * cost) - discount )
+//        FROM   salesProductsList
+//        WHERE  sale_id IN ($sales_ids) AND type = 'service'"
+//        )
+//    )[0] ?? 0 );
+//
+//}
+//
+//function getServices( $sales_ids, &$services ) {
+//
+//    global $API;
+//
+//    $sales_ids = join( ",", array_keys( $sales_ids ?? [] ) );
+//    $servicesList = mysqli_query(
+//        $API->DB_connection,
+//        "SELECT *
+//        FROM   salesProductsList
+//        WHERE  sale_id IN ($sales_ids) AND type = 'service'"
+//    );
+//    foreach ( $servicesList as $service ) $services[ $service[ "product_id" ] ][] = $service;
+//
+//}
+//
+//$sales = getSales( $requestData->user_id, $start_at, $end_at, "sell" );
+//$returns = getSales( $requestData->user_id, $start_at, $end_at, "sellReturn" );
+//
+//getServices( $sales, $services );
+//
+//$salesSummary = getSummary( $sales );
+//$returnsSummary = getSummary( $returns );
+//
+//$sales_summary = $salesSummary - $returnsSummary;
+//$sales_count = count( $sales ) - count( $returns );

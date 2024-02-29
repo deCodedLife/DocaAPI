@@ -16,10 +16,11 @@ if ( $requestData->context->block == "form_list" || $requestData->context->block
 
     foreach ( $response[ "data" ] as $key => $service ) {
 
-        $serviceCustomPrice = $services_price[ intval( $service[ "id" ] ) ];
-        if ( !$serviceCustomPrice ) continue;
+        $price = $services_price[ intval( $service[ "id" ] ) ];
+        if ( !$price ) $price = $service[ "price" ];
 
-        $service[ "price" ] = $serviceCustomPrice[ "price" ];
+
+        $response[ "title" ] = "{$service[ "article" ]} {$service[ "title" ]} + {$price}";
         $response[ "data" ][ $key ] = $service;
 
     }

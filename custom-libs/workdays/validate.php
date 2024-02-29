@@ -82,10 +82,10 @@ $storeDetails = $API->DB->from( "stores" )
 
 if ( $requestData->is_weekend !== 'Y' ) {
 
-    if ( strtotime( $storeDetails[ "schedule_from" ] ) > strtotime( $begin->format( "H:i:s" ) ) )
+    if ( strtotime( $storeDetails[ "schedule_from" ] + 60 ) > strtotime( $begin->format( "H:i:s" ) ) )
         $API->returnResponse( "Расписание выходит за рамки графика филиала ${$storeDetails[ "title" ]}", 402 );
 
-    if ( strtotime( $storeDetails[ "schedule_to" ] ) < strtotime( $end->format( "H:i:s" ) ) )
+    if ( strtotime( $storeDetails[ "schedule_to" ] - 60 ) < strtotime( $end->format( "H:i:s" ) ) )
         $API->returnResponse( "Расписание выходит за рамки графика филиала ${$storeDetails[ "title" ]}", 402 );
 
 }
@@ -164,7 +164,10 @@ foreach ( $scheduleRules as $rule ) {
             ) {
 
 //                if ( $ruleEvent[ "user_id" ] === $newEvent[ "user_id" ] )
-                if ( $ruleEvent[ "is_rule" ] != $newEvent[ "is_rule" ] ) continue;
+                if (
+                    $ruleEvent[ "is_rule" ] != $newEvent[ "is_rule" ] &&
+                    $ruleEvent[ "user_id" ] == $newEvent[ "user_id" ]
+                ) continue;
 
 
                 /**

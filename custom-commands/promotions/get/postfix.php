@@ -43,7 +43,7 @@ foreach ( $response[ "data" ] as $key => $promotion ) {
 
 }
 
-if ( $requestData->context->block === "list" ) {
+if ( $requestData->context->block === "list" || $requestData->context->block === "select" ) {
 
     /**
      * Подстановка периода и типа акции

@@ -27,3 +27,6 @@ $response[ "data" ][ 1 ][ "settings" ][ 2 ][ "body" ][ 0 ][ "settings" ][ "areas
         "is_called" => true
     ]
 ];
+
+//$pageScheme[ "data" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "areas" ][ 0 ][ "blocks" ][ 0 ][ "fields" ][ 4 ][ "is_visible" ] = true;
+//$pageScheme[ "data" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "areas" ][ 0 ][ "blocks" ][ 0 ][ "fields" ][ 5 ][ "is_visible" ] = true;

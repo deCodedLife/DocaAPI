@@ -7,17 +7,38 @@
 $formFieldsUpdate = [];
 $hasAssist = false;
 
+//$API->returnResponse( $requestData );
+//$API->returnResponse( $API->request );
+
+if ( $requestData->context->trigger == "store_id" ) {
+
+    $formFieldsUpdate[ "cabinet_id" ][ "value" ] = null;
+
+}
+
 
 /**
  * Проход
  */
 foreach ( $requestData->services_id as $service ) {
 
-    $serviceDetail = $API->DB->from( "services" )
-        ->where( "id", $service )
-        ->fetch();
+    if ( $requestData->context->trigger == "services_id" ) {
 
-    if ( $serviceDetail[ "preparation" ] ) $formFieldsUpdate[ "modal_info" ][] = $serviceDetail[ "preparation" ];
+        $serviceDetail = $API->DB->from( "services" )
+            ->where( "id", $service )
+            ->fetch();
+
+        $modalExists = false;
+
+        foreach ( $formFieldsUpdate[ "modal_info" ] as $info ) {
+
+            if ( $info == $serviceDetail[ "preparation" ] ) $modalExists = true;
+
+        }
+
+        if ( !$modalExists && $serviceDetail[ "preparation" ] ) $formFieldsUpdate[ "modal_info" ][] = $serviceDetail[ "preparation" ];
+
+    }
 
 }
 
@@ -116,13 +137,17 @@ if ( $requestData->services_id && $requestData->user_id ) {
         "value" => $visitPrice
     ];
 
-//    $formFieldsUpdate[ "end_at" ] = [
-//        "value" => date(
-//            "Y-m-d H:i:s", strtotime(
-//                "+$visitTakeMinutes minutes", strtotime( $requestData->start_at )
-//            )
-//        )
-//    ];
+    if ( $requestData->context->trigger == "start_at" ) {
+
+        $formFieldsUpdate[ "end_at" ] = [
+            "value" => date(
+                "Y-m-d H:i:s", strtotime(
+                    "+$visitTakeMinutes minutes", strtotime( $requestData->start_at )
+                )
+            )
+        ];
+
+    }
 
     if ( !$requestData->id ) {
 
@@ -135,10 +160,7 @@ if ( $requestData->services_id && $requestData->user_id ) {
         ];
 
     }
-
-
-
-
+    
 
 } // if. $requestData->services_id && $requestData->users_id
 

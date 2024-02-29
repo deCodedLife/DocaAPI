@@ -13,6 +13,8 @@ $newSchedule = generateRuleEvents( $workdayInfo );
 
 foreach ( $newSchedule as $schedule ) {
 
+    if ( $workdayInfo[ "is_weekend" ] == 'Y' ) break;
+
     $searchQuery = "
     SELECT * 
     FROM visits 

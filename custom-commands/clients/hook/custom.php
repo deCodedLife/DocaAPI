@@ -24,7 +24,7 @@ if ( $requestData->phone && count( $requestData->phone ) != 11 ) {
         ->where( $filters )
         ->fetch();
 
-    if ( $clientDetails ) {
+    if ( $clientDetails && $requestData->context->trigger == "phone" ) {
 
         $formFieldsUpdate[ "modal_info" ][] = "Пользователь с таким номером уже существует ${clientDetails[ "id" ]} ${clientDetails[ "last_name" ]} ${clientDetails[ "first_name" ]} ${clientDetails[ "patronymic" ]}";
 
@@ -35,7 +35,7 @@ if ( $requestData->phone && count( $requestData->phone ) != 11 ) {
 /**
  * Определение пола по Отчеству
  */
-if ( $requestData->patronymic ) {
+if ( $requestData->patronymic && $requestData->context->trigger == "patronymic" ) {
 
     if ( mb_substr( $requestData->patronymic, -2 ) === "ич" )
         $formFieldsUpdate[ "gender" ][ "value" ] = "M";
