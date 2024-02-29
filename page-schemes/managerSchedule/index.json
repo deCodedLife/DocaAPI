@@ -7,7 +7,7 @@
       "type": "schedule",
       "size": 4,
       "required_permissions": [
-        "manager_schedule"
+        "manager_section"
       ],
       "required_modules": [],
       "settings": {

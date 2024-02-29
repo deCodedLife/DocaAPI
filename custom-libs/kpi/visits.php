@@ -1,24 +1,29 @@
 <?php
 
-$visits_ids = utils\GetVisitsIDsByAuthor(
+$start_at = $start_at ?? $requestData->start_at ?? date( "Y-m-d" );
+$end_at = $end_at ?? $requestData->end_at ?? date( "Y-m-d" );
+$user_id = $user_id ?? $requestData->user_id;
+
+$visits_ids = visits\GetVisitsIDsByAuthor(
     "visits",
-    $requestData->start_at . " 00:00:00",
-    $requestData->end_at . " 23:59:59",
-    $requestData->user_id
+    $start_at . " 00:00:00",
+    $end_at . " 23:59:59",
+    $user_id
 );
 
-$equipment = utils\GetVisitsIDsByAuthor(
+$equipment = visits\GetVisitsIDsByAuthor(
     "equipmentVisits",
-    $requestData->start_at . " 00:00:00",
-    $requestData->end_at . " 23:59:59",
-    $requestData->user_id
+    $start_at . " 00:00:00",
+    $end_at . " 23:59:59",
+    $user_id
 );
 
 $sales_ids = array_merge(
-    utils\getSalesByVisits( "saleVisits", $visits_ids ),
-    utils\getSalesByVisits( "salesEquipmentVisits", $equipment ),
+    visits\getSalesByVisits( "saleVisits", $visits_ids ?? [ 0 ] ),
+    visits\getSalesByVisits( "salesEquipmentVisits", $equipment ?? [ 0 ] ),
 );
 
+if ( count( $sales_ids ) == 0 ) $sales_ids = [ 0 ];
 
 
 $salesInfo = mysqli_fetch_array( mysqli_query( $API->DB_connection, "

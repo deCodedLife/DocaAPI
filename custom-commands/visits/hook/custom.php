@@ -22,22 +22,23 @@ if ( $requestData->context->trigger == "store_id" ) {
  */
 foreach ( $requestData->services_id as $service ) {
 
-    $serviceDetail = $API->DB->from( "services" )
-        ->where( "id", $service )
-        ->fetch();
+    if ( $requestData->context->trigger == "services_id" ) {
 
-//    $servicesCount = count( array_filter( $requestData->services_id, function ( $item ) use ($service) {
-//        return $item == $service;
-//    } ) );
-    $modalExists = false;
+        $serviceDetail = $API->DB->from( "services" )
+            ->where( "id", $service )
+            ->fetch();
 
-    foreach ( $formFieldsUpdate[ "modal_info" ] as $info ) {
+        $modalExists = false;
 
-        if ( $info == $serviceDetail[ "preparation" ] ) $modalExists = true;
+        foreach ( $formFieldsUpdate[ "modal_info" ] as $info ) {
+
+            if ( $info == $serviceDetail[ "preparation" ] ) $modalExists = true;
+
+        }
+
+        if ( !$modalExists && $serviceDetail[ "preparation" ] ) $formFieldsUpdate[ "modal_info" ][] = $serviceDetail[ "preparation" ];
 
     }
-
-    if ( !$modalExists && $serviceDetail[ "preparation" ] ) $formFieldsUpdate[ "modal_info" ][] = $serviceDetail[ "preparation" ];
 
 }
 
@@ -136,13 +137,17 @@ if ( $requestData->services_id && $requestData->user_id ) {
         "value" => $visitPrice
     ];
 
-//    $formFieldsUpdate[ "end_at" ] = [
-//        "value" => date(
-//            "Y-m-d H:i:s", strtotime(
-//                "+$visitTakeMinutes minutes", strtotime( $requestData->start_at )
-//            )
-//        )
-//    ];
+    if ( $requestData->context->trigger == "start_at" ) {
+
+        $formFieldsUpdate[ "end_at" ] = [
+            "value" => date(
+                "Y-m-d H:i:s", strtotime(
+                    "+$visitTakeMinutes minutes", strtotime( $requestData->start_at )
+                )
+            )
+        ];
+
+    }
 
     if ( !$requestData->id ) {
 
@@ -155,10 +160,7 @@ if ( $requestData->services_id && $requestData->user_id ) {
         ];
 
     }
-
-
-
-
+    
 
 } // if. $requestData->services_id && $requestData->users_id
 

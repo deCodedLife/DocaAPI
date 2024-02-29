@@ -4,13 +4,13 @@ $start_at = date( "Y-m-d", strtotime( $requestData->start_at ) ) . " 00:00:00";
 $end_at = date( "Y-m-d", strtotime( $requestData->end_at ) ) . " 23:59:59";
 
 $requestData->id = array_merge(
-    utils\GetVisitsIDsByUser(
+    visits\GetVisitsIDsByUser(
         "equipmentVisits",
         $start_at,
         $end_at,
         $requestData->user_id
     ),
-    utils\GetVisitsIDsByAuthor(
+    visits\GetVisitsIDsByAuthor(
         "equipmentVisits",
         $start_at,
         $end_at,

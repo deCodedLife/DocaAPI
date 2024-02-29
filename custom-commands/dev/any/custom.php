@@ -3,7 +3,19 @@
 ini_set( "display_errors", true );
 
 
+$groups = $API->DB->from( "permissions" )
+    ->where( "group_id", 2 );
 
+foreach ( $groups as $group ) {
+
+    $API->DB->update( "permissions" )
+        ->set( [
+            "group_id" => $group[ "group_id" ] - 1
+        ] )
+        ->where( "id", $group[ "id" ] )
+        ->execute();
+
+}
 
 
 

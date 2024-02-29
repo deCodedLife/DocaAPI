@@ -7,7 +7,7 @@ $relations = [];
 foreach ( $response[ "data" ] as $visit ) $visits_ids[] = $visit[ "id" ];
 if ( empty( $visits_ids ) ) $API->returnResponse( [] );
 
-if ( $requestData->category ) $sqlFilter[ "salesProductsList.product_id" ] = utils\getServicesIds( $requestData->category );
+if ( $requestData->category ) $sqlFilter[ "salesProductsList.product_id" ] = visits\getServicesIds( $requestData->category );
 if ( $requestData->service )  $sqlFilter[ "salesProductsList.product_id" ] = $requestData->service;
 $sqlFilter[ "salesEquipmentVisits.visit_id" ] = $visits_ids;
 $sqlFilter[ "salesList.action" ] = "sell";

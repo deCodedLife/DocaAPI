@@ -1,5 +1,5 @@
 {
-  "required_permissions": [ "operating" ],
+  "required_permissions": [ "operating_section" ],
   "required_modules": [],
   "structure": [
     {

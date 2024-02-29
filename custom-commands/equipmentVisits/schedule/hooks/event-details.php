@@ -1,9 +1,10 @@
-<?php
+<?php //X
 
 
 /**
  * Определение цвета Записи
  */
+
 switch ( $event[ "status" ] ) {
 
     case "moved":
@@ -28,10 +29,6 @@ switch ( $event[ "status" ] ) {
         $event[ "color" ] = "yellow";
         break;
 
-    case "moved":
-        $event[ "color" ] = "orange";
-        break;
-
     case "waited":
         $event[ "color" ] = "green";
         break;
@@ -40,13 +37,14 @@ switch ( $event[ "status" ] ) {
 
 if ( $event[ "status" ] == "ended" && $event[ "is_payed" ] == "Y" ) $event[ "color" ] = "purple";
 
+
 /**
  * Определение иконки Записи
  */
 
-if ( $event[ "is_payed" ] == "Y" ) $event[ "icons" ][] = "rub";
-if ( $event[ "is_earlier" ] == "Y" ) $event[ "icons" ][] = "time";
-
+if ( $event[ "comment" ] != "" && $event[ "comment" ] != "null" ) $event[ "icons" ][] = "more";
+if ( $event[ "is_called" ] === 'N' ) $event[ "icons" ][] = "phone";
+if ( $event[ "is_payed" ] === 'Y' ) $event[ "icons" ][] = "rub";
 
 /**
  * Получение детальной информации о пациенте
@@ -54,6 +52,21 @@ if ( $event[ "is_earlier" ] == "Y" ) $event[ "icons" ][] = "time";
 $clientDetail = $API->DB->from( "clients" )
     ->where( "id", $event[ "client_id" ] )
     ->fetch();
+
+if ( $clientDetail[ "present_first_name" ] ) {
+    $presentInfo = $clientDetail[ "present_first_name" ] . " ";
+    $presentInfo .= $clientDetail[ "present_last_name" ] . " ";
+    $presentInfo .= $clientDetail[ "present_patronymic" ];
+}
+
+/**
+ * Получение детальной информации о сотруднике
+ */
+$profession = $API->DB->from( "professions" )
+    ->innerJoin( "users_professions on users_professions.profession_id = professions.id" )
+    ->where( "users_professions.user_id", $event[ "user_id" ] )
+    ->fetch()[ "title" ] ?? "";
+
 
 /**
  * Получение времени начала и конца Записи
@@ -71,7 +84,10 @@ $eventClientDetails = "№" . $clientDetail[ "id" ] . " " . $clientDetail[ "last
 /**
  * Получение услуг
  */
-$eventServices = $event[ "service_id" ][ "title" ];
+$eventServices = "";
+foreach ( $event[ "services_id" ] as $eventService ) $eventServices .= $eventService[ "title" ] . ", ";
+if ( $eventServices ) $eventServices = substr( $eventServices, 0, -2 );
+
 
 $phone = [];
 if ( $clientDetail[ "phone" ] ) {
@@ -100,27 +116,34 @@ $eventDescription = [ $eventClient, $eventTime ];
  * Заполнение детальной информации о Записи к врачу
  */
 
-$eventDetails = [
-    [
-        "icon" => "schedule",
-        "value" => $eventTime
-    ],
-    [
-        "icon" => "customers",
-        "value" => $eventClientDetails
-    ],
-    $phone,
-    [
-        "icon" => "user",
-        "value" => "Кабинет №" . $event[ "user_id" ][ 0 ][ "title" ]
-    ],
-    [
-        "icon" => "stethoscope",
-        "value" => $eventServices
-    ],
-    [
-        "icon" => "",
-        "value" => $event[ "price" ] . "₽"
-    ]
+if ( $eventTime ) $eventDetails[] = [
+    "icon" => "schedule",
+    "value" => $eventTime
+];
 
+if ( $eventClientDetails ) $eventDetails[] = [
+    "icon" => "customers",
+    "value" => $eventClientDetails
+];
+
+if ( $phone ) $eventDetails[] = $phone;
+
+if ( $profession ) $eventDetails[] = [
+    "icon" => "",
+    "value" => $profession
+];
+
+$eventDetails[] = [
+    "icon" => "",
+    "value" => $event[ "price" ] . "₽"
+];
+
+if ( $presentInfo ) $eventDetails[] = [
+    "icon" => "",
+    "value" => $presentInfo ?? ""
+];
+
+if ( $event[ "comment" ] ) $eventDetails[] = [
+    "icon" => "",
+    "value" => $event[ "comment" ]
 ];

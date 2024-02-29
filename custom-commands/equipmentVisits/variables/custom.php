@@ -3,27 +3,28 @@
 $productsList = [];
 $summary = 0;
 
-foreach ( $requestData->context->object->services_id as $service ) {
 
-    $service = visits\getFullService(
-        $service->value,
-        $requestData->context->object->user_id->value
-    );
-    $productsList[] = $service;
-    $summary += $service[ "price" ];
+$service = $requestData->context->object->service_id;
 
-}
+$service = visits\getFullService(
+    $service->value,
+    $requestData->context->object->user_id->value
+);
+
+$productsList[] = $service;
+$summary += $service[ "price" ];
+
 
 $saleDetails = $API->DB->from( "salesList" )
-    ->innerJoin( "saleVisits on saleVisits.sale_id = salesList.id" )
+    ->innerJoin( "salesEquipmentVisits on salesEquipmentVisits.sale_id = salesList.id" )
     ->where( [
-        "saleVisits.visit_id" => $requestData->id,
+        "salesEquipmentVisits.visit_id" => $requestData->context->object->id,
         "salesList.action" => "sell"
     ] )
     ->fetch();
 
 if ( !$saleDetails ) $API->returnResponse( [
-    "services_id" => $productsList,
+    "service_id" => $productsList,
     "price" => $summary
 ] );
 

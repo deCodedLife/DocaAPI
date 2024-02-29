@@ -87,7 +87,7 @@ if ( $API::$userDetail->role_id == 6 ) {
 
         $equipmentVisit[ "links" ][] = [
             "title" => $visitClientDetail[ "last_name" ] . " " . $visitClientDetail[ "first_name" ] . " " . $visitClientDetail[ "patronymic" ],
-            "link" => "visits/update/" . $event[ "id" ]
+            "link" => "equipmentVisits/update/" . $equipmentVisit[ "id" ]
         ];
 
 

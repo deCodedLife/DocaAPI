@@ -6,35 +6,35 @@
       "href": "dashboard",
       "children": [],
       "icon": "dashboard",
-      "required_permissions":[ "director_schedule" ]
+      "required_permissions": [ "director_schedule" ]
     },
     {
       "title": "Расписание",
       "href": "dashboard",
       "children": [],
       "icon": "schedule",
-      "required_permissions":[ "doctor_schedule" ]
+      "available_permissions": [ "manager_schedule", "doctor_schedule" ]
     },
     {
       "title": "Расписание",
       "href": "managerSchedule",
       "children": [],
       "icon": "schedule",
-      "required_permissions": [ "manager_schedule" ]
+      "required_permissions": [ "manager_section" ]
     },
     {
       "title": "Оборудование",
       "href": "equipmentSchedule",
       "children": [],
       "icon": "health",
-      "required_permissions": [ "equipment_schedule" ]
+      "required_permissions": [ "equipment_section" ]
     },
     {
       "title": "Операционная",
       "href": "operating",
       "children": [],
       "icon": "surgical-instrument",
-      "required_permissions": [ "operating" ]
+      "required_permissions": [ "operating_section" ]
     },
     {
       "title": "Сотрудники",

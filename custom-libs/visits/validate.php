@@ -58,6 +58,12 @@ $store_id    = $requestData->store_id ?? $store_id;
 
 $use_assistant = false;
 
+if ( property_exists( $API->request->data, "cabinet_id" ) ) {
+
+    if ( !$requestData->cabinet_id ) $API->returnResponse( "Выберите кабинет!", 500 );
+
+}
+
 if ( strtotime( $start_at ) > strtotime( $end_at ) )  {
 
     $API->returnResponse( "Некорректно указана дата", 500 );

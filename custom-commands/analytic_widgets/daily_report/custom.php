@@ -45,7 +45,6 @@ $expensesFilter = [];
  */
 
 $salesFilter[ "status" ] = "done";
-$salesFilter[ "action" ] = "sell";
 if ( $requestData->start_price ) $salesFilter[ "summary >= ?" ] = $requestData->start_price;
 if ( $requestData->end_price ) $salesFilter[ "summary <= ?" ] = $requestData->end_price;
 if ( $requestData->start_at ) $salesFilter[ "created_at >= ?" ] = $requestData->start_at . " 00:00:00";
@@ -60,13 +59,18 @@ if ( $requestData->end_at ) $expensesFilter[ "created_at <= ?" ] = $requestData-
 /**
  * Получение продаж
  */
-$salesList = $API->DB->from( "salesList" )
+$visits = $API->DB->from( "salesList" )
     ->leftJoin( "saleVisits ON saleVisits.sale_id = salesList.id" )
-    ->select( null )->select( [ "saleVisits.visit_id", "salesList.summary"  ] )
+    ->select( null )->select( [ "saleVisits.visit_id", "salesList.id", "salesList.summary", "salesList.action"  ] )
     ->where( $salesFilter )
     ->orderBy( "salesList.created_at desc" )
     ->limit( 0 );
 
+$sales = $API->DB->from( "salesList" )
+    ->select( null )->select( [ "salesList.id", "salesList.summary", "salesList.action"  ] )
+    ->where( $salesFilter )
+    ->orderBy( "salesList.created_at desc" )
+    ->limit( 0 );
 /**
  * Получение расходов
  */
@@ -78,12 +82,30 @@ $expenses = $API->DB->from( "expenses" )
  * Обработка продаж
  */
 
-foreach ( $salesList as $sale ) {
+$visitUnq = [];
 
-   if ( $sale[ "visit_id"] != null ) $reportStatistic[ "visits_count" ]++;
-   $reportStatistic[ "visits_sum" ] += $sale[ "summary" ];
+foreach ( $visits as $visit ) {
+
+    $visitUnq[] = $visit[ "visit_id"];
 
 } // foreach. $salesList
+
+$visitUnq = array_unique($visitUnq);
+
+foreach ( $sales as $sale ) {
+
+    if ( $sale[ "action" ] == "sellReturn" ) {
+
+        $reportStatistic[ "visits_sum" ] -= $sale[ "summary" ];
+
+    } else {
+
+        $reportStatistic[ "visits_sum" ] += $sale[ "summary" ];
+
+    }
+
+} // foreach. $salesList
+
 
 /**
  * Обработка расходов
@@ -96,7 +118,7 @@ $API->returnResponse(
     [
         [
             "size" => 1,
-            "value" => round( $reportStatistic[ "visits_count"] ),
+            "value" => count($visitUnq),
             "description" => "Посещений",
             "icon" => "",
             "prefix" => "",

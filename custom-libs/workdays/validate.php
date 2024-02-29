@@ -164,7 +164,10 @@ foreach ( $scheduleRules as $rule ) {
             ) {
 
 //                if ( $ruleEvent[ "user_id" ] === $newEvent[ "user_id" ] )
-                if ( $ruleEvent[ "is_rule" ] != $newEvent[ "is_rule" ] ) continue;
+                if (
+                    $ruleEvent[ "is_rule" ] != $newEvent[ "is_rule" ] &&
+                    $ruleEvent[ "user_id" ] == $newEvent[ "user_id" ]
+                ) continue;
 
 
                 /**
