@@ -325,7 +325,7 @@ foreach ( $services as $service ) {
     $accountedFor = employeesAccountedFor( $serviceDetails, $assistant );
 
     if ( $assistant && !$accountedFor )
-        $API->returnResponse( "Выбранный ассистент ($assistant) не указан в услуге $service", 500 );
+        $API->returnResponse( "Выбранный ассистент не указан в услуге {$serviceDetails[ 'title' ]}", 500 );
 
 
     if ( !$accountedFor )
