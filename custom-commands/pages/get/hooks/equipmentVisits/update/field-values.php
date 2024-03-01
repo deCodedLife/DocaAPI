@@ -5,6 +5,7 @@
  */
 $publicAppPath = $API::$configs[ "paths" ][ "public_app" ];
 
+
 /**
  * Предварительная настройка обязательных параметров
  */
@@ -13,6 +14,9 @@ $requestData->visits_ids = [ $pageDetail[ "row_id" ] ];
 $requestData->store_id = $pageDetail[ "row_detail" ][ "store_id" ]->value;
 $requestData->client_id = $pageDetail[ "row_detail" ][ "client_id" ]->value;
 $requestData->object = "equipmentVisits";
+
+
+$pageScheme[ "structure" ][ 1 ][ "settings" ][ 2 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "id" ] = $requestData->client_id;
 
 /**
  * Вызов скрипта
