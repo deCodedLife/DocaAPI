@@ -6,7 +6,6 @@
 
 
 $resultVisits = $API->sendRequest( "equipmentVisits", "get_queue", (array) $requestData );
-$API->returnResponse( $resultVisits );
 ini_set( "disable_functions", "" );
 
 

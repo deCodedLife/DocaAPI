@@ -17,7 +17,15 @@ foreach ( $groups as $group ) {
 
 }
 
+$sqlQuery = "SELECT * FROM `visits` WHERE (user_id = 141 OR assist_id = 141) AND start_at BETWEEN '2024-02-29 00:00:00' AND '2024-02-29 23:59:59';";
+$visits = mysqli_query(
+    $API->DB_connection,
+    $sqlQuery
+);
+foreach ( $visits  as $visit) {
+    $API->returnResponse($visit);
 
+}
 
 
 //

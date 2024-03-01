@@ -17,7 +17,9 @@ require_once "validate.php";
  */
 foreach ( $existingVisits as $visit ) {
 
+    if ( $visit[ "id" ] == $visitDetail[ "id" ] ) continue;
+
     if ( $visit[ "equipment_id" ] == $visitDetail[ "equipment_id" ] )
-        $API->returnResponse( "Оборудование занято", 500 );
+        $API->returnResponse( [ "Оборудование занято", $visit[ "id" ], $visitDetail[ "id" ] ], 500 );
 
 }
