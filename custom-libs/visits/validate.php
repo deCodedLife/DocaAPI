@@ -50,7 +50,7 @@ if ( isset( $requestData->id ) ) {
 $start_at    = $requestData->start_at ?? $start_at;
 $end_at      = $requestData->end_at ?? $end_at;
 $cabinet     = $requestData->cabinet_id ?? $cabinet;
-$clients     = $requestData->clients_id ?? $clients;
+$clients     = $requestData->clients_id ?? [ $requestData->client_id ] ?? $clients;
 $services    = $requestData->services_id ?? $services;
 $employee    = $requestData->user_id ?? $employee;
 $assistant   = $requestData->assist_id ?? $assistant;
@@ -210,7 +210,7 @@ if ( $objectTable !== "equipmentVisits" ) isCabinetOccupied( $cabinet, $existing
  */
 function isClientBusy( $client, $visits ): int {
 
-    global $API;
+    global $API, $objectTable;
 
     /**
      * Проход по всем посещениях
@@ -221,6 +221,14 @@ function isClientBusy( $client, $visits ): int {
         /**
          * Запрос на получение клиентов у существующих посещений
          */
+        if ( $objectTable == "equipmentVisits" ) {
+
+            if ( $visit[ "client_id" ] == $client ) return $visit[ "user_id" ];
+            continue;
+
+        }
+
+
         $visit_clients = mysqli_query(
             $API->DB_connection,
             "SELECT * FROM visits_clients WHERE visit_id = {$visit[ 'id' ]} AND client_id = $client"
@@ -229,7 +237,7 @@ function isClientBusy( $client, $visits ): int {
         /**
          * Если в выдаче есть клиенты, то они - заняты
          */
-        if ( mysqli_num_rows( $visit_clients ) != 0 ) return $visit[ "id" ];
+        if ( mysqli_num_rows( $visit_clients ) != 0 ) return $visit[ "user_id" ];
 
     }
 
@@ -263,11 +271,11 @@ foreach ( $clients as $client ) {
     $employee_details = mysqli_fetch_array(
         mysqli_query(
             $API->DB_connection,
-            "SELECT last_name FROM users id = $busyVisitID"
+            "SELECT last_name FROM users WHERE id = $busyVisitID"
         )
-    )[0] ?? "";
+    )[0] ?? $busyVisitID;
 
-    $API->returnResponse( "Клиент {$client_details[ 'last_name' ]} на приёме у врача {$employee_details}. Посещение $busyVisitID", 400 );
+    $API->returnResponse( "Клиент {$client_details[ 'last_name' ]} на приёме у врача {$employee_details}", 400 );
 
 } // foreach ( $clients as $client )
 
@@ -363,6 +371,7 @@ function isEmployeeBusy( $employee, $visits ): int {
     return 0;
 
 } // function isEmployeeBusy( $employees, $visits ): bool
+
 
 /**
  * Проверка графика работы исполнителя
