@@ -19,10 +19,11 @@ $userVisits = $API->DB->from( "visits" )
     ->where( [
         "user_id" => $requestData->user_id,
         "visits.start_at >= ?" => date(
-            "Y-m-d", strtotime( "-30 days", strtotime( date( "Y-m-d" ) ) )
-        )
+            "Y-m-d", strtotime( "-30 days", strtotime( date( "Y-m-d" ) ) ),
+        ),
+        "visits.start_at <= ?" => date( "Y-m-d 23:59:59" )
     ] )
-    ->orderBy( "visits.start_at desc" )
+    ->orderBy( "visits.start_at ASC" )
     ->limit( 0 );
 
 

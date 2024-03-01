@@ -1,5 +1,5 @@
 <?php
-
+ini_set( "display_errors", false );
 //global $TABLE;
 //if ( !$TABLE ) $TABLE = "visits";
 
@@ -7,10 +7,12 @@ class Doca
 {
     public $Table = "visits";
 
-    private function getVisitDetails( $visitID ) {
+    private function getVisitDetails( $visitID, $table = null ) {
+
+        if ( !$table ) $table = $this->Table;
 
         global $API;
-        return $API->DB->from( $this->Table )
+        return $API->DB->from( $table )
             ->where( "id", $visitID )
             ->fetch();
 
@@ -92,6 +94,35 @@ class Doca
 
     }
 
+    public function visitsFromTable( $table, $start_at, $end_at ): array {
+
+        global $API, $requestData;
+
+        $combinedVisits = $API->DB->from( $table );
+        $filters = [
+            "$table.start_at > ?" => $start_at,
+            "$table.end_at < ?" => $end_at,
+            "$table.store_id" => (int) $requestData->store_id,
+            "$table.is_active" => "Y",
+            "$table.is_payed" => "N"
+        ];
+
+        if ( $table == "visits" ) {
+
+            $combinedVisits->innerJoin( "visits_clients ON visits_clients.visit_id = $table.id" );
+            $filters[ "visits_clients.client_id" ] = $requestData->client_id;
+
+        } else $filters[ "$table.client_id" ] = $requestData->client_id;
+
+        $combinedVisits->where( $filters );
+
+        foreach ( $combinedVisits as $combinedVisit )
+            $allVisits[] = $this->getVisitDetails( $combinedVisit[ "id" ], $table );
+
+        return $allVisits ?? [];
+
+    }
+
     public function getVisits( &$allVisits, &$saleVisits, $isReturn ): void {
 
         global $API, $requestData, $TABLE;
@@ -113,19 +144,12 @@ class Doca
              * Получение всех, неоплаченных клиентом, посещений
              */
 
-            $combinedVisits = $API->DB->from( $this->Table )
-                ->innerJoin( "visits_clients ON visits_clients.visit_id = visits.id" )
-                ->where( [
-                    "visits.start_at > ?" => $start_at,
-                    "visits.end_at < ?" => $end_at,
-                    "visits.store_id" => (int) $requestData->store_id,
-                    "visits_clients.client_id" => $requestData->client_id,
-                    "visits.is_active" => "Y",
-                    "visits.is_payed" => "N"
-                ] );
+            $allVisits = array_merge(
+                $this->visitsFromTable( "visits", $start_at, $end_at ),
+                $this->visitsFromTable( "equipmentVisits", $start_at, $end_at ),
+            );
 
-            foreach ( $combinedVisits as $combinedVisit )
-                $allVisits[] = $this->getVisitDetails( $combinedVisit[ "id" ] );
+            $API->returnResponse( $allVisits );
 
         } else {
 

@@ -183,6 +183,7 @@ foreach ( $equipmentVisits as $equipmentVisit ) {
             "color" => $equipmentVisit[ "color" ],
             "links" => $equipmentVisit[ "links" ],
             "buttons" => $equipmentVisit[ "buttons" ],
+            "start_at" => date("H:i", strtotime($equipmentVisit["start_at"])),
             "time" => $equipmentVisit[ "time" ],
             "user_id" => $equipmentVisit[ "user_id" ],
             "assist_id" => $equipmentVisit[ "assist_id" ]
@@ -195,15 +196,16 @@ foreach ( $equipmentVisits as $equipmentVisit ) {
 
 foreach ( $response[ "data" ] as $visit ) {
 
+    $visit[ "start_at" ] = substr( $visit[ "time" ], 0, 5);
     if ( $visit[ "user_id" ] == $API::$userDetail->id || $visit[ "assist_id" ] == $API::$userDetail->id ) $filteredEvents[] = $visit;
 
 } // foreach. $response[ "data" ]
 
 
-usort($response[ "data" ], function($a, $b) {
+usort($filteredEvents, function($a, $b) {
 
-    $timeA = strtotime(str_replace(" - ", " ", $a['time']));
-    $timeB = strtotime(str_replace(" - ", " ", $b['time']));
+    $timeA =  $a[ "start_at" ];
+    $timeB =  $b[ "start_at" ];
 
     return $timeA <=> $timeB;
 });
