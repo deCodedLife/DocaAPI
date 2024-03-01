@@ -18,38 +18,46 @@ $equipment = visits\GetVisitsIDsByAuthor(
     $user_id
 );
 
-$sales_ids = array_merge(
-    visits\getSalesByVisits( "saleVisits", $visits_ids ?? [ 0 ] ),
-    visits\getSalesByVisits( "salesEquipmentVisits", $equipment ?? [ 0 ] ),
-);
 
-if ( count( $sales_ids ) == 0 ) $sales_ids = [ 0 ];
+function calculateKPI( $table, $visits_ids ): array {
 
+    global $API;
+    $fetch = mysqli_query( $API->DB_connection, "
+    SELECT 
+        ROUND( SUM( price ), 2 ) as summary,
+        COUNT( id ) as count
+    FROM 
+        $table
+    WHERE 
+        id IN ( " . join( ",", $visits_ids ?? [] ) . " )"
+    );
+    if ( !$fetch ) return [ "summary" => 0, "count" => 0 ];
+    return mysqli_fetch_array( $fetch );
 
-$salesInfo = mysqli_fetch_array( mysqli_query( $API->DB_connection, "
-SELECT 
-    ROUND( SUM( summary ) - SUM( sum_bonus ), 2 ) as summary,
-    COUNT( id ) as count
-FROM 
-	salesList
-WHERE 
-    id IN ( " . join( ",", $sales_ids ) . " ) AND
-	action = 'sell' AND
-	status = 'done'"
-) ) ?? [];
+}
 
+$visitsInfo = calculateKPI( "visits", $visits_ids );
+$equipmentInfo = calculateKPI( "equipmentVisits", $equipment );
+
+$salesInfo = [
+    "summary" =>
+        $visitsInfo[ "summary" ] +
+        $equipmentInfo[ "summary" ],
+    "count" =>
+        $visitsInfo[ "count" ] +
+        $equipmentInfo[ "count" ]
+];
 
 $visits_count = count( $visits_ids ) + count( $equipment );
-$sales_summary = $salesInfo[ "summary" ] ?? 0;
-$sales_count = $salesInfo[ "count" ] ?? 0;
-$services_count = mysqli_fetch_array( mysqli_query( $API->DB_connection, "
+$sales_summary = $salesInfo[ "summary" ];
+$sales_count = $salesInfo[ "count" ];
+
+
+$services_count = ( mysqli_fetch_array( mysqli_query( $API->DB_connection, "
 SELECT 
-    COUNT( salesProductsList.id ) as count
+    COUNT( id ) as count
 FROM 
-	salesList
-INNER JOIN 
-    salesProductsList ON salesProductsList.sale_id = salesList.id
+	visits_services
 WHERE 
-	salesList.id IN ( " . join( ",", $sales_ids ) . " ) AND
-	salesList.action = 'sell'"
-) )[ "count" ] ?? 0;
+	visit_id IN ( " . join( ",", $visits_ids ) . " )"
+) )[ "count" ] ?? 0 ) + count( $equipment );

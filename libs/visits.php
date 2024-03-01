@@ -34,7 +34,6 @@ function GetVisitsIDsByAuthor( $table, $start_at, $end_at, $operator_id ): array
     return sql_constructor( $table, [
         "start_at >= '$start_at'",
         "end_at <= '$end_at'",
-        "status = 'ended'",
         "is_active = 'Y'",
         "is_payed = 'Y'",
         "author_id = $operator_id"
