@@ -186,9 +186,11 @@ foreach ( $equipmentVisits as $equipmentVisit ) {
             "start_at" => date("H:i", strtotime($equipmentVisit["start_at"])),
             "time" => $equipmentVisit[ "time" ],
             "user_id" => $equipmentVisit[ "user_id" ],
+            "dateIssueCoupon" => $equipmentVisit[ "dateIssueCoupon" ],
             "assist_id" => $equipmentVisit[ "assist_id" ]
 
         ];
+
 
     }
 
@@ -201,13 +203,41 @@ foreach ( $response[ "data" ] as $visit ) {
 
 } // foreach. $response[ "data" ]
 
+$is_queue = $API->DB->from( "users" )
+    ->where( "id", $API::$userDetail->id )
+    ->limit(1)
+    ->fetch()[ "is_queue" ];
 
-usort($filteredEvents, function($a, $b) {
+if ( $is_queue == "Y" ) {
 
-    $timeA =  $a[ "start_at" ];
-    $timeB =  $b[ "start_at" ];
+    usort($filteredEvents, function($a, $b) {
+        if ($a[ "dateIssueCoupon" ] != null && $b[ "dateIssueCoupon" ] != null) {
 
-    return $timeA <=> $timeB;
-});
+            return $a["dateIssueCoupon"] <=> $b[ "dateIssueCoupon" ];
+
+        } elseif ($a["dateIssueCoupon"] == null && $b[ "dateIssueCoupon" ] != null) {
+
+            return 1;
+
+        } elseif ($a["dateIssueCoupon"] != null && $b[ "dateIssueCoupon" ] == null) {
+
+            return -1;
+
+        } else {
+            return $a[ "start_at" ] <=> $b[ "start_at" ];
+        }
+    });
+
+} else {
+
+    usort($filteredEvents, function($a, $b) {
+
+        $timeA =  $a[ "start_at" ];
+        $timeB =  $b[ "start_at" ];
+
+        return $timeA <=> $timeB;
+    });
+
+}
 
 $response[ "data" ] = $filteredEvents;

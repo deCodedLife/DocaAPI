@@ -1,5 +1,6 @@
 <?php
 
+$customResponse = [];
 foreach ( $response[ "data" ] as $row ) $services_ids[] = intval( $row[ "value" ] );
 
 $servicesRows = $API->DB->from( "services" )
@@ -14,21 +15,18 @@ foreach ( $servicesRows as $row ) $servicesDetails[ intval( $row[ "id" ] ) ] = $
 foreach ( $customPriceRows as $row ) $servicesDetails[ intval( $row[ "row_id" ] ) ][ "price" ] = $row[ "price" ];
 foreach ( $response[ "data" ] as $key => $row ) {
 
-    if ( $API->request->data->users_id ) {
+    $user = $API->request->data->users_id ?? $API->request->data->user_id ?? null;
+
+    if ( $user ) {
 
         $hasUser = $API->DB->from( "services_users" )
             ->where( [
                 "service_id" => $row[ "id" ],
-                "user_id" => $API->request->data->users_id
+                "user_id" => $user
             ] )
             ->fetch();
 
-        if ( !$hasUser ) {
-
-            unset( $response[ "data" ][ $key ] );
-            continue;
-
-        }
+        if ( !$hasUser ) continue;
 
     }
 
@@ -44,5 +42,9 @@ foreach ( $response[ "data" ] as $key => $row ) {
 
     }
 
+    $customResponse[] = $row;
+
 
 } // foreach. $response[ "data" ]
+
+$response[ "data" ] = $customResponse;

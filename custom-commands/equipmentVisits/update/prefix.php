@@ -13,3 +13,4 @@ if ( !$requestData->is_alert )
     require_once ( $publicAppPath . '/custom-libs/visits/validateEquipment.php' );
 
 }
+if ( $requestData->status == "waited" ) $requestData->dateIssueCoupon = date("Y-m-d H:i:s");

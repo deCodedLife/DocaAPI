@@ -1,63 +1,50 @@
 <?php
 
-$start_at = $start_at ?? $requestData->start_at ?? date( "Y-m-d" );
-$end_at = $end_at ?? $requestData->end_at ?? date( "Y-m-d" );
-$user_id = $user_id ?? $requestData->user_id;
+$requestData->start_at = $requestData->start_at ?? date( "Y-m-d" );
+$requestData->end_at = $requestData->end_at ?? date( "Y-m-d" );
+$requestData->user_id = $user_id ?? $requestData->user_id;
 
-$visits_ids = visits\GetVisitsIDsByAuthor(
-    "visits",
-    $start_at . " 00:00:00",
-    $end_at . " 23:59:59",
-    $user_id
-);
+/*
+ * Запрос данных для расчёта KPI
+ */
+function VisitsStat( $table ): array {
 
-$equipment = visits\GetVisitsIDsByAuthor(
-    "equipmentVisits",
-    $start_at . " 00:00:00",
-    $end_at . " 23:59:59",
-    $user_id
-);
+    global $API, $requestData;
 
-
-function calculateKPI( $table, $visits_ids ): array {
-
-    global $API;
-    $fetch = mysqli_query( $API->DB_connection, "
-    SELECT 
-        ROUND( SUM( price ), 2 ) as summary,
-        COUNT( id ) as count
-    FROM 
-        $table
-    WHERE 
-        id IN ( " . join( ",", $visits_ids ?? [] ) . " )"
+    $visits_ids = visits\GetVisitsIDsByAuthor(
+        $table,
+        $requestData->start_at . " 00:00:00",
+        $requestData->end_at . " 23:59:59",
+        $requestData->user_id
     );
-    if ( !$fetch ) return [ "summary" => 0, "count" => 0 ];
-    return mysqli_fetch_array( $fetch );
+
+    $request = $API->DB->from( $table )
+        ->select( null )
+        ->select( [ "COUNT( $table.id ) as count", "ROUND( SUM( $table.price ), 2 ) as summary" ] )
+        ->where( "id", $visits_ids );
+
+    switch ( $table )
+    {
+        case "visits":
+            $services = $API->DB->from( "visits_services" )
+                ->select( null )
+                ->select( "COUNT( visits_services.id ) as services" )
+                ->where( "visit_id", $visits_ids )
+                ->fetch()[ "services" ] ?? 0;
+            $request->select( "$services as services" );
+            break;
+        case "equipmentVisits":
+            $request->select( [ "COUNT( equipmentVisits.service_id ) as services" ] );
+            break;
+    }
+
+    return $request->fetch() ?? [ "count" => 0, "services" => 0, "summary" => 0 ];
 
 }
 
-$visitsInfo = calculateKPI( "visits", $visits_ids );
-$equipmentInfo = calculateKPI( "equipmentVisits", $equipment );
+$visitsInfo = VisitsStat( "visits" );
+$equipmentInfo = VisitsStat( "equipmentVisits" );
 
-$salesInfo = [
-    "summary" =>
-        $visitsInfo[ "summary" ] +
-        $equipmentInfo[ "summary" ],
-    "count" =>
-        $visitsInfo[ "count" ] +
-        $equipmentInfo[ "count" ]
-];
-
-$visits_count = count( $visits_ids ) + count( $equipment );
-$sales_summary = $salesInfo[ "summary" ];
-$sales_count = $salesInfo[ "count" ];
-
-
-$services_count = ( mysqli_fetch_array( mysqli_query( $API->DB_connection, "
-SELECT 
-    COUNT( id ) as count
-FROM 
-	visits_services
-WHERE 
-	visit_id IN ( " . join( ",", $visits_ids ) . " )"
-) )[ "count" ] ?? 0 ) + count( $equipment );
+$visits_count = $visitsInfo[ "count" ] + $equipmentInfo[ "count" ];
+$sales_summary = $visitsInfo[ "summary" ] + $equipmentInfo[ "summary" ];
+$services_count = $visitsInfo[ "services" ] + $equipmentInfo[ "services" ];

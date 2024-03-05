@@ -2,30 +2,48 @@
 
 ini_set( "display_errors", true );
 
+$start_at = date( "Y-01-01 00:00:00" );
+$end_at = date( "Y-m-d 23:59:59" );
 
-$groups = $API->DB->from( "permissions" )
-    ->where( "group_id", 2 );
+$request = $API->DB->from( "visits" )
+    ->innerJoin( "visits_clients ON visits_clients.visit_id = visits.id" )
+    ->where( [
+        "visits.start_at > ?" => $start_at,
+        "visits.start_at < ? " => $end_at,
+        "visits.store_id" => 62,
+        "visits.is_active" => "Y",
+        "visits.is_payed" => "N"
+    ] );
 
-foreach ( $groups as $group ) {
+//$API->returnResponse( $request->getQuery(false) );
+//$API->returnResponse( $request->fetchColumn( 0 ) );
+//$API->returnResponse( $request->fetchAll( "id" ) );
+$API->returnResponse( array_keys( $request->fetchAll( 'id' ) ) );
 
-    $API->DB->update( "permissions" )
-        ->set( [
-            "group_id" => $group[ "group_id" ] - 1
-        ] )
-        ->where( "id", $group[ "id" ] )
-        ->execute();
-
-}
-
-$sqlQuery = "SELECT * FROM `visits` WHERE (user_id = 141 OR assist_id = 141) AND start_at BETWEEN '2024-02-29 00:00:00' AND '2024-02-29 23:59:59';";
-$visits = mysqli_query(
-    $API->DB_connection,
-    $sqlQuery
-);
-foreach ( $visits  as $visit) {
-    $API->returnResponse($visit);
-
-}
+//
+//$groups = $API->DB->from( "permissions" )
+//    ->where( "group_id", 2 );
+//
+//foreach ( $groups as $group ) {
+//
+//    $API->DB->update( "permissions" )
+//        ->set( [
+//            "group_id" => $group[ "group_id" ] - 1
+//        ] )
+//        ->where( "id", $group[ "id" ] )
+//        ->execute();
+//
+//}
+//
+//$sqlQuery = "SELECT * FROM `visits` WHERE (user_id = 141 OR assist_id = 141) AND start_at BETWEEN '2024-02-29 00:00:00' AND '2024-02-29 23:59:59';";
+//$visits = mysqli_query(
+//    $API->DB_connection,
+//    $sqlQuery
+//);
+//foreach ( $visits  as $visit) {
+//    $API->returnResponse($visit);
+//
+//}
 
 
 //

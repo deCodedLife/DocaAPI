@@ -18,8 +18,9 @@ require_once "validate.php";
  */
 foreach ( $existingVisits as $visit ) {
 
+    if ( $visit[ "is_active" ] === 'N' ) continue;
     if ( $visit[ "id" ] == $visitDetail[ "id" ] ) continue;
-    if ( !$existingVisits[ "assist_id" ] ) continue;
+    if ( !$visit[ "assist_id" ] ) continue;
 
     if ( $visit[ "equipment_id" ] == $requestData->equipment_id ?? $visitDetail[ "equipment_id" ] )
         $API->returnResponse( "Оборудование занято {$visit[ "id" ]}", 500 );

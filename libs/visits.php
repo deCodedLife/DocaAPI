@@ -2,42 +2,69 @@
 
 namespace visits;
 
-function sql_constructor( string $table, array $request ): array
+function Base(
+    string $table,
+    string $start_at,
+    string $end_at
+): \Envms\FluentPDO\Queries\Common
 {
     global $API;
-
-    $visitsList = mysqli_query( $API->DB_connection, "
-    SELECT $table.id as id
-    FROM $table
-    WHERE \n" . join( " AND\n\t", $request ) );
-
-    foreach ( $visitsList as $visit ) $visits_ids[] = intval( $visit[ "id" ] );
-    return $visits_ids ?? [];
+    return $API->DB->from( $table )
+        ->where( [
+            "$table.start_at > ?" => $start_at,
+            "$table.start_at < ?" => $end_at,
+            "$table.is_active" => "Y",
+        ] );
 }
 
 function GetVisitsIDsByUser( $table, $start_at, $end_at, $user_id ): array
 {
     global $API;
-    return sql_constructor( $table, [
-        "start_at >= '$start_at'",
-        "end_at <= '$end_at'",
-        "is_active = 'Y'",
-        "status = 'ended'",
-        "is_payed = 'Y'",
-        "( user_id = $user_id OR assist_id = $user_id )"
-    ]);
+    $request = Base( $table, $start_at . " 00:00:00", $end_at . " 23:59:59"  )
+        ->where( "( user_id = $user_id OR assist_id = $user_id )" )
+        ->where([
+            "is_payed" => 'Y',
+            "status" => "ended",
+            "author_id" => $user_id
+        ])
+        ->fetchAll( "id" ) ?? [];
+    $request = array_keys( $request );
+    if ( empty( $request ) ) $request = [0];
+    return $request;
 }
 
 function GetVisitsIDsByAuthor( $table, $start_at, $end_at, $operator_id ): array
 {
     global $API;
-    return sql_constructor( $table, [
-        "start_at >= '$start_at'",
-        "end_at <= '$end_at'",
-        "is_active = 'Y'",
-        "is_payed = 'Y'",
-        "author_id = $operator_id"
-    ]);
+    $request = $API->DB->from( $table )
+        ->where([
+            "start_at > ?" => $start_at . " 00:00:00",
+            "end_at < ?" => $end_at . " 23:59:59",
+            "is_active" => 'Y',
+            "is_payed" => 'Y',
+            "author_id" => $operator_id
+        ])->fetchAll( 'id' ) ?? [];
+    $request = array_keys( $request );
+    if ( empty( $request ) ) $request = [0];
+    return $request;
+}
+
+function VisitServices( array $visits_ids ) : array
+{
+    global $API;
+    $servicesList = $API->DB->from( "services" )
+        ->rightJoin( "visits_services ON visits_services.service_id = services.id" )
+        ->where( "visits_services.visit_id", $visits_ids );
+    return $servicesList->fetchAll() ?? [];
+}
+
+function EquipmentServices( array $visits_ids ) : array
+{
+    global $API;
+    $servicesList = $API->DB->from( "services" )
+        ->rightJoin( "equipmentVisits ON equipmentVisits.service_id = services.id" )
+        ->where( "equipmentVisits.id", $visits_ids );
+    return $servicesList->fetchAll() ?? [];
 }
 
 function getSalesByVisits( string $table, array $visits_ids ): array
@@ -55,8 +82,8 @@ function getSalesByVisits( string $table, array $visits_ids ): array
     return array_unique( $sales_ids ?? [] );
 }
 
-function getServicesIds( $category ): array {
-
+function getServicesIds( $category ): array
+{
     global $API;
 
     $sqlFilter = "SELECT id FROM services WHERE category_id = $category";
@@ -68,8 +95,8 @@ function getServicesIds( $category ): array {
 
 }
 
-function getFullService( $id, $user_id = null ) {
-
+function getFullService( $id, $user_id = null )
+{
     global $API;
 
     $innerPropertyRows = $API->sendRequest( "services", "get", [

@@ -2,10 +2,6 @@
 
 //ini_set( "display_errors", true );
 
-//if ( $API::$userDetail->id === 260 ) {
-//    $pageScheme[ "" ]
-//}
-
 
 /**
  * Отключение кнопок "Удалить посещение", "Сохранить" и "Оплатить"

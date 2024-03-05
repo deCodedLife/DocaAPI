@@ -767,6 +767,19 @@
       "use_in_commands": [
         "get"
       ]
+    },
+    {
+      "title": "Дата выдачи талона",
+      "article": "dateIssueCoupon",
+      "data_type": "datetime",
+      "field_type": "datetime",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "get",
+        "update"
+      ]
     }
   ]
 }
