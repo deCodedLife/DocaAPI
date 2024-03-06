@@ -27,12 +27,26 @@ foreach ( $response[ "data" ] as $advertise ) {
         $visits = $API->DB->from( "visits" )
             ->select( null )
             ->select( [ "COUNT( id ) as count", "ROUND( SUM( price ), 2 ) as summary" ] )
-            ->where( "client_id", $clientsIds );
+            ->where( [ "client_id" => $clientsIds ] );
+
+        $cancelVisits = $API->DB->from( "visits" )
+            ->select( null )
+            ->select( "COUNT( id ) as count" )
+            ->where( [ "client_id" => $clientsIds, "status" => "canceled" ] );
+
+        $endedVisits = $API->DB->from( "visits" )
+            ->select( null )
+            ->select( [ "COUNT( id ) as count" ] )
+            ->where( [ "client_id" => $clientsIds, "status" => "ended" ] );
 
         $visits = $visits->fetch();
+        $cancelVisits = $cancelVisits->fetch();
+        $endedVisits = $endedVisits->fetch();
 
     } else {
 
+        $cancelVisits[ "count" ] = 0;
+        $endedVisits[ "count" ] = 0;
         $visits[ "count" ] = 0;
         $visits[ "summary" ] = 0;
 
@@ -47,9 +61,9 @@ foreach ( $response[ "data" ] as $advertise ) {
         "store_id" => $advertise[ "store_id" ],
         "advertise_id" => $advertise[ "advertise_id" ],
         "clientsCount" => count($clientsIds),
-        "recordedCount" => 1,
-        "extantCount" => 1,
-        "underdoneCount" => 1,
+        "recordedCount" => $visits[ "count" ] - $endedVisits[ "count" ] - $cancelVisits[ "count" ],
+        "extantCount" => $endedVisits[ "count" ],
+        "underdoneCount" => $cancelVisits[ "count" ],
         "visitsCount" => $visits[ "count" ],
         "price" => $visits[ "summary" ]
 

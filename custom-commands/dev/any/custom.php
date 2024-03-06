@@ -2,23 +2,37 @@
 
 ini_set( "display_errors", true );
 
-$start_at = date( "Y-01-01 00:00:00" );
-$end_at = date( "Y-m-d 23:59:59" );
+//$visits = $API->DB->from( "visits" )
+//    ->select( [ "id", "price" ] )
+//    ->fetchAll( "client_id" );
 
-$request = $API->DB->from( "visits" )
-    ->innerJoin( "visits_clients ON visits_clients.visit_id = visits.id" )
-    ->where( [
-        "visits.start_at > ?" => $start_at,
-        "visits.start_at < ? " => $end_at,
-        "visits.store_id" => 62,
-        "visits.is_active" => "Y",
-        "visits.is_payed" => "N"
-    ] );
 
-//$API->returnResponse( $request->getQuery(false) );
-//$API->returnResponse( $request->fetchColumn( 0 ) );
-//$API->returnResponse( $request->fetchAll( "id" ) );
-$API->returnResponse( array_keys( $request->fetchAll( 'id' ) ) );
+//$visits = $API->DB->from( "visits" )
+//    ->select( null )
+//    ->select( "COUNT( id )" )
+//    ->where( "is_active", 'N' )
+//    ->fetch();
+
+$API->returnResponse( $visits );
+
+//н " if is_active = N"
+//$start_at = date( "Y-01-01 00:00:00" );
+//$end_at = date( "Y-m-d 23:59:59" );
+//
+//$request = $API->DB->from( "visits" )
+//    ->innerJoin( "visits_clients ON visits_clients.visit_id = visits.id" )
+//    ->where( [
+//        "visits.start_at > ?" => $start_at,
+//        "visits.start_at < ? " => $end_at,
+//        "visits.store_id" => 62,
+//        "visits.is_active" => "Y",
+//        "visits.is_payed" => "N"
+//    ] );
+//
+////$API->returnResponse( $request->getQuery(false) );
+////$API->returnResponse( $request->fetchColumn( 0 ) );
+////$API->returnResponse( $request->fetchAll( "id" ) );
+//$API->returnResponse( array_keys( $request->fetchAll( 'id' ) ) );
 
 //
 //$groups = $API->DB->from( "permissions" )
