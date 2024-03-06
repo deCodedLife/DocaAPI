@@ -55,14 +55,17 @@ if ( $requestData->sum_bonus > $clientDetails[ "bonuses" ] )
  */
 foreach ( $requestData->visits_ids ?? [] as $key => $visits ) {
 
+    if ( empty( $visits ) ) continue;
+
     $visitDetails = $API->DB->from( $key )
-        ->where( "id", $visits[0] )
+        ->where( "id", $visits[0] ?? 0 )
         ->fetch();
+
 
     $visitDate = explode( " ", $visitDetails[ "start_at" ] );
 
     if ( $visitDate[ 0 ] != date( "Y-m-d" ) )
-        $API->returnResponse( "Оплаты совершаются только день в день", 500 );
+        $API->returnResponse( "Оплаты совершаются только день в день,{$visitDate[0]}", 500 );
 
 } // foreach ( $requestData->visits_ids ?? [] as $visit )
 

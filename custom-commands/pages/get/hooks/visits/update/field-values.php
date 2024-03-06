@@ -106,6 +106,16 @@ if ( $visitDetails[ "row_detail" ][ "is_payed" ] == "Y" || ( $saleDetails && $sa
     foreach ( $receipt as $product )
         $formFieldValues[ "products_display" ][ "value" ][] = $product[ "title" ];
 
-    $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "products" ] = $formFieldsUpdate[ "products" ] ?? [];
+    $products = AddToReceipt( $services ?? [], $discountPerProduct );
+
+    $products = array_merge(
+        AddToReceipt( $products ?? [], $discountPerProduct ),
+        $products ?? []
+    );
+
+    $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "products" ] = $products;
+
+    foreach ( $services as $service )
+        $formFieldsUpdate[ "products_display" ][ "value" ][] = $service[ "title" ];
 
 }
