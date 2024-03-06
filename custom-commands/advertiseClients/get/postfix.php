@@ -8,18 +8,35 @@
 $filter = [];
 if ( $requestData->start_at ) $filter[ "created_at >= ?" ] = $requestData->start_at . " 00:00:00";
 if ( $requestData->end_at ) $filter[ "created_at <= ?" ] = $requestData->end_at . " 23:59:59";
-$filter[ "advertise_id != ?" ] = "null";
-
-$clients = $API->DB->from( "clients" )
-    ->select( null )
-    ->select( [ "id", "advertise_id" ] )
-    ->where( $filter );
-
-$API->returnResponse($clients->fetchAll( "id" ));
 
 $advertiseReturn = [];
 
 foreach ( $response[ "data" ] as $advertise ) {
+
+    $filter[ "advertise_id" ] = $advertise[ "id" ];
+
+    $clientsIds = $API->DB->from( "clients" )
+        ->select( null )
+        ->select( "id" )
+        ->where( $filter );
+
+    $clientsIds = array_keys( $clientsIds->fetchAll( "id" ) );
+
+    if ( !empty( $clientsIds ) ) {
+
+        $visits = $API->DB->from( "visits" )
+            ->select( null )
+            ->select( [ "COUNT( id ) as count", "ROUND( SUM( price ), 2 ) as summary" ] )
+            ->where( "client_id", $clientsIds );
+
+        $visits = $visits->fetch();
+
+    } else {
+
+        $visits[ "count" ] = 0;
+        $visits[ "summary" ] = 0;
+
+    }
 
     $advertiseReturn[] = [
 
@@ -29,12 +46,12 @@ foreach ( $response[ "data" ] as $advertise ) {
         "end_at" => $advertise[ "end_at" ],
         "store_id" => $advertise[ "store_id" ],
         "advertise_id" => $advertise[ "advertise_id" ],
-        "clientsCount" => 1,
+        "clientsCount" => count($clientsIds),
         "recordedCount" => 1,
         "extantCount" => 1,
         "underdoneCount" => 1,
-        "visitsCount" => 1,
-        "price" => 1
+        "visitsCount" => $visits[ "count" ],
+        "price" => $visits[ "summary" ]
 
     ];
 
