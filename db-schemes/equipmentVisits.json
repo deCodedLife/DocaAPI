@@ -210,6 +210,13 @@
       "type": "datetime",
       "default": "CURRENT_TIMESTAMP",
       "is_required": "N"
+    },
+    {
+      "title": "Дата выдачи талона",
+      "type": "datetime",
+      "default": null,
+      "is_required": "N",
+      "article": "dateIssueCoupon"
     }
   ],
   "rows_key": "",

@@ -2,10 +2,6 @@
 
 //ini_set( "display_errors", true );
 
-//if ( $API::$userDetail->id === 260 ) {
-//    $pageScheme[ "" ]
-//}
-
 
 /**
  * Отключение кнопок "Удалить посещение", "Сохранить" и "Оплатить"
@@ -113,7 +109,7 @@ foreach ( $pageDetail[ "row_detail" ][ "services_id" ] as $service ) {
 } // foreach. $pageDetail[ "row_detail" ][ "services_id" ]
 
 
-if ( $API::$userDetail->role_id == 6 ) {
+if ( !$API->validatePermissions( [ "manager_schedule" ], true ) ) {
 
     unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ] );
     unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 5 ] );
@@ -124,7 +120,7 @@ if ( $API::$userDetail->role_id == 6 ) {
 
 }
 
-if ( $pageDetail[ "row_detail" ][  "is_called" ] === true ) {
+if ( $pageDetail[ "row_detail" ][ "is_called" ] === true ) {
 
     $pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 11 ] = [
 

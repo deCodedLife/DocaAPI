@@ -4,7 +4,7 @@
  * Получение информации об услугах
  */
 
-if ( $API::$userDetail->role_id != 6 ) {
+if ( $API->validatePermissions( [ "manager_schedule" ], true ) ) {
 
     $servicesInfo = [];
     $visitServices = [];
@@ -44,4 +44,3 @@ if ( $API::$userDetail->role_id != 6 ) {
     } // if ( $clientEntity )
 
 }
-

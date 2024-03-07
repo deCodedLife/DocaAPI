@@ -2,22 +2,72 @@
 
 ini_set( "display_errors", true );
 
-
-$groups = $API->DB->from( "permissions" )
-    ->where( "group_id", 2 );
-
-foreach ( $groups as $group ) {
-
-    $API->DB->update( "permissions" )
-        ->set( [
-            "group_id" => $group[ "group_id" ] - 1
-        ] )
-        ->where( "id", $group[ "id" ] )
-        ->execute();
-
-}
+$visits = $API->DB->from( "visits" )
+    ->select( null )
+    ->select( [
+        "SUM( CASE WHEN is_active = 'Y' THEN 1 ELSE 0 END ) AS active",
+        "SUM( CASE WHEN is_active = 'N' THEN 1 ELSE 0 END ) AS not_active",
+        "SUM( CASE WHEN status = 'ended' THEN 1 ELSE 0 END ) AS ended",
+        "SUM( CASE WHEN status = 'canceled' THEN 1 ELSE 0 END ) AS canceled",
+        "SUM( CASE WHEN is_payed = 'Y' THEN price ELSE 0 END ) as price",
+        "client_id"
+    ] )
+    ->groupBy( "client_id" )
+    ->fetchAll( "client_id" );
 
 
+//$visits = $API->DB->from( "visits" )
+//    ->select( null )
+//    ->select( "COUNT( id )" )
+//    ->where( "is_active", 'N' )
+//    ->fetch();
+
+//$API->returnResponse( $visits->getQuery(false) );
+$API->returnResponse( $visits );
+
+//н " if is_active = N"
+//$start_at = date( "Y-01-01 00:00:00" );
+//$end_at = date( "Y-m-d 23:59:59" );
+//
+//$request = $API->DB->from( "visits" )
+//    ->innerJoin( "visits_clients ON visits_clients.visit_id = visits.id" )
+//    ->where( [
+//        "visits.start_at > ?" => $start_at,
+//        "visits.start_at < ? " => $end_at,
+//        "visits.store_id" => 62,
+//        "visits.is_active" => "Y",
+//        "visits.is_payed" => "N"
+//    ] );
+//
+////$API->returnResponse( $request->getQuery(false) );
+////$API->returnResponse( $request->fetchColumn( 0 ) );
+////$API->returnResponse( $request->fetchAll( "id" ) );
+//$API->returnResponse( array_keys( $request->fetchAll( 'id' ) ) );
+
+//
+//$groups = $API->DB->from( "permissions" )
+//    ->where( "group_id", 2 );
+//
+//foreach ( $groups as $group ) {
+//
+//    $API->DB->update( "permissions" )
+//        ->set( [
+//            "group_id" => $group[ "group_id" ] - 1
+//        ] )
+//        ->where( "id", $group[ "id" ] )
+//        ->execute();
+//
+//}
+//
+//$sqlQuery = "SELECT * FROM `visits` WHERE (user_id = 141 OR assist_id = 141) AND start_at BETWEEN '2024-02-29 00:00:00' AND '2024-02-29 23:59:59';";
+//$visits = mysqli_query(
+//    $API->DB_connection,
+//    $sqlQuery
+//);
+//foreach ( $visits  as $visit) {
+//    $API->returnResponse($visit);
+//
+//}
 
 
 //

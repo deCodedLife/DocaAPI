@@ -14,6 +14,8 @@ foreach ( $requestData->context->object->services_id as $service ) {
 
 }
 
+$API->returnResponse( $requestData->context->object );
+
 $saleDetails = $API->DB->from( "salesList" )
     ->innerJoin( "saleVisits on saleVisits.sale_id = salesList.id" )
     ->where( [
@@ -37,6 +39,7 @@ foreach ( $saleProducts as $saleProduct ) {
 
     $service = visits\getFullService( $saleProduct[ "product_id" ] );
 
+    $service[ "title" ] = $saleProduct[ "title" ];
     $service[ "price" ] = $saleProduct[ "cost" ];
     $service[ "discount" ] = round( $saleProduct[ "discount" ], 2 );
     $service[ "with_discount" ] = round( $saleProduct[ "cost" ] - $saleProduct[ "discount" ], 2 );

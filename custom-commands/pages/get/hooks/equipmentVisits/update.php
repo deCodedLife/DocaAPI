@@ -70,3 +70,14 @@ if ( $pageDetail[ "row_detail" ][ "status" ]->value === "ended" ) {
  */
 if ( $clientDetail[ "is_contract" ] == "Y" )
     unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 2 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 0 ] );
+
+if ( !$API->validatePermissions( [ "manager_schedule" ], true ) ) {
+
+    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ] );
+    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 5 ] );
+    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 6 ] );
+    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 7 ] );
+    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 8 ] );
+    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 9 ] );
+
+}

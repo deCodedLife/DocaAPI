@@ -267,8 +267,9 @@
               "type": "form",
               "size": 4,
               "settings": {
+                "close_after_submit": false,
                 "object": "clients",
-                "command": "get",
+                "command": "update",
                 "areas": [
                   {
                     "size": 2,
@@ -341,16 +342,19 @@
                       "title": "Печать договора",
                       "background": "dark",
                       "data": {
-                        "save_to": {
+                        "script": {
                           "object": "clientContracts",
+                          "command": "add",
                           "properties": {
-                            "row_id": ":client_id"
+                            "client_id": ":clients_id",
+                            "user_id": ":user_id",
+                            "document_id": "17"
                           }
                         },
                         "is_edit": true,
-                        "document_article": "services_contract",
-                        "scheme_name": "clients",
-                        "row_id": ":client_id"
+                        "document_article": "17",
+                        "scheme_name": "visits",
+                        "row_id": ":id"
                       }
                     }
                   },
@@ -363,8 +367,16 @@
                       "page": "tasks/add",
                       "context": {
                         "form": "clients",
-                        "row_id": ":client_id"
+                        "row_id": ":clients_id"
                       }
+                    }
+                  },
+                  {
+                    "type": "submit",
+                    "settings": {
+                      "title": "Сохранить",
+                      "background": "dark",
+                      "href": "dashboard"
                     }
                   }
                 ]

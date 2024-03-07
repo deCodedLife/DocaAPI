@@ -4,39 +4,33 @@
  * Получение детальной информации о посещении
  */
 
-$visitDetails = $API->DB->from( "visits" )
-    ->where( "id", $pageDetail[ "row_id" ] )
-    ->limit( 1 )
-    ->fetch();
-
-/**
- * Получение id клиента
- */
-$client = $API->DB->from( "visits_clients" )
-    ->where( "visit_id", $pageDetail[ "row_id" ] )
-    ->limit( 1 )
-    ->fetch();
-
+$pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "employee_id" ] = intval( $API::$userDetail->id );
+$pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "id" ] = $pageDetail[ "row_id" ];
 $pageScheme[ "structure" ][ 1 ][ "settings" ][ 2 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "id" ] = $pageDetail[ "row_detail" ][ "client_id" ];
-
-/**
- * Подключение общего скрипта обработки продаж
- */
-$publicAppPath = $API::$configs[ "paths" ][ "public_app" ];
+$pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "visits_ids" ] = [
+    "visits" => [ $pageDetail[ "row_id" ] ],
+    "equipmentVisits" => []
+];
+$pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "object" ] = "equipmentVisits";
+$client_id = array_slice( $pageDetail[ "row_detail" ][ "clients_id" ], 0 )[ 0 ]->value ?? 0;
 
 /**
  * Предварительная настройка обязательных параметров
  */
 $requestData->id = $pageDetail[ "row_id" ];
-$requestData->visits_ids = [ $pageDetail[ "row_id" ] ];
+$requestData->visits_ids = [
+    "visits" => [ $pageDetail[ "row_id" ] ],
+    "equipmentVisits" => []
+];
 $requestData->store_id = $pageDetail[ "row_detail" ][ "store_id" ]->value;
-$requestData->client_id = $client[ "client_id" ];
+$requestData->client_id = $client_id;
+
 
 /**
  * Вызов скрипта
  */
-require_once( $publicAppPath . '/custom-libs/sales/include.php' );
-require_once( $publicAppPath . '/custom-libs/sales/projects/doca/business_logic.php' );
+$publicAppPath = $API::$configs[ "paths" ][ "public_app" ];
+require_once( $publicAppPath . '/custom-libs/sales/business_logic.php' );
 
 
 /**
@@ -45,10 +39,10 @@ require_once( $publicAppPath . '/custom-libs/sales/projects/doca/business_logic.
 $formFieldValues = [
     "sum_cash" => $amountOfPhysicalPayments,
     "action" => "sell",
-    "client_id" => $requestData->client_id,
+    "store_id" => $pageDetail[ "row_detail" ][ "store_id" ]->value,
+    "client_id" => $client_id,
     "online_receipt" => true,
-    "summary" => $saleSummary,
-    "visits_ids" => [ "value" => [ $pageDetail[ "row_id" ] ] ]
+    "summary" => $saleSummary
 ];
 
 
@@ -69,7 +63,7 @@ $saleDetails = $API->DB->from( "salesList" )
  * Заполнение полей из продаж
  */
 
-if ( $visitDetails[ "is_payed" ] == "Y" || ( $saleDetails && $saleDetails[ "status" ] != "error" ) ) {
+if ( $pageDetail[ "row_detail" ][ "is_payed" ] == "Y" || ( $saleDetails && $saleDetails[ "status" ] != "error" ) ) {
 
     /**
      * Заполнение полей запросом в таблицу
@@ -103,13 +97,12 @@ if ( $visitDetails[ "is_payed" ] == "Y" || ( $saleDetails && $saleDetails[ "stat
 
 } else {
 
-    foreach ( $formFieldsUpdate[ "products" ][ "value" ] as $product )
+    $receipt = array_merge( $services, $products );
+
+    foreach ( $receipt as $product )
         $formFieldValues[ "products_display" ][ "value" ][] = $product[ "title" ];
 
-    $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "products" ] = $formFieldsUpdate[ "products" ];
+    $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "products" ] = AddToReceipt( $receipt, $discountPerProduct );
 
 }
 
-$pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "employee_id" ] = intval( $API::$userDetail->id );
-$pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "visits_ids" ] = [ $pageDetail[ "row_id" ] ];
-$pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "id" ] = $pageDetail[ "row_id" ];

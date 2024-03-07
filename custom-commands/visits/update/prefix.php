@@ -31,3 +31,4 @@ if ( !$requestData->clients_id )
 
 }
 
+if ( $requestData->status == "waited" ) $requestData->dateIssueCoupon = date("Y-m-d H:i:s");
