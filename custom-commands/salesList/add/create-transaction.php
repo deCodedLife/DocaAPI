@@ -89,6 +89,8 @@ foreach ( $requestData->products as $product ) {
     $product = (array) $product;
     $product[ "sale_id" ] = $saleID;
 
+    if ( !$product[ "product_id" ] ) continue;
+
     $API->DB->insertInto( "salesProductsList" )
         ->values( $product )
         ->execute();

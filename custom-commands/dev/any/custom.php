@@ -2,9 +2,18 @@
 
 ini_set( "display_errors", true );
 
-//$visits = $API->DB->from( "visits" )
-//    ->select( [ "id", "price" ] )
-//    ->fetchAll( "client_id" );
+$visits = $API->DB->from( "visits" )
+    ->select( null )
+    ->select( [
+        "SUM( CASE WHEN is_active = 'Y' THEN 1 ELSE 0 END ) AS active",
+        "SUM( CASE WHEN is_active = 'N' THEN 1 ELSE 0 END ) AS not_active",
+        "SUM( CASE WHEN status = 'ended' THEN 1 ELSE 0 END ) AS ended",
+        "SUM( CASE WHEN status = 'canceled' THEN 1 ELSE 0 END ) AS canceled",
+        "SUM( CASE WHEN is_payed = 'Y' THEN price ELSE 0 END ) as price",
+        "client_id"
+    ] )
+    ->groupBy( "client_id" )
+    ->fetchAll( "client_id" );
 
 
 //$visits = $API->DB->from( "visits" )
@@ -13,6 +22,7 @@ ini_set( "display_errors", true );
 //    ->where( "is_active", 'N' )
 //    ->fetch();
 
+//$API->returnResponse( $visits->getQuery(false) );
 $API->returnResponse( $visits );
 
 //н " if is_active = N"

@@ -51,7 +51,10 @@ $formFieldValues = [
  */
 $saleDetails = $API->DB->from( "salesList" )
     ->innerJoin( "salesEquipmentVisits ON salesEquipmentVisits.sale_id = salesList.id" )
-    ->where( "salesEquipmentVisits.visit_id", $pageDetail[ "row_id" ] )
+    ->where( [
+        "salesEquipmentVisits.visit_id" => $pageDetail[ "row_id" ],
+        "salesList.action" => "sell"
+    ] )
     ->limit(1)
     ->fetch();
 
@@ -95,7 +98,7 @@ if ( $pageDetail[ "row_detail" ][ "is_payed" ] == "Y" || ( $saleDetails && $sale
     foreach ( $receipt as $product )
         $formFieldValues[ "products_display" ][ "value" ][] = $product[ "title" ];
 
-    $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "products" ] = $formFieldsUpdate[ "products" ] ?? [];
+    $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "products" ] = AddToReceipt( $receipt, $discountPerProduct );
 
 }
 

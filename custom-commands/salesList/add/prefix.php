@@ -3,6 +3,8 @@
 $publicAppPath = $API::$configs[ "paths" ][ "public_app" ];
 
 
+$API->returnResponse( $requestData, 500 );
+
 if ( $requestData->action == "sell" )
     require ( $publicAppPath . "/custom-commands/salesList/add/validation.php" );
 
@@ -13,4 +15,4 @@ if ( $requestData->action == "sell" )
 require ( $publicAppPath . "/custom-commands/salesList/add/create-transaction.php" );
 
 
-$API->returnResponse( true );
+$API->returnResponse();

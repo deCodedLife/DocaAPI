@@ -22,33 +22,34 @@ foreach ( $response[ "data" ] as $advertise ) {
 
     $clientsIds = array_keys( $clientsIds->fetchAll( "id" ) );
 
+    $cancelVisits[ "count" ] = 0;
+    $endedVisits[ "count" ] = 0;
+    $visits[ "count" ] = 0;
+    $visitsPrice[ "summary" ] = 0;
+
     if ( !empty( $clientsIds ) ) {
 
         $visits = $API->DB->from( "visits" )
             ->select( null )
-            ->select( [ "COUNT( id ) as count", "ROUND( SUM( price ), 2 ) as summary" ] )
-            ->where( [ "client_id" => $clientsIds ] );
+            ->select( [
+                "COUNT( id ) as count",
+                "SUM( CASE WHEN status = 'ended' THEN 1 ELSE 0 END ) as ended",
+                "SUM( CASE WHEN status = 'canceled' THEN 1 ELSE 0 END ) as canceled",
+                "SUM( CASE WHEN is_payed = 'Y' THEN price ELSE 0 END ) as price",
+                "client_id"
+            ] )
+            ->where( [ "client_id" => $clientsIds ] )
+            ->groupBy( "client_id" )
+            ->fetchAll( "client_id" );
 
-        $cancelVisits = $API->DB->from( "visits" )
-            ->select( null )
-            ->select( "COUNT( id ) as count" )
-            ->where( [ "client_id" => $clientsIds, "status" => "canceled" ] );
+        foreach ( $visits as $visit ) {
 
-        $endedVisits = $API->DB->from( "visits" )
-            ->select( null )
-            ->select( [ "COUNT( id ) as count" ] )
-            ->where( [ "client_id" => $clientsIds, "status" => "ended" ] );
+            $cancelVisits[ "count" ] += $visit[ "canceled" ];
+            $endedVisits[ "count" ] += $visit[ "ended" ];
+            $visits[ "count" ] += $visit[ "count" ];
+            $visitsPrice[ "summary" ] += $visit[ "price" ];
 
-        $visits = $visits->fetch();
-        $cancelVisits = $cancelVisits->fetch();
-        $endedVisits = $endedVisits->fetch();
-
-    } else {
-
-        $cancelVisits[ "count" ] = 0;
-        $endedVisits[ "count" ] = 0;
-        $visits[ "count" ] = 0;
-        $visits[ "summary" ] = 0;
+        }
 
     }
 
@@ -65,7 +66,7 @@ foreach ( $response[ "data" ] as $advertise ) {
         "extantCount" => $endedVisits[ "count" ],
         "underdoneCount" => $cancelVisits[ "count" ],
         "visitsCount" => $visits[ "count" ],
-        "price" => $visits[ "summary" ]
+        "price" => $visitsPrice[ "summary" ]
 
     ];
 
