@@ -17,6 +17,7 @@ function Base(
         ] );
 }
 
+
 function GetVisitsIDsByUser( $table, $start_at, $end_at, $user_id ): array
 {
     global $API;
@@ -32,6 +33,7 @@ function GetVisitsIDsByUser( $table, $start_at, $end_at, $user_id ): array
     if ( empty( $request ) ) $request = [0];
     return $request;
 }
+
 
 function GetVisitsIDsByAuthor( $table, $start_at, $end_at, $operator_id ): array
 {
@@ -49,6 +51,7 @@ function GetVisitsIDsByAuthor( $table, $start_at, $end_at, $operator_id ): array
     return $request;
 }
 
+
 function VisitServices( array $visits_ids ) : array
 {
     global $API;
@@ -58,6 +61,7 @@ function VisitServices( array $visits_ids ) : array
     return $servicesList->fetchAll() ?? [];
 }
 
+
 function EquipmentServices( array $visits_ids ) : array
 {
     global $API;
@@ -66,6 +70,7 @@ function EquipmentServices( array $visits_ids ) : array
         ->where( "equipmentVisits.id", $visits_ids );
     return $servicesList->fetchAll() ?? [];
 }
+
 
 function getSalesByVisits( string $table, array $visits_ids ): array
 {
@@ -82,6 +87,7 @@ function getSalesByVisits( string $table, array $visits_ids ): array
     return array_unique( $sales_ids ?? [] );
 }
 
+
 function getServicesIds( $category ): array
 {
     global $API;
@@ -94,6 +100,7 @@ function getServicesIds( $category ): array
     return $services_ids;
 
 }
+
 
 function getFullService( $id, $user_id = null )
 {

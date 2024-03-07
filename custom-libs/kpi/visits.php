@@ -1,7 +1,7 @@
 <?php
 
-$requestData->start_at = $requestData->start_at ?? date( "Y-m-d" );
-$requestData->end_at = $requestData->end_at ?? date( "Y-m-d" );
+$requestData->start_at = $start_at ?? $requestData->start_at ?? date( "Y-m-d" );
+$requestData->end_at = $end_at ?? $requestData->end_at ?? date( "Y-m-d" );
 $requestData->user_id = $user_id ?? $requestData->user_id;
 
 /*
