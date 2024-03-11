@@ -252,6 +252,8 @@ function isClientBusy( $client, $visits ): int {
  */
 foreach ( $clients as $client ) {
 
+    if ( $objectTable === "equipmentVisits" ) continue;
+
     /**
      * Проверка занят ли клиент
      */

@@ -14,8 +14,6 @@ foreach ( $requestData->context->object->services_id as $service ) {
 
 }
 
-$API->returnResponse( $requestData->context->object );
-
 $saleDetails = $API->DB->from( "salesList" )
     ->innerJoin( "saleVisits on saleVisits.sale_id = salesList.id" )
     ->where( [

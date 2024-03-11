@@ -98,118 +98,120 @@ if ( $requestData->is_weekend !== 'Y' ) {
  * В списке также присутствуют графики, которые
  * частично пересекаются с новым
  */
-$searchQuery = "SELECT * FROM workDays WHERE 
-    (
-        ( event_from >= '$requestData->event_from' and event_from < '$requestData->event_to' ) OR
-        ( event_to > '$requestData->event_from' and event_to < '$requestData->event_to' ) OR
-        ( event_from < '$requestData->event_from' and event_to >= '$requestData->event_to' ) 
-   ) AND 
-    store_id = $requestData->store_id AND
-    ( is_weekend is NULL OR is_weekend = 'N' )";
+$scheduleRules = $API->DB->from( "workDays" )
+    ->where(
+        "( ( event_from >= :from and event_from < :to ) OR ( event_to > :from and event_to < :to ) OR ( event_from < :from and event_to >= :to ) )",
+        [
+            ":from" => $requestData->event_from,
+            ":to" => $requestData->event_to,
+            ":store" => $requestData->store_id
+        ])
+    ->where( "store_id = :store" )
+    ->where( "( is_weekend is NULL OR is_weekend = 'N' )" )
+    ->fetchAll( 'user_id[]' );
 
-if ( $requestData->id ) $searchQuery .= " AND NOT id = $requestData->id";
-//if ( $requestData->is_rule === 'Y' ) $searchQuery .= " AND is_rule = 'Y'";
-//else $searchQuery .= " AND is_rule = 'N'";
 
+foreach ( $scheduleRules as $user => $events ) {
 
-/**
- * Поиск корреляций
- */
-$scheduleRules = mysqli_query( $API->DB_connection, $searchQuery );
+    foreach ( $events as $event ) {
+
+        $allDayEvents = array_merge(
+            $allDayEvents ?? [],
+            generateRuleEvents( $event )
+        );
+
+    }
+
+    $filtered = array_merge(
+        $filtered ?? [],
+        filterRuleEvents( $allDayEvents ?? [] )
+    );
+
+}
 $newSchedule = generateRuleEvents( (array) $requestData, $requestData->work_days ?? [] );
 
 
-//$API->returnResponse( $newSchedule );
-
-
-foreach ( $scheduleRules as $rule ) {
+foreach ( $filtered ?? [] as $ruleEvent ) {
 
     /**
      * Не проверяем правила на отмену посещений
      */
     if ( $requestData->is_weekend === 'Y' ) break;
-    if ( $rule[ "is_weekend" ] === 'Y' ) continue;
+    if ( $ruleEvent[ "is_weekend" ] === 'Y' ) continue;
+
 
     /**
-     * Получаем список событий коррелирующего правила
+     * Получаем время события коррелирующего правила
      */
-    $ruleEvents = generateRuleEvents( $rule );
+    $eventStartFrom = strtotime( $ruleEvent[ "event_from" ] );
+    $eventEndsAt = strtotime( $ruleEvent[ "event_to" ] );
 
-    foreach ( $ruleEvents as $ruleEvent ) {
+
+    /**
+     * Проходимся по событиям нового правила
+     */
+    foreach ( $newSchedule as $newEvent ) {
 
         /**
-         * Получаем время события коррелирующего правила
+         * Получаем время события нового правила
          */
-        $eventStartFrom = strtotime( $ruleEvent[ "event_from" ] );
-        $eventEndsAt = strtotime( $ruleEvent[ "event_to" ] );
+        $newEventStartFrom = strtotime( $newEvent[ "event_from" ] );
+        $newEventEndsAt = strtotime( $newEvent[ "event_to" ] );
 
         /**
-         * Проходимся по событиям нового правила
+         * Находим корреляцию по времени
          */
-        foreach ( $newSchedule as $newEvent ) {
-
-            /**
-             * Получаем время события нового правила
-             */
-            $newEventStartFrom = strtotime( $newEvent[ "event_from" ] );
-            $newEventEndsAt = strtotime( $newEvent[ "event_to" ] );
-
-            /**
-             * Находим корреляцию по времени
-             */
-            if (
-                ( $eventStartFrom >= $newEventStartFrom and $eventStartFrom < $newEventEndsAt ) or
-                ( $eventEndsAt > $newEventStartFrom and $eventEndsAt < $newEventEndsAt ) or
-                ( $eventStartFrom < $newEventStartFrom and $eventEndsAt >= $newEventEndsAt )
-            ) {
+        if (
+            ( $eventStartFrom >= $newEventStartFrom and $eventStartFrom < $newEventEndsAt ) or
+            ( $eventEndsAt > $newEventStartFrom and $eventEndsAt < $newEventEndsAt ) or
+            ( $eventStartFrom < $newEventStartFrom and $eventEndsAt >= $newEventEndsAt )
+        ) {
 
 //                if ( $ruleEvent[ "user_id" ] === $newEvent[ "user_id" ] )
-                if (
-                    $ruleEvent[ "is_rule" ] != $newEvent[ "is_rule" ] &&
-                    $ruleEvent[ "user_id" ] == $newEvent[ "user_id" ]
-                ) continue;
+            if (
+                $ruleEvent[ "is_rule" ] != $newEvent[ "is_rule" ] &&
+                $ruleEvent[ "user_id" ] == $newEvent[ "user_id" ]
+            ) continue;
 
 
-                /**
-                 * Проверяем занят ли кабинет
-                 */
-                if ( $ruleEvent[ "cabinet_id" ] == $newEvent[ "cabinet_id" ] && $ruleEvent[ "cabinet_id" ] != 0  ) {
-
-                    /**
-                     * Получаем информацию по сотруднику в событии коррелирующего правила
-                     */
-                    $employeeDetails = $API->DB->from( "users" )
-                        ->where( "id", $ruleEvent[ "user_id" ] )
-                        ->fetch( );
-
-                    $employeeFio = "{$employeeDetails[ "last_name" ]} ";
-                    $employeeFio .= mb_substr( $employeeDetails[ "first_name" ], 0, 1) . ". ";
-                    $employeeFio .= mb_substr( $employeeDetails[ "patronymic" ], 0, 1) . ". ";
-
-                    $API->returnResponse( "Кабинет занимает врач $employeeFio {$ruleEvent[ "id" ]}", 500 );
-
-                } // if ( $ruleEvent[ "cabinet_id" ] == $newEvent[ "cabinet_id" ] ) {
-
+            /**
+             * Проверяем занят ли кабинет
+             */
+            if ( $ruleEvent[ "cabinet_id" ] == $newEvent[ "cabinet_id" ] && $ruleEvent[ "cabinet_id" ] != 0  ) {
 
                 /**
-                 * Если кабинет не занят, то возможной причиной корреляции стало уже
-                 * существующее правило для сотрудника
+                 * Получаем информацию по сотруднику в событии коррелирующего правила
                  */
-                if ( $ruleEvent[ "user_id" ] === $newEvent[ "user_id" ] ) {
+                $employeeDetails = $API->DB->from( "users" )
+                    ->where( "id", $ruleEvent[ "user_id" ] )
+                    ->fetch( );
 
-                    $eventDate = date( "d-m", strtotime( $ruleEvent[ "event_from" ] ) );
+                $employeeFio = "{$employeeDetails[ "last_name" ]} ";
+                $employeeFio .= mb_substr( $employeeDetails[ "first_name" ], 0, 1) . ". ";
+                $employeeFio .= mb_substr( $employeeDetails[ "patronymic" ], 0, 1) . ". ";
 
-                    $eventTimeFrom = date( "H:i", strtotime( $ruleEvent[ "event_from" ] ) );
-                    $eventTimeTo = date( "H:i", strtotime( $ruleEvent[ "event_to"] ) );
+                $API->returnResponse( "Кабинет занимает врач $employeeFio {$ruleEvent[ "id" ]}", 500 );
 
-                    $API->returnResponse( "У сотрудника уже есть расписание на $eventDate с $eventTimeFrom по $eventTimeTo", 500 );
+            } // if ( $ruleEvent[ "cabinet_id" ] == $newEvent[ "cabinet_id" ] ) {
 
-                } //  if ( $ruleEvent[ "user_id" ] == $newEvent[ "user_id" ] ) {
 
-            } // if ( correlation )
+            /**
+             * Если кабинет не занят, то возможной причиной корреляции стало уже
+             * существующее правило для сотрудника
+             */
+            if ( $ruleEvent[ "user_id" ] === $newEvent[ "user_id" ] ) {
 
-        } // foreach ( $newSchedule as $newEvent ) {
+                $eventDate = date( "d-m", strtotime( $ruleEvent[ "event_from" ] ) );
 
-    } // foreach ( $ruleEvents as $ruleEvent ) {
+                $eventTimeFrom = date( "H:i", strtotime( $ruleEvent[ "event_from" ] ) );
+                $eventTimeTo = date( "H:i", strtotime( $ruleEvent[ "event_to"] ) );
+
+                $API->returnResponse( "У сотрудника уже есть расписание на $eventDate с $eventTimeFrom по $eventTimeTo", 500 );
+
+            } //  if ( $ruleEvent[ "user_id" ] == $newEvent[ "user_id" ] ) {
+
+        } // if ( correlation )
+
+    } // foreach ( $newSchedule as $newEvent ) {
 
 } // foreach ( $scheduleEvents as $event )

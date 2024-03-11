@@ -10,3 +10,36 @@ foreach ( $response[ "data" ] as $key => $row ) {
     $response[ "data" ][ $key ] = $row;
 
 } // foreach. $response[ "data" ]
+
+$role = $API->DB->from( "roles" )
+    ->where( "id", $API::$userDetail->role_id )
+    ->limit(1)
+    ->fetch()[ "article" ];
+
+if ( $role == "public" ) {
+
+    $siteClients = [];
+
+    foreach ( $response[ "data" ] as $client ) {
+
+        $phoneFormat = "+" . sprintf("%s (%s) %s-%s-%s",
+                substr( $client[ "phone" ], 0, 1 ),
+                substr( $client[ "phone" ], 1, 3 ),
+                substr( $client[ "phone" ], 4, 3 ),
+                substr( $client[ "phone" ], 7, 2 ),
+                substr( $client[ "phone" ], 9 )
+            );
+
+        $siteClients[] = [
+
+            "id" => $client[ "id" ],
+            "fio" => $client[ "fio" ],
+            "phone" => $phoneFormat,
+
+        ];
+
+    }
+
+    $response[ "data" ] = $siteClients;
+
+}

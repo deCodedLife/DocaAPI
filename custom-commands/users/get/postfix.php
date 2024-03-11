@@ -107,6 +107,39 @@ foreach ( $response[ "data" ] as $row ) {
 
 $response[ "data" ] = $returnRows;
 
+$role = $API->DB->from( "roles" )
+    ->where( "id", $API::$userDetail->role_id )
+    ->limit(1)
+    ->fetch()[ "article" ];
+
+
+if ( $role == "public" ) {
+
+    $siteUsers = [];
+
+    foreach ( $response[ "data" ] as $user ) {
+
+        $phoneFormat = "+" . sprintf("%s (%s) %s-%s-%s",
+                substr( $user[ "phone" ], 0, 1 ),
+                substr( $user[ "phone" ], 1, 3 ),
+                substr( $user[ "phone" ], 4, 3 ),
+                substr( $user[ "phone" ], 7, 2 ),
+                substr( $user[ "phone" ], 9 )
+            );
+
+        $siteUsers[] = [
+
+            "id" => $user[ "id" ],
+            "fio" => $user[ "fio" ],
+            "phone" => $phoneFormat,
+
+        ];
+
+    }
+
+    $response[ "data" ] = $siteUsers;
+
+}
 
 
 /**

@@ -1,4 +1,5 @@
 <?php
+
 global $API;
 
 /**
@@ -31,15 +32,8 @@ foreach ( $response[ "data" ] as $row ) {
      */
 
     $client = "{$clientDetail[ "last_name" ]} {$clientDetail[ "first_name" ]} {$clientDetail[ "patronymic" ]}";
-//    $fio = explode( " ", $client );
-//
-//    $row[ "title" ] = $fio[ 0 ];
-//
-//    if ( $fio[ 1 ] ) $row[ "title" ] .= " " . mb_substr( $fio[ 1 ], 0, 1 ) . ".";
-//    if ( $fio[ 2 ] ) $row[ "title" ] .= " " . mb_substr( $fio[ 2 ], 0, 1 ) . ".";
-//
-//
     $row[ "fio" ] = $client;
+    $row[ "phone" ] = $phoneFormat;
     $row[ "menu_title" ] = "$client $phoneFormat";
     $row[ "title" ] = "$client";
     $returnRows[] = $row;
@@ -47,3 +41,29 @@ foreach ( $response[ "data" ] as $row ) {
 } // foreach. $response[ "data" ]
 
 $response[ "data" ] = $returnRows;
+
+
+$role = $API->DB->from( "roles" )
+    ->where( "id", $API::$userDetail->role_id )
+    ->limit(1)
+    ->fetch()[ "article" ];
+
+if ( $role == "support" ) {
+
+    $siteClients = [];
+
+    foreach ( $response[ "data" ] as $client ) {
+
+        $siteClients[] = [
+
+            "id" => $client[ "id" ],
+            "fio" => $client[ "fio" ],
+            "phone" => $client[ "phone" ],
+
+        ];
+
+    }
+
+    $response[ "data" ] = $siteClients;
+
+}

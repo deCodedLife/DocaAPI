@@ -2,18 +2,68 @@
 
 ini_set( "display_errors", true );
 
-$visits = $API->DB->from( "visits" )
-    ->select( null )
-    ->select( [
-        "SUM( CASE WHEN is_active = 'Y' THEN 1 ELSE 0 END ) AS active",
-        "SUM( CASE WHEN is_active = 'N' THEN 1 ELSE 0 END ) AS not_active",
-        "SUM( CASE WHEN status = 'ended' THEN 1 ELSE 0 END ) AS ended",
-        "SUM( CASE WHEN status = 'canceled' THEN 1 ELSE 0 END ) AS canceled",
-        "SUM( CASE WHEN is_payed = 'Y' THEN price ELSE 0 END ) as price",
-        "client_id"
-    ] )
-    ->groupBy( "client_id" )
-    ->fetchAll( "client_id" );
+$test = [
+    [
+        "value" => "98",
+        "title" => "123 - 2023-12-27 19 =>32 =>30"
+    ],
+    [
+        "value" => "83",
+        "title" => " - 2023-12-12 18 =>04 =>26"
+    ],
+    [
+        "value" => "68",
+        "title" => "123 - 2023-10-25 13 =>12 =>59"
+    ],
+    [
+        "value" => "67",
+        "title" => " - 2023-10-23 17 =>22 =>08"
+    ],
+    [
+        "value" => "62",
+        "title" => "\u041f\u043e\u0435\u0445\u0430\u0442\u044c \u043d\u0430 \u0440\u044b\u043d\u043e\u043a - 2023-10-03 12 =>00 =>00"
+    ],
+    [
+        "value" => "45",
+        "title" => "\u0417\u0430\u0434\u0430\u0447\u0430 \u0434\u043b\u044f \u043a\u043e\u043c\u043f\u0430\u043d\u0438\u0438  - 2023-08-20 18 =>35 =>41"
+    ],
+    [
+        "value" => "41",
+        "title" => "\u0416\u0435\u043b\u0435\u0437\u043e - 2023-08-17 12 =>42 =>00"
+    ],
+    [
+        "value" => "35",
+        "title" => "\u0416\u0435\u043b\u0435\u0437\u043e - 2023-07-14 15 =>05 =>43"
+    ],
+    [
+        "value" => "33",
+        "title" => " - 2023-07-14 13 =>59 =>42"
+    ],
+    [
+        "value" => "32",
+        "title" => " - 2023-06-30 12 =>11 =>47"
+    ],
+    [
+        "value" => "25",
+        "title" => " - 2023-06-22 00 =>08 =>10"
+    ]
+];
+
+$API->returnResponse(  join( '\n', array_map( fn ( $item ) => $item[ "title" ] ?? "", $test ) ) );
+
+
+//$visits = $API->DB->from( "visits" )
+//    ->select( null )
+//    ->select( [
+//        "SUM( CASE WHEN is_active = 'Y' THEN 1 ELSE 0 END ) AS active",
+//        "SUM( CASE WHEN is_active = 'N' THEN 1 ELSE 0 END ) AS not_active",
+//        "SUM( CASE WHEN status = 'ended' THEN 1 ELSE 0 END ) AS ended",
+//        "SUM( CASE WHEN status = 'canceled' THEN 1 ELSE 0 END ) AS canceled",
+//        "SUM( CASE WHEN is_payed = 'Y' THEN price ELSE 0 END ) as price",
+//        "client_id"
+//    ] )
+//    ->groupBy( "client_id" )
+//    ->fetchAll( "client_id" );
 
 
 //$visits = $API->DB->from( "visits" )
