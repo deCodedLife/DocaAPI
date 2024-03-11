@@ -18,8 +18,7 @@
         "calendar",
         "addEvent",
         "updateEvent",
-        "hook",
-        "addCabinet"
+        "hook"
       ],
       "require_in_commands": [
         "add"
@@ -59,7 +58,8 @@
       "use_in_commands": [
         "add",
         "addEvent",
-        "updateEvent"
+        "updateEvent",
+        "addCabinet"
       ],
       "require_in_commands": [
         "add",

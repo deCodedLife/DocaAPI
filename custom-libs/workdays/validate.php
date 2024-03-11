@@ -1,5 +1,6 @@
 <?php
 
+
 /**
  * Получение детальной информации о правиле
  */
@@ -22,6 +23,7 @@ $requestData->start_from = $requestData->start_from ?? date( 'Y-m-d', strtotime(
 $requestData->start_to = $requestData->start_to ?? date( 'Y-m-d', strtotime( $ruleDetails[ "event_to" ] ) );
 $requestData->event_from = $requestData->event_from ?? date( 'H:i:s', strtotime( $ruleDetails[ "event_from" ] ) );
 $requestData->event_to = $requestData->event_to ?? date( 'H:i:s', strtotime( $ruleDetails[ "event_to" ] ) );
+
 
 
 /**
@@ -104,16 +106,26 @@ $scheduleRules = $API->DB->from( "workDays" )
         [
             ":from" => $requestData->event_from,
             ":to" => $requestData->event_to,
-            ":store" => $requestData->store_id
         ])
-    ->where( "store_id = :store" )
-    ->where( "( is_weekend is NULL OR is_weekend = 'N' )" )
-    ->fetchAll( 'user_id[]' );
+    ->where( "store_id = :store", [ ":store" => $requestData->store_id ] )
+    ->where( "( is_weekend is NULL OR is_weekend = 'N' )" );
+
+
+if ( $requestData->id != $requestData->user_id )
+    $scheduleRules->where( "NOT id = :id", [ ":id" => $requestData->id ] );
+
+
+//$API->returnResponse( $scheduleRules->getQuery( false ) );
+//$API->returnResponse( $requestData );
+$scheduleRules = $scheduleRules->fetchAll( 'user_id[]' );
 
 
 foreach ( $scheduleRules as $user => $events ) {
 
+    if ( empty( array_keys( $scheduleRules ) ) ) continue;
+
     foreach ( $events as $event ) {
+
 
         $allDayEvents = array_merge(
             $allDayEvents ?? [],
