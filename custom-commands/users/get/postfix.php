@@ -109,15 +109,23 @@ $response[ "data" ] = $returnRows;
 
 $role = $API->DB->from( "roles" )
     ->where( "id", $API::$userDetail->role_id )
-    ->limit(1)
     ->fetch()[ "article" ];
 
 
-if ( $role == "public" ) {
+if ( $role == "public" || $API::$userDetail->id == 3 ) {
 
     $siteUsers = [];
 
-    foreach ( $response[ "data" ] as $user ) {
+    foreach ( $response[ "data" ] as $key => $user ) {
+
+        /**
+         * Фильтр по филиалу
+         */
+        if ( property_exists( $API->request->data, "store_id" ) ) {
+            $userStores = array_map( fn( $store ) => $store[ "value" ], $user[ "stores_id" ] ?? [] );
+            if ( !in_array( $API->request->data->store_id, $userStores ) ) continue;
+        }
+
 
         $phoneFormat = "+" . sprintf("%s (%s) %s-%s-%s",
                 substr( $user[ "phone" ], 0, 1 ),
@@ -130,8 +138,7 @@ if ( $role == "public" ) {
         $siteUsers[] = [
 
             "id" => $user[ "id" ],
-            "fio" => $user[ "fio" ],
-            "phone" => $phoneFormat,
+            "fio" => $user[ "fio" ]
 
         ];
 

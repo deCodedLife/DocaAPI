@@ -147,3 +147,11 @@ if ( $event[ "comment" ] ) $eventDetails[] = [
     "icon" => "",
     "value" => $event[ "comment" ]
 ];
+
+if ( $API::$userDetail->id == 3 ) {
+
+    $eventDetails = null;
+    $event = null;
+    $eventDescription = null;
+
+}
