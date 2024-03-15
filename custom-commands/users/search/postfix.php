@@ -19,6 +19,16 @@ foreach ( $response[ "data" ] as $row ) {
     $user = "{$clientDetail[ "last_name" ]} {$clientDetail[ "first_name" ]} {$clientDetail[ "patronymic" ]}";
     $row[ "fio" ] = $user;
 
+    if ( $API::$userDetail->id == 3 ) {
+
+        $row = [
+            "id" => $row[ "id" ],
+            "fio" => $row[ "fio" ]
+        ];
+
+
+    };
+
     $returnRows[] = $row;
 
 } // foreach. $response[ "data" ]
