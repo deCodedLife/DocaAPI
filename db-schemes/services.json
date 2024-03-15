@@ -119,6 +119,13 @@
       "type": "char(1)",
       "default": "N",
       "is_required": "Y"
+    },
+    {
+      "title": "Выводить на сайте",
+      "article": "is_visibleOnSite",
+      "type": "char(1)",
+      "default": "N",
+      "is_required": "N"
     }
   ]
 }
