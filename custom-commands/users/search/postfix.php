@@ -8,6 +8,8 @@ $returnRows = [];
 
 foreach ( $response[ "data" ] as $row ) {
 
+    if ( ( $row[ "is_active" ] ?? 'Y' ) == 'N' ) continue;
+
     /**
      * Получение детальной информации о клиенте
      */
