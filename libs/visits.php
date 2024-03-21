@@ -26,12 +26,11 @@ function GetVisitsIDsByUser( $table, $start_at, $end_at, $user_id ): array
         ->where([
             "is_payed" => 'Y',
             "status" => "ended",
-            "author_id" => $user_id
+            "user_id" => $user_id
         ])
         ->fetchAll( "id" ) ?? [];
-    $request = array_keys( $request );
-    if ( empty( $request ) ) $request = [0];
-    return $request;
+
+    return array_keys( $request );
 }
 
 
@@ -46,9 +45,8 @@ function GetVisitsIDsByAuthor( $table, $start_at, $end_at, $operator_id ): array
             "is_payed" => 'Y',
             "author_id" => $operator_id
         ])->fetchAll( 'id' ) ?? [];
-    $request = array_keys( $request );
-    if ( empty( $request ) ) $request = [0];
-    return $request;
+
+    return array_keys( $request );
 }
 
 

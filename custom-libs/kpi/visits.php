@@ -17,6 +17,7 @@ function VisitsStat( $table ): array {
         $requestData->end_at . " 23:59:59",
         $requestData->user_id
     );
+    if ( empty( $visits_ids ) ) return [];
 
     $request = $API->DB->from( $table )
         ->select( null )
