@@ -12,6 +12,7 @@ $serviceDetail = $API->DB->from( "services" )
 /**
  * Заполнение недостающих полей для записи не из црм
  */
+
 if ( $API->isPublicAccount() ) {
 
     $requestData->status = "online";

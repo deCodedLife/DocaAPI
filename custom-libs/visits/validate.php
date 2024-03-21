@@ -16,8 +16,6 @@ $store_id    = 0;
 $consumables = [];
 $objectTable = $requestData->objectTable ?? "visits";
 
-if ( !property_exists( $requestData, "end_at" ) )
-    $API->returnResponse( "Укажите дату окончания" );
 
 /**
  * Подтягиваем данные из существующего посещения
