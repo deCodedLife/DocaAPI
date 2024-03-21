@@ -1,6 +1,46 @@
 <?php
 
 /**
+ * Формирование талона
+ */
+$serviceDetail = $API->DB->from( "services" )
+    ->where( "id", $requestData->services_id[ 0 ] )
+    ->limit( 1 )
+    ->fetch();
+
+
+if ( $API::$userDetail->id == 3 ) {
+
+    $customTime = $API->DB->from( "workingTime" )
+        ->where( [
+            "user" => $requestData->user_id,
+            "row_id" => $requestData->services_id[ 0 ] ?? 0
+        ] )
+        ->fetch();
+
+    if ( $customTime ) $customTime = $customTime[ "time" ];
+    else $customTime = $serviceDetail[ "take_minutes" ];
+
+    $requestData->end_at = date(
+        "Y-m-d H:i:s",
+        strtotime( "$requestData->start_at + $customTime minute" )
+    );
+
+    $event = $API->DB->from( "scheduleEvents" )
+        ->where( [
+            "event_from >= ?" => date( "Y-m-d 00:00:00", strtotime( $requestData->start_at ) ),
+            "event_to <= ?" => date( "Y-m-d 23:59:59", strtotime( $requestData->end_at ) ),
+            "user_id" => $requestData->user_id
+        ] )
+        ->fetch();
+
+    if ( $event ) $requestData->cabinet_id = $event[ "cabinet_id" ];
+    $requestData->status = "online";
+
+}
+
+
+/**
  * Определение рекламного источника
  */
 
@@ -52,7 +92,7 @@ foreach ( $requestData->clients_id as $clientId ) {
     /**
      * Получение посещений Клиента
      */
-    
+
     $clientVisits = $API->DB->from( "visits" )
         ->innerJoin( "visits_clients ON visits_clients.visit_id = visits.id" )
         ->where( [
@@ -73,15 +113,6 @@ foreach ( $requestData->clients_id as $clientId ) {
     }
 
 } // foreach. $requestData->clients_id
-
-
-/**
- * Формирование талона
- */
-$serviceDetail = $API->DB->from( "services" )
-    ->where( "id", $requestData->services_id[ 0 ] )
-    ->limit( 1 )
-    ->fetch();
 
 $requestData->talon = mb_strtoupper(
         mb_substr( $serviceDetail[ "title" ], 0, 1 )
