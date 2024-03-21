@@ -120,6 +120,7 @@ function getFullService( $id, $user_id = null )
 
         if ( $user_time->user != $user_id ) continue;
         $service[ "price" ] = $user_time->price;
+        $service[ "take_minutes" ] = $user_time->time;
 
     }
 

@@ -107,12 +107,8 @@ foreach ( $response[ "data" ] as $row ) {
 
 $response[ "data" ] = $returnRows;
 
-$role = $API->DB->from( "roles" )
-    ->where( "id", $API::$userDetail->role_id )
-    ->fetch()[ "article" ];
 
-
-if ( $role == "public" || $API::$userDetail->id == 3 ) {
+if ( $API->isPublicAccount() ) {
 
     $siteUsers = [];
 

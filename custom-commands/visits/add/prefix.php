@@ -9,8 +9,18 @@ $serviceDetail = $API->DB->from( "services" )
     ->fetch();
 
 
-if ( $API::$userDetail->id == 3 ) {
+/**
+ * Заполнение недостающих полей для записи не из црм
+ */
+if ( $API->isPublicAccount() ) {
 
+    $requestData->status = "online";
+    $requestData->price = 0;
+
+
+    /**
+     * Определение времени приёма
+     */
     $customTime = $API->DB->from( "workingTime" )
         ->where( [
             "user" => $requestData->user_id,
@@ -26,6 +36,8 @@ if ( $API::$userDetail->id == 3 ) {
         strtotime( "$requestData->start_at + $customTime minute" )
     );
 
+
+    //Получение кабинета в котором принимает Врач
     $event = $API->DB->from( "scheduleEvents" )
         ->where( [
             "event_from >= ?" => date( "Y-m-d 00:00:00", strtotime( $requestData->start_at ) ),
@@ -35,9 +47,17 @@ if ( $API::$userDetail->id == 3 ) {
         ->fetch();
 
     if ( $event ) $requestData->cabinet_id = $event[ "cabinet_id" ];
-    $requestData->status = "online";
 
-}
+
+    // Получение стоимости приёма
+    foreach ( $requestData->services_id as $service ) {
+
+        $serviceInfo = visits\getFullService( $service, $requestData->user_id );
+        $requestData->price += $serviceInfo[ "price" ];
+
+    } // foreach ( $requestData->services_id as $service ) {
+
+} // if ( $API->isPublicAccount() )
 
 
 /**

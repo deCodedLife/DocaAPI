@@ -6,4 +6,4 @@ if ( !$requestData->sort_by ) {
 
 }
 
-if ( $API::$userDetail->id == 3 ) $requestData->is_visibleOnSite = 'Y';
+if ( $API->isPublicAccount() ) $requestData->is_visibleOnSite = 'Y';

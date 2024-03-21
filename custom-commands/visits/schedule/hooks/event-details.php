@@ -148,7 +148,7 @@ if ( $event[ "comment" ] ) $eventDetails[] = [
     "value" => $event[ "comment" ]
 ];
 
-if ( $API::$userDetail->id == 3 ) {
+if ( $API->isPublicAccount() ) {
 
     $eventDetails = null;
     $event = null;

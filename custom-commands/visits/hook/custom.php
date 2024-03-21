@@ -78,54 +78,9 @@ if ( $requestData->services_id && $requestData->user_id ) {
         /**
          * Получение детальной информации об услуге
          */
-        $serviceDetail = $API->DB->from( "services" )
-            ->where( "id", $serviceId )
-            ->limit( 1 )
-            ->fetch();
-
-        /**
-         * Получение информации о сотруднике
-         */
-        $serviceUser = $API->DB->from( "workingTime" )
-            ->where(
-                [
-                    "row_id" => $serviceId,
-                    "user" => $requestData->user_id
-                ]
-            )
-            ->limit( 1 )
-            ->fetch();
-
-
-        /**
-         * Обновление стоимости Записи
-         */
-
-        if ( $serviceUser ) {
-
-            $visitPrice += (float) $serviceUser[ "price" ];
-
-
-        } else {
-
-            $visitPrice += (float) $serviceDetail[ "price" ];
-
-        }
-
-
-        /**
-         * Обновление времени выполнения Записи
-         */
-
-        if ( $serviceUser ) {
-
-            $visitTakeMinutes += (int) $serviceUser[ "time" ];
-
-        } else {
-
-            $visitTakeMinutes += (int) $serviceDetail[ "take_minutes" ];
-
-        }
+        $serviceDetail = visits\getFullService( $serviceId, $requestData->user_id );
+        $visitPrice += floatval( $serviceDetail[ "price" ] );
+        $visitTakeMinutes += intval( $serviceDetail[ "take_minutes" ] );
 
     } // foreach. $requestData->services_id
 
