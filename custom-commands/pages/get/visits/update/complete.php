@@ -28,5 +28,27 @@ $response[ "data" ][ 1 ][ "settings" ][ 2 ][ "body" ][ 0 ][ "settings" ][ "areas
     ]
 ];
 
+$settings = $API->DB->from( "settings" )
+    ->fetch();
+
+if ( !$settings[ "folder_id" ] ) {
+
+    $button = $response[ "data" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 1 ];
+    $button[ "type" ] = "script";
+    $button[ "settings" ][ "object" ] = "visits";
+    $button[ "settings" ][ "command" ] = "update";
+    $button[ "settings" ][ "title" ] = "В клинике";
+    $button[ "settings" ][ "data" ] = [
+        "id" => $pageDetail[ "row_detail" ][ "id" ],
+        "status" => "waited"
+    ];
+
+    $response[ "data" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 1 ] = $button;
+    $response[ "data" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "components" ][ "buttons" ] = array_values(
+        $response[ "data" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "components" ][ "buttons" ]
+    );
+
+}
+
 //$pageScheme[ "data" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "areas" ][ 0 ][ "blocks" ][ 0 ][ "fields" ][ 4 ][ "is_visible" ] = true;
 //$pageScheme[ "data" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "areas" ][ 0 ][ "blocks" ][ 0 ][ "fields" ][ 5 ][ "is_visible" ] = true;

@@ -30,7 +30,7 @@ if ( $API->isPublicAccount() ) {
         ->fetch();
 
     if ( $customTime ) $customTime = $customTime[ "time" ];
-    else $customTime = $serviceDetail[ "take_minutes" ];
+    else $customTime = $serviceDetail[ "take_minutes" ] ?? 60;
 
     $requestData->end_at = date(
         "Y-m-d H:i:s",

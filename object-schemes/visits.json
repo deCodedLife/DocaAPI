@@ -259,9 +259,7 @@
         "add",
         "update"
       ],
-      "require_in_commands": [
-        "add"
-      ]
+      "require_in_commands": []
     },
     {
       "title": "Оплачено",
