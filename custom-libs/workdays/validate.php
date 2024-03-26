@@ -102,10 +102,17 @@ if ( $requestData->is_weekend !== 'Y' ) {
  */
 $scheduleRules = $API->DB->from( "workDays" )
     ->where(
-        "( ( event_from >= :from and event_from < :to ) OR ( event_to > :from and event_to < :to ) OR ( event_from < :from and event_to >= :to ) )",
+        "( 
+            ( event_from >= :from and event_from < :to ) OR 
+            ( event_to > :from and event_to < :to ) OR 
+            ( event_from < :from and event_to >= :to ) OR 
+            ( event_from > :day_start and event_to < :day_end ) 
+        )",
         [
             ":from" => $requestData->event_from,
             ":to" => $requestData->event_to,
+            ":day_start" => date( "Y-m-d 00:00:00", strtotime( $requestData->event_from ) ),
+            ":day_end" => date( "Y-m-d 23:59:59", strtotime( $requestData->event_to ) )
         ])
     ->where( "store_id = :store", [ ":store" => $requestData->store_id ] )
     ->where( "( is_weekend is NULL OR is_weekend = 'N' )" );
@@ -114,9 +121,6 @@ $scheduleRules = $API->DB->from( "workDays" )
 if ( $requestData->id != $requestData->user_id )
     $scheduleRules->where( "NOT id = :id", [ ":id" => $requestData->id ] );
 
-
-//$API->returnResponse( $scheduleRules->getQuery( false ) );
-//$API->returnResponse( $requestData );
 $scheduleRules = $scheduleRules->fetchAll( 'user_id[]' );
 
 
