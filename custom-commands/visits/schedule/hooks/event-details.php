@@ -32,6 +32,10 @@ switch ( $event[ "status" ] ) {
     case "waited":
         $event[ "color" ] = "green";
         break;
+        
+    case "remote":
+        $event[ "color" ] = "azure";
+        break;
 
 } // switch. $event[ "status" ][ "value" ]
 

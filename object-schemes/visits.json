@@ -343,6 +343,10 @@
         {
           "title": "Перенесен",
           "value": "moved"
+        },
+        {
+          "title": "Remote",
+          "value": "remote"
         }
       ]
     },
