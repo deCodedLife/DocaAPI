@@ -2,56 +2,56 @@
 
 //ini_set( "display_errors", true );
 //
-//$roles = $API->DB->from( "roles" )
-//    ->where( "id > ?", 2 )
-//    ->orderBy( "id DESC" );
-//
-//
-//foreach ( $roles as $role ) {
-//
-//    $API->DB->update( "roles" )
-//        ->set( "id", $role[ "id" ] + 1 )
-//        ->where( "id", $role[ "id" ] )
-//        ->execute();
-//
-//}
-//
-//
-//$publicRole = $API->DB->from( "roles" )
-//    ->where( "article", "public" )
-//    ->fetch();
-//
-//$API->DB->update( "roles" )
-//    ->set( "id", 3 )
-//    ->where( "id", $publicRole[ "id" ] )
-//    ->execute();
-//
-//
-//foreach ( $API->DB->from( "users" )->where( "role_id > ?", 2 ) as $user ) {
-//
-//    $API->DB->update( "users" )
-//        ->set( "role_id", $user[ "role_id" ] + 1 )
-//        ->where( "id", $user[ "id" ] )
-//        ->execute();
-//
-//}
-//
-//$API->DB->update( "users" )
-//    ->set( "role_id", 3 )
-//    ->where( "email", "public@oxbox.ru" )
-//    ->execute();
-//
-$rolesPermissions = $API->DB->from( "roles_permissions" )
-    ->where( "role_id > ?", 2 );
+$roles = $API->DB->from( "roles" )
+    ->where( "id > ?", 2 )
+    ->orderBy( "id DESC" );
 
-foreach ( $rolesPermissions as $role ) {
 
-    $API->DB->update( "roles_permissions" )
-        ->set( "role_id", $role[ "role_id" ] + 1 )
+foreach ( $roles as $role ) {
+
+    $API->DB->update( "roles" )
+        ->set( "id", $role[ "id" ] + 1 )
         ->where( "id", $role[ "id" ] )
         ->execute();
 
 }
+
+
+$publicRole = $API->DB->from( "roles" )
+    ->where( "article", "public" )
+    ->fetch();
+
+$API->DB->update( "roles" )
+    ->set( "id", 3 )
+    ->where( "id", $publicRole[ "id" ] )
+    ->execute();
+
+
+foreach ( $API->DB->from( "users" )->where( "role_id > ?", 2 ) as $user ) {
+
+    $API->DB->update( "users" )
+        ->set( "role_id", $user[ "role_id" ] + 1 )
+        ->where( "id", $user[ "id" ] )
+        ->execute();
+
+}
+
+$API->DB->update( "users" )
+    ->set( "role_id", 3 )
+    ->where( "email", "public@oxbox.ru" )
+    ->execute();
+
+//$rolesPermissions = $API->DB->from( "roles_permissions" )
+//    ->where( "role_id > ?", 2 );
+//
+//foreach ( $rolesPermissions as $role ) {
+//
+//    $API->DB->update( "roles_permissions" )
+//        ->set( "role_id", $role[ "role_id" ] + 1 )
+//        ->where( "id", $role[ "id" ] )
+//        ->execute();
+//
+//}
 
 
 //$visits = $API->DB->from( "visits" )
@@ -75,7 +75,7 @@ foreach ( $rolesPermissions as $role ) {
 //    ->fetch();
 
 //$API->returnResponse( $visits->getQuery(false) );
-$API->returnResponse( $visits );
+//$API->returnResponse( $visits );
 
 //н " if is_active = N"
 //$start_at = date( "Y-01-01 00:00:00" );

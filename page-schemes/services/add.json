@@ -52,7 +52,8 @@
                   "price",
                   "take_minutes",
                   "is_equipment",
-                  "is_visibleOnSite"
+                  "is_visibleOnSite",
+                  "is_available_everyone"
                 ]
               }
             ]

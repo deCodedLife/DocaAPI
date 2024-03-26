@@ -365,6 +365,34 @@
       ]
     },
     {
+      "title": "Доступна всем",
+      "article": "is_available_everyone",
+      "data_type": "boolean",
+      "field_type": "checkbox",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "update",
+        "add",
+        "get"
+      ]
+    },
+    {
+      "title": "Дистанционная услуга",
+      "article": "is_remote",
+      "data_type": "boolean",
+      "field_type": "checkbox",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "update",
+        "add",
+        "get"
+      ]
+    },
+    {
       "title": "Используется для оборудования",
       "article": "is_equipment",
       "data_type": "boolean",

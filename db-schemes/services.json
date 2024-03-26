@@ -126,6 +126,20 @@
       "type": "char(1)",
       "default": "N",
       "is_required": "N"
+    },
+    {
+      "title": "Доступна всем",
+      "article": "is_available_everyone",
+      "type": "char(1)",
+      "default": "N",
+      "is_required": "N"
+    },
+    {
+      "title": "Дистанционная услуга",
+      "article": "is_remote",
+      "type": "char(1)",
+      "default": "N",
+      "is_required": "N"
     }
   ]
 }
