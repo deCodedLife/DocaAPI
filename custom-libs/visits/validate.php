@@ -323,7 +323,7 @@ foreach ( $services as $service ) {
         ->where( "id", $service )
         ->fetch();
 
-    if ( $serviceDetails[ "is_remote" ] && $API->request->command != "update" ) $requestData->status = "remote";
+    if ( $serviceDetails[ "is_remote" ] == 'Y' && $API->request->command != "update" ) $requestData->status = "remote";
     if ( $serviceDetails[ "is_consider_second_performer_time" ] == "Y" ) $use_assistant = true;
 
     $accountedFor = employeesAccountedFor( $serviceDetails, $assistant );
