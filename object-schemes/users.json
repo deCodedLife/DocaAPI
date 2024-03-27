@@ -35,6 +35,17 @@
       "require_in_commands": []
     },
     {
+      "title": "ФИО короткое",
+      "article": "short_fio",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [],
+      "require_in_commands": []
+    },
+    {
       "title": "Фамилия",
       "article": "last_name",
       "data_type": "string",

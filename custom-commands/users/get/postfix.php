@@ -101,6 +101,12 @@ $returnRows = [];
 foreach ( $response[ "data" ] as $row ) {
 
     $row[ "fio" ] = $row[ "last_name" ] . " " . $row[ "first_name" ] . " " . $row[ "patronymic" ];
+
+    $short_fio = $row[ "last_name" ];
+    if ( $row[ "first_name" ] ) $short_fio .= " " . mb_substr( $row[ "first_name" ], 0, 1 ) . ".";
+    if ( $row[ "patronymic" ] ) $short_fio .= " " . mb_substr( $row[ "patronymic" ], 0, 1 ) . ".";
+    $row[ "short_fio" ] = $short_fio;
+    
     $returnRows[] = $row;
 
 } // foreach. $response[ "data" ]

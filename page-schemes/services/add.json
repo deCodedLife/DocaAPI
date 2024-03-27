@@ -50,10 +50,15 @@
                 "title": "",
                 "fields": [
                   "price",
-                  "take_minutes",
+                  "take_minutes"
+                ]
+              },
+              {
+                "title": "Настройки",
+                "fields": [
                   "is_equipment",
                   "is_visibleOnSite",
-                  "is_available_everyone"
+                  "is_remote"
                 ]
               }
             ]

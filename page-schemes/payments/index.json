@@ -96,7 +96,9 @@
                       "recipient_property": "user_id",
                       "donor_object": "users",
                       "donor_property_title": "last_name",
-                      "donor_property_value": "id"
+                      "donor_property_value": "id",
+                      "select": [ "short_fio" ],
+                      "select_menu": [ "fio" ]
                     },
                     "type": "list"
                   }
@@ -298,7 +300,9 @@
                       "donor_object": "users",
                       "donor_property_title": "last_name",
                       "donor_property_value": "id",
-                      "recipient_property": "user_id"
+                      "recipient_property": "user_id",
+                      "select": [ "short_fio" ],
+                      "select_menu": [ "fio" ]
                     }
                   }
                 ]

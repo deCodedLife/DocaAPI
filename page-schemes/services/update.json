@@ -69,7 +69,6 @@
                         "fields": [
                           "is_equipment",
                           "is_visibleOnSite",
-                          "is_available_everyone",
                           "is_remote"
                         ]
                       }

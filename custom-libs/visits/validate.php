@@ -318,10 +318,12 @@ function employeesAccountedFor( $serviceDetails, $employee ): bool {
  * Проверка второго исполнителя для каждой услуги
  */
 foreach ( $services as $service ) {
+
     $serviceDetails = $API->DB->from( "services" )
         ->where( "id", $service )
         ->fetch();
 
+    if ( $serviceDetails[ "is_remote" ] ) $requestData->status = "remote";
     if ( $serviceDetails[ "is_consider_second_performer_time" ] == "Y" ) $use_assistant = true;
 
     $accountedFor = employeesAccountedFor( $serviceDetails, $assistant );
@@ -421,7 +423,7 @@ function checkWorkDays( $employee_id, $store_id, $start_at, $end_at ): void {
 
             if (
                 ( $from >= $start and $from < $end ) or
-                ( $to > $start and $to < $end ) or
+                ( $to >= $start and $to <= $end ) or
                 ( $from < $start and $to > $end )
             ) {
 
