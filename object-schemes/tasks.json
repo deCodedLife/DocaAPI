@@ -130,10 +130,10 @@
         "table": "users",
         "properties_title": "last_name",
         "select": [
-          "id",
-          "last_name",
-          "first_name",
-          "patronymic"
+          [ "id" ],
+          [ "last_name" ],
+          [ "first_name" ],
+          [ "patronymic" ]
         ]
       }
     },
@@ -155,10 +155,10 @@
         "table": "users",
         "properties_title": "last_name",
         "select": [
-          "id",
-          "last_name",
-          "first_name",
-          "patronymic"
+          [ "id" ],
+          [ "last_name" ],
+          [ "first_name" ],
+          [ "patronymic" ]
         ]
       }
     },
@@ -182,17 +182,17 @@
         "table": "clients",
         "properties_title": "last_name",
         "select": [
-          "id",
-          "last_name",
-          "first_name",
-          "patronymic"
+          [ "id" ],
+          [ "last_name" ],
+          [ "first_name" ],
+          [ "patronymic" ]
         ],
         "select_menu": [
-          "id",
-          "last_name",
-          "first_name",
-          "patronymic",
-          "phone"
+          [ "id" ],
+          [ "last_name" ],
+          [ "first_name" ],
+          [ "patronymic" ],
+          [ "phone", "second_phone" ]
         ]
       },
       "is_disabled": false,

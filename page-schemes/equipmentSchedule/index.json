@@ -51,19 +51,6 @@
             }
           },
           {
-            "title": "Клиент",
-            "type": "list",
-            "required_permissions": [],
-            "required_modules": [],
-            "settings": {
-              "is_search": false,
-              "recipient_property": "client_id",
-              "donor_object": "clients",
-              "donor_property_title": "last_name",
-              "donor_property_value": "id"
-            }
-          },
-          {
             "title": "Хочет раньше",
             "type": "checkbox",
             "required_permissions": [],

@@ -37,6 +37,7 @@ class Atol
     public array $clientInfo;
     public bool $electronically;
     public float $summary;
+    public string $pay_method;
 
 
 
@@ -107,6 +108,7 @@ class Atol
             "sales" => $this->sales,
             "hash" => null,
             "code_return" => "",
+            "pay_method" => $this->pay_method,
             "request" => [
                 "callbacks" => [
                     "resultUrl" => "http://127.0.0.1:80/receive",

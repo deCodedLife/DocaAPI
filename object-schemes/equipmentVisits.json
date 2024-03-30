@@ -125,10 +125,10 @@
         "table": "users",
         "properties_title": "last_name",
         "select": [
-          "id",
-          "last_name",
-          "first_name",
-          "patronymic"
+          [ "id" ],
+          [ "last_name" ],
+          [ "first_name" ],
+          [ "patronymic" ]
         ]
       },
       "is_disabled": false
@@ -161,14 +161,14 @@
         "table": "services",
         "properties_title": "title",
         "select": [
-          "article",
-          "title",
-          "price"
+          [ "article" ],
+          [ "title" ],
+          [ "price" ]
         ],
         "select_menu": [
-          "article",
-          "title",
-          "price"
+          [ "article" ],
+          [ "title" ],
+          [ "price" ]
         ]
       },
       "min_value": 0,
@@ -184,21 +184,21 @@
       "is_autofill": true,
       "is_hook": true,
       "use_in_commands": [
-        "add",
-        "update",
-        "get",
-        "hook",
-        "schedule"
+        [ "add" ],
+        [ "update" ],
+        [ "get" ],
+        [ "hook" ],
+        [ "schedule" ]
       ],
       "require_in_commands": [],
       "list_donor": {
         "table": "users",
         "properties_title": "last_name",
         "select": [
-          "id",
-          "last_name",
-          "first_name",
-          "patronymic"
+          [ "id" ],
+          [ "last_name" ],
+          [ "first_name" ],
+          [ "patronymic" ]
         ]
       },
       "is_visible": true
@@ -338,17 +338,17 @@
         "table": "clients",
         "properties_title": "last_name",
         "select": [
-          "id",
-          "last_name",
-          "first_name",
-          "patronymic"
+          [ "id" ],
+          [ "last_name" ],
+          [ "first_name" ],
+          [ "patronymic" ]
         ],
         "select_menu": [
-          "id",
-          "last_name",
-          "first_name",
-          "patronymic",
-          "phone"
+          [ "id" ],
+          [ "last_name" ],
+          [ "first_name" ],
+          [ "patronymic" ],
+          [ "phone" ]
         ]
       },
       "annotation": "",

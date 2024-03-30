@@ -51,12 +51,8 @@
       "list_donor": {
         "table": "users",
         "properties_title": "last_name",
-        "select": [
-          "id",
-          "last_name",
-          "first_name",
-          "patronymic"
-        ]
+        "select": [ [ "short_fio", "last_name", "first_name", "patronymic" ] ],
+        "select_menu": [ [ "fio", "last_name", "first_name", "patronymic" ] ]
       }
     },
     {

@@ -19,6 +19,30 @@ $services = array_merge(
         ->fetchAll()
 );
 
+//$API->returnResponse( $services );
+
+foreach ( $services as $key => $service ) {
+
+    $user_id = $API->DB->from( "visits" )
+        ->where( "id", $requestData->id )
+        ->fetch()[ "user_id" ];
+
+    $serviceDetails = $API->DB->from( "workingTime" )
+        ->where( [
+            "row_id" => $service[ "id" ],
+            "user" => $user_id
+        ] )
+        ->fetch();
+
+    if ( $serviceDetails ) {
+
+        $service[ "price" ] = $serviceDetails[ "price" ];
+        $services[ $key ] = $service;
+
+    }
+
+}
+
 $products = $API->DB->from( "products" )
     ->where( "id", $requestData->doca_products ?? [0] )
     ->fetchAll();

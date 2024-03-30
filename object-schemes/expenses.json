@@ -97,10 +97,10 @@
         "properties_title": "last_name",
         "filters": [],
         "select": [
-          "id",
-          "last_name",
-          "first_name",
-          "patronymic"
+          [ "id" ],
+          [ "last_name" ],
+          [ "first_name" ],
+          [ "patronymic" ]
         ]
       },
       "require_in_commands": [

@@ -127,5 +127,6 @@ $AtolReciept->uuid = $processedSale[ "id" ];
 
 $AtolReciept->sales = [ (int) $processedSale[ "id" ] ];
 $AtolReciept->sale_type = $processedSale[ "action" ];
+$AtolReciept->pay_method = $processedSale[ "pay_method" ];
 
 $API->returnResponse( $AtolReciept->GetReciept() );

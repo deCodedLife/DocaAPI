@@ -49,8 +49,8 @@
               "donor_object": "users",
               "donor_property_title": "last_name",
               "donor_property_value": "id",
-              "select": [ "short_fio" ],
-              "select_menu": [ "fio" ]
+              "select": [ [ "short_fio", "last_name", "first_name", "patronymic" ] ],
+              "select_menu": [ [ "fio", "last_name", "first_name", "patronymic" ] ]
             }
           },
           {
@@ -64,8 +64,8 @@
               "donor_object": "users",
               "donor_property_title": "last_name",
               "donor_property_value": "id",
-              "select": [ "short_fio" ],
-              "select_menu": [ "fio" ]
+              "select": [ [ "short_fio", "last_name", "first_name", "patronymic" ] ],
+              "select_menu": [ [ "fio", "last_name", "first_name", "patronymic" ] ]
             }
           },
           {
@@ -74,11 +74,13 @@
             "required_permissions": [],
             "required_modules": [],
             "settings": {
-              "is_search": false,
+              "is_search": true,
               "recipient_property": "client_id",
               "donor_object": "clients",
               "donor_property_title": "last_name",
-              "donor_property_value": "id"
+              "donor_property_value": "id",
+              "select": [ [ "id" ], [ "fio", "last_name", "first_name", "patronymic" ] ],
+              "select_menu": [ [ "id" ], [ "fio" ], [ "phone", "second_phone" ] ]
             }
           },
           {

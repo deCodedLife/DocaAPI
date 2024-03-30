@@ -4,7 +4,7 @@ $sum_cash = $requestData->sum_cash;
 $sum_card = $requestData->sum_card;
 $requestData->pay_method = $requestData->pay_method ?? false;
 
-if ( $requestData->pay_method == "card" ) {
+if ( $requestData->pay_method == "card" || $requestData->pay_method == "online" ) {
 
     $formFieldsUpdate[ "sum_cash" ][ "is_visible" ] = false;
     $formFieldsUpdate[ "sum_card" ][ "is_visible" ] = true;
