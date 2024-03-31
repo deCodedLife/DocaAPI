@@ -66,7 +66,7 @@ if ( $requestData->context->block === "list" ) {
      */
     foreach ( $payments as $payment ) {
 
-        if ( in_array( $payment[ "pay_method" ], [ "card", "legalEntity" ] ) ) continue;
+        if ( in_array( $payment[ "pay_method" ], [ "card", "legalEntity", "online" ] ) ) continue;
         if ( $payment[ "status" ] != "done" ) continue;
 
         $listItem = [];

@@ -182,7 +182,7 @@
         "table": "users",
         "properties_title": "last_name",
         "select": [
-          [ "fio" ]
+          [ "fio" ], [ "last_name", "first_name", "patronymic" ]
         ]
       },
       "is_disabled": false

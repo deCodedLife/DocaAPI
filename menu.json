@@ -227,6 +227,11 @@
           "title": "Юридические лица",
           "href": "legalEntities",
           "required_permissions": [ "settings_stores" ]
+        },
+        {
+          "title": "CRON задачи",
+          "href": "cronTasks",
+          "required_permissions": [ "support" ]
         }
       ],
       "icon": "gear"

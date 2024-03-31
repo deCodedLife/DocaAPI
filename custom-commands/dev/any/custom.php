@@ -1,45 +1,68 @@
 <?php
 
+//$execCommand = [
+//    "/opt/php74/bin/php",
+//    "{$_SERVER[ "DOCUMENT_ROOT" ]}/index.php",
+//    $_SERVER[ "DOCUMENT_ROOT" ],
+//    $API::$configs[ "company" ],
+//    $insertId,
+//    $_SERVER[ "HTTP_HOST" ],
+//    $API->request->jwt
+//];
+//$execCommand = join( ' ', $execCommand );
+//
+//$requestData->minutes = $requestData->minutes ? "*/$requestData->minutes" : "*";
+//$requestData->hours = $requestData->hours ? "*/$requestData->hours" : "*";
+//$requestData->days = $requestData->days ? "*/$requestData->days" : "*";
+//$requestData->month = $requestData->month ? "*/$requestData->month" : "*";
+//$requestData->weekdays = $requestData->weekdays ? "*/$requestData->weekdays" : "*";
+//
+//shell_exec( "crontab -l > tasks" );
+//$cronJobs = file_get_contents( "tasks" );
+//$cronJobs .= "$requestData->minutes $requestData->hours $requestData->days $requestData->month $requestData->weekdays     $execCommand\n";
+//file_put_contents( "tasks", $cronJobs );
+//shell_exec( "crontab < tasks" );
+
+file_put_contents( "test", "Neko neko ni" );
+
 //ini_set( "display_errors", true );
 //
-$roles = $API->DB->from( "roles" )
-    ->where( "id > ?", 2 )
-    ->orderBy( "id DESC" );
+//$roles = $API->DB->from( "permissions" )
+//    ->orderBy( "id DESC" );
+//
+//
+//foreach ( $roles as $role ) {
+//
+//    $API->DB->update( "permissions" )
+//        ->set( "id", $role[ "id" ] + 1 )
+//        ->where( "id", $role[ "id" ] )
+//        ->execute();
+//
+//}
+//
+//
+//$publicRole = $API->DB->from( "roles_permissions" )
+//    ->fetch();
+
+//$API->DB->update( "roles" )
+//    ->set( "id", 3 )
+//    ->where( "id", $publicRole[ "id" ] )
+//    ->execute();
 
 
-foreach ( $roles as $role ) {
+//foreach ( $API->DB->from( "roles_permissions" ) as $role ) {
+//
+//    $API->DB->update( "roles_permissions" )
+//        ->set( "permission_id", $role[ "permission_id" ] + 1 )
+//        ->where( "id", $role[ "id" ] )
+//        ->execute();
+//
+//}
 
-    $API->DB->update( "roles" )
-        ->set( "id", $role[ "id" ] + 1 )
-        ->where( "id", $role[ "id" ] )
-        ->execute();
-
-}
-
-
-$publicRole = $API->DB->from( "roles" )
-    ->where( "article", "public" )
-    ->fetch();
-
-$API->DB->update( "roles" )
-    ->set( "id", 3 )
-    ->where( "id", $publicRole[ "id" ] )
-    ->execute();
-
-
-foreach ( $API->DB->from( "users" )->where( "role_id > ?", 2 ) as $user ) {
-
-    $API->DB->update( "users" )
-        ->set( "role_id", $user[ "role_id" ] + 1 )
-        ->where( "id", $user[ "id" ] )
-        ->execute();
-
-}
-
-$API->DB->update( "users" )
-    ->set( "role_id", 3 )
-    ->where( "email", "public@oxbox.ru" )
-    ->execute();
+//$API->DB->update( "users" )
+//    ->set( "role_id", 3 )
+//    ->where( "email", "public@oxbox.ru" )
+//    ->execute();
 
 //$rolesPermissions = $API->DB->from( "roles_permissions" )
 //    ->where( "role_id > ?", 2 );
