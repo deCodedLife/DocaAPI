@@ -23,7 +23,19 @@
 //file_put_contents( "tasks", $cronJobs );
 //shell_exec( "crontab < tasks" );
 
-file_put_contents( "test", "Neko neko ni" );
+//file_put_contents( "test", "Neko neko ni" );
+
+$API->DB->insertInto( "cronTasks" )
+    ->values( [
+        "title" => "blyat",
+        "object" => "dev",
+        "command" => "any",
+        "run_configuration" => "period",
+        "days" => 1,
+        "hours" => "0",
+        "minutes" => 0
+    ])
+    ->execute();
 
 //ini_set( "display_errors", true );
 //
