@@ -333,16 +333,12 @@
         "properties_title": "last_name",
         "select": [
           [ "id" ],
-          [ "last_name" ],
-          [ "first_name" ],
-          [ "patronymic" ]
+          [ "fio", "last_name", "first_name", "patronymic" ]
         ],
         "select_menu": [
           [ "id" ],
-          [ "last_name" ],
-          [ "first_name" ],
-          [ "patronymic" ],
-          [ "phone" ]
+          [ "fio", "last_name", "first_name", "patronymic" ],
+          [ "phone", "second_phone" ]
         ]
       },
       "annotation": "",
