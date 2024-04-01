@@ -3,7 +3,7 @@
 /**
  * Отключение кнопок "Удалить посещение", "Сохранить" и "Оплатить"
  */
-if ( $pageDetail[ "row_detail" ][ "is_payed" ] == true ) {
+if ( $pageDetail[ "row_detail" ][ "is_payed" ] == "Y" ) {
 
     unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 5 ] );
     unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 0 ] );
@@ -18,7 +18,7 @@ function shouldHideButton(): bool {
     global $API, $pageDetail;
     $isPayed = $pageDetail[ "row_detail" ][ "is_payed" ];
 
-    if ( $isPayed ) return true;
+    if ( $isPayed == 'Y' ) return true;
 
     /**
      * Получение информации из таблицы продаж
@@ -30,6 +30,7 @@ function shouldHideButton(): bool {
         ->fetch();
 
     if ( !$listedInSales ) return false;
+
 
     if ( $listedInSales[ "status" ] == "done" ) return true;
     if ( $listedInSales[ "status" ] == "waiting" ) return true;
@@ -46,6 +47,7 @@ function shouldHideButton(): bool {
 
 if ( shouldHideButton() )
     unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 0 ] );
+
 
 /**
  * Отключение кнопки "Акт вып работ"
