@@ -125,10 +125,7 @@
         "table": "users",
         "properties_title": "last_name",
         "select": [
-          [ "id" ],
-          [ "last_name" ],
-          [ "first_name" ],
-          [ "patronymic" ]
+          [ "fio", "last_name", "first_name", "patronymic" ]
         ]
       },
       "is_disabled": false
@@ -184,21 +181,18 @@
       "is_autofill": true,
       "is_hook": true,
       "use_in_commands": [
-        [ "add" ],
-        [ "update" ],
-        [ "get" ],
-        [ "hook" ],
-        [ "schedule" ]
+        "add",
+        "update",
+        "get",
+        "hook",
+        "schedule"
       ],
       "require_in_commands": [],
       "list_donor": {
         "table": "users",
         "properties_title": "last_name",
         "select": [
-          [ "id" ],
-          [ "last_name" ],
-          [ "first_name" ],
-          [ "patronymic" ]
+          [ "fio", "last_name", "first_name", "patronymic" ]
         ]
       },
       "is_visible": true
