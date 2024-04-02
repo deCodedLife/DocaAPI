@@ -114,6 +114,20 @@ function getServicesIds( $category ): array
 
 }
 
+function serviceFilter( $service_id, $visits_id ): array
+{
+    global $API;
+
+    $filtered = $API->DB->from( "visits_services" )
+        ->where( [
+            "visit_id" => $visits_id,
+            "service_id" => $service_id
+        ] )
+        ->fetchAll( "visit_id" );
+
+    return array_keys( $filtered );
+}
+
 
 function getFullService( $id, $user_id = null )
 {

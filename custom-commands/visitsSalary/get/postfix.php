@@ -87,6 +87,13 @@ foreach ( $response[ "data" ] as $key => $visit ) {
 
         $serviceID = intval( $service[ "product_id" ] );
 
+        if (
+            property_exists( $requestData, "service" ) &&
+            !empty( $requestData->service ) &&
+            $serviceID != $requestData->service[ 0 ]
+        ) continue;
+
+
         $servicesList[] = [
             "title" => $service[ "title" ],
             "value" =>  $serviceID

@@ -41,16 +41,7 @@ $requestData->sort_order = "asc";
 
 if ( property_exists( $requestData, "service" ) && $requestData->service ) {
 
-    $filtered = $API->DB->from( "visits_services" )
-        ->where( [
-            "visit_id" => $requestData->id,
-            "service_id" => $requestData->service
-        ] )
-        ->fetchAll( "visit_id" );
-
-    $requestData->id = array_keys( $filtered );
-
-    unset( $requestData->service );
+    $requestData->id = visits\serviceFilter( $requestData->service, $requestData->id );
 
 }
 
