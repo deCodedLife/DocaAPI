@@ -10,6 +10,12 @@ $requestData->id = array_merge(
         $end_at,
         $requestData->user_id
     ),
+    visits\GetVisitsIDsByAssist(
+        "visits",
+        $start_at,
+        $end_at,
+        $requestData->user_id
+    ),
     visits\GetVisitsIDsByAuthor(
         "equipmentVisits",
         $start_at,

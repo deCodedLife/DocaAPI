@@ -33,6 +33,21 @@ function GetVisitsIDsByUser( $table, $start_at, $end_at, $user_id ): array
     return array_keys( $request );
 }
 
+function GetVisitsIDsByAssist( $table, $start_at, $end_at, $user_id ): array
+{
+    global $API;
+    $request = Base( $table, $start_at . " 00:00:00", $end_at . " 23:59:59"  )
+        ->where( "( user_id = $user_id OR assist_id = $user_id )" )
+        ->where([
+            "is_payed" => 'Y',
+            "status" => "ended",
+            "assist_id" => $user_id
+        ])
+        ->fetchAll( "id" ) ?? [];
+
+    return array_keys( $request );
+}
+
 
 function GetVisitsIDsByAuthor( $table, $start_at, $end_at, $operator_id ): array
 {

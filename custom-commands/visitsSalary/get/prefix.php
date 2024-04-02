@@ -1,10 +1,18 @@
 <?php
 
+//ini_set( "display_errors", 1 );
+
 $start_at = date( "Y-m-d", strtotime( $requestData->start_at ) ) . " 00:00:00";
 $end_at = date( "Y-m-d", strtotime( $requestData->end_at ) ) . " 23:59:59";
 
 $requestData->id = array_merge(
     visits\GetVisitsIDsByUser(
+        "visits",
+        $start_at,
+        $end_at,
+        $requestData->user_id
+    ),
+    visits\GetVisitsIDsByAssist(
         "visits",
         $start_at,
         $end_at,
