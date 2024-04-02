@@ -60,6 +60,7 @@ $use_assistant = false;
 
 if ( property_exists( $API->request->data, "cabinet_id" ) ) {
 
+    if ( !property_exists( $requestData, "cabinet_id" ) ) $API->returnResponse( "Выберите кабинет!", 500 );
     if ( !$requestData->cabinet_id ) $API->returnResponse( "Выберите кабинет!", 500 );
 
 }

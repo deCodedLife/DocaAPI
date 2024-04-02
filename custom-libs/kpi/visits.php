@@ -46,6 +46,6 @@ function VisitsStat( $table ): array {
 $visitsInfo = VisitsStat( "visits" );
 $equipmentInfo = VisitsStat( "equipmentVisits" );
 
-$visits_count = $visitsInfo[ "count" ] + $equipmentInfo[ "count" ];
-$sales_summary = $visitsInfo[ "summary" ] + $equipmentInfo[ "summary" ];
-$services_count = $visitsInfo[ "services" ] + $equipmentInfo[ "services" ];
+$visits_count = $visitsInfo[ "count" ] ?? 0 + $equipmentInfo[ "count" ] ?? 0;
+$sales_summary = $visitsInfo[ "summary" ] ?? 0 + $equipmentInfo[ "summary" ] ?? 0;
+$services_count = $visitsInfo[ "services" ] ?? 0 + $equipmentInfo[ "services" ] ?? 0;
