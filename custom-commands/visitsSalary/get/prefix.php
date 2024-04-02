@@ -31,8 +31,29 @@ $requestData->context->user_id = $requestData->user_id;
 
 unset( $requestData->start_at );
 unset( $requestData->end_at );
-unset( $requestData->user_id );
 unset( $requestData->status );
+unset( $requestData->user_id );
 
 if ( empty( $requestData->id ) ) $requestData->id = [ 0 ];
+
+$requestData->sort_by = "start_at";
+$requestData->sort_order = "asc";
+
+if ( property_exists( $requestData, "service" ) && $requestData->service ) {
+
+    $filtered = $API->DB->from( "visits_services" )
+        ->where( [
+            "visit_id" => $requestData->id,
+            "service_id" => $requestData->service
+        ] )
+        ->fetchAll( "visit_id" );
+
+    $requestData->id = array_keys( $filtered );
+
+    unset( $requestData->service );
+
+}
+
 $requestSettings[ "filter" ][ "id" ] = $requestData->id;
+
+//$API->returnResponse( $requestData );

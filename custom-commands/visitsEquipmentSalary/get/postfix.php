@@ -65,6 +65,7 @@ foreach ( $response[ "data" ] as $key => $visit ) {
     $visit[ "period" ] = date( 'Y-m-d H:i', strtotime( $visit[ "start_at" ] ) ) . " - " . date( "H:i", strtotime( $visit[ "end_at" ] ) );
 
     $services = $relations[ intval( $visit[ "id" ] ) ];
+//    $API->returnResponse( $visit );
 
     if ( !$services ) {
         $visit[ "summary" ] = $visit[ "price" ];
@@ -129,7 +130,7 @@ foreach ( $response[ "data" ] as $key => $visit ) {
 
     }
 
-    $visit[ "service_id" ] = $servicesList[ 0 ];
+//    $visit[ "service_id" ] = $visit[ "service_id" ];
     $visit[ "summary" ] = $summary;
     $visit[ "percent" ] = $total;
 

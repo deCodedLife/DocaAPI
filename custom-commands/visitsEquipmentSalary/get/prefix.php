@@ -33,3 +33,7 @@ unset( $requestData->status );
 
 if ( empty( $requestData->id ) ) $requestData->id = [ 0 ];
 $requestSettings[ "filter" ][ "id" ] = $requestData->id;
+$requestData->sort_by = "start_at";
+$requestData->sort_order = "asc";
+
+if ( property_exists( $requestData, "service" ) && $requestData->service ) $requestSettings[ "filter" ][ "service_id" ] = $requestData->service;
