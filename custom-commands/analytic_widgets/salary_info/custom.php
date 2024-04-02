@@ -23,7 +23,7 @@ function getServicesIds( $category ): array {
 
 function getVisitsIds( $table, $start_at, $end_at, $user_id ): array {
 
-    global $API;
+    global $API, $requestData;
 
     $sqlFilter = "
     SELECT $table.id as id
@@ -35,10 +35,19 @@ function getVisitsIds( $table, $start_at, $end_at, $user_id ): array {
         is_active = 'Y' AND
         is_payed = 'Y' AND
         status = 'ended'";
+
+    if ( property_exists( $requestData, "service" ) && $requestData->service && $table == "equipmentVisits" )
+        $sqlFilter .= " AND service_id = $requestData->service";
+
     $visitsList = mysqli_query( $API->DB_connection, $sqlFilter );
     $visits_ids = [];
 
+
     foreach ( $visitsList as $visit ) $visits_ids[] = intval( $visit[ "id" ] );
+
+    if ( property_exists( $requestData, "service" ) && $requestData->service && $table == "visits" )
+        $visits_ids = visits\serviceFilter( $requestData->service, $visits_ids );
+
     return $visits_ids;
 
 }

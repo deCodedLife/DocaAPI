@@ -1,7 +1,7 @@
 <?php
 
 global $API, $requestData;
-ini_set( "display_errors", true );
+//ini_set( "display_errors", true );
 
 $userDetails = $API->DB->from( "users" )
     ->where( "id", $requestData->user_id )

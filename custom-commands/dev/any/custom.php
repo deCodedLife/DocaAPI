@@ -1,19 +1,106 @@
 <?php
 
-ini_set( "display_errors", true );
+//$execCommand = [
+//    "/opt/php74/bin/php",
+//    "{$_SERVER[ "DOCUMENT_ROOT" ]}/index.php",
+//    $_SERVER[ "DOCUMENT_ROOT" ],
+//    $API::$configs[ "company" ],
+//    $insertId,
+//    $_SERVER[ "HTTP_HOST" ],
+//    $API->request->jwt
+//];
+//$execCommand = join( ' ', $execCommand );
+//
+//$requestData->minutes = $requestData->minutes ? "*/$requestData->minutes" : "*";
+//$requestData->hours = $requestData->hours ? "*/$requestData->hours" : "*";
+//$requestData->days = $requestData->days ? "*/$requestData->days" : "*";
+//$requestData->month = $requestData->month ? "*/$requestData->month" : "*";
+//$requestData->weekdays = $requestData->weekdays ? "*/$requestData->weekdays" : "*";
+//
+//shell_exec( "crontab -l > tasks" );
+//$cronJobs = file_get_contents( "tasks" );
+//$cronJobs .= "$requestData->minutes $requestData->hours $requestData->days $requestData->month $requestData->weekdays     $execCommand\n";
+//file_put_contents( "tasks", $cronJobs );
+//shell_exec( "crontab < tasks" );
 
-$visits = $API->DB->from( "visits" )
-    ->select( null )
-    ->select( [
-        "SUM( CASE WHEN is_active = 'Y' THEN 1 ELSE 0 END ) AS active",
-        "SUM( CASE WHEN is_active = 'N' THEN 1 ELSE 0 END ) AS not_active",
-        "SUM( CASE WHEN status = 'ended' THEN 1 ELSE 0 END ) AS ended",
-        "SUM( CASE WHEN status = 'canceled' THEN 1 ELSE 0 END ) AS canceled",
-        "SUM( CASE WHEN is_payed = 'Y' THEN price ELSE 0 END ) as price",
-        "client_id"
-    ] )
-    ->groupBy( "client_id" )
-    ->fetchAll( "client_id" );
+//file_put_contents( "test", "Neko neko ni" );
+
+$API->DB->insertInto( "cronTasks" )
+    ->values( [
+        "title" => "blyat",
+        "object" => "dev",
+        "command" => "any",
+        "run_configuration" => "period",
+        "days" => 1,
+        "hours" => "0",
+        "minutes" => 0
+    ])
+    ->execute();
+
+//ini_set( "display_errors", true );
+//
+//$roles = $API->DB->from( "permissions" )
+//    ->orderBy( "id DESC" );
+//
+//
+//foreach ( $roles as $role ) {
+//
+//    $API->DB->update( "permissions" )
+//        ->set( "id", $role[ "id" ] + 1 )
+//        ->where( "id", $role[ "id" ] )
+//        ->execute();
+//
+//}
+//
+//
+//$publicRole = $API->DB->from( "roles_permissions" )
+//    ->fetch();
+
+//$API->DB->update( "roles" )
+//    ->set( "id", 3 )
+//    ->where( "id", $publicRole[ "id" ] )
+//    ->execute();
+
+
+//foreach ( $API->DB->from( "roles_permissions" ) as $role ) {
+//
+//    $API->DB->update( "roles_permissions" )
+//        ->set( "permission_id", $role[ "permission_id" ] + 1 )
+//        ->where( "id", $role[ "id" ] )
+//        ->execute();
+//
+//}
+
+//$API->DB->update( "users" )
+//    ->set( "role_id", 3 )
+//    ->where( "email", "public@oxbox.ru" )
+//    ->execute();
+
+//$rolesPermissions = $API->DB->from( "roles_permissions" )
+//    ->where( "role_id > ?", 2 );
+//
+//foreach ( $rolesPermissions as $role ) {
+//
+//    $API->DB->update( "roles_permissions" )
+//        ->set( "role_id", $role[ "role_id" ] + 1 )
+//        ->where( "id", $role[ "id" ] )
+//        ->execute();
+//
+//}
+
+
+//$visits = $API->DB->from( "visits" )
+//    ->select( null )
+//    ->select( [
+//        "SUM( CASE WHEN is_active = 'Y' THEN 1 ELSE 0 END ) AS active",
+//        "SUM( CASE WHEN is_active = 'N' THEN 1 ELSE 0 END ) AS not_active",
+//        "SUM( CASE WHEN status = 'ended' THEN 1 ELSE 0 END ) AS ended",
+//        "SUM( CASE WHEN status = 'canceled' THEN 1 ELSE 0 END ) AS canceled",
+//        "SUM( CASE WHEN is_payed = 'Y' THEN price ELSE 0 END ) as price",
+//        "client_id"
+//    ] )
+//    ->groupBy( "client_id" )
+//    ->fetchAll( "client_id" );
 
 
 //$visits = $API->DB->from( "visits" )
@@ -23,7 +110,7 @@ $visits = $API->DB->from( "visits" )
 //    ->fetch();
 
 //$API->returnResponse( $visits->getQuery(false) );
-$API->returnResponse( $visits );
+//$API->returnResponse( $visits );
 
 //н " if is_active = N"
 //$start_at = date( "Y-01-01 00:00:00" );

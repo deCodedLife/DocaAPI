@@ -50,7 +50,9 @@
               "recipient_property": "user_id",
               "donor_object": "users",
               "donor_property_title": "last_name",
-              "donor_property_value": "id"
+              "donor_property_value": "id",
+              "select": [ [ "short_fio", "last_name", "first_name", "patronymic" ] ],
+              "select_menu": [ [ "fio" ] ]
             }
           },
           {
@@ -61,24 +63,6 @@
               "donor_property_title": "title",
               "donor_property_value": "id",
               "recipient_property": "profession_id"
-            }
-          },
-          {
-            "title": "Клиент",
-            "type": "list",
-            "required_permissions": [],
-            "required_modules": [],
-            "settings": {
-              "is_search": true,
-              "recipient_property": "clients_id",
-              "donor_object": "clients",
-              "donor_property_title": [
-                "last_name",
-                "first_name",
-                "patronymic",
-                "phone"
-              ],
-              "donor_property_value": "id"
             }
           },
           {

@@ -3,6 +3,14 @@
 $requestData->start_at = $start_at ?? $requestData->start_at ?? date( "Y-m-d" );
 $requestData->end_at = $end_at ?? $requestData->end_at ?? date( "Y-m-d" );
 $requestData->user_id = $user_id ?? $requestData->user_id;
+$requestData->service = $requestData->service ?? $requestData->service_id ?? null;
+
+if ( is_array( $requestData->service ) ) {
+
+    if ( empty( $requestData->service ) ) $requestData->service = null;
+    else $requestData->service = $requestData->service[ 0 ];
+
+}
 
 /*
  * Запрос данных для расчёта KPI
@@ -17,6 +25,13 @@ function VisitsStat( $table ): array {
         $requestData->end_at . " 23:59:59",
         $requestData->user_id
     );
+    if ( empty( $visits_ids ) ) return [];
+    
+    if ( property_exists( $requestData, "service" ) && $requestData->service ) {
+
+        $visits_ids = visits\serviceFilter( $requestData->service, $visits_ids );
+
+    }
 
     $request = $API->DB->from( $table )
         ->select( null )
@@ -45,6 +60,6 @@ function VisitsStat( $table ): array {
 $visitsInfo = VisitsStat( "visits" );
 $equipmentInfo = VisitsStat( "equipmentVisits" );
 
-$visits_count = $visitsInfo[ "count" ] + $equipmentInfo[ "count" ];
-$sales_summary = $visitsInfo[ "summary" ] + $equipmentInfo[ "summary" ];
-$services_count = $visitsInfo[ "services" ] + $equipmentInfo[ "services" ];
+$visits_count = $visitsInfo[ "count" ] ?? 0 + $equipmentInfo[ "count" ] ?? 0;
+$sales_summary = $visitsInfo[ "summary" ] ?? 0 + $equipmentInfo[ "summary" ] ?? 0;
+$services_count = $visitsInfo[ "services" ] ?? 0 + $equipmentInfo[ "services" ] ?? 0;

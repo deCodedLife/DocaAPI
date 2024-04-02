@@ -10,6 +10,12 @@ $requestData->id = array_merge(
         $end_at,
         $requestData->user_id
     ),
+    visits\GetVisitsIDsByAssist(
+        "visits",
+        $start_at,
+        $end_at,
+        $requestData->user_id
+    ),
     visits\GetVisitsIDsByAuthor(
         "equipmentVisits",
         $start_at,
@@ -27,3 +33,7 @@ unset( $requestData->status );
 
 if ( empty( $requestData->id ) ) $requestData->id = [ 0 ];
 $requestSettings[ "filter" ][ "id" ] = $requestData->id;
+$requestData->sort_by = "start_at";
+$requestData->sort_order = "asc";
+
+if ( property_exists( $requestData, "service" ) && $requestData->service ) $requestSettings[ "filter" ][ "service_id" ] = $requestData->service;

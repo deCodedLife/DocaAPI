@@ -32,6 +32,10 @@ switch ( $event[ "status" ] ) {
     case "waited":
         $event[ "color" ] = "green";
         break;
+        
+    case "remote":
+        $event[ "color" ] = "azure";
+        break;
 
 } // switch. $event[ "status" ][ "value" ]
 
@@ -147,3 +151,11 @@ if ( $event[ "comment" ] ) $eventDetails[] = [
     "icon" => "",
     "value" => $event[ "comment" ]
 ];
+
+if ( $API->isPublicAccount() ) {
+
+    $eventDetails = null;
+    $event = null;
+    $eventDescription = null;
+
+}

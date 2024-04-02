@@ -139,11 +139,11 @@
         "table": "clients",
         "properties_title": "last_name",
         "select": [
-          "id",
-          "last_name",
-          "first_name",
-          "patronymic",
-          "phone"
+          [ "id" ],
+          [ "last_name" ],
+          [ "first_name" ],
+          [ "patronymic" ],
+          [ "phone" ]
         ]
       },
       "annotation": "",
@@ -162,10 +162,10 @@
         "table": "users",
         "properties_title": "last_name",
         "select": [
-          "id",
-          "last_name",
-          "first_name",
-          "patronymic"
+          [ "id" ],
+          [ "last_name" ],
+          [ "first_name" ],
+          [ "patronymic" ]
         ]
       },
       "use_in_commands": [
@@ -504,6 +504,10 @@
         {
           "title": "Юридическое лицо",
           "value": "legalEntity"
+        },
+        {
+          "title": "Онлайн оплата",
+          "value": "online"
         }
       ],
       "is_hook": true,

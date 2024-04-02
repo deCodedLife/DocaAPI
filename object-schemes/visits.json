@@ -1,1 +1,864 @@
-{"title":"Запись к врачу","table":"visits","is_trash":true,"properties":[{"title":"Дата начала","article":"start_at","size":2,"article_modifier":">= ?","data_type":"datetime","field_type":"datetime","is_default_in_list":false,"is_unique":false,"is_autofill":true,"is_hook":true,"use_in_commands":["add","update","get","hook","schedule"],"require_in_commands":["add"]},{"title":"Дата окончания","article":"end_at","size":2,"article_modifier":"<= ?","data_type":"datetime","field_type":"datetime","is_default_in_list":false,"is_unique":false,"is_autofill":true,"use_in_commands":["add","update","schedule","get","hook"],"require_in_commands":["add"]},{"title":"Дата и время посещения","article":"period","data_type":"string","field_type":"string","is_default_in_list":true,"is_unique":false,"is_autofill":false,"use_in_commands":["add","get","update"]},{"title":"Клиент","article":"clients_id","data_type":"array","field_type":"list","is_default_in_list":true,"is_unique":false,"is_autofill":true,"search":"clients","use_in_commands":["add","update","get","schedule","hook"],"require_in_commands":["add"],"is_disabled":false,"join":{"connection_table":"visits_clients","donor_table":"clients","property_article":"last_name","insert_property":"visit_id","filter_property":"client_id","select":["id","last_name","first_name","patronymic"],"select_menu":["id","last_name","first_name","patronymic","phone","second_phone"]},"annotation":"","is_hook":true},{"title":"Информация о клиентах","article":"clients_info","data_type":"array","field_type":"info_strings","is_default_in_list":false,"is_unique":false,"is_autofill":false,"use_in_commands":["update","add","get"],"require_in_commands":[],"is_hook":true,"is_variable":false,"is_visible":false},{"title":"Услуги","article":"services_id","data_type":"array","joined_field":"user_id","joined_field_filter":"users_id","field_type":"list","is_default_in_list":true,"is_unique":false,"is_autofill":true,"is_hook":true,"settings":{"is_duplicate":true},"use_in_commands":["add","update","hook","get","variables"],"require_in_commands":["add"],"join":{"connection_table":"visits_services","donor_table":"services","property_article":"title","insert_property":"visit_id","filter_property":"service_id","select":["article","title","price"],"select_menu":["article","title","price"]},"min_value":0,"is_disabled":false},{"title":"Сотрудник","article":"user_id","data_type":"integer","field_type":"list","is_default_in_list":true,"is_unique":false,"is_autofill":true,"is_hook":true,"use_in_commands":["add","update","get","hook","schedule"],"require_in_commands":["add"],"list_donor":{"table":"users","properties_title":"last_name","select":["id","last_name","first_name","patronymic"]},"is_disabled":false},{"title":"Администратор","article":"author_id","data_type":"integer","field_type":"list","is_default_in_list":true,"is_unique":false,"is_autofill":true,"list_donor":{"table":"users","properties_title":"last_name"},"use_in_commands":["add","update"],"require_in_commands":["add"],"is_visible":false},{"title":"Ассистент","article":"assist_id","data_type":"integer","field_type":"list","is_default_in_list":false,"is_unique":false,"is_autofill":true,"is_hook":true,"use_in_commands":["add","update","get","hook","schedule"],"require_in_commands":[],"list_donor":{"table":"users","properties_title":"last_name","select":["id","last_name","first_name","patronymic"]},"is_visible":false},{"title":"Стоимость","article":"price","data_type":"float","field_type":"price","is_default_in_list":false,"is_unique":false,"is_autofill":true,"is_disabled":true,"use_in_commands":["hook","add","update"],"require_in_commands":["add"]},{"title":"Оплачено","article":"is_payed","data_type":"boolean","field_type":"checkbox","is_default_in_list":false,"is_unique":false,"is_autofill":false,"use_in_commands":["update","get"]},{"title":"Клиент прозвонен","article":"is_called","data_type":"boolean","field_type":"checkbox","is_default_in_list":false,"is_unique":false,"is_autofill":true,"use_in_commands":["update","get"]},{"title":"Оплачено","article":"payed","data_type":"string","field_type":"string","is_default_in_list":false,"is_unique":false,"is_autofill":false,"use_in_commands":["update","get"]},{"title":"Статус","article":"status","data_type":"string","field_type":"list","is_default_in_list":false,"is_unique":false,"is_autofill":true,"is_disabled":false,"is_variable":false,"use_in_commands":["add","update","get"],"custom_list":[{"title":"Запланировано","value":"planning"},{"title":"На приеме","value":"process"},{"title":"Завершено","value":"ended"},{"title":"Ожидает","value":"waited"},{"title":"Онлайн запись","value":"online"},{"title":"Повторное","value":"repeated"},{"title":"Перенесен","value":"moved"}]},{"title":"Филиал","article":"store_id","data_type":"integer","field_type":"list","is_default_in_list":false,"is_unique":false,"is_hook":true,"is_autofill":true,"use_in_commands":["add","update","get","schedule","hook","get_queue"],"require_in_commands":["add","get_queue"],"list_donor":{"table":"stores","properties_title":"title"}},{"title":"Кабинет","article":"cabinet_id","data_type":"integer","field_type":"list","joined_field":"store_id","is_default_in_list":false,"is_unique":false,"is_autofill":true,"use_in_commands":["add","update","get"],"require_in_commands":["add"],"list_donor":{"table":"cabinets","properties_title":"title"}},{"title":"Рекламный источник","article":"advert_id","data_type":"integer","field_type":"integer","is_default_in_list":false,"is_unique":false,"is_autofill":true,"use_in_commands":["add","update","get"],"require_in_commands":[]},{"title":"Артикул исполнителя","article":"performers_article","data_type":"string","field_type":"string","is_default_in_list":false,"is_unique":false,"is_autofill":false,"is_disabled":true,"is_variable":false,"use_in_commands":["schedule"],"require_in_commands":["schedule"]},{"title":"Объект","article":"object","data_type":"string","field_type":"string","is_default_in_list":false,"is_unique":false,"is_autofill":true,"is_variable":false,"use_in_commands":["day_planning"],"require_in_commands":["day_planning"]},{"title":"Талон","article":"talon","data_type":"string","field_type":"string","is_default_in_list":false,"is_unique":false,"is_autofill":true,"use_in_commands":["add"],"require_in_commands":[]},{"title":"Время начала записи","article":"time_from_property","data_type":"datetime","field_type":"datetime","is_default_in_list":false,"is_unique":false,"is_autofill":true,"is_variable":false,"use_in_commands":["day_planning"],"require_in_commands":["day_planning"]},{"title":"Время окончания записи","article":"time_to_property","data_type":"datetime","field_type":"datetime","is_default_in_list":false,"is_unique":false,"is_autofill":true,"is_variable":false,"use_in_commands":["day_planning"],"require_in_commands":["day_planning"]},{"title":"Ссылки графика","article":"links_property","data_type":"string","field_type":"string","is_default_in_list":false,"is_unique":false,"is_autofill":true,"is_variable":false,"use_in_commands":["day_planning"],"require_in_commands":["day_planning"]},{"title":"День графика","article":"day","data_type":"date","field_type":"date","is_default_in_list":false,"is_unique":false,"is_autofill":true,"is_variable":false,"use_in_commands":["day_planning"],"require_in_commands":["day_planning"]},{"title":"Таблица исполнителя","article":"performers_table","data_type":"string","field_type":"string","is_default_in_list":false,"is_unique":false,"is_autofill":false,"is_disabled":true,"is_variable":false,"use_in_commands":["schedule"],"require_in_commands":["schedule"]},{"title":"Имя исполнителя","article":"performers_title","data_type":"string","field_type":"string","is_default_in_list":false,"is_unique":false,"is_autofill":false,"is_disabled":true,"is_variable":false,"use_in_commands":["schedule"],"require_in_commands":["schedule"]},{"title":"Комментарий","article":"comment","settings":{"rows":4},"data_type":"string","field_type":"textarea","is_default_in_list":false,"ignoreInLogs":true,"is_unique":false,"is_autofill":true,"is_disabled":false,"is_variable":false,"use_in_commands":["add","update"],"require_in_commands":[]},{"title":"Шаг","article":"step","data_type":"integer","field_type":"integer","is_default_in_list":false,"is_unique":false,"is_autofill":false,"is_disabled":true,"is_variable":false,"use_in_commands":["schedule"],"require_in_commands":[]},{"title":"Кол-во дней в диапазоне графика","article":"days_range","data_type":"integer","field_type":"integer","is_default_in_list":false,"is_unique":false,"is_autofill":false,"is_disabled":true,"is_variable":false,"use_in_commands":["schedule"],"require_in_commands":[]},{"title":"Тип скидки","article":"discount_type","data_type":"string","field_type":"radio","is_default_in_list":false,"is_unique":false,"is_autofill":true,"is_variable":false,"use_in_commands":["add","update","hook"],"custom_list":[{"title":"Фиксированная","value":"fixed"},{"title":"Процент","value":"percent"}]},{"title":"Сумма скидки","article":"discount_value","data_type":"float","field_type":"integer","is_default_in_list":false,"is_unique":false,"is_autofill":true,"is_variable":false,"use_in_commands":["add","update"]},{"title":"Специальность","article":"profession_id","data_type":"integer","field_type":"list","is_default_in_list":false,"is_unique":false,"is_autofill":false,"is_disabled":false,"use_in_commands":["schedule"],"list_donor":{"table":"professions","properties_title":"title"},"require_in_commands":[]},{"title":"Причина отмены","article":"reason_id","data_type":"integer","field_type":"list","is_default_in_list":false,"is_unique":false,"is_autofill":true,"is_disabled":false,"on_change_submit":true,"use_in_commands":["update","get","remove","cancel"],"list_donor":{"table":"cancelReasons","properties_title":"title"},"require_in_commands":[]},{"title":"Повторное","article":"is_repeat","data_type":"boolean","field_type":"checkbox","is_default_in_list":false,"is_unique":false,"is_autofill":false,"use_in_commands":[]},{"title":"Клиент оповещен","article":"is_alert","data_type":"boolean","field_type":"checkbox","is_default_in_list":false,"is_unique":false,"is_autofill":true,"use_in_commands":["update"]},{"title":"Активность","article":"is_active","data_type":"boolean","field_type":"checkbox","is_default_in_list":false,"is_unique":false,"is_autofill":true,"use_in_commands":["add","update","get"]},{"title":"Оператор","article":"operator","data_type":"integer","field_type":"list","is_default_in_list":false,"is_unique":false,"is_autofill":true,"use_in_commands":["update","get","remove","add"],"list_donor":{"table":"users","properties_title":"last_name"}},{"title":"Дата удаления","article":"cancelledDate","data_type":"datetime","field_type":"datetime","is_default_in_list":false,"is_unique":false,"is_autofill":true,"is_variable":false,"use_in_commands":["update","get","remove","add"]},{"title":"Хочу раньше","article":"is_earlier","data_type":"boolean","field_type":"checkbox","is_default_in_list":false,"is_unique":false,"is_autofill":true,"use_in_commands":["update","add","schedule","get","hook"],"is_hook":true},{"title":"Категория для фильтра","article":"category","data_type":"array","field_type":"list","is_default_in_list":false,"is_unique":false,"is_autofill":false,"use_in_commands":["get"]},{"title":"Услуги для фильтра","article":"service","data_type":"array","field_type":"list","is_default_in_list":false,"is_unique":false,"is_autofill":false,"use_in_commands":["get"]},{"title":"Кабинет для филтра","article":"cabinet","data_type":"string","field_type":"string","is_default_in_list":false,"is_unique":false,"is_autofill":false,"use_in_commands":["get"]},{"title":"Онлайн запись","article":"is_online","data_type":"boolean","field_type":"checkbox","is_default_in_list":false,"is_unique":false,"is_autofill":true,"use_in_commands":["get","add","update"]},{"title":"Клиент (кеш для эвентов)","article":"client_id","data_type":"integer","field_type":"list","is_default_in_list":false,"is_unique":false,"is_autofill":true,"use_in_commands":["add","update"],"require_in_commands":[],"is_visible":false,"is_disabled":false,"is_hook":true},{"title":"Способ оплаты","article":"paymentMethod","data_type":"integer","field_type":"list","is_default_in_list":false,"is_unique":false,"is_autofill":false,"is_disabled":false,"is_variable":false,"use_in_commands":["get"],"list_donor":{"table":"salePayMethods","properties_title":"title"}},{"title":"Дата выдачи талона","article":"dateIssueCoupon","data_type":"datetime","field_type":"datetime","is_default_in_list":false,"is_unique":false,"is_autofill":true,"use_in_commands":["get","update","day_planning"]}]}
+{
+  "title": "Запись к врачу",
+  "table": "visits",
+  "is_trash": true,
+  "properties": [
+    {
+      "title": "Дата начала",
+      "article": "start_at",
+      "size": 2,
+      "article_modifier": ">= ?",
+      "data_type": "datetime",
+      "field_type": "datetime",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_hook": true,
+      "use_in_commands": [
+        "add",
+        "update",
+        "get",
+        "hook",
+        "schedule"
+      ],
+      "require_in_commands": [
+        "add"
+      ]
+    },
+    {
+      "title": "Дата окончания",
+      "article": "end_at",
+      "size": 2,
+      "article_modifier": "<= ?",
+      "data_type": "datetime",
+      "field_type": "datetime",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add",
+        "update",
+        "schedule",
+        "get",
+        "hook"
+      ],
+      "require_in_commands": []
+    },
+    {
+      "title": "Дата и время посещения",
+      "article": "period",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "add",
+        "get",
+        "update"
+      ]
+    },
+    {
+      "title": "Клиент",
+      "article": "clients_id",
+      "data_type": "array",
+      "field_type": "list",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "search": "clients",
+      "use_in_commands": [
+        "add",
+        "update",
+        "get",
+        "schedule",
+        "hook"
+      ],
+      "require_in_commands": [
+        "add"
+      ],
+      "is_disabled": false,
+      "join": {
+        "connection_table": "visits_clients",
+        "donor_table": "clients",
+        "property_article": "last_name",
+        "insert_property": "visit_id",
+        "filter_property": "client_id",
+        "select": [
+          [ "id" ],
+          [ "fio" ]
+        ],
+        "select_menu": [
+          [ "id" ],
+          [ "fio" ],
+          [ "phone", "second_phone"]
+        ]
+      },
+      "annotation": "",
+      "is_hook": true
+    },
+    {
+      "title": "Информация о клиентах",
+      "article": "clients_info",
+      "data_type": "array",
+      "field_type": "info_strings",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "update",
+        "add",
+        "get"
+      ],
+      "require_in_commands": [],
+      "is_hook": true,
+      "is_variable": false,
+      "is_visible": false
+    },
+    {
+      "title": "Услуги",
+      "article": "services_id",
+      "data_type": "array",
+      "joined_field": "user_id",
+      "joined_field_filter": "users_id",
+      "field_type": "list",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_hook": true,
+      "settings": {
+        "is_duplicate": true
+      },
+      "use_in_commands": [
+        "add",
+        "update",
+        "hook",
+        "get",
+        "variables"
+      ],
+      "require_in_commands": [
+        "add"
+      ],
+      "join": {
+        "connection_table": "visits_services",
+        "donor_table": "services",
+        "property_article": "title",
+        "insert_property": "visit_id",
+        "filter_property": "service_id",
+        "select": [
+          [ "article" ],
+          [ "title" ],
+          [ "price" ]
+        ],
+        "select_menu": [
+          [ "article" ],
+          [ "title" ],
+          [ "price" ]
+        ]
+      },
+      "min_value": 0,
+      "is_disabled": false
+    },
+    {
+      "title": "Сотрудник",
+      "article": "user_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_hook": true,
+      "use_in_commands": [
+        "add",
+        "update",
+        "get",
+        "hook",
+        "schedule"
+      ],
+      "require_in_commands": [
+        "add"
+      ],
+      "list_donor": {
+        "table": "users",
+        "properties_title": "last_name",
+        "select": [
+          [ "fio", "last_name", "first_name", "patronymic" ]
+        ]
+      },
+      "is_disabled": false
+    },
+    {
+      "title": "Администратор",
+      "article": "author_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "list_donor": {
+        "table": "users",
+        "properties_title": "last_name"
+      },
+      "use_in_commands": [
+        "add",
+        "update"
+      ],
+      "require_in_commands": [
+        "add"
+      ],
+      "is_visible": false
+    },
+    {
+      "title": "Ассистент",
+      "article": "assist_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_hook": true,
+      "use_in_commands": [
+        "add",
+        "update",
+        "get",
+        "hook",
+        "schedule"
+      ],
+      "require_in_commands": [],
+      "list_donor": {
+        "table": "users",
+        "properties_title": "last_name",
+        "select": [
+          [ "fio", "last_name", "first_name", "patronymic" ]
+        ]
+      },
+      "is_visible": false
+    },
+    {
+      "title": "Стоимость",
+      "article": "price",
+      "data_type": "float",
+      "field_type": "price",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_disabled": true,
+      "use_in_commands": [
+        "hook",
+        "add",
+        "update"
+      ],
+      "require_in_commands": []
+    },
+    {
+      "title": "Оплачено",
+      "article": "is_payed",
+      "data_type": "boolean",
+      "field_type": "checkbox",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "update",
+        "get"
+      ]
+    },
+    {
+      "title": "Клиент прозвонен",
+      "article": "is_called",
+      "data_type": "boolean",
+      "field_type": "checkbox",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "update",
+        "get"
+      ]
+    },
+    {
+      "title": "Оплачено",
+      "article": "payed",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "update",
+        "get"
+      ]
+    },
+    {
+      "title": "Статус",
+      "article": "status",
+      "data_type": "string",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_disabled": false,
+      "is_variable": false,
+      "use_in_commands": [
+        "add",
+        "update",
+        "get"
+      ],
+      "custom_list": [
+        {
+          "title": "Запланировано",
+          "value": "planning"
+        },
+        {
+          "title": "На приеме",
+          "value": "process"
+        },
+        {
+          "title": "Завершено",
+          "value": "ended"
+        },
+        {
+          "title": "Ожидает",
+          "value": "waited"
+        },
+        {
+          "title": "Онлайн запись",
+          "value": "online"
+        },
+        {
+          "title": "Повторное",
+          "value": "repeated"
+        },
+        {
+          "title": "Перенесен",
+          "value": "moved"
+        },
+        {
+          "title": "Remote",
+          "value": "remote"
+        }
+      ]
+    },
+    {
+      "title": "Филиал",
+      "article": "store_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_hook": true,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add",
+        "update",
+        "get",
+        "schedule",
+        "hook",
+        "get_queue"
+      ],
+      "require_in_commands": [
+        "add",
+        "get_queue"
+      ],
+      "list_donor": {
+        "table": "stores",
+        "properties_title": "title"
+      }
+    },
+    {
+      "title": "Кабинет",
+      "article": "cabinet_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "joined_field": "store_id",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add",
+        "update",
+        "get"
+      ],
+      "require_in_commands": [],
+      "list_donor": {
+        "table": "cabinets",
+        "properties_title": "title"
+      }
+    },
+    {
+      "title": "Рекламный источник",
+      "article": "advert_id",
+      "data_type": "integer",
+      "field_type": "integer",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add",
+        "update",
+        "get"
+      ],
+      "require_in_commands": []
+    },
+    {
+      "title": "Артикул исполнителя",
+      "article": "performers_article",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "is_disabled": true,
+      "is_variable": false,
+      "use_in_commands": [
+        "schedule"
+      ],
+      "require_in_commands": [
+        "schedule"
+      ]
+    },
+    {
+      "title": "Объект",
+      "article": "object",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_variable": false,
+      "use_in_commands": [
+        "day_planning"
+      ],
+      "require_in_commands": [
+        "day_planning"
+      ]
+    },
+    {
+      "title": "Талон",
+      "article": "talon",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add"
+      ],
+      "require_in_commands": []
+    },
+    {
+      "title": "Время начала записи",
+      "article": "time_from_property",
+      "data_type": "datetime",
+      "field_type": "datetime",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_variable": false,
+      "use_in_commands": [
+        "day_planning"
+      ],
+      "require_in_commands": [
+        "day_planning"
+      ]
+    },
+    {
+      "title": "Время окончания записи",
+      "article": "time_to_property",
+      "data_type": "datetime",
+      "field_type": "datetime",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_variable": false,
+      "use_in_commands": [
+        "day_planning"
+      ],
+      "require_in_commands": [
+        "day_planning"
+      ]
+    },
+    {
+      "title": "Ссылки графика",
+      "article": "links_property",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_variable": false,
+      "use_in_commands": [
+        "day_planning"
+      ],
+      "require_in_commands": [
+        "day_planning"
+      ]
+    },
+    {
+      "title": "День графика",
+      "article": "day",
+      "data_type": "date",
+      "field_type": "date",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_variable": false,
+      "use_in_commands": [
+        "day_planning"
+      ],
+      "require_in_commands": [
+        "day_planning"
+      ]
+    },
+    {
+      "title": "Таблица исполнителя",
+      "article": "performers_table",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "is_disabled": true,
+      "is_variable": false,
+      "use_in_commands": [
+        "schedule"
+      ],
+      "require_in_commands": [
+        "schedule"
+      ]
+    },
+    {
+      "title": "Имя исполнителя",
+      "article": "performers_title",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "is_disabled": true,
+      "is_variable": false,
+      "use_in_commands": [
+        "schedule"
+      ],
+      "require_in_commands": [
+        "schedule"
+      ]
+    },
+    {
+      "title": "Комментарий",
+      "article": "comment",
+      "settings": {
+        "rows": 4
+      },
+      "data_type": "string",
+      "field_type": "textarea",
+      "is_default_in_list": false,
+      "ignoreInLogs": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_disabled": false,
+      "is_variable": false,
+      "use_in_commands": [
+        "add",
+        "update"
+      ],
+      "require_in_commands": []
+    },
+    {
+      "title": "Шаг",
+      "article": "step",
+      "data_type": "integer",
+      "field_type": "integer",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "is_disabled": true,
+      "is_variable": false,
+      "use_in_commands": [
+        "schedule"
+      ],
+      "require_in_commands": []
+    },
+    {
+      "title": "Кол-во дней в диапазоне графика",
+      "article": "days_range",
+      "data_type": "integer",
+      "field_type": "integer",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "is_disabled": true,
+      "is_variable": false,
+      "use_in_commands": [
+        "schedule"
+      ],
+      "require_in_commands": []
+    },
+    {
+      "title": "Тип скидки",
+      "article": "discount_type",
+      "data_type": "string",
+      "field_type": "radio",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_variable": false,
+      "use_in_commands": [
+        "add",
+        "update",
+        "hook"
+      ],
+      "custom_list": [
+        {
+          "title": "Фиксированная",
+          "value": "fixed"
+        },
+        {
+          "title": "Процент",
+          "value": "percent"
+        }
+      ]
+    },
+    {
+      "title": "Сумма скидки",
+      "article": "discount_value",
+      "data_type": "float",
+      "field_type": "integer",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_variable": false,
+      "use_in_commands": [
+        "add",
+        "update"
+      ]
+    },
+    {
+      "title": "Специальность",
+      "article": "profession_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "is_disabled": false,
+      "use_in_commands": [
+        "schedule"
+      ],
+      "list_donor": {
+        "table": "professions",
+        "properties_title": "title"
+      },
+      "require_in_commands": []
+    },
+    {
+      "title": "Причина отмены",
+      "article": "reason_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_disabled": false,
+      "on_change_submit": true,
+      "use_in_commands": [
+        "update",
+        "get",
+        "remove",
+        "cancel"
+      ],
+      "list_donor": {
+        "table": "cancelReasons",
+        "properties_title": "title"
+      },
+      "require_in_commands": []
+    },
+    {
+      "title": "Повторное",
+      "article": "is_repeat",
+      "data_type": "boolean",
+      "field_type": "checkbox",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": []
+    },
+    {
+      "title": "Клиент оповещен",
+      "article": "is_alert",
+      "data_type": "boolean",
+      "field_type": "checkbox",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "update"
+      ]
+    },
+    {
+      "title": "Активность",
+      "article": "is_active",
+      "data_type": "boolean",
+      "field_type": "checkbox",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add",
+        "update",
+        "get"
+      ]
+    },
+    {
+      "title": "Оператор",
+      "article": "operator",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "update",
+        "get",
+        "remove",
+        "add"
+      ],
+      "list_donor": {
+        "table": "users",
+        "properties_title": "last_name"
+      }
+    },
+    {
+      "title": "Дата удаления",
+      "article": "cancelledDate",
+      "data_type": "datetime",
+      "field_type": "datetime",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_variable": false,
+      "use_in_commands": [
+        "update",
+        "get",
+        "remove",
+        "add"
+      ]
+    },
+    {
+      "title": "Хочу раньше",
+      "article": "is_earlier",
+      "data_type": "boolean",
+      "field_type": "checkbox",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "update",
+        "add",
+        "schedule",
+        "get",
+        "hook"
+      ],
+      "is_hook": true
+    },
+    {
+      "title": "Категория для фильтра",
+      "article": "category",
+      "data_type": "array",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "get"
+      ]
+    },
+    {
+      "title": "Услуги для фильтра",
+      "article": "service",
+      "data_type": "array",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "get"
+      ]
+    },
+    {
+      "title": "Кабинет для филтра",
+      "article": "cabinet",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "get"
+      ]
+    },
+    {
+      "title": "Онлайн запись",
+      "article": "is_online",
+      "data_type": "boolean",
+      "field_type": "checkbox",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "get",
+        "add",
+        "update"
+      ]
+    },
+    {
+      "title": "Клиент (кеш для эвентов)",
+      "article": "client_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add",
+        "update"
+      ],
+      "require_in_commands": [],
+      "is_visible": false,
+      "is_disabled": false,
+      "is_hook": true
+    },
+    {
+      "title": "Способ оплаты",
+      "article": "paymentMethod",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "is_disabled": false,
+      "is_variable": false,
+      "use_in_commands": [
+        "get"
+      ],
+      "list_donor": {
+        "table": "salePayMethods",
+        "properties_title": "title"
+      }
+    },
+    {
+      "title": "Дата выдачи талона",
+      "article": "dateIssueCoupon",
+      "data_type": "datetime",
+      "field_type": "datetime",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "get",
+        "update",
+        "day_planning"
+      ]
+    }
+  ]
+}

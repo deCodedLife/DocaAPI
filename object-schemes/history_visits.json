@@ -87,18 +87,17 @@
         "insert_property": "visit_id",
         "filter_property": "client_id",
         "select": [
-          "id",
-          "last_name",
-          "first_name",
-          "patronymic"
+          [ "id" ],
+          [ "last_name" ],
+          [ "first_name" ],
+          [ "patronymic" ]
         ],
         "select_menu": [
-          "id",
-          "last_name",
-          "first_name",
-          "patronymic",
-          "phone",
-          "second_phone"
+          [ "id" ],
+          [ "last_name" ],
+          [ "first_name" ],
+          [ "patronymic" ],
+          [ "phone", "second_phone" ]
         ]
       },
       "annotation": "",
@@ -135,14 +134,14 @@
         "insert_property": "visit_id",
         "filter_property": "service_id",
         "select": [
-          "article",
-          "title",
-          "price"
+          [ "article" ],
+          [ "title" ],
+          [ "price" ]
         ],
         "select_menu": [
-          "article",
-          "title",
-          "price"
+          [ "article" ],
+          [ "title" ],
+          [ "price" ]
         ]
       },
       "min_value": 0,
@@ -171,10 +170,10 @@
         "table": "users",
         "properties_title": "last_name",
         "select": [
-          "id",
-          "last_name",
-          "first_name",
-          "patronymic"
+          [ "id" ],
+          [ "last_name" ],
+          [ "first_name" ],
+          [ "patronymic" ]
         ]
       },
       "is_disabled": false

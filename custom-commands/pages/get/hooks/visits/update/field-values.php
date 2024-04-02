@@ -58,7 +58,6 @@ $saleDetails = $API->DB->from( "salesList" )
     ->limit(1)
     ->fetch();
 
-
 /**
  * Заполнение полей из продаж
  */

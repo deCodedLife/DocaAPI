@@ -584,8 +584,8 @@
                 "object": "logs",
                 "filters": [
                   {
-                    "property": "client_id",
-                    "value": ":client_id"
+                    "property": "row_id",
+                    "value": ":id"
                   }
                 ]
               },

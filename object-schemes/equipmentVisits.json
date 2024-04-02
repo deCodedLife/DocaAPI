@@ -125,10 +125,7 @@
         "table": "users",
         "properties_title": "last_name",
         "select": [
-          "id",
-          "last_name",
-          "first_name",
-          "patronymic"
+          [ "fio", "last_name", "first_name", "patronymic" ]
         ]
       },
       "is_disabled": false
@@ -161,14 +158,14 @@
         "table": "services",
         "properties_title": "title",
         "select": [
-          "article",
-          "title",
-          "price"
+          [ "article" ],
+          [ "title" ],
+          [ "price" ]
         ],
         "select_menu": [
-          "article",
-          "title",
-          "price"
+          [ "article" ],
+          [ "title" ],
+          [ "price" ]
         ]
       },
       "min_value": 0,
@@ -195,10 +192,7 @@
         "table": "users",
         "properties_title": "last_name",
         "select": [
-          "id",
-          "last_name",
-          "first_name",
-          "patronymic"
+          [ "fio", "last_name", "first_name", "patronymic" ]
         ]
       },
       "is_visible": true
@@ -338,17 +332,13 @@
         "table": "clients",
         "properties_title": "last_name",
         "select": [
-          "id",
-          "last_name",
-          "first_name",
-          "patronymic"
+          [ "id" ],
+          [ "fio", "last_name", "first_name", "patronymic" ]
         ],
         "select_menu": [
-          "id",
-          "last_name",
-          "first_name",
-          "patronymic",
-          "phone"
+          [ "id" ],
+          [ "fio", "last_name", "first_name", "patronymic" ],
+          [ "phone", "second_phone" ]
         ]
       },
       "annotation": "",

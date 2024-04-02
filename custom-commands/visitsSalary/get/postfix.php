@@ -64,6 +64,8 @@ foreach ( $userServices as $service ) {
 }
 
 
+
+
 foreach ( $response[ "data" ] as $key => $visit ) {
 
     $visit[ "period" ] = date( 'Y-m-d H:i', strtotime( $visit[ "start_at" ] ) ) . " - " . date( "H:i", strtotime( $visit[ "end_at" ] ) );
@@ -84,6 +86,13 @@ foreach ( $response[ "data" ] as $key => $visit ) {
     foreach ( $services as $service ) {
 
         $serviceID = intval( $service[ "product_id" ] );
+
+        if (
+            property_exists( $requestData, "service" ) &&
+            !empty( $requestData->service ) &&
+            $serviceID != $requestData->service[ 0 ]
+        ) continue;
+
 
         $servicesList[] = [
             "title" => $service[ "title" ],

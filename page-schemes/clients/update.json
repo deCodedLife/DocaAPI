@@ -292,7 +292,9 @@
                       "recipient_property": "performer_id",
                       "donor_object": "users",
                       "donor_property_title": "last_name",
-                      "donor_property_value": "id"
+                      "donor_property_value": "id",
+                      "select": [ [ "short_fio", "last_name", "first_name", "patronymic" ] ],
+                      "select_menu": [ [ "fio" ] ]
                     }
                   },
                   {
@@ -305,7 +307,9 @@
                       "recipient_property": "author_id",
                       "donor_object": "users",
                       "donor_property_title": "last_name",
-                      "donor_property_value": "id"
+                      "donor_property_value": "id",
+                      "select": [ [ "short_fio", "last_name", "first_name", "patronymic" ] ],
+                      "select_menu": [ [ "fio" ] ]
                     }
                   },
                   {

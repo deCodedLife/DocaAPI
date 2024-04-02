@@ -90,9 +90,9 @@
         "insert_property": "visit_id",
         "filter_property": "service_id",
         "select": [
-          "article",
-          "title",
-          "price"
+          [ "article" ],
+          [ "title" ],
+          [ "price" ]
         ]
       },
       "min_value": 0,

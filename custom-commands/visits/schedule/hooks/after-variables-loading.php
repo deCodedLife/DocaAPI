@@ -38,9 +38,11 @@ else $requestData->end_at =  date( "Y-m-d 23:59:59", strtotime( $requestData->st
  */
 if ( $requestData->profession_id || $requestData->user_id ) {
 
-    $requestData->end_at = date(
-        "Y-m-d", strtotime( "+30 days", strtotime( $requestData->start_at ) )
-    );
+    if ( !property_exists( $API->request->data, "end_at" ) )
+        $requestData->end_at = date(
+            "Y-m-d", strtotime( "+30 days", strtotime( $requestData->start_at ) )
+        );
+    else $requestData->end_at = $API->request->data->end_at;
 
 } // if. $requestData->profession_id || $requestData->users_id
 

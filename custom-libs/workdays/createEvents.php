@@ -24,7 +24,7 @@ function generateRuleEvents( array $rule, $customWorkdays = [] ): array
     /**
      * Списки событий
      */
-    $weekdays = [ 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' ];
+    $weekdays = [ 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday' ];
     $generatedEvents = [];
 
 
@@ -84,3 +84,41 @@ function generateRuleEvents( array $rule, $customWorkdays = [] ): array
     return $generatedEvents;
 
 } // function generateRuleEvents( int $eventID ): array
+
+function filterRuleEvents( array $eventList ): array {
+
+    foreach ( $eventList as $event ) {
+
+        if ( $event[ "is_weekend" ] === 'Y' ) continue;
+
+        $day = date( 'Y-m-d', strtotime( $event[ "event_from" ] ) );
+        $eventsDayMap[ $day ][] = $event;
+
+        if ( $event[ "is_rule" ] === 'Y' ) continue;
+        $ignoreRuleDays[] = $day;
+
+    }
+
+    foreach ( $eventsDayMap ?? [] as $key => $events ) {
+
+        if ( !in_array( $key, $ignoreRuleDays ?? [] ) ) {
+
+            $filteredList = array_merge(
+                $filteredList ?? [],
+                $eventsDayMap[ $key ] ?? []
+            );
+            continue;
+
+        }
+
+        foreach ( $events as $event ) {
+
+            if ( $event[ "is_rule" ] === 'Y' ) continue;
+            $filteredList[] = $event;
+
+        }
+
+    }
+
+    return $filteredList ?? [];
+}

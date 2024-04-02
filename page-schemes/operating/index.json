@@ -61,7 +61,9 @@
                 "first_name",
                 "patronymic"
               ],
-              "donor_property_value": "id"
+              "donor_property_value": "id",
+              "select": [ [ "fio", "last_name", "first_name", "patronymic" ] ],
+              "select_menu": [ [ "id" ], [ "fio" ], [ "phone", "second_phone" ] ]
             }
           },
           {
@@ -83,11 +85,13 @@
             "required_permissions": [],
             "required_modules": [],
             "settings": {
-              "is_search": false,
+              "is_search": true,
               "recipient_property": "services_id",
               "donor_object": "services",
               "donor_property_title": "title",
-              "donor_property_value": "id"
+              "donor_property_value": "id",
+              "select": [ [ "title" ] ],
+              "select_menu": [ [ "article" ], [ "title" ] ]
             }
           }
         ]

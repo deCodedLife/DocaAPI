@@ -1,49 +1,38 @@
 <?php
-global $API;
+
+global $API, $response;
 
 /**
  * Подстановка ФИО
  */
 
-$returnRows = [];
-
-foreach ( $response[ "data" ] as $row ) {
+foreach ( $response[ "data" ] as $key => $row ) {
 
     /**
      * Получение детальной информации о клиенте
      */
-
-    $clientDetail = $API->DB->from( "clients" )
+    if ( $row[ "last_name" ] && $row[ "first_name" ] && $row[ "patronymic" ] ) $clientDetail = $row;
+    else $clientDetail = $API->DB->from( "clients" )
         ->where( "id", $row[ "id" ] ?? $row[ "value" ] )
         ->limit( 1 )
         ->fetch();
 
-    $phoneFormat = "+" . sprintf("%s (%s) %s-%s-%s",
-            substr( $clientDetail[ "phone" ], 0, 1 ),
-            substr( $clientDetail[ "phone" ], 1, 3 ),
-            substr( $clientDetail[ "phone" ], 4, 3 ),
-            substr( $clientDetail[ "phone" ], 7, 2 ),
-            substr( $clientDetail[ "phone" ], 9 )
-        );
 
-    /**
-     * Формирование title записи
-     */
+    $row[ "fio" ] = $clientDetail[ "last_name" ];
+    if ( $clientDetail[ "first_name" ] ) $row[ "fio" ] .= " {$clientDetail[ "first_name" ]}";
+    if ( $clientDetail[ "patronymic" ] ) $row[ "fio" ] .= " {$clientDetail[ "patronymic" ]}";
 
-    $client = "{$clientDetail[ "last_name" ]} {$clientDetail[ "first_name" ]} {$clientDetail[ "patronymic" ]}";
-//    $fio = explode( " ", $client );
-//
-//    $row[ "title" ] = $fio[ 0 ];
-//
-//    if ( $fio[ 1 ] ) $row[ "title" ] .= " " . mb_substr( $fio[ 1 ], 0, 1 ) . ".";
-//    if ( $fio[ 2 ] ) $row[ "title" ] .= " " . mb_substr( $fio[ 2 ], 0, 1 ) . ".";
-//
-//
-    $row[ "fio" ] = $client;
-    $row[ "menu_title" ] = "$client $phoneFormat";
-    $row[ "title" ] = "$client";
-    $returnRows[] = $row;
+
+    if ( $API->isPublicAccount() ) {
+
+        $row = [
+            "id" => $row[ "id" ],
+            "fio" => $row[ "fio" ],
+            "phone" => $row[ "phone" ]
+        ];
+
+    }
+
+    $response[ "data" ][ $key ] = $row;
 
 } // foreach. $response[ "data" ]
-
-$response[ "data" ] = $returnRows;

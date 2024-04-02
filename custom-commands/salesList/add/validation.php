@@ -8,7 +8,7 @@
 if ( !isset( $requestData->employee_id ) ) $API->returnResponse( "Ошибка. Не указан сотрудник", 500 );
 if ( !isset( $requestData->products ) ) $API->returnResponse( "Ошибка. Продукты не подгрузились", 500 );
 
-if ( $requestData->pay_method != "parts" ) {
+if ( $requestData->pay_method != "parts" && $requestData->pay_method != "online" ) {
 
     if ( $requestData->sum_cash != 0 && $requestData->pay_method != "cash" )
         $API->returnResponse( "Ошибка. Несовпадение типа и значений оплаты", 500 );
@@ -64,7 +64,7 @@ foreach ( $requestData->visits_ids ?? [] as $key => $visits ) {
 
     $visitDate = explode( " ", $visitDetails[ "start_at" ] );
 
-    if ( $visitDate[ 0 ] != date( "Y-m-d" ) )
+    if ( $visitDate[ 0 ] != date( "Y-m-d" ) && $requestData->pay_method != "online" )
         $API->returnResponse( "Оплаты совершаются только день в день,{$visitDate[0]}", 500 );
 
 } // foreach ( $requestData->visits_ids ?? [] as $visit )

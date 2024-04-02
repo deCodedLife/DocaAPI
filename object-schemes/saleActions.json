@@ -1,6 +1,6 @@
 {
   "title": "Типы операций",
-  "table": "salesActions",
+  "table": "saleActions",
   "is_trash": false,
   "properties": [
     {

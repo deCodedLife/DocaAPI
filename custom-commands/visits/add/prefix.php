@@ -1,6 +1,101 @@
 <?php
 
 /**
+ * Формирование талона
+ */
+$serviceDetail = $API->DB->from( "services" )
+    ->where( "id", $requestData->services_id[ 0 ] )
+    ->limit( 1 )
+    ->fetch();
+
+
+/**
+ * Статус "Повторное" у Посещения и Клиентов
+ */
+
+foreach ( $requestData->clients_id as $clientId ) {
+
+    /**
+     * Получение посещений Клиента
+     */
+
+    $clientVisits = $API->DB->from( "visits" )
+        ->innerJoin( "visits_clients ON visits_clients.visit_id = visits.id" )
+        ->where( [
+            "visits_clients.client_id" => intval( $clientId ),
+            "visits.status" => "ended",
+            "visits.is_active" => "Y"
+        ] );
+
+    if ( count( $clientVisits ) > 0 ) {
+
+        $requestData->status = "repeated";
+
+        $API->DB->update( "clients" )
+            ->set( "is_repeat", "Y" )
+            ->where( "id", $clientId )
+            ->execute();
+
+    }
+
+} // foreach. $requestData->clients_id
+
+
+/**
+ * Заполнение недостающих полей для записи не из црм
+ */
+
+if ( $API->isPublicAccount() ) {
+
+    $requestData->status = "online";
+    $requestData->price = 0;
+
+
+    /**
+     * Определение времени приёма
+     */
+    $customTime = $API->DB->from( "workingTime" )
+        ->where( [
+            "user" => $requestData->user_id,
+            "row_id" => $requestData->services_id[ 0 ] ?? 0
+        ] )
+        ->fetch();
+
+    if ( $customTime ) $customTime = $customTime[ "time" ];
+    else $customTime = $serviceDetail[ "take_minutes" ] ?? 60;
+
+    $requestData->end_at = date(
+        "Y-m-d H:i:s",
+        strtotime( "$requestData->start_at + $customTime minute" )
+    );
+
+
+    //Получение кабинета в котором принимает Врач
+    $event = $API->DB->from( "scheduleEvents" )
+        ->where( [
+            "event_from >= ?" => date( "Y-m-d 00:00:00", strtotime( $requestData->start_at ) ),
+            "event_to <= ?" => date( "Y-m-d 23:59:59", strtotime( $requestData->end_at ) ),
+            "user_id" => $requestData->user_id
+        ] )
+        ->fetch();
+
+    if ( $event ) $requestData->cabinet_id = $event[ "cabinet_id" ];
+
+
+    // Получение стоимости приёма
+    foreach ( $requestData->services_id as $service ) {
+
+        $serviceInfo = visits\getFullService( $service, $requestData->user_id );
+        $requestData->price += $serviceInfo[ "price" ];
+
+        if ( $serviceInfo[ "is_remote" ] ) $requestData->status = "remote";
+
+    } // foreach ( $requestData->services_id as $service ) {
+
+} // if ( $API->isPublicAccount() )
+
+
+/**
  * Определение рекламного источника
  */
 
@@ -42,46 +137,6 @@ function translit ( $value ) {
 $publicAppPath = $API::$configs[ "paths" ][ "public_app" ];
 require_once ( $publicAppPath . "/custom-libs/visits/validate.php" );
 
-
-/**
- * Статус "Повторное" у Посещения и Клиентов
- */
-
-foreach ( $requestData->clients_id as $clientId ) {
-
-    /**
-     * Получение посещений Клиента
-     */
-    
-    $clientVisits = $API->DB->from( "visits" )
-        ->innerJoin( "visits_clients ON visits_clients.visit_id = visits.id" )
-        ->where( [
-            "visits_clients.client_id" => intval( $clientId ),
-            "visits.status" => "ended",
-            "visits.is_active" => "Y"
-        ] );
-
-    if ( count( $clientVisits ) > 0 ) {
-
-        $requestData->status = "repeated";
-
-        $API->DB->update( "clients" )
-            ->set( "is_repeat", "Y" )
-            ->where( "id", $clientId )
-            ->execute();
-
-    }
-
-} // foreach. $requestData->clients_id
-
-
-/**
- * Формирование талона
- */
-$serviceDetail = $API->DB->from( "services" )
-    ->where( "id", $requestData->services_id[ 0 ] )
-    ->limit( 1 )
-    ->fetch();
 
 $requestData->talon = mb_strtoupper(
         mb_substr( $serviceDetail[ "title" ], 0, 1 )

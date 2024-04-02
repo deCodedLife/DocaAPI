@@ -26,12 +26,26 @@ function GetVisitsIDsByUser( $table, $start_at, $end_at, $user_id ): array
         ->where([
             "is_payed" => 'Y',
             "status" => "ended",
-            "author_id" => $user_id
+            "user_id" => $user_id
         ])
         ->fetchAll( "id" ) ?? [];
-    $request = array_keys( $request );
-    if ( empty( $request ) ) $request = [0];
-    return $request;
+
+    return array_keys( $request );
+}
+
+function GetVisitsIDsByAssist( $table, $start_at, $end_at, $user_id ): array
+{
+    global $API;
+    $request = Base( $table, $start_at . " 00:00:00", $end_at . " 23:59:59"  )
+        ->where( "( user_id = $user_id OR assist_id = $user_id )" )
+        ->where([
+            "is_payed" => 'Y',
+            "status" => "ended",
+            "assist_id" => $user_id
+        ])
+        ->fetchAll( "id" ) ?? [];
+
+    return array_keys( $request );
 }
 
 
@@ -46,9 +60,8 @@ function GetVisitsIDsByAuthor( $table, $start_at, $end_at, $operator_id ): array
             "is_payed" => 'Y',
             "author_id" => $operator_id
         ])->fetchAll( 'id' ) ?? [];
-    $request = array_keys( $request );
-    if ( empty( $request ) ) $request = [0];
-    return $request;
+
+    return array_keys( $request );
 }
 
 
@@ -101,6 +114,20 @@ function getServicesIds( $category ): array
 
 }
 
+function serviceFilter( $service_id, $visits_id ): array
+{
+    global $API;
+
+    $filtered = $API->DB->from( "visits_services" )
+        ->where( [
+            "visit_id" => $visits_id,
+            "service_id" => $service_id
+        ] )
+        ->fetchAll( "visit_id" );
+
+    return array_keys( $filtered );
+}
+
 
 function getFullService( $id, $user_id = null )
 {
@@ -120,6 +147,7 @@ function getFullService( $id, $user_id = null )
 
         if ( $user_time->user != $user_id ) continue;
         $service[ "price" ] = $user_time->price;
+        $service[ "take_minutes" ] = $user_time->time;
 
     }
 
