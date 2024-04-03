@@ -61,7 +61,7 @@
       "title": "Уведомлять каждые (мин)",
       "article": "notifyEvery",
       "type": "integer",
-      "is_required": false,
+      "is_required": "N",
       "default": 0
     },
     {
