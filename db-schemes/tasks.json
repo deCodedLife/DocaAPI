@@ -33,7 +33,7 @@
       "title": "Тема",
       "article": "taskGroup_id",
       "type": "integer",
-      "is_required": true,
+      "is_required": "N",
       "default": null
     },
     {
