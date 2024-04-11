@@ -37,7 +37,7 @@ require_once( $publicAppPath . '/custom-libs/sales/business_logic.php' );
  * Заполнение полей стандартными значениями
  */
 $formFieldValues = [
-    "sum_cash" => $amountOfPhysicalPayments,
+    "sum_cash" => $amountOfPhysicalPayments ?? 0,
     "action" => "sell",
     "store_id" => $pageDetail[ "row_detail" ][ "store_id" ]->value,
     "client_id" => $client_id,
@@ -72,7 +72,7 @@ if ( $pageDetail[ "row_detail" ][ "is_payed" ] == "Y" || ( $saleDetails && $sale
     /**
      * Приведение данных к правильным типам
      */
-    $formFieldValues[ "summary" ] = (float) $formFieldValues[ "summary" ];
+    $formFieldValues[ "summary" ] = (float) $formFieldValues[ "summary" ] ?? 0;
     $formFieldValues[ "sum_cash" ] = (float) $formFieldValues[ "sun_cash" ];
     $formFieldValues[ "sum_card" ] = (float) $formFieldValues[ "sum_card" ];
     $formFieldValues[ "sum_bonus" ] = (float) $formFieldValues[ "sum_bonus" ];
@@ -102,7 +102,7 @@ if ( $pageDetail[ "row_detail" ][ "is_payed" ] == "Y" || ( $saleDetails && $sale
         $formFieldValues[ "products_display" ][ "value" ][] = $product[ "title" ];
 
     $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "products" ] = AddToReceipt( $receipt, $discountPerProduct );
-    $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "summary" ] = $saleSummary ?? 0;
 
 }
 
+$pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "summary" ] = $saleSummary ?? $formFieldValues[ "summary" ] ?? 0;

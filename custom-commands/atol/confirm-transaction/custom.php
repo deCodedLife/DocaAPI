@@ -19,7 +19,6 @@ $saleDetails = $API->DB->from( "salesList" )
     ->where( "id", $requestData->sale_id )
     ->fetch();
 
-
 /**
  * Изменение статуса посещений
  */

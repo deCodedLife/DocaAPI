@@ -1,5 +1,4 @@
 <?php
-
 $saleID = $pageDetail[ "row_id" ];
 
 $formFieldValues = $API->DB->from( "salesList" )
@@ -48,12 +47,6 @@ $formFieldValues[ "terminal_code" ] = [
     "value" => $formFieldValues[ "terminal_code" ]
 ];
 
-
-foreach ( $API->DB->from( "saleVisits" )
-              ->where( "sale_id", $saleID ) as $saleVisit )
-    $formFieldValues[ "visits_ids" ][ "value" ][] = $saleVisit[ "visit_id" ];
-
-
 $products = $API->DB->from( "salesProductsList" )
     ->where( "sale_id", $saleID );
 
@@ -97,4 +90,21 @@ if ( $formFieldValues[ "pay_method" ] == "legalEntity" ) {
 
 }
 
+$visitsIds = $API->DB->from( "saleVisits" )
+    ->where( "sale_id", $saleID )
+    ->fetchAll( "visit_id" );
+
+$equipmentVisitsIds = $API->DB->from( "salesEquipmentVisits" )
+    ->where( "sale_id", $saleID )
+    ->fetchAll( "visit_id" );
+
+$visitsIds = array_keys($visitsIds);
+$equipmentVisitsIds = array_keys($equipmentVisitsIds);
+
+$visits_ids = [
+    "visits" => $visitsIds,
+    "equipmentVisits" => $equipmentVisitsIds
+];
+
 $pageScheme[ "structure" ][ 1 ][ "settings" ][ "data" ][ "employee_id" ] = $API::$userDetail->id;
+$pageScheme[ "structure" ][ 1 ][ "settings" ][ "data" ][ "visits_ids" ] = $visits_ids;
