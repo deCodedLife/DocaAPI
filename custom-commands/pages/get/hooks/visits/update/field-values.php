@@ -42,7 +42,7 @@ $formFieldValues = [
     "store_id" => $pageDetail[ "row_detail" ][ "store_id" ]->value,
     "client_id" => $client_id,
     "online_receipt" => true,
-    "summary" => $saleSummary
+    "summary" => $saleSummary ?? 0
 ];
 
 
@@ -102,6 +102,7 @@ if ( $pageDetail[ "row_detail" ][ "is_payed" ] == "Y" || ( $saleDetails && $sale
         $formFieldValues[ "products_display" ][ "value" ][] = $product[ "title" ];
 
     $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "products" ] = AddToReceipt( $receipt, $discountPerProduct );
+    $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "summary" ] = $saleSummary ?? 0;
 
 }
 

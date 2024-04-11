@@ -17,28 +17,11 @@ if ( $requestData->clients_id ) {
 
     foreach ( $response[ "data" ] as $event ) {
 
-        $isContinue = true;
+        if ( $event[ "client_id" ] == $requestData->clients_id ) {
 
-        if ( !is_array( $event[ "client_id" ] ) ) {
-
-            $arrayClients = [];
-            $arrayClients[] = [ "value" => $event[ "client_id" ] ];
-
-            $event[ "client_id" ] = $arrayClients;
+            $filteredEvents[] = $event;
 
         }
-
-        foreach ( $event[ "client_id" ] as $eventClient )
-
-            $eventClient[ "value" ] = [ $eventClient[ "value" ] ];
-
-        if ( $eventClient[ "value" ] == $requestData->clients_id ) {
-
-            $isContinue = false;
-
-        }
-
-        if ( !$isContinue ) $filteredEvents[] = $event;
 
     } // foreach. $response[ "data" ]
 

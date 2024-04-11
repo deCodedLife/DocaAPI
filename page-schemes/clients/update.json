@@ -169,7 +169,7 @@
                 "widgets_group": "visit_statistic",
                 "filters": [
                   {
-                    "property": "client_id",
+                    "property": "clients_id",
                     "value": ":id"
                   }
                 ]

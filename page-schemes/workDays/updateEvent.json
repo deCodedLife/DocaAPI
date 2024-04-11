@@ -46,6 +46,7 @@
           {
             "type": "submit",
             "settings": {
+              "close_previous_modal": true,
               "title": "Сохранить",
               "background": "dark"
             }

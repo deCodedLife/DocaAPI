@@ -107,6 +107,7 @@ $returnKpi[] = $progressbar;
 foreach ( $kpiServices as $kpiService ) {
 
     $service = $kpiService[ "service" ];
+    $sales_id = $sales_id ?? [ 0 ];
 
     $services_count = mysqli_fetch_array( mysqli_query( $API->DB_connection, "
     SELECT 
@@ -116,7 +117,7 @@ foreach ( $kpiServices as $kpiService ) {
     INNER JOIN 
         salesProductsList ON salesProductsList.sale_id = salesList.id
     WHERE 
-        salesList.id IN ( " . join( ",", $sales_ids ) . " ) AND
+        salesList.id IN ( " . join( ",", $sales_id ) . " ) AND
         salesProductsList.product_id = $service AND
         salesProductsList.type = 'service' AND
         salesList.action = 'sell'",

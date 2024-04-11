@@ -62,7 +62,6 @@ if ( $requestData->status === "waited" ) {
      */
     $API->addEvent( "notifications" );
 
-
 }
 
 

@@ -102,8 +102,9 @@ foreach ( $response[ "data" ] as $key => $visit ) {
         if ( isset( $sales_percent[ $serviceID ] ) ) {
 
             $servicePercent = $sales_percent[ $serviceID ];
+            $servicesDetail = visits\getFullService( $service[ "product_id" ], $user_id );
 
-            $price = intval( $service[ "cost" ] * $service[ "amount" ] );
+            $price = $servicesDetail[ "price" ]; //intval( $service[ "cost" ] * $service[ "amount" ] );
             $total += $price / 100 * $servicePercent;
             continue;
 

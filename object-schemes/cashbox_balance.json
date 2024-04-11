@@ -17,7 +17,7 @@
       "article": "start_at",
       "data_type": "date",
       "field_type": "date",
-      "is_default_in_list": true,
+      "is_default_in_list": false,
       "is_unique": false,
       "is_autofill": false,
       "use_in_commands": [
@@ -29,7 +29,7 @@
       "article": "end_at",
       "data_type": "date",
       "field_type": "date",
-      "is_default_in_list": true,
+      "is_default_in_list": false,
       "is_unique": false,
       "is_autofill": false,
       "use_in_commands": [

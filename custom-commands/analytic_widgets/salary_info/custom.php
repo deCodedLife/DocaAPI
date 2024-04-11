@@ -67,7 +67,9 @@ function getPaymentServices( $type, $sqlFilter, $start_at, $end_at, $user_id ): 
         ->innerJoin( "$table on $table.sale_id = salesList.id" )
         ->where( $sqlFilter );
 
-    foreach ( $allServices as $service ) $servicesList[] = $service;
+    foreach ( $allServices as $service ) {
+        $servicesList[] = visits\getFullService( $service[ "product_id" ], $user_id );
+    }
     return  $servicesList ?? [];
 
 }
@@ -166,22 +168,23 @@ function rate_percent ( $user_id, $visitsServices ): float {
         }
 
     }
+//    $API->returnResponse( $visitsServices );
 
     foreach ( $visitsServices as $visitsService ) {
 
-        if ( isset( $sales_percent[ $visitsService[ "product_id" ] ] ) ) {
+        if ( isset( $sales_percent[ $visitsService[ "id" ] ] ) ) {
 
-            $servicePercent = $sales_percent[ $visitsService[ "product_id" ] ];
+            $servicePercent = $sales_percent[ $visitsService[ "id" ] ];
 
-            $price = intval( $visitsService[ "cost" ] * $visitsService[ "amount" ] );
-            $total += $price / 100 * $servicePercent;
+//            $price = intval( $visitsService[ "cost" ] * $visitsService[ "amount" ] );
+            $total += $visitsService[ "price" ] / 100 * $servicePercent;
             continue;
 
         }
 
-        if ( isset( $sales_fixed[ $visitsService[ "product_id" ] ] ) ) {
+        if ( isset( $sales_fixed[ $visitsService[ "id" ] ] ) ) {
 
-            $servicePercent = $sales_fixed[ $visitsService[ "product_id" ] ];
+            $servicePercent = $sales_fixed[ $visitsService[ "id" ] ];
             $total += $servicePercent;
 
         }
@@ -218,7 +221,6 @@ if ( $salaryType == "rate_kpi" ) {
     require_once( "$publicApp/custom-libs/kpi/visits.php" );
     require_once( "$publicApp/custom-libs/kpi/sales.php" );
     require_once( "$publicApp/custom-libs/kpi/services.php" );
-    require_once( "$publicApp/custom-libs/kpi/promotions.php" );
 
     $highestKPI = [];
 
@@ -305,19 +307,19 @@ $API->returnResponse(
             "detail" => []
         ],
         [
-        "size" => 2,
-        "value" => $services_count,
-        "description" => "Количество услуг",
-        "icon" => "",
-        "prefix" => "",
-        "postfix" => [
+            "size" => 2,
+            "value" => $services_count,
+            "description" => "Количество услуг",
             "icon" => "",
-            "value" => "",
-            "background" => ""
-        ],
-        "type" => "char",
-        "background" => "",
-        "detail" => []
+            "prefix" => "",
+            "postfix" => [
+                "icon" => "",
+                "value" => "",
+                "background" => ""
+            ],
+            "type" => "char",
+            "background" => "",
+            "detail" => []
         ]
     ]
 

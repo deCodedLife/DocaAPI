@@ -169,6 +169,7 @@
         ]
       },
       "use_in_commands": [
+        "get",
         "add",
         "update"
       ],

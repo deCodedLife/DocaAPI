@@ -86,7 +86,7 @@
         "filter_property": "client_id",
         "select": [
           [ "id" ],
-          [ "fio" ]
+          [ "fio", "first_name", "last_name", "patronymic" ]
         ],
         "select_menu": [
           [ "id" ],
@@ -197,9 +197,13 @@
       "is_autofill": true,
       "list_donor": {
         "table": "users",
-        "properties_title": "last_name"
+        "properties_title": "last_name",
+        "select": [
+          [ "fio", "last_name", "first_name", "patronymic" ]
+        ]
       },
       "use_in_commands": [
+        "get",
         "add",
         "update"
       ],

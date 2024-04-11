@@ -130,10 +130,7 @@
         "table": "users",
         "properties_title": "last_name",
         "select": [
-          [ "id" ],
-          [ "last_name" ],
-          [ "first_name" ],
-          [ "patronymic" ]
+          [ "fio", "last_name", "first_name", "patronymic" ]
         ]
       }
     },
@@ -155,10 +152,10 @@
         "table": "users",
         "properties_title": "last_name",
         "select": [
-          [ "id" ],
-          [ "last_name" ],
-          [ "first_name" ],
-          [ "patronymic" ]
+          [ "short_fio", "last_name", "first_name", "patronymic" ]
+        ],
+        "select_menu": [
+          [ "fio", "last_name", "first_name", "patronymic" ]
         ]
       }
     },
@@ -183,15 +180,11 @@
         "properties_title": "last_name",
         "select": [
           [ "id" ],
-          [ "last_name" ],
-          [ "first_name" ],
-          [ "patronymic" ]
+          [ "fio", "last_name", "first_name", "patronymic" ]
         ],
         "select_menu": [
           [ "id" ],
-          [ "last_name" ],
-          [ "first_name" ],
-          [ "patronymic" ],
+          [ "fio", "last_name", "first_name", "patronymic" ],
           [ "phone", "second_phone" ]
         ]
       },

@@ -19,7 +19,7 @@ if ( $requestData->user_id ) {
      * в отфильтрованный список
      */
     foreach ( $performersRows as $performersRowKey => $performersRow )
-        if ( !in_array( $performersRow[ "id" ], (array) $requestData->user_id ) ) unset( $performersRows[ $performersRowKey ] );
+        if ( !in_array( $performersRow[ "id" ], (array) ( $requestData->user_id ?? [] ) ) ) unset( $performersRows[ $performersRowKey ] );
 
 } // if. $requestData->users_id
 
@@ -50,7 +50,7 @@ if ( $requestData->profession_id ) {
      * в отфильтрованный список
      */
     foreach ( $performersRows as $performersRowKey => $performersRow )
-        if ( !in_array( $performersRow[ "id" ], $usersWithCurrentProfession ) ) unset( $performersRows[ $performersRowKey ] );
+        if ( !in_array( $performersRow[ "id" ], $usersWithCurrentProfession ?? [] ) ) unset( $performersRows[ $performersRowKey ] );
 
 
 } // if. $requestData->profession_id
