@@ -86,7 +86,7 @@
         "filter_property": "client_id",
         "select": [
           [ "id" ],
-          [ "fio" ]
+          [ "fio", "first_name", "last_name", "patronymic" ]
         ],
         "select_menu": [
           [ "id" ],

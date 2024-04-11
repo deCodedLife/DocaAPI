@@ -11,8 +11,10 @@ if ( $ruleDetails[ "is_weekend" ] === 'Y' ) {
 
     $formFieldValues[ "event_from" ][ "is_visible" ] = false;
     $formFieldValues[ "event_to" ][ "is_visible" ] = false;
+    $formFieldValues[ "is_weekend" ][ "value" ] = true;
 
-}
+} else $formFieldValues[ "is_weekend" ][ "value" ] = false;
+
 
 if ( $ruleDetails[ "is_rule" ] === 'Y' ) {
 
@@ -28,6 +30,7 @@ if ( $ruleDetails[ "is_rule" ] === 'Y' ) {
         "value" => $workdays ?? []
     ];
 }
+
 if ( $ruleDetails[ "is_rule" ] === 'N' ) {
 
     $formFieldValues[ "work_days" ] = [

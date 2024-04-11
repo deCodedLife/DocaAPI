@@ -38,6 +38,7 @@
         "userServices",
         "daily_report",
         "advertise",
+        "visit_statistic",
         "clients",
         "salary_info",
         "expenses_statistic",
@@ -66,6 +67,7 @@
         "clients",
         "sales_statistic",
         "visit_clients",
+        "visit_statistic",
         "client_statistic",
         "userCalls",
         "expenses_statistic",
@@ -279,13 +281,31 @@
         "deposit_statistic",
         "bonus_statistic",
         "sales_statistic",
-        "client_statistic",
-        "visit_statistic"
+        "client_statistic"
       ],
       "require_in_commands": [
         "deposit_statistic",
         "bonus_statistic",
-        "client_statistic",
+        "client_statistic"
+
+      ],
+      "list_donor": {
+        "table": "clients",
+        "properties_title": "last_name"
+      }
+    },
+    {
+      "title": "Клиент",
+      "article": "clients_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "visit_statistic"
+      ],
+      "require_in_commands": [
         "visit_statistic"
 
       ],

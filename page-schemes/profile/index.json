@@ -1,9 +1,6 @@
 {
   "required_modules": [],
-  "required_permissions": [
-    "users_get",
-    "users_update"
-  ],
+  "required_permissions": [],
   "structure": [
     {
       "title": "Шапка",

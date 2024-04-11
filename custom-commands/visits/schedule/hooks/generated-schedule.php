@@ -175,7 +175,7 @@ foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
              * Используется для добавления блоков empty
              */
             $currentStatus = "empty";
-            if ( in_array( $performerEvent[ "steps" ][ 0 ], $workedScheduleSteps ) ) $currentStatus = "available";
+            if ( in_array( $performerEvent[ "steps" ][ 0 ], $workedScheduleSteps ?? [] ) ) $currentStatus = "available";
 
 
             /**
@@ -192,7 +192,7 @@ foreach ( $resultSchedule as $scheduleDateKey => $scheduleDateDetail ) {
                  * Проверка, входит ли шаг в график работы
                  */
                 $scheduleBlockStepStatus = "empty";
-                if ( in_array( $scheduleBlockStepKey, $workedScheduleSteps ) ) $scheduleBlockStepStatus = "available";
+                if ( in_array( $scheduleBlockStepKey, $workedScheduleSteps ?? [] ) ) $scheduleBlockStepStatus = "available";
 
 
                 if (

@@ -28,7 +28,7 @@
       ]
     },
     {
-      "title": "Сумма продаж",
+      "title": "Продажи",
       "article": "sum_one",
       "data_type": "float",
       "field_type": "price",
@@ -52,7 +52,7 @@
       ]
     },
     {
-      "title": "Сумма продаж",
+      "title": "Продажи",
       "article": "sum_two",
       "data_type": "float",
       "field_type": "price",
@@ -76,7 +76,7 @@
       ]
     },
     {
-      "title": "Сумма продаж",
+      "title": "Продажи",
       "article": "sum_three",
       "data_type": "float",
       "field_type": "price",

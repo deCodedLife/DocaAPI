@@ -27,6 +27,7 @@ $requestData->id = array_merge(
 );
 
 
+$user_id = $requestData->user_id;
 $requestData->context->user_id = $requestData->user_id;
 
 unset( $requestData->start_at );

@@ -25,17 +25,17 @@
 
 //file_put_contents( "test", "Neko neko ni" );
 
-$API->DB->insertInto( "cronTasks" )
-    ->values( [
-        "title" => "blyat",
-        "object" => "dev",
-        "command" => "any",
-        "run_configuration" => "period",
-        "days" => 1,
-        "hours" => "0",
-        "minutes" => 0
-    ])
-    ->execute();
+//$API->DB->insertInto( "cronTasks" )
+//    ->values( [
+//        "title" => "blyat",
+//        "object" => "dev",
+//        "command" => "any",
+//        "run_configuration" => "period",
+//        "days" => 1,
+//        "hours" => "0",
+//        "minutes" => 0
+//    ])
+//    ->execute();
 
 //ini_set( "display_errors", true );
 //
@@ -61,11 +61,11 @@ $API->DB->insertInto( "cronTasks" )
 //    ->where( "id", $publicRole[ "id" ] )
 //    ->execute();
 
-
+//
 //foreach ( $API->DB->from( "roles_permissions" ) as $role ) {
 //
 //    $API->DB->update( "roles_permissions" )
-//        ->set( "permission_id", $role[ "permission_id" ] + 1 )
+//        ->set( "permission_id", $role[ "permission_id" ] - 1 )
 //        ->where( "id", $role[ "id" ] )
 //        ->execute();
 //

@@ -8,7 +8,7 @@ $performersWorkSchedule = [];
 
 foreach ( $performersDetail as $performerId => $performerDetail ) {
 
-    if ( !in_array( $performerId, $requestData->user_id ) ) continue;
+    if ( !in_array( $performerId, $requestData->user_id ?? [] ) ) continue;
 
     /**
      * Обход графика работы Сотрудника

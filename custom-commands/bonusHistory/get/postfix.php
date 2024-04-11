@@ -6,7 +6,8 @@ foreach ( $response[ "data" ] as $row ) {
     if ( $row[ "replenished" ] > 0 ) $row[ "action" ] = "Пополнение";
 
     $userDetails = $API->DB->from( "users" )
-        ->where( "id", $row[ "user_id" ] )
+        ->where( "id", $row[ "user_id" ][ "value" ] )
+        ->limit(1)
         ->fetch();
 
     $lastname = $userDetails[ "first_name" ] ?? " ";

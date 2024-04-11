@@ -1,0 +1,89 @@
+{
+  "required_modules": [],
+  "required_permissions": [
+    "clients_add"
+  ],
+  "structure": [
+    {
+      "title": "Шапка",
+      "type": "header",
+      "size": 4,
+      "settings": {
+        "description": "Клиенты - Импорт",
+        "title": [
+          "Импорт клиентов"
+        ]
+      },
+      "components": {
+        "buttons": [
+          {
+            "type": "script",
+            "settings": {
+              "title": "Создать шаблон",
+              "icon": "gear",
+              "background": "dark",
+              "object": "clients",
+              "command": "import",
+              "data": {
+                "context": {
+                  "template": true
+                }
+              }
+            }
+          },
+          {
+            "type": "download",
+            "settings": {
+              "title": "Скачать шаблон",
+              "href": "",
+              "background": "dark",
+              "modal_size": "lg",
+              "page": "clients/import",
+              "context": {
+                "type": "import"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "title": "Форма",
+      "type": "form",
+      "size": 4,
+      "settings": {
+        "object": "clients",
+        "command": "import",
+        "areas": [
+          {
+            "size": 4,
+            "blocks": [
+              {
+                "title": "Основное",
+                "fields": [
+                  "import_file",
+                  "import_headers"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "components": {
+        "buttons": [
+          {
+            "type": "submit",
+            "settings": {
+              "title": "Импортировать",
+              "background": "dark",
+              "href": "clients",
+              "context": {
+                "block": "exel"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

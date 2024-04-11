@@ -41,24 +41,17 @@ $clientStatistic = [
 
 ];
 
-$filters[ "client_id" ] = $requestData->client_id;
-if ( $requestData->start_at ) $filters[ "start_at >= ?" ] = $requestData->start_at . " 00:00:00";
-if ( $requestData->end_at )   $filters[ "end_at <= ?" ]   = $requestData->end_at   . " 23:59:59";
-
 /**
 * Получение посещений Сотрудника
 */
-$clientVisits = $API->DB->from( "visits" )
-    ->where( $filters );
-
+$clientVisits = $API->sendRequest( "history_visits", "get", $requestData );
 /**
 * Формирование графика посещений
 */
-
 foreach ( $clientVisits as $userVisit ) {
 
 $clientStatistic[ "visits_count" ]++;
-$clientStatistic[ "visits_sum" ] += (float) $userVisit[ "price" ];
+$clientStatistic[ "visits_sum" ] += (float) $userVisit->price;
 
 } // foreach. $userVisits
 
