@@ -20,7 +20,6 @@
             "type": "script",
             "settings": {
               "title": "Создать шаблон",
-              "icon": "gear",
               "background": "dark",
               "object": "clients",
               "command": "import",
@@ -28,19 +27,6 @@
                 "context": {
                   "template": true
                 }
-              }
-            }
-          },
-          {
-            "type": "download",
-            "settings": {
-              "title": "Скачать шаблон",
-              "href": "",
-              "background": "dark",
-              "modal_size": "lg",
-              "page": "clients/import",
-              "context": {
-                "type": "import"
               }
             }
           }

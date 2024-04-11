@@ -50,7 +50,10 @@ if ( isset( $requestData->id ) ) {
 $start_at    = $requestData->start_at ?? $start_at;
 $end_at      = $requestData->end_at ?? $end_at;
 $cabinet     = $requestData->cabinet_id ?? $cabinet;
-$clients     = $requestData->clients_id ?? [ $requestData->client_id ] ?? $clients;
+
+if ( $requestData->clients_id ?? false ) $clients = $requestData->clients_id;
+else if ( $requestData->client_id ?? false ) $clients = [ $requestData->client_id ];
+
 $services    = $requestData->services_id ?? $services;
 $employee    = $requestData->user_id ?? $employee;
 $assistant   = $requestData->assist_id ?? $assistant;
@@ -228,8 +231,7 @@ function isClientBusy( $client, $visits ): int {
             continue;
 
         }
-
-
+        
         $visit_clients = mysqli_query(
             $API->DB_connection,
             "SELECT * FROM visits_clients WHERE visit_id = {$visit[ 'id' ]} AND client_id = $client"
@@ -251,7 +253,7 @@ function isClientBusy( $client, $visits ): int {
 /**
  *  Обход всех клиентов
  */
-foreach ( $clients as $client ) {
+foreach ( ( $clients ?? [] ) as $client ) {
 
     if ( $objectTable === "equipmentVisits" ) continue;
 

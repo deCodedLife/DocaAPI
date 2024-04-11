@@ -35,6 +35,18 @@
               "background": "dark",
               "page": "clients/add"
             }
+          },
+          {
+            "type": "modal",
+            "settings": {
+              "size": "xl",
+              "title": "Импорт",
+              "background": "dark",
+              "page": "clients/import",
+              "context": {
+                "type": "import"
+              }
+            }
           }
         ]
       }
