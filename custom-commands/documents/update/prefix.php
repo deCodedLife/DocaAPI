@@ -3,7 +3,7 @@
 $alreadyExisits = mysqli_fetch_array(
     mysqli_query(
         $API->DB_connection,
-        "SELECT FROM documents WHERE title = $requestData->title, AND NOT id = $requestData->id"
+        "SELECT * FROM documents WHERE title = '$requestData->title' AND NOT id = $requestData->id"
     )
 );
 

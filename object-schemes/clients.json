@@ -393,7 +393,8 @@
       "use_in_commands": [
         "add",
         "update",
-        "hook"
+        "hook",
+        "import"
       ],
       "is_hook": true
     },

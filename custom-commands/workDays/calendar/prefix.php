@@ -23,4 +23,7 @@ if ( $API->isPublicAccount() ) {
 
     $requestData->id = array_keys( $scheduleRules );
 
+    $requestData->event_from = date( "Y-m-01", strtotime( $requestData->event_from ) );
+    $requestData->event_to = date( "Y-m-t", strtotime( $requestData->event_to ) );
+
 }
