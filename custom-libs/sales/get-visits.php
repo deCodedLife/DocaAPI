@@ -21,8 +21,11 @@ function CombinedHandler( string $is_combined, &$visits )
     global $API, $requestData;
     if ( $is_combined == 'N' ) return;
 
-    $start_at = date( "Y-m-d" ) . " 00:00:00";
-    $end_at = date( "Y-m-d" ) . " 23:59:59";
+    $start_at = $API->request->data->start_at ?? date( "Y-m-d" );
+    $end_at = $API->request->data->end_at ?? date( "Y-m-d" );
+
+    $start_at = date( "Y-m-d", strtotime( $start_at ) ) . " 00:00:00";
+    $end_at = date( "Y-m-d", strtotime( $end_at ) ) . " 23:59:59";
     $client_id = $requestData->client_id ?? 0;
 
     $visits[ "visits" ] = visits\Base( "visits", $start_at, $end_at )
@@ -45,7 +48,7 @@ function CombinedHandler( string $is_combined, &$visits )
 
 
 $visits = (array) $requestData->visits_ids;
-
+//$API->returnResponse( [ $visits, $requestData->visits_ids ] );
 if ( ( $requestData->is_combined ?? 'N' ) == 'N' ) $visits = [
     "visits" => GetVisitsLists( "visits", $visits[ "visits" ] ?? [0] ),
     "equipmentVisits" => GetVisitsLists( "equipmentVisits", $visits[ "equipmentVisits" ] ?? [0] )

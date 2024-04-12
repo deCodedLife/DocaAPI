@@ -1,12 +1,19 @@
 <?php
 
-ini_set( "display_errors", true );
-
 if ( $requestData->is_combined == 'N' && $requestData->object ) {
 
-    $requestData->visits_ids = [
-        $requestData->object => [ $requestData->id ]
-    ];
+    foreach ( $requestData->visits_ids as $object => $visits_id  ) {
+
+        foreach ( $visits_id as $index => $visit_id ) {
+
+            if ( $visit_id == $requestData->id ) continue;
+            unset( $visits_id[ $index ] );
+
+        }
+
+        $requestData->visits_ids->$object = array_values( $visits_id );
+
+    }
 
 }
 

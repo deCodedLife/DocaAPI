@@ -1,7 +1,7 @@
 <?php
 
-$sum_cash = $requestData->sum_cash;
-$sum_card = $requestData->sum_card;
+$sum_cash = $requestData->sum_cash ?? 0;
+$sum_card = $requestData->sum_card ?? 0;
 $requestData->pay_method = $requestData->pay_method ?? false;
 
 if ( $requestData->pay_method == "card" || $requestData->pay_method == "online" ) {
