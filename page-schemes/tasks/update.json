@@ -21,8 +21,8 @@
       "title": "Табы",
       "type": "tabs",
       "size": 4,
-      "settings": [
-        {
+      "settings": {
+      "info": {
           "title": "Основная информация",
           "body": [
             {
@@ -88,7 +88,7 @@
             }
           ]
         },
-        {
+      "chat":  {
           "title": "Чат",
           "is_counter": true,
           "body": [
@@ -105,7 +105,7 @@
             }
           ]
         },
-        {
+      "logs":  {
           "title": "Логи",
           "body": [
             {
@@ -141,7 +141,7 @@
             }
           ]
         }
-      ]
+    }
     }
   ]
 }

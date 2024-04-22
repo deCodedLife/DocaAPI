@@ -14,19 +14,31 @@ $clients = $API->DB->from( "clients" )
 
 foreach ( $clients as $client ) {
 
-    if ( $client[ "phone" ] ) {
+    $clientDetail = $API->DB->from( "clients" )
+        ->where("id", $client[ "id" ])
+        ->limit(1)
+        ->fetch();
+
+    if ( $clientDetail[ "phone" ] ) {
+//            $API->returnResponse($clientDetail[ "phone" ] );
 
         $phoneFormat = ", +" . sprintf("%s (%s) %s-%s-%s",
-                substr($client["phone"], 0, 1),
-                substr($client["phone"], 1, 3),
-                substr($client["phone"], 4, 3),
-                substr($client["phone"], 7, 2),
-                substr($client["phone"], 9)
+                substr($clientDetail[ "phone" ], 0, 1),
+                substr($clientDetail[ "phone" ], 1, 3),
+                substr($clientDetail[ "phone" ], 4, 3),
+                substr($clientDetail[ "phone" ], 7, 2),
+                substr($clientDetail[ "phone" ], 9)
             );
 
     } else {
 
-        $phoneFormat = "";
+        $phoneFormat = ", +" . sprintf("%s (%s) %s-%s-%s",
+                substr($clientDetail[ "second_phone" ], 0, 1),
+                substr($clientDetail[ "second_phone" ], 1, 3),
+                substr($clientDetail[ "second_phone" ], 4, 3),
+                substr($clientDetail[ "second_phone" ], 7, 2),
+                substr($clientDetail[ "second_phone" ], 9)
+            );
 
     }
 

@@ -20,6 +20,11 @@
       ],
       "require_in_commands": [],
       "settings": {
+        "allowed_formats": [
+          "png",
+          "svg"
+        ],
+        "max_size": 2097152,
         "is_multiply": false
       }
     },
@@ -641,6 +646,20 @@
         "update",
         "add",
         "get"
+      ]
+    },
+    {
+      "title": "Ссылка на страницу врача",
+      "article": "site_url",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "update",
+        "get",
+        "add"
       ]
     }
   ],

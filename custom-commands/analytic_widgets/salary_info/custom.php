@@ -121,7 +121,57 @@ $userDetail = $API->DB->from( "users" )
 
 
 $salaryType = $userDetail[ "salary_type" ];
-$salary_fixed = $userDetail[ "salary" ];
+
+if ( $userDetail[ "salary_type" ] == "per_hour" ) {
+
+    $hours = 0;
+    $workDays = $API->sendRequest( "workDays", "calendar", [ "user_id" => $requestData->user_id, "event_from" => $start_at , "event_to" => $end_at ] );
+    foreach ( $workDays as $workDay ){
+
+        foreach ( $workDay as $times ) {
+
+            $hours += ceil(( strtotime( $times->to ) - strtotime( $times->from ) ) / ( 60 * 60 ) );
+
+        }
+
+    }
+
+    $salary_fixed = $userDetail[ "salary" ] * $hours;
+
+} else {
+
+    $start_date = new DateTime( $requestData->start_at );
+    $end_date = new DateTime($requestData->end_at );
+
+    $current_date = $start_date;
+    $months = array();
+
+    while ($current_date <= $end_date) {
+
+        $start_of_month = $current_date->format('Y-m-01');
+        $end_of_month = $current_date->format('Y-m-t');
+
+        $months[] = array(
+            'start' => $start_of_month,
+            'end' => $end_of_month
+        );
+
+        $current_date->modify('first day of next month');
+    }
+
+    foreach ( $months as $month ) {
+
+        $workDays = $API->sendRequest( "workDays", "calendar", [ "user_id" => $requestData->user_id, "event_from" => $month[ "start_at" ] , "event_to" => $month[ "end_at" ] ] );
+
+        if ( $workDays ) {
+
+            $salary_fixed += $userDetail[ "salary" ];
+
+        }
+
+    }
+
+}
 
 $additionalWidgetTitle = "% от продаж";
 $additionalWidgetValue = 0;

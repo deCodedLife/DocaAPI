@@ -1,7 +1,7 @@
 <?php
 //ini_set( "display_errors", true );
 
-$pageScheme[ "structure" ][ 1 ][ "settings" ][ 3 ][ "body" ][ 0 ][ "settings" ][ "filters" ] = [
+$pageScheme[ "structure" ][ 1 ][ "settings" ][ "salaryDetail" ][ "body" ][ 0 ][ "settings" ][ "filters" ] = [
     [
         "property" => "start_at",
         "value" => date( 'Y-m-d', strtotime("-1 months") ),
@@ -21,7 +21,7 @@ $pageScheme[ "structure" ][ 1 ][ "settings" ][ 3 ][ "body" ][ 0 ][ "settings" ][
 
 ];
 
-$pageScheme[ "structure" ][ 1 ][ "settings" ][ 3 ][ "body" ][ 1 ][ "settings" ][ "filters" ] = [
+$pageScheme[ "structure" ][ 1 ][ "settings" ][ "salaryDetail" ][ "body" ][ 1 ][ "settings" ][ "filters" ] = [
     [
         "property" => "start_at",
         "value" => date( 'Y-m-d', strtotime("-1 months") ),
@@ -41,7 +41,7 @@ $pageScheme[ "structure" ][ 1 ][ "settings" ][ 3 ][ "body" ][ 1 ][ "settings" ][
 
 ];
 
-$pageScheme[ "structure" ][ 1 ][ "settings" ][ 3 ][ "body" ][ 2 ][ "settings" ][ "filters" ] = [
+$pageScheme[ "structure" ][ 1 ][ "settings" ][ "salaryDetail" ][ "body" ][ 2 ][ "settings" ][ "filters" ] = [
     [
         "property" => "start_at",
         "value" => date( 'Y-m-d', strtotime("-1 months") ),
@@ -63,7 +63,7 @@ $pageScheme[ "structure" ][ 1 ][ "settings" ][ 3 ][ "body" ][ 2 ][ "settings" ][
 
 ];
 
-$pageScheme[ "structure" ][ 1 ][ "settings" ][ 3 ][ "body" ][ 0 ][ "components" ][ "filters" ][ 3 ][ "settings" ][ "is_multi" ] = true;
+$pageScheme[ "structure" ][ 1 ][ "settings" ][ "salaryDetail" ][ "body" ][ 0 ][ "components" ][ "filters" ][ 3 ][ "settings" ][ "is_multi" ] = true;
 
 $user = $API->DB->from( "users" )
     ->where( "id", $pageDetail[ "row_detail" ][ "id" ] )
@@ -77,7 +77,7 @@ $userStores = $API->DB->from( "users_stores" )
 
 if ( $userStores ) {
 
-    $pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "settings" ][ "filters" ] = [
+    $pageScheme[ "structure" ][ 1 ][ "settings" ][ "workDays" ][ "body" ][ 0 ][ "settings" ][ "filters" ] = [
 
         [
             "property" => "store_id",
@@ -97,8 +97,8 @@ $equipmentIndex = 2;
 
 if ( $user[ "salary_type" ] != "rate_kpi" ) {
 
-    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 3 ][ "body" ][ 1 ] );
-    $pageScheme[ "structure" ][ 1 ][ "settings" ][ 3 ][ "body" ] = array_values( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 3 ][ "body" ] );
+    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ "salaryDetail" ][ "body" ][ 1 ] );
+    $pageScheme[ "structure" ][ 1 ][ "settings" ][ "salaryDetail" ][ "body" ] = array_values( $pageScheme[ "structure" ][ 1 ][ "settings" ][ "salaryDetail" ][ "body" ] );
     $equipmentIndex -= 1;
 
 } else {
@@ -123,7 +123,7 @@ foreach ( $equipmentServices as $service ) {
 
 if ( $removeEquipment ) {
 
-    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 3 ][ "body" ][ $equipmentIndex ] );
-    $pageScheme[ "structure" ][ 1 ][ "settings" ][ 3 ][ "body" ] = array_values( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 3 ][ "body" ] );
+    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ "salaryDetail" ][ "body" ][ $equipmentIndex ] );
+    $pageScheme[ "structure" ][ 1 ][ "settings" ][ "salaryDetail" ][ "body" ] = array_values( $pageScheme[ "structure" ][ 1 ][ "settings" ][ "salaryDetail" ][ "body" ] );
 
 }

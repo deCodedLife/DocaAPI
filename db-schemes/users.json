@@ -182,6 +182,13 @@
       "type": "char(1)",
       "default": "N",
       "is_required": "N"
+    },
+    {
+      "title": "Ссылка на страницу врача",
+      "article": "site_url",
+      "type": "char(255)",
+      "default": null,
+      "is_required": "N"
     }
   ]
 }

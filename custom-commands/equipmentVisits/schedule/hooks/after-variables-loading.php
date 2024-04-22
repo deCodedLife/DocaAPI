@@ -43,3 +43,5 @@ $currentStep = $workdayStart;
  * Конец рабочего дня
  */
 $workdayEnd = strtotime( $storeDetail[ "schedule_to" ] );
+
+$requestData->start_at = date( "Y-m-d H:i:s", strtotime( "$requestData->start_at - 1 day" ) );

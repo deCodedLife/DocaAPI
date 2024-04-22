@@ -5,28 +5,28 @@
       "title": "Описание",
       "article": "description",
       "type": "text",
-      "is_required": true,
+      "is_required": "Y",
       "default": null
     },
     {
       "title": "Статус",
       "article": "status",
       "type": "varchar(25)",
-      "is_required": false,
+      "is_required": "N",
       "default": "set"
     },
     {
       "title": "Автор",
       "article": "author_id",
-      "type": "integer",
-      "is_required": true,
+      "type": "int",
+      "is_required": "Y",
       "default": null
     },
     {
       "title": "Исполнитель",
       "article": "performer_id",
-      "type": "integer",
-      "is_required": true,
+      "type": "int",
+      "is_required": "N",
       "default": null
     },
     {
@@ -40,21 +40,21 @@
       "title": "Срок выполнения",
       "article": "deadline",
       "type": "datetime",
-      "is_required": false,
+      "is_required": "N",
       "default": null
     },
     {
       "title": "Дата и время создания",
       "article": "created_at",
       "type": "datetime",
-      "is_required": false,
+      "is_required": "N",
       "default": "CURRENT_TIMESTAMP"
     },
     {
       "title": "Дата и время последнего уведомления",
       "article": "reminderDate",
       "type": "datetime",
-      "is_required": false,
+      "is_required": "N",
       "default": null
     },
     {
@@ -68,7 +68,7 @@
       "title": "Активность (Y/N)",
       "article": "is_active",
       "type": "char(1)",
-      "is_required": false,
+      "is_required": "N",
       "default": "Y"
     },
     {
@@ -77,6 +77,13 @@
       "type": "int",
       "default": null,
       "is_required": "N"
+    },
+    {
+      "title": "Цвет",
+      "article": "color",
+      "type": "varchar(7)",
+      "is_required": "N",
+      "default": "set"
     }
   ],
   "rows_key": "",

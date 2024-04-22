@@ -31,7 +31,8 @@
                 "title": "",
                 "fields": [
                   "performer_id",
-                  "client_id"
+                  "client_id",
+                  "color"
                 ]
               }
             ]

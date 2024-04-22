@@ -14,12 +14,16 @@ foreach ( $requestData->context->object->services_id as $service ) {
 
 }
 
+//$sale_id = $API->DB->from( "saleVisits" )
+//    ->where( "visit_id", $requestData )
+
 $saleDetails = $API->DB->from( "salesList" )
     ->innerJoin( "saleVisits on saleVisits.sale_id = salesList.id" )
     ->where( [
         "saleVisits.visit_id" => $requestData->id,
         "salesList.action" => "sell"
     ] )
+    ->orderBy( "saleVisits.id DESC" )
     ->fetch();
 
 if ( !$saleDetails ) $API->returnResponse( [

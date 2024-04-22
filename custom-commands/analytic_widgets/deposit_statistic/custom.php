@@ -46,7 +46,6 @@ $clientVisits = $API->DB->from( "salesList" )
 foreach ( $clientVisits as $userDepositt ) {
 
     $clientStatistic[ "deposit_count" ]++;
-    $clientStatistic[ "deposit_sum" ] += (float) $userDepositt[ "summary" ];
 
 } // foreach. $userDepositt
 

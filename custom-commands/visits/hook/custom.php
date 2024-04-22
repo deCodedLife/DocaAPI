@@ -136,16 +136,22 @@ if ( $requestData->clients_id ) {
 //            $API->returnResponse($clientDetail[ "phone" ] );
 
             $phoneFormat = ", +" . sprintf("%s (%s) %s-%s-%s",
-                    substr($clientDetail["phone"], 0, 1),
-                    substr($clientDetail["phone"], 1, 3),
-                    substr($clientDetail["phone"], 4, 3),
-                    substr($clientDetail["phone"], 7, 2),
-                    substr($clientDetail["phone"], 9)
+                    substr($clientDetail[ "phone" ], 0, 1),
+                    substr($clientDetail[ "phone" ], 1, 3),
+                    substr($clientDetail[ "phone" ], 4, 3),
+                    substr($clientDetail[ "phone" ], 7, 2),
+                    substr($clientDetail[ "phone" ], 9)
                 );
 
         } else {
 
-            $phoneFormat = "";
+            $phoneFormat = ", +" . sprintf("%s (%s) %s-%s-%s",
+                    substr($clientDetail[ "second_phone" ], 0, 1),
+                    substr($clientDetail[ "second_phone" ], 1, 3),
+                    substr($clientDetail[ "second_phone" ], 4, 3),
+                    substr($clientDetail[ "second_phone" ], 7, 2),
+                    substr($clientDetail[ "second_phone" ], 9)
+                );
 
         }
 

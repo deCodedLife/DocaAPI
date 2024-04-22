@@ -1,6 +1,9 @@
 {
   "required_modules": [],
-  "required_permissions": ["clients_get", "clients_update"],
+  "required_permissions": [
+    "clients_get",
+    "clients_update"
+  ],
   "structure": [
     {
       "title": "Шапка",
@@ -27,8 +30,8 @@
       "title": "Табы",
       "type": "tabs",
       "size": 4,
-      "settings": [
-        {
+      "settings": {
+        "info": {
           "title": "Основная информация",
           "body": [
             {
@@ -157,7 +160,7 @@
             }
           ]
         },
-        {
+        "visits": {
           "title": "История посещений",
           "is_counter": true,
           "body": [
@@ -220,7 +223,7 @@
             }
           ]
         },
-        {
+        "calls": {
           "title": "История звонков",
           "is_counter": true,
           "body": [
@@ -241,7 +244,7 @@
             }
           ]
         },
-        {
+        "tasks": {
           "title": "Задачи клиента",
           "body": [
             {
@@ -293,8 +296,19 @@
                       "donor_object": "users",
                       "donor_property_title": "last_name",
                       "donor_property_value": "id",
-                      "select": [ [ "short_fio", "last_name", "first_name", "patronymic" ] ],
-                      "select_menu": [ [ "fio" ] ]
+                      "select": [
+                        [
+                          "short_fio",
+                          "last_name",
+                          "first_name",
+                          "patronymic"
+                        ]
+                      ],
+                      "select_menu": [
+                        [
+                          "fio"
+                        ]
+                      ]
                     }
                   },
                   {
@@ -308,8 +322,19 @@
                       "donor_object": "users",
                       "donor_property_title": "last_name",
                       "donor_property_value": "id",
-                      "select": [ [ "short_fio", "last_name", "first_name", "patronymic" ] ],
-                      "select_menu": [ [ "fio" ] ]
+                      "select": [
+                        [
+                          "short_fio",
+                          "last_name",
+                          "first_name",
+                          "patronymic"
+                        ]
+                      ],
+                      "select_menu": [
+                        [
+                          "fio"
+                        ]
+                      ]
                     }
                   },
                   {
@@ -356,7 +381,7 @@
             }
           ]
         },
-        {
+        "statistic": {
           "title": "Статистика",
           "body": [
             {
@@ -375,7 +400,7 @@
             }
           ]
         },
-        {
+        "visitReports": {
           "title": "Мед карта",
           "body": [
             {
@@ -397,7 +422,7 @@
             }
           ]
         },
-        {
+        "clientContracts": {
           "title": "Договора",
           "body": [
             {
@@ -419,7 +444,7 @@
             }
           ]
         },
-        {
+        "bonuses": {
           "title": "Бонусы",
           "body": [
             {
@@ -474,7 +499,7 @@
             }
           ]
         },
-        {
+        "deposits": {
           "title": "Депозит",
           "body": [
             {
@@ -507,7 +532,11 @@
                   },
                   {
                     "property": "action",
-                    "value": "deposit"
+                    "value": [
+                      "deposit",
+                      "sell",
+                      "sellReturn"
+                    ]
                   }
                 ],
                 "is_edit": false
@@ -532,7 +561,7 @@
             }
           ]
         },
-        {
+        "logs": {
           "title": "Логи",
           "body": [
             {
@@ -577,7 +606,7 @@
             }
           ]
         }
-      ]
+      }
     }
   ]
 }

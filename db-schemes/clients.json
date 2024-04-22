@@ -231,6 +231,13 @@
       "type": "char(1)",
       "default": null,
       "is_required": "N"
+    },
+    {
+      "title": "Telegram id",
+      "article": "telegram_id",
+      "type": "varchar(25)",
+      "default": null,
+      "is_required": "N"
     }
   ]
 }

@@ -1,7 +1,5 @@
 <?php
 
-
-
 /**
  * Изменение статуса оплаты
  */
@@ -64,7 +62,16 @@ if ( $saleDetails[ "action" ] == "sell" ) {
 
 } // if ( $saleDetails[ "action" ] == "sell" )
 
+if ( $saleDetails[ "action" ] == "deposit" ) {
 
+    $API->DB->update( "clients" )
+        ->set( [
+            "deposit" => $clientDetails[ "deposit" ] + $saleDetails[ "summary" ]
+        ] )
+        ->where( "id", $saleDetails[ "client_id" ] )
+        ->execute();
+
+} // if ( $saleDetails[ "action" ] == "deposit" )
 
 if ( $saleDetails[ "action" ] == "sellReturn" ) {
 

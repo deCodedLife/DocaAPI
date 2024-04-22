@@ -20,8 +20,8 @@
       "title": "Табы",
       "type": "tabs",
       "size": 4,
-      "settings": [
-        {
+      "settings": {
+        "info": {
           "title": "Основная информация",
           "body": [
             {
@@ -65,7 +65,7 @@
             }
           ]
         },
-        {
+        "warehouses": {
           "title": "Складские остатки",
           "body": [
             {
@@ -86,7 +86,7 @@
             }
           ]
         }
-      ],
+      },
       "components": []
     }
   ]

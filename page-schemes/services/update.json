@@ -25,8 +25,8 @@
       "title": "Табы",
       "type": "tabs",
       "size": 4,
-      "settings": [
-        {
+      "settings": {
+      "info": {
           "title": "Основное",
           "body": [
             {
@@ -103,7 +103,7 @@
             }
           ]
         },
-        {
+      "workingTime":  {
           "title": "Время работы сотрудника",
           "body": [
             {
@@ -142,7 +142,7 @@
             }
           ]
         },
-        {
+      "consumables":  {
           "title": "Расходники",
           "body": [
             {
@@ -181,7 +181,7 @@
             }
           ]
         }
-      ],
+    },
       "components": []
     }
   ]

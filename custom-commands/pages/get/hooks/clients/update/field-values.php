@@ -20,4 +20,4 @@ if ( $clientDetail[ "is_representative" ] == "Y" ) {
 
 }
 
-$pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "settings" ][ "data" ][ "id" ] = intval( $pageDetail[ "row_id" ] );
+$pageScheme[ "structure" ][ 1 ][ "settings" ][ "info" ][ "body" ][ 0 ][ "settings" ][ "data" ][ "id" ] = intval( $pageDetail[ "row_id" ] );

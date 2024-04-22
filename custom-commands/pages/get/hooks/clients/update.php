@@ -1,6 +1,6 @@
 <?php
 
-$pageScheme[ "structure" ][ 1 ][ "settings" ][ 7 ][ "body" ][ 1 ][ "components" ][ "buttons" ][ 0 ][ "settings" ][ "context" ] = [
+$pageScheme[ "structure" ][ 1 ][ "settings" ][ "bonuses" ][ "body" ][ 1 ][ "components" ][ "buttons" ][ 0 ][ "settings" ][ "context" ] = [
     "client_id" => $pageDetail[ "row_id" ]
 ];
 
@@ -9,9 +9,9 @@ $pageScheme[ "structure" ][ 1 ][ "settings" ][ 7 ][ "body" ][ 1 ][ "components" 
  * Кнопка "Печать договора"
  */
 if ( $pageDetail[ "row_detail" ][ "is_contract" ] )
-    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 0 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 2 ] );
+    unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ "info" ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 2 ] );
 
-$pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][ "filters" ] = [
+$pageScheme[ "structure" ][ 1 ][ "settings" ][ "visits" ][ "body" ][ 0 ][ "settings" ][ "filters" ] = [
 
     [
         "property" => "clients_id",
@@ -28,7 +28,7 @@ $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 0 ][ "settings" ][
 
 ];
 
-$pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ][ "body" ][ 1 ][ "settings" ][ "filters" ] = [
+$pageScheme[ "structure" ][ 1 ][ "settings" ][ "visits" ][ "body" ][ 1 ][ "settings" ][ "filters" ] = [
 
     [
         "property" => "clients_id",

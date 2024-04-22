@@ -1,7 +1,5 @@
 <?php
 
-
-
 $user = $API->DB->from( "users" )
     ->where( "id", $pageDetail[ "row_detail" ][ "id" ] )
     ->fetch();
