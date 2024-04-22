@@ -2,43 +2,36 @@
 
 namespace telegram;
 
-function getDefaultVisitHandlers ( $visits ): array {
+function getDefaultVisitHandlers ( $visits, $phone = null ): array {
 
+    global $API;
     return [
-        "👍" => [
-            "api_url" => "https://test.docacrm.com",
+        "1" => [
+            "api_url" => "https://{$API::$configs[ "company" ]}.docacrm.com",
             "object" => "visits",
             "command" => "update",
             "data" => [
                 "id" => $visits,
-                "comment" => "Придёт"
+                "comment" => "Подтвердил через Telegram"
             ]
         ],
-        "да" => [
-            "api_url" => "https://test.docacrm.com",
+        "2" => [
+            "api_url" => "https://{$API::$configs[ "company" ]}.docacrm.com",
             "object" => "visits",
             "command" => "update",
             "data" => [
                 "id" => $visits,
-                "comment" => "Придёт"
-            ]
-        ],
-        "👎" => [
-            "api_url" => "https://test.docacrm.com",
-            "object" => "visits",
-            "command" => "update",
-            "data" => [
-                "id" => $visits,
+                "is_active" => "N",
                 "comment" => "Не придёт"
             ]
         ],
-        "нет" => [
-            "api_url" => "https://test.docacrm.com",
-            "object" => "visits",
-            "command" => "update",
+        "3" => [
+            "api_url" => "https://{$API::$configs[ "company" ]}.docacrm.com",
+            "object" => "dom_ru",
+            "command" => "make_call",
             "data" => [
-                "id" => $visits,
-                "comment" => "Не придёт"
+                "phone" => $phone,
+                "user" => "loginova_ekaterina@vpbx000000787b.domru.biz"
             ]
         ]
     ];
@@ -74,7 +67,7 @@ function getClient ( $client_id ): array
             ->where( "id", $client_id )
             ->execute();
 
-        $client[ "telegram_id" ] = $contacts->telegram->id;
+        $clientDetails[ "telegram_id" ] = $contacts->telegram->id;
 
     }
 

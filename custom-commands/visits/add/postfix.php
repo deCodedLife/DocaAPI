@@ -37,7 +37,7 @@ $API->addNotification(
     $requestData->user_id
 );
 
-if ( $API->isPublicAccount() && !empty( $requestData->clients_id ) ) {
+if ( !empty( $requestData->clients_id ) ) {
 
     $clientDetail = $API->DB->from( "clients" )
         ->where( "id", $requestData->clients_id[ 0 ] )
@@ -47,16 +47,18 @@ if ( $API->isPublicAccount() && !empty( $requestData->clients_id ) ) {
         ->where( "id", $requestData->user_id )
         ->fetch();
 
-    $date = date( "d-m-Y в H:i", strtotime( $requestData->start_at ) );
-    $employeeFio = $employeeDetail[ "last_name" ];
+    $date = date( "d.m.Y в H:i", strtotime( $requestData->start_at ) );
 
+    $clientFio = $clientDetail[ "first_name" ];
+    if ( empty( $clientDetail[ "patronymic" ] ) ) $clientFio .= " {$clientDetail[ "last_name" ]}";
+    else $clientFio .= " {$clientDetail[ "patronymic" ]}";
+
+    $employeeFio = $employeeDetail[ "last_name" ];
     if ( !empty( $employeeDetail[ "first_name" ] ) ) $employeeFio .= " {$employeeDetail[ "first_name" ]}";
     if ( !empty( $employeeDetail[ "patronymic" ] ) ) $employeeFio .= " {$employeeDetail[ "patronymic" ]}";
 
-    $message = "Здравствуйте!\n{$clientDetail[ "first_name" ]} {$clientDetail[ "patronymic" ]}, \nВы записаны на приём $date \nВрач: $employeeFio.\nПознакомиться с доктором предстоящего визита вы можете по ссылке: {$employeeDetail[ "site_url" ]}\n\nТел: 79052333533 Адрес: Крестьянский переулок д.5, лит. А, пом. 18-Н \nДо встречи в Community Clinic!";
-
     telegram\sendMessage(
-        $message,
+        "Здравствуйте!\n\n$clientFio, Вы записаны на приём $date\n\nВрач: $employeeFio.\n\nПознакомиться с доктором предстоящего визита вы можете по ссылке: {$employeeDetail[ "site_url" ]}\n\nТел: +78124032032 Адрес: Крестьянский переулок д.5, лит. А, пом. 18-Н \n\nДо встречи в Community Clinic!",
         telegram\getClient( $requestData->clients_id[ 0 ] )
     );
 

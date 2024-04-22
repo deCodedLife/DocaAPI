@@ -146,7 +146,30 @@ foreach ( $consumables as $consumable_id => $consumable ) {
  * Ищем все посещения за запрашиваемый период
  * Сорян, но периоды я таки скопировал(
  */
-$getVisitsQuery = "SELECT * FROM $objectTable WHERE 
+//$existingVisits = $API->DB->from( "visits" )
+//    ->where( "
+//        ( start_at >= :start and start_at < :end ) OR
+//        ( end_at > :start and end_at < :end ) OR
+//        ( start_at < :start and end_at > :end ) AND
+//        is_active = :is_active AND
+//        store_id = :store AND
+//        user_id not in ( :users )
+//    ",
+//    [
+//        ":start" => $start_at,
+//        ":end" => $end_at,
+//        ":is_active" => "Y",
+//        ":store" => $store_id,
+//        ":users" => "260,135"
+//    ]);
+
+//->fetchAll();
+//if ( is_array( $requestData->id ) ) $existingVisits->where( "id not in ( :visits )", [ ":visitss" => join( ",", $requestData->id ) ] );
+//else $existingVisits->where( "not id = :visits", [ "visits" => $requestData->id ] );
+
+//$API->returnResponse( $existingVisits->getQuery( false ) );
+
+$getVisitsQuery = "SELECT * FROM $objectTable WHERE
     reason_id IS NULL AND (
     ( start_at >= '$start_at' and start_at < '$end_at' ) OR
     ( end_at > '$start_at' and end_at < '$end_at' ) OR
@@ -159,7 +182,8 @@ $getVisitsQuery = "SELECT * FROM $objectTable WHERE
 /**
  * Отсекаем редактируемое посещение
  */
-$getVisitsQuery .= $requestData->id ? " AND NOT id = {$requestData->id}" : "";
+if ( is_array( $requestData->id ) ) $getVisitsQuery .= " AND id NOT IN (" . join( ", ", $requestData->id ) . ") ";
+else $getVisitsQuery .= $requestData->id ? " AND NOT id = {$requestData->id}" : "";
 
 $existingVisits = mysqli_query(
     $API->DB_connection,

@@ -24,17 +24,19 @@ foreach ( $visitsList as $client_id => $visits ) {
         if ( !empty( $employeeDetail[ "patronymic" ] ) ) $employee_fio .= " " . trim( $employeeDetail[ "patronymic" ] );
 
         $visitTime = date( "H:i", strtotime( $visit[ "start_at" ] ) );
-        $visitTexts[] = "$visitTime к $employee_fio";
+        $visitTexts[] = "в $visitTime к $employee_fio";
         $visit_ids[] = $visit[ "id" ];
 
     }
+    $userDetails = telegram\getClient( $client_id );
     $visitTexts = join( ", ", $visitTexts );
+    $tomorrow = date( "d.m.Y", strtotime( "+1 day" ) );
 
-    $message = "Добрый день, Вы записаны на завтра в $visitTexts. Чтобы подтвердить запись ответьте 'да' или поставьте реакцию 👍. Чтобы отменить приём - 'нет' или 👎";
+    $API->returnResponse( telegram\getDefaultVisitHandlers( $visit_ids, $userDetails[ "phone" ] ) );
     telegram\sendMessage(
-        $message,
-        telegram\getClient( $client_id ),
-        telegram\getDefaultVisitHandlers( $visit_ids )
+        "Здравствуйте!\n\nВы записаны на $tomorrow $visitTexts. Для подтверждения записи ответьте '1'\n\nДля отмены запись ответьте '2'\n\nДля переноса записи ответьте '3'",
+        $userDetails,
+        telegram\getDefaultVisitHandlers( $visit_ids, $userDetails[ "phone" ] )
     );
 
 }
