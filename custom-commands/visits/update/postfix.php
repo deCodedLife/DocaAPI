@@ -53,3 +53,29 @@ if ( $requestData->status === "waited" ) {
  */
 $API->addEvent( "schedule" );
 $API->addEvent( "day_planning" );
+
+
+if ( property_exists( $API->request->data, "context" ) && property_exists( $API->request->data->context, "bot" ) ) {
+
+    $clientDetails = $API->DB->from( "clients" )
+        ->innerJoin( "visits on visits.client_id = clients.id" )
+        ->where( "visits.id", $requestData->id )
+        ->fetch();
+
+    if ( property_exists( $requestData, "is_active" ) ) {
+
+        telegram\sendMessage(
+            "Ваша запись отменена.",
+            telegram\getClient( $clientDetails[ "id" ] )
+        );
+
+    } else {
+
+        telegram\sendMessage(
+            "Ваша запись подтверждена.\n\nДо встречи в COMMUNITY CLINIC.\n\nhttps://yandex.ru/maps/org/community_clinic/203290979385",
+            telegram\getClient( $clientDetails[ "id" ] )
+        );
+
+    }
+
+}

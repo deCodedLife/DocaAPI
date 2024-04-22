@@ -11,8 +11,11 @@ function getDefaultVisitHandlers ( $visits, $phone = null ): array {
             "object" => "visits",
             "command" => "update",
             "data" => [
+                "context" => [
+                    "bot" => true
+                ],
                 "id" => $visits,
-                "comment" => "Подтвердил через Telegram"
+                "is_called" => true,
             ]
         ],
         "2" => [
@@ -20,9 +23,12 @@ function getDefaultVisitHandlers ( $visits, $phone = null ): array {
             "object" => "visits",
             "command" => "update",
             "data" => [
+                "context" => [
+                    "bot" => true
+                ],
                 "id" => $visits,
-                "is_active" => "N",
-                "comment" => "Не придёт"
+                "reason_id" => 17,
+                "is_active" => false
             ]
         ],
         "3" => [

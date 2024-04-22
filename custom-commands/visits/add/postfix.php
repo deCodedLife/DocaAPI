@@ -50,15 +50,15 @@ if ( !empty( $requestData->clients_id ) ) {
     $date = date( "d.m.Y в H:i", strtotime( $requestData->start_at ) );
 
     $clientFio = $clientDetail[ "first_name" ];
-    if ( empty( $clientDetail[ "patronymic" ] ) ) $clientFio .= " {$clientDetail[ "last_name" ]}";
-    else $clientFio .= " {$clientDetail[ "patronymic" ]}";
+    if ( empty( $clientDetail[ "patronymic" ] ) ) $clientFio .= " " . trim( $clientDetail[ "last_name" ] );
+    else $clientFio .= " " . trim( $clientDetail[ "patronymic" ] );
 
     $employeeFio = $employeeDetail[ "last_name" ];
     if ( !empty( $employeeDetail[ "first_name" ] ) ) $employeeFio .= " {$employeeDetail[ "first_name" ]}";
     if ( !empty( $employeeDetail[ "patronymic" ] ) ) $employeeFio .= " {$employeeDetail[ "patronymic" ]}";
 
     telegram\sendMessage(
-        "Здравствуйте!\n\n$clientFio, Вы записаны на приём $date\n\nВрач: $employeeFio.\n\nПознакомиться с доктором предстоящего визита вы можете по ссылке: {$employeeDetail[ "site_url" ]}\n\nТел: +78124032032 Адрес: Крестьянский переулок д.5, лит. А, пом. 18-Н \n\nДо встречи в Community Clinic!",
+        "Здравствуйте!\n\n$clientFio, Вы записаны на приём $date\n\nВрач: $employeeFio.\n\nПознакомиться с доктором предстоящего визита вы можете по ссылке: {$employeeDetail[ "site_url" ]}\n\nТел: +78124032032 Адрес: Крестьянский переулок д.5, лит. А, пом. 18-Н\n\nhttps://yandex.ru/maps/org/community_clinic/203290979385\n\nДо встречи в Community Clinic!",
         telegram\getClient( $requestData->clients_id[ 0 ] )
     );
 
