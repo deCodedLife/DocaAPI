@@ -75,7 +75,8 @@ function getClient ( $client_id ): array
             ->where( "id", $client_id )
             ->execute();
 
-        $clientDetails[ "telegram_id" ] = $contacts->telegram->id;
+        $contacts = array($contacts);
+        $clientDetails[ "telegram_id" ] = $contacts[ $API::$configs[ "company" ] . "_telegram" ]->id;
 
     }
 
