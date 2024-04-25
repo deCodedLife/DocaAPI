@@ -70,13 +70,15 @@ function getClient ( $client_id ): array
         $request[ "phone" ] = $clientPhone;
 
         $contacts = $API->curlRequest ( $request, "bot.docacrm.com/add_contact" );
+        $contacts = (array)$contacts;
+        $telegram_id = $contacts[ $API::$configs[ "company" ] . "_telegram" ]->id;
+
         $API->DB->update( "clients" )
-            ->set( "telegram_id", $contacts->telegram->id )
+            ->set( "telegram_id", $telegram_id )
             ->where( "id", $client_id )
             ->execute();
 
-        $contacts = array($contacts);
-        $clientDetails[ "telegram_id" ] = $contacts[ $API::$configs[ "company" ] . "_telegram" ]->id;
+        $clientDetails[ "telegram_id" ] = $telegram_id;
 
     }
 
