@@ -1,5 +1,43 @@
 <?php
 
+$workDay = $API->DB->from( "workDays" )
+    ->where( "id", $requestData->id )
+    ->limit( 1 )
+    ->fetch();
+$logDescription = "Внесены изменения в графике:";
+foreach ( $requestData as $key => $item ) {
+
+    switch ( $key ) {
+
+        case "store_id":
+            $storeTitle = $API->DB->from( "stores" )
+                ->where( "id", $item )
+                ->limit( 1 )
+                ->fetch()[ "title" ];
+
+            $logDescription .= " Филиал изменен на \"$storeTitle\"; ";
+
+            break;
+
+        case "cabinet_id":
+            $cabinetTitle = $API->DB->from( "cabinets" )
+                ->where( "id", $item )
+                ->limit( 1 )
+                ->fetch()[ "title" ];
+            $logDescription .= " Кабинет изменен на \"$cabinetTitle\"; ";
+
+            break;
+
+    }
+
+}
+
+$API->addLog( [
+    "table_name" => "users",
+    "description" => $logDescription,
+    "row_id" => $workDay[ "user_id" ]
+], $requestData );
+
 /**
  * Вызываем метод создания ячеек и их валидации
  */

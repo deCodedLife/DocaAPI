@@ -1,5 +1,7 @@
 <?php
 
+$API->returnResponse( $API->DB->from( "settings" )->fetch()[ "name" ] );
+
 //$execCommand = [
 //    "/opt/php74/bin/php",
 //    "{$_SERVER[ "DOCUMENT_ROOT" ]}/index.php",

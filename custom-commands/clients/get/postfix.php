@@ -1,5 +1,13 @@
 <?php
 
+function getAge( $dob ) {
+
+    $today = date( "Y-m-d" );
+    $diff = date_diff( date_create( $dob ), date_create( $today ) );
+    return $diff->y;
+
+}
+
 /**
  * Подстановка ФИО
  */
@@ -7,6 +15,7 @@
 foreach ( $response[ "data" ] as $key => $row ) {
 
     $row[ "fio" ] = $row[ "last_name" ] . " " . $row[ "first_name" ] . " " . $row[ "patronymic" ];
+    $row[ "fullYears" ] = $age = getAge( $row[ "birthday" ] );
     $response[ "data" ][ $key ] = $row;
 
 } // foreach. $response[ "data" ]

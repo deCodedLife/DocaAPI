@@ -24,6 +24,25 @@ $API->DB->update( "workDays" )
 $API->addEvent( "schedule" );
 $API->addEvent( "day_planning" );
 
+$workDay = $API->DB->from( "workDays" )
+    ->where( "id", $requestData->id )
+    ->limit( 1 )
+    ->fetch();
+
+$cabinetTitle= $API->DB->from( "cabinets" )
+    ->where( "id", $requestData->cabinet_id )
+    ->limit( 1 )
+    ->fetch()[ "title" ];
+
+$period = "c " . date( 'd.m.Y H:i', strtotime( $workDay[ "event_from" ] ) ) . " до " . date( 'd.m.Y H:i', strtotime( $workDay[ "event_from" ] ) );
+
+$API->addLog( [
+    "table_name" => "users",
+    "description" => "Кабинет в графике \"$period\" изменен на \"$cabinetTitle\"",
+    "row_id" => $workDay[ "user_id" ]
+], $requestData );
+
+
 //$API->returnResponse( "Заглушка", 500 );
 
 //{"id":449226,"event_from":"2024-02-05","store_id":62,"cabinet_id":1139}

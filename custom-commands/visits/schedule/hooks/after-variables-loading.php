@@ -29,7 +29,7 @@ if ( $requestData->store_id ) {
 if ( !$storeDetail ) $API->returnResponse( "Не определен филиал", 500 );
 
 
-if ( $requestData->start_at ) $requestData->end_at = date( "Y-m-d 23:59:59", strtotime($requestData->start_at ) );
+if ( $requestData->start_at ) $requestData->end_at = date( "Y-m-d 23:59:59", strtotime( $requestData->start_at ) );
 else $requestData->end_at =  date( "Y-m-d 23:59:59", strtotime( $requestData->start_at) );
 
 
@@ -38,11 +38,18 @@ else $requestData->end_at =  date( "Y-m-d 23:59:59", strtotime( $requestData->st
  */
 if ( $requestData->profession_id || $requestData->user_id ) {
 
-    if ( !property_exists( $API->request->data, "end_at" ) )
+    if ( $API->isPublicAccount() ) {
+
+        $requestData->start_at = date( "Y-m-d 00:00:00", strtotime( $API->request->data->start_at ) );
+        $requestData->end_at  = date( "Y-m-d 23:59:59", strtotime( $API->request->data->end_at ) );
+
+    } else {
+
         $requestData->end_at = date(
             "Y-m-d", strtotime( "+30 days", strtotime( $requestData->start_at ) )
         );
-    else $requestData->end_at = $API->request->data->end_at;
+
+    }
 
 } // if. $requestData->profession_id || $requestData->users_id
 
@@ -111,5 +118,3 @@ $workdayEnd = strtotime( $storeDetail[ "schedule_to" ] );
  * Отключение фильтрации по тем кто не хочет раньше
  */
 if ( $requestData->is_earlier == "N" ) unset( $requestData->is_earlier );
-
-//$API->returnResponse( $requestData );

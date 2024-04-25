@@ -96,10 +96,12 @@ $storeData = $API->DB->from( "stores" )
 
 $isTimeCorrect = true;
 
+
 if ( DateTime::createFromFormat( 'Y-m-d H:i:s', $start_at )->format('Y-m-d') == DateTime::createFromFormat( 'Y-m-d H:i:s', $end_at )->format('Y-m-d') ) {
 
     if ( strtotime( DateTime::createFromFormat( 'Y-m-d H:i:s', $start_at )->format('H:i:s') ) < strtotime( $storeData[ "schedule_from" ] ) ) $isTimeCorrect = false;
     if ( strtotime( DateTime::createFromFormat( 'Y-m-d H:i:s', $end_at )->format('H:i:s') ) > strtotime( $storeData[ "schedule_to" ] ) ) $isTimeCorrect = false;
+    if ( strtotime( DateTime::createFromFormat( 'Y-m-d H:i:s', $start_at )->format('H:i:s') ) < strtotime( date(  "Y-m-d 00:00:00" ) ) ) $isTimeCorrect = false;
 
 }
 

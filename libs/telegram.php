@@ -18,30 +18,32 @@ function getDefaultVisitHandlers ( $visits, $phone = null ): array {
                 "is_called" => true,
             ]
         ],
-        "2" => [
-            "api_url" => "https://{$API::$configs[ "company" ]}.docacrm.com",
-            "object" => "visits",
-            "command" => "update",
-            "data" => [
-                "context" => [
-                    "bot" => true
-                ],
-                "id" => $visits,
-                "reason_id" => 17,
-                "is_active" => false
-            ]
-        ],
-        "3" => [
-            "api_url" => "https://{$API::$configs[ "company" ]}.docacrm.com",
-            "object" => "dom_ru",
-            "command" => "make_call",
-            "data" => [
-                "phone" => $phone,
-                "user" => "loginova_ekaterina@vpbx000000787b.domru.biz"
-            ]
-        ]
     ];
 
+    /**
+     * "2" => [
+     * "api_url" => "https://{$API::$configs[ "company" ]}.docacrm.com",
+     * "object" => "visits",
+     * "command" => "update",
+     * "data" => [
+     * "context" => [
+     * "bot" => true
+     * ],
+     * "id" => $visits,
+     * "reason_id" => 17,
+     * "is_active" => false
+     * ]
+     * ],
+     * "3" => [
+     * "api_url" => "https://{$API::$configs[ "company" ]}.docacrm.com",
+     * "object" => "dom_ru",
+     * "command" => "make_call",
+     * "data" => [
+     * "phone" => $phone,
+     * "user" => "loginova_ekaterina@vpbx000000787b.domru.biz"
+     * ]
+     * ]
+     */
 }
 
 function getClient ( $client_id ): array
@@ -62,7 +64,7 @@ function getClient ( $client_id ): array
     if ( empty( $clientDetails[ "telegram_id" ] ) ) {
 
         $request = [];
-        $request[ "messenger" ] = "telegram";
+        $request[ "messenger" ] = "{$API::$configs[ "company" ]}_telegram";
         $request[ "first_name" ] = $clientDetails[ "first_name" ];
         $request[ "last_name" ] = $clientDetails[ "last_name" ];
         $request[ "phone" ] = $clientPhone;
@@ -86,7 +88,7 @@ function sendMessage ( string $message, array $client, array $handlers = null )
 {
     global $API;
     $request = [];
-    $request[ "messenger" ] = "telegram";
+    $request[ "messenger" ] = "{$API::$configs[ "company" ]}_telegram";
     $request[ "user" ] = $client;
     $request[ "message" ] = $message;
     $request[ "handlers" ] = $handlers;

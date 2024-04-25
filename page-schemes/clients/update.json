@@ -53,6 +53,7 @@
                           "patronymic",
                           "gender",
                           "birthday",
+                          "fullYears",
                           "is_blacklist",
                           "advertise_id"
                         ]
