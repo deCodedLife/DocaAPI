@@ -13,12 +13,15 @@ foreach ( $visitsList as $client_id => $visits ) {
     $employees = [];
     $visit_ids = [];
     $times = [];
+    $store_id = null;
 
     foreach ( $visits as $visit ) {
 
         $employeeDetail = $API->DB->from( "users" )
             ->where( "id", $visit[ "user_id" ] )
             ->fetch();
+
+        if ( $visit[ "store_id" ] ) $store_id = $visit[ "store_id" ];
 
         $employee_fio = trim( $employeeDetail[ "last_name" ] );
         if ( !empty( $employeeDetail[ "first_name" ] ) ) $employee_fio .= " " . trim( $employeeDetail[ "first_name" ] );
@@ -44,7 +47,8 @@ foreach ( $visitsList as $client_id => $visits ) {
     $times = join( ", ", $times );
     $employees = join( ", ", $employees );
     $tomorrow = date( "d.m.Y", strtotime( "+1 day" ) );
-    $app_name = $API->DB->from( "settings" )->fetch()[ "name" ];
+
+    $app_name = $API->DB->from( "stores" )->where( "id", $store_id ?? 0 )->fetch()[ "name" ];
 
 
     telegram\sendMessage(

@@ -62,8 +62,8 @@ if ( property_exists( $API->request->data, "context" ) && property_exists( $API-
         ->where( "visits.id", $requestData->id )
         ->fetch();
 
-    $app_name = $API->DB->from( "settings" )->fetch()[ "name" ];
-    $app_map = $API->DB->from( "settings" )->fetch()[ "map" ];
+    $app_name = $API->DB->from( "stores" )->where( "id", $visitDetails[ "store_id" ] ?? 0 )->fetch()[ "name" ];
+    $app_map = $API->DB->from( "stores" )->where( "id", $visitDetails[ "store_id" ] ?? 0 )->fetch()[ "map" ];
 
     if ( property_exists( $requestData, "is_active" ) ) {
 

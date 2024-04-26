@@ -57,10 +57,10 @@ if ( !empty( $requestData->clients_id ) ) {
     if ( !empty( $employeeDetail[ "first_name" ] ) ) $employeeFio .= " {$employeeDetail[ "first_name" ]}";
     if ( !empty( $employeeDetail[ "patronymic" ] ) ) $employeeFio .= " {$employeeDetail[ "patronymic" ]}";
 
-    $app_name = $API->DB->from( "settings" )->fetch()[ "name" ];
-    $app_address = $API->DB->from( "settings" )->fetch()[ "address" ];
-    $app_map = $API->DB->from( "settings" )->fetch()[ "map" ];
-    $app_phone = $API->DB->from( "settings" )->fetch()[ "phone" ];
+    $app_name = $API->DB->from( "stores" )->where( "id", $requestData->store_id )->fetch()[ "name" ];
+    $app_address = $API->DB->from( "stores" )->where( "id", $requestData->store_id )->fetch()[ "address" ];
+    $app_map = $API->DB->from( "stores" )->where( "id", $requestData->store_id )->fetch()->fetch()[ "map" ];
+    $app_phone = $API->DB->from( "stores" )->where( "id", $requestData->store_id )->fetch()[ "phone" ];
 
     telegram\sendMessage(
         "Здравствуйте!\n\n$clientFio, Вы записаны на приём $date\n\nВрач: $employeeFio.\n\nПознакомиться с доктором предстоящего визита вы можете по ссылке: {$employeeDetail[ "site_url" ]}\n\nТел: $app_phone Адрес: $app_address\n\n$app_map\n\nДо встречи в $app_name!",

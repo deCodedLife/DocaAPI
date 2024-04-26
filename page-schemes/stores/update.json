@@ -1,1 +1,77 @@
-{"required_modules":[],"required_permissions":[],"structure":[{"title":"Шапка","type":"header","size":4,"settings":{"description":"Филиалы - Редактирование","title":[":title"]},"components":{"buttons":[]}},{"title":"Форма","type":"form","size":4,"settings":{"object":"stores","command":"update","areas":[{"size":2,"blocks":[{"title":"Основное","fields":["title","is_queue","is_operating"]}]},{"size":2,"blocks":[{"title":"Расписание","fields":["schedule_from","schedule_to"]}]}]},"components":{"buttons":[{"type":"submit","settings":{"title":"Сохранить","background":"dark","href":"stores"}}]}}]}
+{
+  "required_modules": [],
+  "required_permissions": [],
+  "structure": [
+    {
+      "title": "Шапка",
+      "type": "header",
+      "size": 4,
+      "settings": {
+        "description": "Филиалы - Редактирование",
+        "title": [
+          ":title"
+        ]
+      },
+      "components": {
+        "buttons": []
+      }
+    },
+    {
+      "title": "Форма",
+      "type": "form",
+      "size": 4,
+      "settings": {
+        "object": "stores",
+        "command": "update",
+        "areas": [
+          {
+            "size": 2,
+            "blocks": [
+              {
+                "title": "Основное",
+                "fields": [
+                  "title",
+                  "is_queue",
+                  "is_operating"
+                ]
+              },
+              {
+                "title": "Основное",
+                "fields": [
+                  "name",
+                  "address",
+                  "map",
+                  "phone"
+                ]
+              }
+            ]
+          },
+          {
+            "size": 2,
+            "blocks": [
+              {
+                "title": "Расписание",
+                "fields": [
+                  "schedule_from",
+                  "schedule_to"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "components": {
+        "buttons": [
+          {
+            "type": "submit",
+            "settings": {
+              "title": "Сохранить",
+              "background": "dark",
+              "href": "stores"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

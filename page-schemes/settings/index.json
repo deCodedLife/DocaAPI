@@ -42,20 +42,6 @@
                 ]
               }
             ]
-          },
-          {
-            "size": 2,
-            "blocks": [
-              {
-                "title": "Основные",
-                "fields": [
-                  "name",
-                  "address",
-                  "map",
-                  "phone"
-                ]
-              }
-            ]
           }
         ]
       },
