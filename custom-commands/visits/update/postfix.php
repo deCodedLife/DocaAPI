@@ -62,6 +62,9 @@ if ( property_exists( $API->request->data, "context" ) && property_exists( $API-
         ->where( "visits.id", $requestData->id )
         ->fetch();
 
+    $app_name = $API->DB->from( "settings" )->fetch()[ "name" ];
+    $app_map = $API->DB->from( "settings" )->fetch()[ "map" ];
+
     if ( property_exists( $requestData, "is_active" ) ) {
 
         telegram\sendMessage(
@@ -72,7 +75,7 @@ if ( property_exists( $API->request->data, "context" ) && property_exists( $API-
     } else {
 
         telegram\sendMessage(
-            "Ваша запись подтверждена.\n\nДо встречи в COMMUNITY CLINIC.\n\nhttps://yandex.ru/maps/org/community_clinic/203290979385",
+            "Ваша запись подтверждена.\n\nДо встречи в $app_name.\n\n$app_map",
             telegram\getClient( $clientDetails[ "id" ] )
         );
 
