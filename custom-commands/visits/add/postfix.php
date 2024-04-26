@@ -15,7 +15,7 @@ if ( $requestData->phone || $requestData->last_name || $requestData->first_name 
         ->limit( 1 )
         ->fetch();
 
-   $requestData->clients_id = [$clientDetail[ "id" ]];
+    $requestData->clients_id = [$clientDetail[ "id" ]];
 
 }
 
@@ -59,7 +59,7 @@ if ( !empty( $requestData->clients_id ) ) {
 
     $app_name = $API->DB->from( "stores" )->where( "id", $requestData->store_id )->fetch()[ "name" ];
     $app_address = $API->DB->from( "stores" )->where( "id", $requestData->store_id )->fetch()[ "address" ];
-    $app_map = $API->DB->from( "stores" )->where( "id", $requestData->store_id )->fetch()->fetch()[ "map" ];
+    $app_map = $API->DB->from( "stores" )->where( "id", $requestData->store_id )->fetch()[ "map" ];
     $app_phone = $API->DB->from( "stores" )->where( "id", $requestData->store_id )->fetch()[ "phone" ];
 
     telegram\sendMessage(

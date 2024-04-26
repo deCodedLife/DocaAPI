@@ -49,10 +49,10 @@ foreach ( $visitsList as $client_id => $visits ) {
     $tomorrow = date( "d.m.Y", strtotime( "+1 day" ) );
 
     $app_name = $API->DB->from( "stores" )->where( "id", $store_id ?? 0 )->fetch()[ "name" ];
-
+    $app_address = $API->DB->from( "stores" )->where( "id", $store_id ?? 0 )->fetch()[ "address" ];
 
     telegram\sendMessage(
-        "Здравствуйте!\n\n$clientFio, Вы записаны в $app_name на $tomorrow в $times.\n\nВрач: $employees\n\nДля подтверждения записи ответьте '1'\n\nДля переноса или отмены посещения напишите об этом в чате.",
+        "Здравствуйте!\n\n$clientFio, Вы записаны в клинику $app_name на $tomorrow в $times по адресу $app_address.\n\nВрач: $employees\n\nДля подтверждения записи ответьте '1'\n\nДля переноса или отмены посещения напишите об этом в чате.",
         $userDetails,
         telegram\getDefaultVisitHandlers( $visit_ids, $userDetails[ "phone" ] )
     );

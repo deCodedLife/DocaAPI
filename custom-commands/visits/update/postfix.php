@@ -13,11 +13,12 @@ if ( $requestData->clients_id && $requestData->id ) {
 } // if ( $requestData->clients_id && $requestData->id )
 
 
-if ( $requestData->status === "waited" ) {
+$visitDetails = $API->DB->from( "visits" )
+    ->where( "id", $requestData->id )
+    ->fetch();
 
-    $visitDetails = $API->DB->from( "visits" )
-        ->where( "id", $requestData->id )
-        ->fetch();
+
+if ( $requestData->status === "waited" ) {
 
     $clientDetails = $API->DB->from( "clients" )
         ->innerJoin( "visits on visits.client_id = clients.id" )
@@ -57,13 +58,17 @@ $API->addEvent( "day_planning" );
 
 if ( property_exists( $API->request->data, "context" ) && property_exists( $API->request->data->context, "bot" ) ) {
 
+    $visitDetails = $API->DB->from( "visits" )
+        ->where( "id", $requestData->id )
+        ->fetch();
+
     $clientDetails = $API->DB->from( "clients" )
         ->innerJoin( "visits on visits.client_id = clients.id" )
         ->where( "visits.id", $requestData->id )
         ->fetch();
 
-    $app_name = $API->DB->from( "stores" )->where( "id", $visitDetails[ "store_id" ] ?? 0 )->fetch()[ "name" ];
-    $app_map = $API->DB->from( "stores" )->where( "id", $visitDetails[ "store_id" ] ?? 0 )->fetch()[ "map" ];
+    $app_name = $API->DB->from( "stores" )->where( "id", $visitDetails[ "store_id" ] )->fetch()[ "name" ];
+    $app_map = $API->DB->from( "stores" )->where( "id", $visitDetails[ "store_id" ] )->fetch()[ "map" ];
 
     if ( property_exists( $requestData, "is_active" ) ) {
 
