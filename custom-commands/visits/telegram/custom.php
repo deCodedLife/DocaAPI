@@ -16,13 +16,14 @@ foreach ( $visitsList as $client_id => $visits ) {
     $times = [];
     $store_id = null;
 
-    foreach ( $visits as $visit ) {
+    foreach ( $visits as $key => $visit ) {
 
         $employeeDetail = $API->DB->from( "users" )
             ->where( "id", $visit[ "user_id" ] )
             ->fetch();
 
         if ( $visit[ "store_id" ] ) $store_id = $visit[ "store_id" ];
+        if ( $employeeDetail[ "notify_clients" ] == "N" )  unset( $visits[ $key ] );
 
         $employee_fio = trim( $employeeDetail[ "last_name" ] );
         if ( !empty( $employeeDetail[ "first_name" ] ) ) $employee_fio .= " " . trim( $employeeDetail[ "first_name" ] );
@@ -35,6 +36,8 @@ foreach ( $visitsList as $client_id => $visits ) {
         $visit_ids[] = $visit[ "id" ];
 
     }
+
+    if ( empty( $visits ) ) continue;
 
     $clientDetail = $API->DB->from( "clients" )
         ->where( "id", $client_id )

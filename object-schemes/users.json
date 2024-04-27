@@ -665,6 +665,20 @@
       ]
     },
     {
+      "title": "Уведомлять клиентов о записи к врачу",
+      "article": "notify_clients",
+      "data_type": "boolean",
+      "field_type": "checkbox",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "update",
+        "add",
+        "get"
+      ]
+    },
+    {
       "title": "Ссылка на страницу врача",
       "article": "site_url",
       "data_type": "string",

@@ -189,6 +189,13 @@
       "type": "char(255)",
       "default": null,
       "is_required": "N"
+    },
+    {
+      "title": "Уведомлять клиентов о записи к врачу",
+      "article": "notify_clients",
+      "type": "char(1)",
+      "default": "Y",
+      "is_required": "N"
     }
   ]
 }

@@ -173,7 +173,8 @@
                           "fields": [
                             "is_visible_in_schedule",
                             "is_queue",
-                            "is_visibleOnSite"
+                            "is_visibleOnSite",
+                            "notify_clients"
                           ]
                         }
                       ]
