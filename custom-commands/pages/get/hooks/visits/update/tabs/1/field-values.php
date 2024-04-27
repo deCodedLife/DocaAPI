@@ -4,7 +4,7 @@
  * Получение информации об услугах
  */
 
-if ( $API->validatePermissions( [ "manager_schedule" ], true ) ) {
+if ( $API->validatePermissions( [ "manager_schedule", "director_schedule" ], true ) ) {
 
     $servicesInfo = [];
     $visitServices = [];
