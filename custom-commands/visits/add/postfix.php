@@ -48,7 +48,7 @@ if ( !empty( $requestData->clients_id ) ) {
         ->fetch();
 
     if ( $employeeDetail[ "notify_clients" ] == "Y" ) {
-        
+
         $date = date( "d.m.Y в H:i", strtotime( $requestData->start_at ) );
 
         $clientFio = $clientDetail[ "first_name" ];
@@ -64,8 +64,13 @@ if ( !empty( $requestData->clients_id ) ) {
         $app_map = $API->DB->from( "stores" )->where( "id", $requestData->store_id )->fetch()[ "map" ];
         $app_phone = $API->DB->from( "stores" )->where( "id", $requestData->store_id )->fetch()[ "phone" ];
 
+        $message = "Здравствуйте!\n\n$clientFio, Вы записаны на приём $date\n\nВрач: $employeeFio.\n\nПознакомиться с доктором предстоящего визита вы можете по ссылке: {$employeeDetail[ "site_url" ]}\n\nТел: $app_phone Адрес: $app_address\n\n$app_map\n\nДо встречи в $app_name!";
+
+        if ( $requestData->status == "online" )
+            $message = "Здравствуйте!\n\n$clientFio, Вы записаны на онлайн прием $date\n\nВрач: $employeeFio.\n\nПознакомиться с доктором предстоящего визита вы можете по ссылке: {$employeeDetail[ "site_url" ]}\n\nВ ближайшее время администратор отправит Вам ссылку на оплату и расскажет как подключиться.\n\nТел: $app_phone\n\nТакже Вы можете написать в этот чат по любым вопросам 😌";
+
         telegram\sendMessage(
-            "Здравствуйте!\n\n$clientFio, Вы записаны на приём $date\n\nВрач: $employeeFio.\n\nПознакомиться с доктором предстоящего визита вы можете по ссылке: {$employeeDetail[ "site_url" ]}\n\nТел: $app_phone Адрес: $app_address\n\n$app_map\n\nДо встречи в $app_name!",
+            $message,
             telegram\getClient( $requestData->clients_id[ 0 ] )
         );
 
