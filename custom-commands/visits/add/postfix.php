@@ -47,6 +47,10 @@ if ( !empty( $requestData->clients_id ) ) {
         ->where( "id", $requestData->user_id )
         ->fetch();
 
+    $storeDetail = $API->DB->from( "stores" )
+        ->where( "id", $requestData->store_id )
+        ->fetch();
+
     if ( $employeeDetail[ "notify_clients" ] == "Y" ) {
 
         $date = date( "d.m.Y в H:i", strtotime( $requestData->start_at ) );
@@ -59,10 +63,10 @@ if ( !empty( $requestData->clients_id ) ) {
         if ( !empty( $employeeDetail[ "first_name" ] ) ) $employeeFio .= " {$employeeDetail[ "first_name" ]}";
         if ( !empty( $employeeDetail[ "patronymic" ] ) ) $employeeFio .= " {$employeeDetail[ "patronymic" ]}";
 
-        $app_name = $API->DB->from( "stores" )->where( "id", $requestData->store_id )->fetch()[ "name" ];
-        $app_address = $API->DB->from( "stores" )->where( "id", $requestData->store_id )->fetch()[ "address" ];
-        $app_map = $API->DB->from( "stores" )->where( "id", $requestData->store_id )->fetch()[ "map" ];
-        $app_phone = $API->DB->from( "stores" )->where( "id", $requestData->store_id )->fetch()[ "phone" ];
+        $app_name = $storeDetail[ "name" ];
+        $app_address = $storeDetail[ "address" ];
+        $app_map = $storeDetail[ "map" ];
+        $app_phone = $storeDetail[ "phone" ];
 
         $message = "Здравствуйте!\n\n$clientFio, Вы записаны на приём $date\n\nВрач: $employeeFio.\n\nПознакомиться с доктором предстоящего визита вы можете по ссылке: {$employeeDetail[ "site_url" ]}\n\nТел: $app_phone Адрес: $app_address\n\n$app_map\n\nДо встречи в $app_name!";
 

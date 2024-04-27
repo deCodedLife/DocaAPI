@@ -39,6 +39,10 @@ foreach ( $visitsList as $client_id => $visits ) {
 
     if ( empty( $visits ) ) continue;
 
+    $storeDetails = $API->DB->from( "stores" )
+        ->where( "id", $store_id ?? 0 )
+        ->fetch();
+
     $clientDetail = $API->DB->from( "clients" )
         ->where( "id", $client_id )
         ->fetch();
@@ -52,8 +56,8 @@ foreach ( $visitsList as $client_id => $visits ) {
     $employees = join( ", ", $employees );
     $tomorrow = date( "d.m.Y", strtotime( "+1 day" ) );
 
-    $app_name = $API->DB->from( "stores" )->where( "id", $store_id ?? 0 )->fetch()[ "name" ];
-    $app_address = $API->DB->from( "stores" )->where( "id", $store_id ?? 0 )->fetch()[ "address" ];
+    $app_name = $storeDetails[ "name" ];
+    $app_address = $storeDetails[ "address" ];
 
     telegram\sendMessage(
         "Здравствуйте!\n\n$clientFio, Вы записаны в $app_name на $tomorrow в $times по адресу $app_address.\n\nВрач: $employees\n\nДля подтверждения записи ответьте '1'\n\nДля переноса или отмены посещения напишите об этом в чате.",
