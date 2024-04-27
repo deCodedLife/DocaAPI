@@ -23,6 +23,7 @@ foreach ( $visitsList as $client_id => $visits ) {
                 "status" => "ended",
                 "is_payed" => "Y",
                 "is_active" => "Y",
+                "client_id" => $visit[ "client_id" ],
                 "not id" => $visit[ "id" ]
             ])
             ->fetch();
