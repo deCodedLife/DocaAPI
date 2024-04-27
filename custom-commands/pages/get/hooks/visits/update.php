@@ -109,7 +109,7 @@ foreach ( $pageDetail[ "row_detail" ][ "services_id" ] as $service ) {
 } // foreach. $pageDetail[ "row_detail" ][ "services_id" ]
 
 
-if ( !$API->validatePermissions( [ "manager_schedule" ], true ) ) {
+if ( !$API->validatePermissions( [ "manager_schedule", "director_schedule" ], true ) ) {
 
     unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ] );
     unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 5 ] );
