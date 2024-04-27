@@ -1,1 +1,693 @@
-{"title":"Клиенты","table":"clients","is_trash":true,"properties":[{"title":"ID","article":"id","data_type":"integer","field_type":"integer","is_default_in_list":true,"is_unique":false,"is_autofill":false,"is_variable":true,"is_visible":false,"use_in_commands":["update","get"],"require_in_commands":["remove"]},{"title":"ФИО","article":"fio","data_type":"string","field_type":"string","is_default_in_list":true,"is_unique":false,"is_autofill":false,"use_in_commands":[],"require_in_commands":[]},{"title":"Фамилия","article":"last_name","data_type":"string","field_type":"string","is_default_in_list":false,"is_unique":false,"is_autofill":true,"use_in_commands":["add","update","import"],"require_in_commands":["add"]},{"title":"Имя","article":"first_name","data_type":"string","field_type":"string","is_default_in_list":false,"is_unique":false,"is_autofill":true,"use_in_commands":["add","update","import"],"require_in_commands":["add"]},{"title":"Отчество","article":"patronymic","data_type":"string","field_type":"string","is_default_in_list":false,"is_unique":false,"is_autofill":true,"is_hook":true,"use_in_commands":["get","hook","add","update","import"]},{"title":"Дата рождения","article":"birthday","data_type":"date","field_type":"date","is_default_in_list":true,"is_unique":false,"is_autofill":true,"use_in_commands":["add","update","get","import"]},{"title":"Телефон","article":"phone","data_type":"phone","field_type":"phone","is_default_in_list":true,"is_unique":true,"is_hook":true,"is_autofill":true,"use_in_commands":["add","hook","update","import"],"require_in_commands":[]},{"title":"Email","article":"email","data_type":"email","field_type":"email","is_default_in_list":true,"is_unique":false,"is_autofill":true,"use_in_commands":["add","update","import"]},{"title":"Дополнительный телефон","article":"second_phone","data_type":"phone","field_type":"phone","is_default_in_list":false,"is_unique":false,"is_autofill":true,"use_in_commands":["add","update","import"]},{"title":"Адрес","article":"address","data_type":"string","field_type":"dadata_address","is_default_in_list":false,"is_unique":false,"is_autofill":true,"use_in_commands":["add","update","import"]},{"title":"Пол","article":"gender","data_type":"string","field_type":"list","is_default_in_list":false,"is_unique":false,"is_autofill":true,"use_in_commands":["add","hook","update","import"],"custom_list":[{"title":"Мужской","value":"M"},{"title":"Женский","value":"W"}]},{"title":"Серия паспорта","article":"passport_series","data_type":"string","field_type":"string","is_default_in_list":false,"is_unique":false,"is_autofill":true,"use_in_commands":["add","update","import"]},{"title":"Номер паспорта","article":"passport_number","data_type":"string","field_type":"string","is_default_in_list":false,"is_unique":false,"is_autofill":true,"use_in_commands":["add","update","import"]},{"title":"Кем выдан паспорт","article":"passport_issued","data_type":"string","field_type":"dadata_passport","is_default_in_list":false,"is_unique":false,"is_autofill":true,"use_in_commands":["add","update"]},{"title":"Имя представителя","article":"present_first_name","data_type":"string","field_type":"string","is_default_in_list":false,"is_unique":false,"is_autofill":true,"is_visible":false,"use_in_commands":["add","update","import"]},{"title":"Фамилия представителя","article":"present_last_name","data_type":"string","field_type":"string","is_default_in_list":false,"is_unique":false,"is_autofill":true,"is_visible":false,"use_in_commands":["add","update","import"]},{"title":"Отчество представителя","article":"present_patronymic","data_type":"string","field_type":"string","is_default_in_list":false,"is_unique":false,"is_autofill":true,"is_hook":true,"is_visible":false,"use_in_commands":["add","update","import"]},{"title":"Серия паспорта представителя","article":"present_passport_series","data_type":"string","field_type":"string","is_default_in_list":false,"is_unique":false,"is_autofill":true,"is_visible":false,"use_in_commands":["add","update","import"]},{"title":"Номер паспорта представителя","article":"present_passport_number","data_type":"string","field_type":"string","is_default_in_list":false,"is_unique":false,"is_autofill":true,"is_visible":false,"use_in_commands":["add","update","import"]},{"title":"Кем выдан паспорт представителя","article":"present_passport_issued","data_type":"string","field_type":"dadata_passport","is_default_in_list":false,"is_unique":false,"is_autofill":true,"is_visible":false,"use_in_commands":["add","update","import"]},{"title":"Повторный","article":"is_repeat","data_type":"string","field_type":"list","is_default_in_list":false,"is_unique":false,"is_autofill":false,"use_in_commands":[],"custom_list":[{"title":"Нет","value":"N"},{"title":"Да","value":"Y"}]},{"title":"Комментарий","article":"comment","data_type":"string","field_type":"textarea","is_default_in_list":false,"is_unique":false,"is_autofill":true,"use_in_commands":["add","update"]},{"title":"Дата и время создания","article":"created_at","data_type":"datetime","field_type":"datetime","is_default_in_list":false,"is_unique":false,"is_autofill":true,"use_in_commands":["add","update","get"]},{"title":"Группы клиента","article":"client_groups","data_type":"array","field_type":"list","is_default_in_list":false,"is_unique":false,"is_autofill":true,"join":{"connection_table":"clientsGroupsAssociation","donor_table":"clientGroups","property_article":"title","insert_property":"client_id","filter_property":"clientGroup_id"},"use_in_commands":["add","update"]},{"title":"Есть законный представитель","article":"is_representative","data_type":"boolean","field_type":"checkbox","is_default_in_list":false,"is_unique":false,"is_autofill":true,"use_in_commands":["add","update","hook","import"],"is_hook":true},{"title":"Черный список","article":"is_blacklist","data_type":"boolean","field_type":"checkbox","is_default_in_list":false,"is_unique":false,"is_autofill":true,"is_in_search":false,"use_in_commands":["update","get","import"]},{"title":"Подписан договор","article":"is_contract","data_type":"boolean","field_type":"checkbox","is_default_in_list":false,"is_unique":false,"is_autofill":false,"is_in_search":false,"use_in_commands":["get"]},{"title":"Рекламный канал","article":"advertise_id","data_type":"integer","field_type":"list","is_default_in_list":false,"is_unique":false,"is_autofill":true,"list_donor":{"table":"advertise","properties_title":"title"},"require_in_commands":["add"],"use_in_commands":["update","get","add","remove","import"],"custom_list":[{"value":1,"title":"SEO Яндекс"},{"value":3,"title":"Листовки"},{"value":4,"title":"Интернет"},{"value":7,"title":"2ГИС"},{"value":8,"title":"От знакомых"},{"value":9,"title":"Проживает недалеко"},{"value":11,"title":"SEO Google"},{"value":12,"title":"Google ads"},{"value":13,"title":"Яндекс Директ"},{"value":14,"title":"Реклама на радио"},{"value":15,"title":"Продокторов"},{"value":16,"title":"От специалиста"},{"value":17,"title":"Сотрудники ГК Автоальфа и Теталит "},{"value":18,"title":"Онлайн запись с сайта"}]},{"title":"Депозит","article":"deposit","data_type":"float","field_type":"price","is_default_in_list":false,"is_unique":false,"is_autofill":true,"is_variable":false,"use_in_commands":["update","get","add","hook","import"]},{"title":"Бонусы","article":"bonuses","data_type":"float","field_type":"integer","is_default_in_list":false,"is_unique":false,"is_autofill":true,"is_variable":false,"use_in_commands":["update","get","add","hook","import"]},{"title":"Депозит - пополнение","article":"deposit_replenishment","data_type":"float","field_type":"price","is_default_in_list":false,"is_unique":false,"is_autofill":false,"is_variable":false,"use_in_commands":["update","get"]},{"title":"Бонусы - пополнение","article":"bonuses_replenishment","data_type":"integer","field_type":"integer","is_default_in_list":false,"is_unique":false,"is_autofill":false,"is_variable":false,"use_in_commands":["update","get"]},{"title":"Геолокация","article":"geolocation","data_type":"string","field_type":"string","is_default_in_list":false,"is_unique":false,"is_autofill":true,"is_visible":false,"use_in_commands":["update","get","add"]},{"title":"Действия с бонусами","article":"bonus_action","data_type":"string","field_type":"radio","is_default_in_list":false,"is_unique":false,"is_autofill":false,"custom_list":[{"title":"Начислить","value":"increase"},{"title":"Списать","value":"decrease"}],"use_in_commands":["update"]},{"title":"Полных лет","article":"fullYears","data_type":"integer","field_type":"integer","is_default_in_list":false,"is_unique":false,"is_autofill":false,"use_in_commands":["update","get","add","hook"],"is_hook":true,"is_disabled":true}],"action_buttons":[{"type":"href","settings":{"title":"Изменить","page":["clients/update/",":id"],"icon":"gear","background":"dark"}},{"type":"script","settings":{"title":"Удалить","background":"dark","icon":"trash","object":"clients","command":"remove","data":{"id":":id"}}},{"type":"print","settings":{"icon":"print","title":"Печать договора","background":"dark","data":{"save_to":{"object":"clientContracts","properties":{"row_id":":id"}},"is_edit":true,"document_article":"services_contract","scheme_name":"clients","row_id":":id"}}}]}
+{
+  "title": "Клиенты",
+  "table": "clients",
+  "is_trash": true,
+  "properties": [
+    {
+      "title": "ID",
+      "article": "id",
+      "data_type": "integer",
+      "field_type": "integer",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": false,
+      "is_variable": true,
+      "is_visible": false,
+      "use_in_commands": [
+        "update",
+        "get"
+      ],
+      "require_in_commands": [
+        "remove"
+      ]
+    },
+    {
+      "title": "ФИО",
+      "article": "fio",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [ "get"],
+      "require_in_commands": []
+    },
+    {
+      "title": "Фамилия",
+      "article": "last_name",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "get",
+        "add",
+        "update",
+        "import"
+      ],
+      "require_in_commands": [
+        "add"
+      ]
+    },
+    {
+      "title": "Имя",
+      "article": "first_name",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "get",
+        "add",
+        "update",
+        "import"
+      ],
+      "require_in_commands": [
+        "add"
+      ]
+    },
+    {
+      "title": "Отчество",
+      "article": "patronymic",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_hook": true,
+      "use_in_commands": [
+        "get",
+        "hook",
+        "add",
+        "update",
+        "import"
+      ]
+    },
+    {
+      "title": "Дата рождения",
+      "article": "birthday",
+      "data_type": "date",
+      "field_type": "date",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "add",
+        "update",
+        "get",
+        "import"
+      ]
+    },
+    {
+      "title": "Телефон",
+      "article": "phone",
+      "data_type": "phone",
+      "field_type": "phone",
+      "is_default_in_list": true,
+      "is_unique": true,
+      "is_hook": true,
+      "is_autofill": true,
+      "use_in_commands": [
+        "get",
+        "add",
+        "hook",
+        "update",
+        "import"
+      ],
+      "require_in_commands": []
+    },
+    {
+      "title": "Email",
+      "article": "email",
+      "data_type": "email",
+      "field_type": "email",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "get",
+        "add",
+        "update",
+        "import"
+      ]
+    },
+    {
+      "title": "Дополнительный телефон",
+      "article": "second_phone",
+      "data_type": "phone",
+      "field_type": "phone",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "get",
+        "add",
+        "update",
+        "import"
+      ]
+    },
+    {
+      "title": "Адрес",
+      "article": "address",
+      "data_type": "string",
+      "field_type": "dadata_address",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "get",
+        "add",
+        "update",
+        "import"
+      ]
+    },
+    {
+      "title": "Пол",
+      "article": "gender",
+      "data_type": "string",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "get",
+        "add",
+        "hook",
+        "update",
+        "import"
+      ],
+      "custom_list": [
+        {
+          "title": "Мужской",
+          "value": "M"
+        },
+        {
+          "title": "Женский",
+          "value": "W"
+        }
+      ]
+    },
+    {
+      "title": "Серия паспорта",
+      "article": "passport_series",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "get",
+        "add",
+        "update",
+        "import"
+      ]
+    },
+    {
+      "title": "Номер паспорта",
+      "article": "passport_number",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "get",
+        "add",
+        "update",
+        "import"
+      ]
+    },
+    {
+      "title": "Кем выдан паспорт",
+      "article": "passport_issued",
+      "data_type": "string",
+      "field_type": "dadata_passport",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "get",
+        "add",
+        "update"
+      ]
+    },
+    {
+      "title": "Имя представителя",
+      "article": "present_first_name",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_visible": false,
+      "use_in_commands": [
+        "get",
+        "add",
+        "update",
+        "import"
+      ]
+    },
+    {
+      "title": "Фамилия представителя",
+      "article": "present_last_name",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_visible": false,
+      "use_in_commands": [
+        "get",
+        "add",
+        "update",
+        "import"
+      ]
+    },
+    {
+      "title": "Отчество представителя",
+      "article": "present_patronymic",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_hook": true,
+      "is_visible": false,
+      "use_in_commands": [
+        "get",
+        "add",
+        "update",
+        "import"
+      ]
+    },
+    {
+      "title": "Серия паспорта представителя",
+      "article": "present_passport_series",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_visible": false,
+      "use_in_commands": [
+        "get",
+        "add",
+        "update",
+        "import"
+      ]
+    },
+    {
+      "title": "Номер паспорта представителя",
+      "article": "present_passport_number",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_visible": false,
+      "use_in_commands": [
+        "get",
+        "add",
+        "update",
+        "import"
+      ]
+    },
+    {
+      "title": "Кем выдан паспорт представителя",
+      "article": "present_passport_issued",
+      "data_type": "string",
+      "field_type": "dadata_passport",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_visible": false,
+      "use_in_commands": [
+        "get",
+        "add",
+        "update",
+        "import"
+      ]
+    },
+    {
+      "title": "Повторный",
+      "article": "is_repeat",
+      "data_type": "string",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [],
+      "custom_list": [
+        {
+          "title": "Нет",
+          "value": "N"
+        },
+        {
+          "title": "Да",
+          "value": "Y"
+        }
+      ]
+    },
+    {
+      "title": "Комментарий",
+      "article": "comment",
+      "data_type": "string",
+      "field_type": "textarea",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "get",
+        "add",
+        "update"
+      ]
+    },
+    {
+      "title": "Дата и время создания",
+      "article": "created_at",
+      "data_type": "datetime",
+      "field_type": "datetime",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "get",
+        "add",
+        "update",
+        "get"
+      ]
+    },
+    {
+      "title": "Группы клиента",
+      "article": "client_groups",
+      "data_type": "array",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "join": {
+        "connection_table": "clientsGroupsAssociation",
+        "donor_table": "clientGroups",
+        "property_article": "title",
+        "insert_property": "client_id",
+        "filter_property": "clientGroup_id"
+      },
+      "use_in_commands": [
+        "get",
+        "add",
+        "update"
+      ]
+    },
+    {
+      "title": "Есть законный представитель",
+      "article": "is_representative",
+      "data_type": "boolean",
+      "field_type": "checkbox",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "get",
+        "add",
+        "update",
+        "hook",
+        "import"
+      ],
+      "is_hook": true
+    },
+    {
+      "title": "Черный список",
+      "article": "is_blacklist",
+      "data_type": "boolean",
+      "field_type": "checkbox",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_in_search": false,
+      "use_in_commands": [
+        "update",
+        "get",
+        "import"
+      ]
+    },
+    {
+      "title": "Подписан договор",
+      "article": "is_contract",
+      "data_type": "boolean",
+      "field_type": "checkbox",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "is_in_search": false,
+      "use_in_commands": [
+        "get"
+      ]
+    },
+    {
+      "title": "Рекламный канал",
+      "article": "advertise_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "list_donor": {
+        "table": "advertise",
+        "properties_title": "title"
+      },
+      "require_in_commands": [
+        "add"
+      ],
+      "use_in_commands": [
+        "update",
+        "get",
+        "add",
+        "remove",
+        "import"
+      ],
+      "custom_list": [
+        {
+          "value": 1,
+          "title": "SEO Яндекс"
+        },
+        {
+          "value": 3,
+          "title": "Листовки"
+        },
+        {
+          "value": 4,
+          "title": "Интернет"
+        },
+        {
+          "value": 7,
+          "title": "2ГИС"
+        },
+        {
+          "value": 8,
+          "title": "От знакомых"
+        },
+        {
+          "value": 9,
+          "title": "Проживает недалеко"
+        },
+        {
+          "value": 11,
+          "title": "SEO Google"
+        },
+        {
+          "value": 12,
+          "title": "Google ads"
+        },
+        {
+          "value": 13,
+          "title": "Яндекс Директ"
+        },
+        {
+          "value": 14,
+          "title": "Реклама на радио"
+        },
+        {
+          "value": 15,
+          "title": "Продокторов"
+        },
+        {
+          "value": 16,
+          "title": "От специалиста"
+        },
+        {
+          "value": 17,
+          "title": "Сотрудники ГК Автоальфа и Теталит "
+        },
+        {
+          "value": 18,
+          "title": "Онлайн запись с сайта"
+        }
+      ]
+    },
+    {
+      "title": "Депозит",
+      "article": "deposit",
+      "data_type": "float",
+      "field_type": "price",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_variable": false,
+      "use_in_commands": [
+        "update",
+        "get",
+        "add",
+        "hook",
+        "import"
+      ]
+    },
+    {
+      "title": "Бонусы",
+      "article": "bonuses",
+      "data_type": "float",
+      "field_type": "integer",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_variable": false,
+      "use_in_commands": [
+        "update",
+        "get",
+        "add",
+        "hook",
+        "import"
+      ]
+    },
+    {
+      "title": "Депозит - пополнение",
+      "article": "deposit_replenishment",
+      "data_type": "float",
+      "field_type": "price",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "is_variable": false,
+      "use_in_commands": [
+        "update",
+        "get"
+      ]
+    },
+    {
+      "title": "Бонусы - пополнение",
+      "article": "bonuses_replenishment",
+      "data_type": "integer",
+      "field_type": "integer",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "is_variable": false,
+      "use_in_commands": [
+        "update",
+        "get"
+      ]
+    },
+    {
+      "title": "Геолокация",
+      "article": "geolocation",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "is_visible": false,
+      "use_in_commands": [
+        "update",
+        "get",
+        "add"
+      ]
+    },
+    {
+      "title": "Действия с бонусами",
+      "article": "bonus_action",
+      "data_type": "string",
+      "field_type": "radio",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "custom_list": [
+        {
+          "title": "Начислить",
+          "value": "increase"
+        },
+        {
+          "title": "Списать",
+          "value": "decrease"
+        }
+      ],
+      "use_in_commands": [
+        "update"
+      ]
+    },
+    {
+      "title": "Полных лет",
+      "article": "fullYears",
+      "data_type": "integer",
+      "field_type": "integer",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "update",
+        "get",
+        "add",
+        "hook"
+      ],
+      "is_hook": true,
+      "is_disabled": true
+    }
+  ],
+  "action_buttons": [
+    {
+      "type": "href",
+      "settings": {
+        "title": "Изменить",
+        "page": [
+          "clients/update/",
+          ":id"
+        ],
+        "icon": "gear",
+        "background": "dark"
+      }
+    },
+    {
+      "type": "script",
+      "settings": {
+        "title": "Удалить",
+        "background": "dark",
+        "icon": "trash",
+        "object": "clients",
+        "command": "remove",
+        "data": {
+          "id": ":id"
+        }
+      }
+    },
+    {
+      "type": "print",
+      "settings": {
+        "icon": "print",
+        "title": "Печать договора",
+        "background": "dark",
+        "data": {
+          "save_to": {
+            "object": "clientContracts",
+            "properties": {
+              "row_id": ":id"
+            }
+          },
+          "is_edit": true,
+          "document_article": "services_contract",
+          "scheme_name": "clients",
+          "row_id": ":id"
+        }
+      }
+    }
+  ]
+}

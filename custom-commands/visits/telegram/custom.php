@@ -4,7 +4,8 @@ $visitsList = $API->DB->from( "visits" )
     ->where([
         "start_at >= ?" => date("Y-m-d 00:00:00", strtotime("+1 day")),
         "end_at <= ?" => date("Y-m-d 23:59:59", strtotime("+1 day")),
-        "is_active" => "Y"
+        "is_active" => "Y",
+        "is_called" => "N",
     ])
     ->fetchAll( "client_id[]" );
 
@@ -52,7 +53,7 @@ foreach ( $visitsList as $client_id => $visits ) {
     $app_address = $API->DB->from( "stores" )->where( "id", $store_id ?? 0 )->fetch()[ "address" ];
 
     telegram\sendMessage(
-        "Здравствуйте!\n\n$clientFio, Вы записаны в клинику $app_name на $tomorrow в $times по адресу $app_address.\n\nВрач: $employees\n\nДля подтверждения записи ответьте '1'\n\nДля переноса или отмены посещения напишите об этом в чате.",
+        "Здравствуйте!\n\n$clientFio, Вы записаны в $app_name на $tomorrow в $times по адресу $app_address.\n\nВрач: $employees\n\nДля подтверждения записи ответьте '1'\n\nДля переноса или отмены посещения напишите об этом в чате.",
         $userDetails,
         telegram\getDefaultVisitHandlers( $visit_ids, $userDetails[ "phone" ] )
     );

@@ -70,7 +70,13 @@ if ( property_exists( $API->request->data, "cabinet_id" ) ) {
 
 if ( strtotime( $start_at ) > strtotime( $end_at ) )  {
 
-    $API->returnResponse( "Некорректно указана дата", 500 );
+    $API->returnResponse( "Некорректно указана дата", 400 );
+
+}
+
+if ( strtotime( $start_at ) < strtotime( date( "Y-m-d 00:00:00" ) ) ) {
+
+    $API->returnResponse( "Нельзя создавать посещения за прошедшие дни", 400 );
 
 }
 
@@ -101,7 +107,6 @@ if ( DateTime::createFromFormat( 'Y-m-d H:i:s', $start_at )->format('Y-m-d') == 
 
     if ( strtotime( DateTime::createFromFormat( 'Y-m-d H:i:s', $start_at )->format('H:i:s') ) < strtotime( $storeData[ "schedule_from" ] ) ) $isTimeCorrect = false;
     if ( strtotime( DateTime::createFromFormat( 'Y-m-d H:i:s', $end_at )->format('H:i:s') ) > strtotime( $storeData[ "schedule_to" ] ) ) $isTimeCorrect = false;
-    if ( strtotime( DateTime::createFromFormat( 'Y-m-d H:i:s', $start_at )->format('H:i:s') ) < strtotime( date(  "Y-m-d 00:00:00" ) ) ) $isTimeCorrect = false;
 
 }
 
@@ -257,7 +262,7 @@ function isClientBusy( $client, $visits ): int {
             continue;
 
         }
-        
+
         $visit_clients = mysqli_query(
             $API->DB_connection,
             "SELECT * FROM visits_clients WHERE visit_id = {$visit[ 'id' ]} AND client_id = $client"
