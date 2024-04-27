@@ -11,7 +11,7 @@
  */
 $formFieldsUpdate = [];
 
-if ( $requestData->phone && count( $requestData->phone ) != 11 ) {
+if ( property_exists( $requestData, "phone" ) && count( str_split( $requestData->phone ) ) != 11 ) {
 
     $filters = [
         "phone" => $requestData->phone,
