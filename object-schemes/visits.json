@@ -63,7 +63,7 @@
       "article": "clients_id",
       "data_type": "array",
       "field_type": "list",
-      "is_default_in_list": true,
+      "is_default_in_list": false,
       "is_unique": false,
       "is_autofill": true,
       "search": "clients",

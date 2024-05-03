@@ -1,5 +1,4 @@
 <?php
-
 $API->DB->update( "users" )
     ->set( [
         "is_visibleOnSite" => "N",
@@ -7,5 +6,5 @@ $API->DB->update( "users" )
         "notify_clients" => "N",
         "is_queue" => "N"
     ] )
-    ->where( "id", $requestData->id )
+    ->where( "id", $requestData->id[0] )
     ->execute();
