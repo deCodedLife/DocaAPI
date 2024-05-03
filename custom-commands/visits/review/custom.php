@@ -3,10 +3,11 @@
 $visitsList = $API->DB->from( "visits" )
     ->where([
         "start_at >= ?" => date("Y-m-d H:i:00", strtotime( "-3 hour" ) ),
-        "end_at <= ?" => date("Y-m-d H:i:00", strtotime( "-2 hour" ) ),
+        "end_at <= ?" => date("Y-m-d H:i:00" ),
         "status" => "ended",
         "is_payed" => "Y",
-        "is_active" => "Y"
+        "is_active" => "Y",
+        "is_notified" => "N",
     ])
     ->fetchAll( "client_id[]" );
 
@@ -35,6 +36,11 @@ foreach ( $visitsList as $client_id => $visits ) {
         if ( $anotherVisits !== false ) unset( $visits[ $key ] );
         if ( $visit[ "store_id" ] ) $store_id = $visit[ "store_id" ];
         if ( $employeeDetail[ "notify_clients" ] == "N" )  unset( $visits[ $key ] );
+
+        $API->DB->update( "visits" )
+            ->set( "is_notified", "Y" )
+            ->where( "id", $visit[ "id" ] )
+            ->execute();
 
     }
 

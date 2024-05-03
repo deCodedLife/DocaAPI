@@ -219,6 +219,13 @@
       "is_required": "N"
     },
     {
+      "title": "Уведомлён",
+      "article": "is_notified",
+      "type": "char(1)",
+      "default": "N",
+      "is_required": "N"
+    },
+    {
       "type": "datetime",
       "default": null,
       "is_required": "N",
