@@ -233,6 +233,7 @@
               "type": "list",
               "size": 4,
               "settings": {
+                "is_edit": false,
                 "object": "callHistory",
                 "filters": [
                   {
