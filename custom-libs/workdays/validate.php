@@ -81,7 +81,7 @@ $storeDetails = $API->DB->from( "stores" )
     ->where( "id", $requestData->store_id )
     ->fetch( );
 
-
+$API->returnResponse( [ strtotime( $storeDetails[ "schedule_from" ] + 60 ),strtotime( $begin->format( "H:i:s" ) )], 402 );
 if ( $requestData->is_weekend !== 'Y' ) {
 
     if ( strtotime( $storeDetails[ "schedule_from" ] + 60 ) > strtotime( $begin->format( "H:i:s" ) ) )
