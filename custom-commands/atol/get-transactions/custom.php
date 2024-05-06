@@ -125,8 +125,11 @@ $AtolReciept->summary = $summary;
 $AtolReciept->taxationType = "usnIncomeOutcome";
 $AtolReciept->uuid = $processedSale[ "id" ];
 
+$action = $processedSale[ "action" ];
+if ( $action == "deposit" ) $action = "sell";
+
 $AtolReciept->sales = [ (int) $processedSale[ "id" ] ];
-$AtolReciept->sale_type = $processedSale[ "action" ];
+$AtolReciept->sale_type = $action;
 $AtolReciept->pay_method = $processedSale[ "pay_method" ];
 
 $API->returnResponse( $AtolReciept->GetReciept() );
