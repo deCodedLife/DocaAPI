@@ -20,6 +20,7 @@ if ( $requestData->pay_method != "parts" && $requestData->pay_method != "online"
 
 foreach ( $requestData->products as $product ) {
 
+    if ( $requestData->action == "deposit" )
     if (
         !isset( $product->title ) ||
         !isset( $product->product_id )

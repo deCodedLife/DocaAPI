@@ -2,6 +2,8 @@
 
 foreach ( $response[ "data" ] as $row ) {
 
+    $API->returnResponse($row, 400);
+
     if ( $row[ "replenished" ] < 0 ) $row[ "action" ] = "Списание";
     if ( $row[ "replenished" ] > 0 ) $row[ "action" ] = "Пополнение";
 

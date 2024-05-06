@@ -81,12 +81,14 @@ $storeDetails = $API->DB->from( "stores" )
     ->where( "id", $requestData->store_id )
     ->fetch( );
 
+
 if ( $requestData->is_weekend !== 'Y' ) {
+
     $storeDetailsTitle = $storeDetails[ "title" ];
-    if ( strtotime( $storeDetails[ "schedule_from" ] + 60 ) > $begin->format( "H:i:s" ) )
+    if ( strtotime( $begin->format( "H:i:s" ) ) < strtotime( $storeDetails[ "schedule_from" ] ) )
         $API->returnResponse( "Расписание выходит за рамки графика филиала $storeDetailsTitle", 402 );
 
-    if ( strtotime( $storeDetails[ "schedule_to" ] - 60 ) < $end->format( "H:i:s" ) )
+    if ( strtotime( $end->format( "H:i:s" ) ) > strtotime( $storeDetails[ "schedule_to" ] ) )
         $API->returnResponse( "Расписание выходит за рамки графика филиала $storeDetailsTitle", 402 );
 
 }

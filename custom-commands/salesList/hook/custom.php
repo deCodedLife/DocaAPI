@@ -19,6 +19,7 @@ if ( $requestData->action == "deposit" ) {
     $sum_cash = $requestData->sum_cash ?? 0;
     $saleSummary = $sum_cash + $sum_card;
 
+    $formFieldsUpdate[ "products" ] = $formFieldsUpdate[ "products" ] ?? [];
     $formFieldsUpdate[ "products" ][ "value" ][] = [
         "title" => "Пополнение депозита",
         "type" => "product",
