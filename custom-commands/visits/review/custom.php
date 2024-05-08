@@ -8,6 +8,7 @@ $visitsList = $API->DB->from( "visits" )
         "is_payed" => "Y",
         "is_active" => "Y",
         "is_notified" => "N",
+        "send_review" => "Y"
     ])
     ->fetchAll( "client_id[]" );
 

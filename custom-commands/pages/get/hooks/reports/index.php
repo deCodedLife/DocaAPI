@@ -22,6 +22,17 @@ $pageScheme[ "structure" ][ 1 ][ "settings" ][ "sum_all_services" ][ "body" ][ 0
     ]
 ];
 
+$pageScheme[ "structure" ][ 1 ][ "settings" ][ "sum_all_services" ][ "body" ][ 1 ][ "settings" ][ "filters" ] = [
+    [
+        "property" => "start_at",
+        "value" => date("Y-m-d", strtotime("-1 months"))
+    ],
+    [
+        "property" => "end_at",
+        "value" => date( 'Y-m-d' )
+    ]
+];
+
 $pageScheme[ "structure" ][ 1 ][ "settings" ][ "userServices" ][ "body" ][ 0 ][ "settings" ][ "filters" ] = [
     [
         "property" => "start_at",

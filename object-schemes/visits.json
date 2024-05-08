@@ -863,6 +863,34 @@
         "update",
         "day_planning"
       ]
+    },
+    {
+      "title": "Уведомлять о посещении",
+      "article": "notify",
+      "data_type": "boolean",
+      "field_type": "checkbox",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "update",
+        "add",
+        "get"
+      ]
+    },
+    {
+      "title": "Предлагать оставить отзыв",
+      "article": "send_review",
+      "data_type": "boolean",
+      "field_type": "checkbox",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "update",
+        "add",
+        "get"
+      ]
     }
   ]
 }

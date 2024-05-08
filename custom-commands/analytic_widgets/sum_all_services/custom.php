@@ -26,16 +26,16 @@ $salesFilter = [];
 /**
  * Формирование фильтров
  */
-$salesFilter[ "status" ] = "done";
-$salesFilter[ "type" ] = "service";
-$salesFilter[ "action" ] = "sell";
+$salesFilter[ "salesList.status" ] = "done";
+$salesFilter[ "salesProductsList.type" ] = "service";
+$salesFilter[ "salesList.action" ] = "sell";
 
-if ( $requestData->start_price ) $salesFilter[ "summary >= ?" ] = $requestData->start_price;
-if ( $requestData->end_price ) $salesFilter[ "summary <= ?" ] = $requestData->end_price;
-if ( $requestData->start_at ) $salesFilter[ "created_at >= ?" ] = $requestData->start_at . " 00:00:00";
-if ( $requestData->end_at ) $salesFilter[ "created_at <= ?" ] = $requestData->end_at . " 23:59:59";
-if ( $requestData->store_id ) $salesFilter[ "store_id" ] = $requestData->store_id;
-if ( $requestData->id ) $salesFilter[ "product_id" ] = $requestData->id;
+if ( $requestData->start_price ) $salesFilter[ "salesList.summary >= ?" ] = $requestData->start_price;
+if ( $requestData->end_price ) $salesFilter[ "salesList.summary <= ?" ] = $requestData->end_price;
+if ( $requestData->start_at ) $salesFilter[ "salesList.created_at >= ?" ] = $requestData->start_at . " 00:00:00";
+if ( $requestData->end_at ) $salesFilter[ "salesList.created_at <= ?" ] = $requestData->end_at . " 23:59:59";
+if ( $requestData->store_id ) $salesFilter[ "salesList.store_id" ] = $requestData->store_id;
+if ( $requestData->id ) $salesFilter[ "salesProductsList.product_id" ] = $requestData->id;
 
 
 /**
@@ -53,6 +53,7 @@ $salesList = $API->DB->from( "salesList" )
     ->where( $salesFilter )
     ->orderBy( "salesList.created_at desc" )
     ->limit( 0 );
+
 
 /**
  * Обход продаж

@@ -56,7 +56,8 @@ foreach ( $stores as $store ) {
     $API->DB->insertInto( "cashboxBalances" )
         ->values( [
             "store_id" => $store[ "id" ],
-            "balance" => $summary
+            "balance" => $summary,
+            "created_at" => date( "Y-m-d 00:00:00", strtotime( "-1 day" ) ),
         ] )
         ->execute();
 

@@ -226,6 +226,20 @@
       "is_required": "N"
     },
     {
+      "title": "Уведомлять о посещении",
+      "article": "notify",
+      "type": "char(1)",
+      "default": "Y",
+      "is_required": "N"
+    },
+    {
+      "title": "Предлагать оставить отзыв",
+      "article": "send_review",
+      "type": "char(1)",
+      "default": "Y",
+      "is_required": "N"
+    },
+    {
       "type": "datetime",
       "default": null,
       "is_required": "N",

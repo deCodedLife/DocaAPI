@@ -19,11 +19,12 @@ $cashboxFilter = [
 
 if ( $requestData->start_at ) {
 
-    $dayCount = 1;
+    if ( date( "l", strtotime( $start ) ) === "Monday" && $API::$configs[ "company" ] == "yazdorov" ) $dayCount = 2;
+    else $dayCount = 1;
     $cashboxDate = DateTime::createFromFormat( "Y-m-d", $requestData->start_at );
-    if ( date( "l", strtotime( $start ) ) === "Monday" ) $dayCount = 2;
     $cashboxDate->modify( "-$dayCount day" );
-    $cashboxFilter[ "created_at" ] = $cashboxDate->format( "Y-m-d 00:00:00" );
+    $cashboxFilter[ "created_at >= ?" ] = $cashboxDate->format( "Y-m-d 00:00:00" );
+    $cashboxFilter[ "created_at < ?" ] = $cashboxDate->format( "Y-m-d 00:01:00" );
 
 }
 

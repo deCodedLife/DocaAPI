@@ -10,6 +10,7 @@ $userDetails = $API->DB->from( "users" )
     ->fetch();
 
 if ( !$userDetails[ "store_id" ] ) $userDetails[ "store_id" ] = $API->DB->from( "stores" )->limit( 1 )->fetch()["id"];
+$store_id = $requestData->store_id ?? $userDetails[ "store_id" ];
 
 if ( $requestData->pay_method == "legalEntity" ) {
 
@@ -39,7 +40,7 @@ $saleID = $API->DB->insertInto( "salesList" )
         "sum_card" => $requestData->sum_card,
         "sum_cash" => $requestData->sum_cash,
         "status" => $requestData->pay_method == "legalEntity" ? "done" : "waiting",
-        "store_id" => (int) $userDetails[ "store_id" ],
+        "store_id" => $store_id,
         "pay_method" => $requestData->pay_method,
         "online_receipt" => $requestData->online_receipt,
         "summary" => $requestData->summary,

@@ -6,6 +6,7 @@ $visitsList = $API->DB->from( "visits" )
         "end_at <= ?" => date("Y-m-d 23:59:59", strtotime("+1 day")),
         "is_active" => "Y",
         "is_called" => "N",
+        "notify" => "Y"
     ])
     ->fetchAll( "client_id[]" );
 

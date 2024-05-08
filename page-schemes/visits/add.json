@@ -61,6 +61,13 @@
                   "price",
                   "is_earlier"
                 ]
+              },
+              {
+                "title": "",
+                "fields": [
+                  "notify",
+                  "send_review"
+                ]
               }
             ]
           },
