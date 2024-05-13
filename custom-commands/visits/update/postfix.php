@@ -79,8 +79,13 @@ if ( property_exists( $API->request->data, "context" ) && property_exists( $API-
 
     } else {
 
-        telegram\sendMessage(
-            "Ваша запись подтверждена.\n\nДо встречи в $app_name.\n\n$app_map",
+        $message = "Ваша запись подтверждена.\n\nДо встречи в $app_name.\n\n$app_map";
+
+        if ( $visitDetails[ "status" ] === "remote" )
+            $message = "Ваша запись подтверждена.\n\nЗа 5 минут до приема администратор отправит Вам ссылку на подключение.";
+
+        telegram\sendMessage(   
+            $message,
             telegram\getClient( $clientDetails[ "id" ] )
         );
 

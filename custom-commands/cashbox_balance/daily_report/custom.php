@@ -1,7 +1,7 @@
 <?php
 
-$start = ( $requestData->start_at ?? date( 'Y-m-d' ) ) . " 00:00:00";
-$end = ( $requestData->end_at ?? date( 'Y-m-d' ) ) . " 23:59:59";
+$start = ( $requestData->start_at ?? date( 'Y-m-d', strtotime( "-1 day" ) ) ) . " 00:00:00";
+$end = ( $requestData->end_at ?? date( 'Y-m-d', strtotime( "-1 day" ) ) ) . " 23:59:59";
 
 $stores = $API->DB->from( "stores" )
     ->fetchAll();

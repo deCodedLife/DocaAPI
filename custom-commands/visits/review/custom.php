@@ -26,7 +26,8 @@ foreach ( $visitsList as $client_id => $visits ) {
                 "is_payed" => "Y",
                 "is_active" => "Y",
                 "client_id" => $visit[ "client_id" ],
-                "not id" => $visit[ "id" ]
+                "not id" => $visit[ "id" ],
+                "send_review" => "Y"
             ])
             ->fetch();
 

@@ -16,6 +16,7 @@ foreach ( $visitsList as $client_id => $visits ) {
     $visit_ids = [];
     $times = [];
     $store_id = null;
+    $is_remote = false;
 
     foreach ( $visits as $key => $visit ) {
 
@@ -25,6 +26,7 @@ foreach ( $visitsList as $client_id => $visits ) {
 
         if ( $visit[ "store_id" ] ) $store_id = $visit[ "store_id" ];
         if ( $employeeDetail[ "notify_clients" ] == "N" )  unset( $visits[ $key ] );
+        if ( $visit[ "status" ] == "remote" ) $is_remote = true;
 
         $employee_fio = trim( $employeeDetail[ "last_name" ] );
         if ( !empty( $employeeDetail[ "first_name" ] ) ) $employee_fio .= " " . trim( $employeeDetail[ "first_name" ] );
@@ -60,8 +62,13 @@ foreach ( $visitsList as $client_id => $visits ) {
     $app_name = $storeDetails[ "name" ];
     $app_address = $storeDetails[ "address" ];
 
+    $message = "Здравствуйте!\n\n$clientFio, Вы записаны в $app_name на $tomorrow в $times по адресу $app_address.\n\nВрач: $employees\n\nДля подтверждения записи ответьте '1'\n\nДля переноса или отмены посещения напишите об этом в чате.";
+
+    if ( $is_remote )
+        $message = "Здравствуйте!\n\n$clientFio, Вы записаны в $app_name на онлайн приём $tomorrow в $times.\n\nВрач: $employees\n\nДля подтверждения записи ответьте '1'\n\nДля переноса или отмены посещения напишите об этом в чате.";
+
     telegram\sendMessage(
-        "Здравствуйте!\n\n$clientFio, Вы записаны в $app_name на $tomorrow в $times по адресу $app_address.\n\nВрач: $employees\n\nДля подтверждения записи ответьте '1'\n\nДля переноса или отмены посещения напишите об этом в чате.",
+        $message,
         $userDetails,
         telegram\getDefaultVisitHandlers( $visit_ids, $userDetails[ "phone" ] )
     );
