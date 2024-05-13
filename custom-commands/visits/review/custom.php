@@ -2,8 +2,8 @@
 
 $visitsList = $API->DB->from( "visits" )
     ->where([
-        "start_at >= ?" => date("Y-m-d H:i:00", strtotime( "-3 hour" ) ),
-        "end_at <= ?" => date("Y-m-d H:i:00" ),
+        "end_at >= ?" => date("Y-m-d H:i:00", strtotime( "-3 hour" ) ),
+        "end_at <= ?" => date("Y-m-d H:i:00", strtotime( "-2 hour" ) ),
         "status" => "ended",
         "is_payed" => "Y",
         "is_active" => "Y",
@@ -20,7 +20,7 @@ foreach ( $visitsList as $client_id => $visits ) {
 
         $anotherVisits = $API->DB->from( "visits" )
             ->where([
-                "start_at >= ?" => date("Y-m-d 00:00:00", strtotime( $visit[ "start_at" ] )),
+                "end_at >= ?" => date("Y-m-d 00:00:00", strtotime( $visit[ "start_at" ] )),
                 "end_at <= ?" => $visit[ "end_at" ],
                 "status" => "ended",
                 "is_payed" => "Y",
