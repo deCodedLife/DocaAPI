@@ -73,7 +73,7 @@ if ( $pageDetail[ "row_detail" ][ "status" ]->value === "ended" ) {
 if ( $clientDetail[ "is_contract" ] == "Y" )
     unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 2 ][ "body" ][ 0 ][ "components" ][ "buttons" ][ 0 ] );
 
-if ( !$API->validatePermissions( [ "manager_schedule" ], true ) ) {
+if ( !$API->validatePermissions( [ "manager_schedule", "director_schedule" ], true ) ) {
 
     unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 1 ] );
     unset( $pageScheme[ "structure" ][ 1 ][ "settings" ][ 5 ] );

@@ -54,7 +54,10 @@ $cabinet     = $requestData->cabinet_id ?? $cabinet;
 if ( $requestData->clients_id ?? false ) $clients = $requestData->clients_id;
 else if ( $requestData->client_id ?? false ) $clients = [ $requestData->client_id ];
 
-$services    = $requestData->services_id ?? $services;
+if ( property_exists( $requestData, "services_id" ) ) $services = $requestData->services_id;
+if ( property_exists( $requestData, "service_id" ) ) $services = [ $requestData->service_id ];
+
+//$services    = $requestData->services_id ?? $services;
 $employee    = $requestData->user_id ?? $employee;
 $assistant   = $requestData->assist_id ?? $assistant;
 $store_id    = $requestData->store_id ?? $store_id;

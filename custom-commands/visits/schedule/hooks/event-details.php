@@ -32,7 +32,7 @@ switch ( $event[ "status" ] ) {
     case "waited":
         $event[ "color" ] = "green";
         break;
-        
+
     case "remote":
         $event[ "color" ] = "azure";
         break;
@@ -63,13 +63,13 @@ if ( $clientDetail[ "present_first_name" ] ) {
     $presentInfo .= $clientDetail[ "present_patronymic" ];
 }
 
-/**
- * Получение детальной информации о сотруднике
- */
-$profession = $API->DB->from( "professions" )
-    ->innerJoin( "users_professions on users_professions.profession_id = professions.id" )
-    ->where( "users_professions.user_id", $event[ "user_id" ] )
-    ->fetch()[ "title" ] ?? "";
+///**
+// * Получение детальной информации о сотруднике
+// */
+//$profession = $API->DB->from( "professions" )
+//    ->innerJoin( "users_professions on users_professions.profession_id = professions.id" )
+//    ->where( "users_professions.user_id", $event[ "user_id" ] )
+//    ->fetch()[ "title" ] ?? "";
 
 
 /**
@@ -132,10 +132,10 @@ if ( $eventClientDetails ) $eventDetails[] = [
 
 if ( $phone ) $eventDetails[] = $phone;
 
-if ( $profession ) $eventDetails[] = [
-    "icon" => "",
-    "value" => $profession
-];
+//if ( $profession ) $eventDetails[] = [
+//    "icon" => "",
+//    "value" => $profession
+//];
 
 $eventDetails[] = [
     "icon" => "",

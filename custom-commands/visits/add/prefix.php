@@ -79,6 +79,9 @@ if ( $API->isPublicAccount() ) {
         ] )
         ->fetch();
 
+    if ( strtotime( $requestData->end_at ) > strtotime( $event[ "event_to" ] ) )
+        $API->returnResponse( "Ошибка. Посещение выходит за рамки работы сотрудника", 403 );
+
     if ( $event ) $requestData->cabinet_id = $event[ "cabinet_id" ];
 
 
