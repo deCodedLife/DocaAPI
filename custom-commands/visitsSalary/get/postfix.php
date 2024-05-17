@@ -4,7 +4,6 @@
 
 $sqlFilter = [];
 $visits_ids = [];
-$relations = [];
 
 foreach ( $response[ "data" ] as $visit ) $visits_ids[] = $visit[ "id" ];
 if ( empty( $visits_ids ) ) $API->returnResponse( [] );
@@ -15,27 +14,33 @@ $sqlFilter[ "saleVisits.visit_id" ] = $visits_ids;
 $sqlFilter[ "salesList.action" ] = "sell";
 $sqlFilter[ "salesList.status" ] = "done";
 
-$allServices = $API->DB->from( "salesProductsList" )
+$relations = $API->DB->from( "salesProductsList" )
     ->innerJoin( "salesList on salesList.id = salesProductsList.sale_id" )
     ->select( [ "salesList.summary" ] )
     ->innerJoin( "saleVisits on saleVisits.sale_id = salesList.id" )
     ->select( [ "saleVisits.visit_id as visit_id" ] )
-    ->where( $sqlFilter );
+    ->where( $sqlFilter )
+    ->fetchAll( "visit_id[]" );
+
 $sqlFilter = [];
 
-//$API->returnResponse( count( $allServices ) );
+$visitServices = $API->DB->from( "visits_services" )
+    ->select( null )
+    ->select( [ "service_id", "visit_id" ] )
+    ->where( "visit_id", $visits_ids )
+    ->fetchAll( "visit_id[]" );
+
+foreach ( $visitServices as $key => $serviceVisits ) {
+
+    $services = array_map( fn( $item ) => $item[ "service_id" ], $serviceVisits );
+    $visitServices[ $key ] = $services;
+
+}
 
 
 if ( $requestData->service ) $sqlFilter[ "services.id" ] = $requestData->service;
 if ( $requestData->category ) $sqlFilter[ "services.category_id" ] = $requestData->category;
 $sqlFilter[ "visits_services.visit_id" ] = $visits_ids;
-
-
-foreach ( $allServices as $visitsService ) {
-
-    $relations[ $visitsService[ "visit_id" ] ][] = $visitsService;
-
-}
 
 $sales_percent = [];
 $sales_fixed = [];
@@ -71,6 +76,14 @@ foreach ( $response[ "data" ] as $key => $visit ) {
     $visit[ "period" ] = date( 'Y-m-d H:i', strtotime( $visit[ "start_at" ] ) ) . " - " . date( "H:i", strtotime( $visit[ "end_at" ] ) );
 
     $services = $relations[ $visit[ "id" ] ];
+    $userServices = $visitServices[ $visit[ "id" ] ];
+
+    foreach ( $services as $index => $service ) {
+
+        if ( in_array( $service[ "product_id" ], $userServices ) ) continue;
+        unset( $services[ $index ] );
+
+    }
 
     if ( !$services ) {
         $visit[ "summary" ] = $visit[ "price" ];

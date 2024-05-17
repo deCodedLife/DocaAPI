@@ -156,3 +156,35 @@ function getFullService( $id, $user_id = null )
     return $service;
 
 }
+
+
+function getFullServiceDefault( $id, $user_id = null )
+{
+    global $API;
+
+    $innerPropertyRows = $API->DB->from( "services")
+        ->where([
+            "id" => $id
+        ] )
+        ->limit(1)
+        ->fetch();
+
+    $service = (array) $innerPropertyRows;
+    $service[ "with_discount" ] = $service[ "price" ];
+
+    if ( $service[ "article" ] == "null" ) $service[ "article" ] = "-";
+    if ( !$user_id ) return $service;
+
+    foreach ( ( $service[ "workingTime" ] ?? [] ) as $user_time ) {
+
+        if ( $user_time->user != $user_id ) continue;
+        $service[ "price" ] = $user_time->price;
+        $service[ "take_minutes" ] = $user_time->time;
+
+    }
+
+    $service[ "with_discount" ] = $service[ "price" ];
+
+    return $service;
+
+}

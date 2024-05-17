@@ -42,7 +42,7 @@ foreach ( $stores as $store ) {
 
     foreach ( $payments as $payment ) {
 
-        if ( $payment[ "action" ] !== "sell" ) {
+        if ( $payment[ "action" ] === "sellReturn" ) {
             $summary -= $payment[ "sum_cash" ];
             continue;
         };

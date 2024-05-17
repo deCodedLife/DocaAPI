@@ -56,6 +56,7 @@ function getPaymentServices( $type, $sqlFilter, $start_at, $end_at, $user_id ): 
 
     global $API, $visits_ids;
 
+
     $table = $type == "equipmentVisits" ? "salesEquipmentVisits" : "saleVisits";
     $sqlFilter[ "$table.visit_id" ] = getVisitsIds( $type, $start_at, $end_at, $user_id );
 
@@ -68,9 +69,11 @@ function getPaymentServices( $type, $sqlFilter, $start_at, $end_at, $user_id ): 
         ->where( $sqlFilter );
 
     foreach ( $allServices as $service ) {
-        $servicesList[] = visits\getFullService( $service[ "product_id" ], $user_id );
+        $servicesList[] = visits\getFullServiceDefault( $service[ "product_id" ], $user_id );
     }
+
     return  $servicesList ?? [];
+
 
 }
 

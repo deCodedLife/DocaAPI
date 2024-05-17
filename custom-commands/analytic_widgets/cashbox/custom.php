@@ -27,7 +27,6 @@ if ( $requestData->start_at ) {
     $cashboxFilter[ "created_at < ?" ] = $cashboxDate->format( "Y-m-d 00:01:00" );
 
 }
-
 $incomeBalance = $API->DB->from( "cashboxBalances" )
     ->where( $cashboxFilter )
     ->orderBy( "created_at DESC" )
@@ -37,15 +36,18 @@ $incomeBalance = $API->DB->from( "cashboxBalances" )
 $filters = [
     "status" => "done",
     "created_at >= ?" => $start,
-    "created_at <= ?" => $end
+    "created_at <= ?" => $end,
 ];
+
 
 if ( $requestData->store_id ) $filters[ "store_id" ] = $requestData->store_id;
 
 $payments = $API->DB->from( "salesList" )
-    ->where( $filters );
+    ->where( $filters )
+    ->fetchAll();
 
 unset( $filters[ "action" ] );
+unset( $filters[ "not action = ?" ] );
 unset( $filters[ "pay_method" ] );
 unset( $filters[ "status" ] );
 
@@ -63,13 +65,14 @@ foreach ( $expenses as $expense ) {
 
 foreach ( $payments as $payment ) {
 
-    if ( $payment[ "action" ] !== "sell" ) {
+    if ( $payment[ "action" ] === "sellReturn" ) {
         $summary -= $payment[ "sum_cash" ];
         continue;
     };
-    $summary += $payment[ "sum_cash" ];
+    $summary += $payment[ "sum_cash" ] + $payment[ "price" ];
 
 }
+
 
 $incomeBalance[ "balance" ] = $incomeBalance[ "balance" ] ?? 0;
 $summary += $incomeBalance[ "balance" ] - $expenses_summary;

@@ -27,7 +27,6 @@ $salesFilter = [];
  * Формирование фильтров
  */
 $salesFilter[ "salesList.status" ] = "done";
-$salesFilter[ "salesProductsList.type" ] = "service";
 $salesFilter[ "salesList.action" ] = "sell";
 
 if ( $requestData->start_price ) $salesFilter[ "salesList.summary >= ?" ] = $requestData->start_price;

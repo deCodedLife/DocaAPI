@@ -11,7 +11,7 @@
  */
 
 $clientDetail = $API->DB->from( "clients" )
-    ->where( "id", $requestData->clients_id[ 0 ] )
+    ->where( "id", $requestData->clients_id[ 0 ] ?? $requestData->client_id )
     ->limit( 1 )
     ->fetch();
 
@@ -23,7 +23,7 @@ $clientName = $clientDetail[ "last_name" ] . " " . mb_substr( $clientDetail[ "fi
  */
 
 $serviceDetail = $API->DB->from( "services" )
-    ->where( "id", $requestData->services_id[ 0 ] )
+    ->where( "id", $requestData->service_id )
     ->limit( 1 )
     ->fetch();
 
@@ -77,5 +77,4 @@ $months = [
 ];
 
 $created_at = date( "d" ) . " " . $months[ date( "n" ) - 1 ] . " " . date( "Y" ) . "г" . " " . date( "H:i:s" );
-
-$logDescription = "Добавлено посещение к $userProfession $userName на $created_at, клиент №" . $requestData->clients_id[ 0 ] . " $clientName услуга " . $serviceDetail[ "title" ];
+$logDescription = "Добавлено посещение к $userProfession $userName на $created_at, клиент №{$requestData->client_id} $clientName, услуга {$serviceDetail[ "title" ]}";

@@ -180,14 +180,16 @@ foreach ( $consumables as $consumable_id => $consumable ) {
 //$API->returnResponse( $existingVisits->getQuery( false ) );
 
 $getVisitsQuery = "SELECT * FROM $objectTable WHERE
-    reason_id IS NULL AND (
-    ( start_at >= '$start_at' and start_at < '$end_at' ) OR
-    ( end_at > '$start_at' and end_at < '$end_at' ) OR
-    ( start_at < '$start_at' and end_at > '$end_at' ) AND
+    reason_id IS NULL AND 
+    (
+        ( start_at >= '$start_at' and start_at < '$end_at' ) OR
+        ( end_at > '$start_at' and end_at < '$end_at' ) OR
+        ( start_at < '$start_at' and end_at > '$end_at' ) 
+    ) AND
     user_id NOT IN ( 260, 135 ) AND
     is_active = 'Y' AND
     store_id = $store_id
-)";
+";
 
 /**
  * Отсекаем редактируемое посещение

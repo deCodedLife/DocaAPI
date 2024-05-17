@@ -557,7 +557,7 @@
       "data_type": "string",
       "field_type": "textarea",
       "is_default_in_list": false,
-      "ignoreInLogs": true,
+      "ignoreInLogs": false,
       "is_unique": false,
       "is_autofill": true,
       "is_disabled": false,

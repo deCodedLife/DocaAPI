@@ -15,7 +15,6 @@ $returnData= [];
  * Фильтр Продаж
  */
 $filter = [];
-$filter[ "salesProductsList.type" ] = "service";
 $filter[ "salesList.status" ] = "done";
 if ( $requestData->user_id ) $filter[ "visits.user_id" ] = $requestData->user_id;
 if ( $requestData->store_id ) $filter[ "visits.store_id" ] = $requestData->store_id;

@@ -44,7 +44,7 @@ foreach ( $clients as $client ) {
 
     $clientsInfo[] = [
         "link" => "clients/card/{$client[ "id" ]}",
-        "title" => "№{$client[ "id" ]} {$client[ "last_name" ]} {$client[ "first_name" ]} {$client[ "patronymic" ]} $phoneFormat"
+        "title" => "№{$client[ "id" ]} {$client[ "last_name" ]} {$client[ "first_name" ]} {$client[ "patronymic" ]}$phoneFormat"
     ];
 
 } // foreach. $clients

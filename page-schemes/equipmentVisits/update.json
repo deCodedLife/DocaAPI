@@ -586,6 +586,10 @@
                   {
                     "property": "row_id",
                     "value": ":id"
+                  },
+                  {
+                    "property": "table_name",
+                    "value": "equipmentVisits"
                   }
                 ]
               },

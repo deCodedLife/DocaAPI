@@ -16,6 +16,7 @@ foreach ( $response[ "data" ] as $key => $visit ) {
         ->orderBy( "id DESC" )
         ->fetch()[ "sale_id" ];
 
+
     if ( $sale_id ) {
 
         $saleDetails = $API->DB->from( "salesList" )
@@ -41,8 +42,10 @@ foreach ( $response[ "data" ] as $key => $visit ) {
 
             $payMethod = $saleDetails[ "pay_method" ];
 
+            $visit[ "paymentMethod" ] = $payMethod;
             if ( $payMethod == "cash" ) $visit[ "paymentMethod" ] = "Наличные";
             if ( $payMethod == "card" ) $visit[ "paymentMethod" ] = "Безналичные";
+            if ( $payMethod == "online" ) $visit[ "paymentMethod" ] = "Онлайн";
             if ( $payMethod == "parts" ) $visit[ "paymentMethod" ] = "Раздельная";
             if ( $payMethod == "legalEntity" ) $visit[ "paymentMethod" ] = "Юридическое лицо";
 
