@@ -26,7 +26,7 @@ $currentEnd = $currentDateTime->modify('last day of this month')->format("Y-m-d 
 /**
  * Начало прошлого месяца
  */
-$pastStart = $currentDateTime->modify("-1 month")->format("Y-m-01 00:00:00");
+$pastStart = $currentDateTime->modify("-32 days")->format("Y-m-01 00:00:00");
 
 /**
  * Конец прошлого месяца

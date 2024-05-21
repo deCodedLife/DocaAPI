@@ -18,6 +18,7 @@
         "add",
         "update",
         "get",
+        "hook_filters",
         "hook",
         "schedule"
       ],
@@ -53,6 +54,7 @@
       "is_unique": false,
       "is_autofill": false,
       "use_in_commands": [
+        "hook_filters",
         "add",
         "get",
         "update"
@@ -173,6 +175,7 @@
         "update",
         "get",
         "hook",
+        "hook_filters",
         "schedule"
       ],
       "require_in_commands": [

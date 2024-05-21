@@ -196,6 +196,13 @@
       "type": "char(1)",
       "default": "Y",
       "is_required": "N"
+    },
+    {
+      "title": "Выгружать в продокторов",
+      "article": "is_prodoctorov",
+      "type": "char(1)",
+      "default": "N",
+      "is_required": "N"
     }
   ]
 }

@@ -92,3 +92,4 @@ foreach ( $response[ "data" ] as $service ) {
 } // foreach. $response[ "data" ]
 
 $response[ "data" ] = $returnServices;
+$response[ "detail" ][ "rows_count" ] = null;

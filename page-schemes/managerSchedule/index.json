@@ -27,6 +27,17 @@
             }
           },
           {
+            "title": "Дата",
+            "type": "date",
+            "required_permissions": [],
+            "required_modules": [],
+            "settings": {
+              "recipient_property": "end_at",
+              "is_visible": false,
+              "hook": "visits"
+            }
+          },
+          {
             "title": "Филиал",
             "type": "list",
             "required_permissions": [],
@@ -47,6 +58,7 @@
             "required_modules": [],
             "settings": {
               "is_search": false,
+              "hook": "visits",
               "recipient_property": "user_id",
               "donor_object": "users",
               "donor_property_title": "last_name",

@@ -1,71 +1,89 @@
 <?php
 
-$result = [];
-$scan_path = $API::$configs[ "paths" ][ "public_custom_commands" ];
-$folders = scandir( $scan_path ) ?? [];
-$folders = array_diff( $folders, array( ".", ".." ) );
 
-if ( empty( $folders ) ) $API->returnResponse();
+//$result = $API->sendRequest( "visits", "schedule", [
+//    "performers_article" => "user_id",
+//    "performers_table" => "users",
+//    "performers_title" => "first_name",
+//    "store_id" => 62,
+//    "start_at" => "2024-05-01",
+//    "end_at" => "2024-05-31",
+//    "user_id" => 121,
+//    "step" => 20
+//] );
 
-function propertiesGet ( array $objectScheme ): array
-{
-    $result = [];
-
-    foreach ( $objectScheme[ "properties" ] as $property ) {
-
-        if ( !$property[ "is_autofill" ] ) continue;
-        if ( $property[ "ignoreInLogs" ] ) continue;
-        $result[] = $property[ "title" ];
-
-    }
-
-    return $result;
-}
-
-foreach ( $folders as $folder ) {
-
-    $inner_dirs = scandir( join( "/", [ $scan_path, $folder ] ) ) ?? [];
-    $inner_dirs = array_diff( $inner_dirs, array( ".", ".." ) );
-
-    if ( empty( $inner_dirs ) ) continue;
-
-    $public_file_name = join( "/", [ $API::$configs[ "paths" ][ "public_object_schemes" ], $folder ] ) . ".json";
-    $system_file_name = join( "/", [ $API::$configs[ "paths" ][ "system_object_schemes" ], $folder ] ) . ".json";
-
-    if ( !file_exists( $public_file_name ) && file_exists( $system_file_name ) ) continue;
-    if ( file_exists( $public_file_name ) ) $objectName = file_get_contents( $system_file_name );
-    if ( file_exists( $public_file_name ) ) $objectName = file_get_contents( $public_file_name );
-
-    $objectScheme = (array) json_decode( $objectName, true ) ?? [];
-    $objectName = $objectScheme[ "title" ] ?? "";
-
-    if ( count( array_intersect( $inner_dirs, [ "add", "update", "remove" ] ) ) != 0 ) {
-
-        foreach ( $inner_dirs as $inner_dir ) {
-
-            switch ( $inner_dir ) {
-                case "add":
-                    $result[ $objectName . " добавление" ] = "Название";
-                    break;
-                case "update":
-                    $result[ $objectName . " редактирование" ] = propertiesGet( $objectScheme );
-                    break;
-                case "remove":
-                    $result[ $objectName . " удаление" ] = "Название";
-                    break;
-            }
-
-        }
-
-    }
-
-
-
-
-}
-
+$result = prodoctorov\ExportEmployeesSchedule();
 
 $API->returnResponse( $result );
+
+
+
+//$result = [];
+//$scan_path = $API::$configs[ "paths" ][ "public_custom_commands" ];
+//$folders = scandir( $scan_path ) ?? [];
+//$folders = array_diff( $folders, array( ".", ".." ) );
+//
+//if ( empty( $folders ) ) $API->returnResponse();
+//
+//function propertiesGet ( array $objectScheme ): array
+//{
+//    $result = [];
+//
+//    foreach ( $objectScheme[ "properties" ] as $property ) {
+//
+//        if ( !$property[ "is_autofill" ] ) continue;
+//        if ( $property[ "ignoreInLogs" ] ) continue;
+//        $result[] = $property[ "title" ];
+//
+//    }
+//
+//    return $result;
+//}
+//
+//foreach ( $folders as $folder ) {
+//
+//    $inner_dirs = scandir( join( "/", [ $scan_path, $folder ] ) ) ?? [];
+//    $inner_dirs = array_diff( $inner_dirs, array( ".", ".." ) );
+//
+//    if ( empty( $inner_dirs ) ) continue;
+//
+//    $public_file_name = join( "/", [ $API::$configs[ "paths" ][ "public_object_schemes" ], $folder ] ) . ".json";
+//    $system_file_name = join( "/", [ $API::$configs[ "paths" ][ "system_object_schemes" ], $folder ] ) . ".json";
+//
+//    if ( !file_exists( $public_file_name ) && file_exists( $system_file_name ) ) continue;
+//    if ( file_exists( $public_file_name ) ) $objectName = file_get_contents( $system_file_name );
+//    if ( file_exists( $public_file_name ) ) $objectName = file_get_contents( $public_file_name );
+//
+//    $objectScheme = (array) json_decode( $objectName, true ) ?? [];
+//    $objectName = $objectScheme[ "title" ] ?? "";
+//
+//    if ( count( array_intersect( $inner_dirs, [ "add", "update", "remove" ] ) ) != 0 ) {
+//
+//        foreach ( $inner_dirs as $inner_dir ) {
+//
+//            switch ( $inner_dir ) {
+//                case "add":
+//                    $result[ $objectName . " добавление" ] = "Название";
+//                    break;
+//                case "update":
+//                    $result[ $objectName . " редактирование" ] = propertiesGet( $objectScheme );
+//                    break;
+//                case "remove":
+//                    $result[ $objectName . " удаление" ] = "Название";
+//                    break;
+//            }
+//
+//        }
+//
+//    }
+//
+//
+//
+//
+//}
+//
+//
+//$API->returnResponse( $result );
 
 
 //$execCommand = [

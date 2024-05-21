@@ -174,7 +174,8 @@
                             "is_visible_in_schedule",
                             "is_queue",
                             "is_visibleOnSite",
-                            "notify_clients"
+                            "notify_clients",
+                            "is_prodoctorov"
                           ]
                         }
                       ]

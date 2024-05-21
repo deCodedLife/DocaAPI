@@ -1,6 +1,6 @@
 {
   "title": "Вывод",
-  "type": "fget",
+  "type": "custom",
   "object_scheme": "visits",
   "required_permissions": [],
   "required_modules": []

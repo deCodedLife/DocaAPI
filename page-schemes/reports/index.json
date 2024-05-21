@@ -203,6 +203,7 @@
                 "size": 4,
                 "settings": {
                   "is_edit": false,
+                  "is_infinite": true,
                   "link": "services",
                   "object": "serviceReports",
                   "linked_filter": "analytic_widgets_sum_all_services"
@@ -320,6 +321,7 @@
                 "size": 4,
                 "settings": {
                   "is_edit": false,
+                  "is_infinite": true,
                   "link": "services",
                   "size": 2,
                   "object": "userServices",

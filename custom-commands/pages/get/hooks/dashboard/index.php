@@ -28,5 +28,5 @@ $pageScheme[ "structure" ][ 4 ][ "settings" ][ "filters" ] = [
     "performers_title" => "first_name",
     "store_id" => $userDetails[ "store_id" ] ?? $API->DB->from( "stores" )
             ->limit(1)->fetch()[ "id" ],
-     "start_at" =>  date( 'Y-m-d' )
+    "start_at" =>  date( 'Y-m-d' )
 ];

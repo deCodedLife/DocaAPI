@@ -41,6 +41,8 @@ $clientDetails = $API->DB->from( "clients" )
     ->where( "id", $saleDetails[ "client_id" ] )
     ->fetch();
 
+
+
 if ( $saleDetails[ "action" ] == "sell" ) {
 
     $API->DB->update( "clients" )
@@ -62,6 +64,8 @@ if ( $saleDetails[ "action" ] == "sell" ) {
 
 } // if ( $saleDetails[ "action" ] == "sell" )
 
+
+
 if ( $saleDetails[ "action" ] == "deposit" ) {
 
     $API->DB->update( "clients" )
@@ -72,6 +76,8 @@ if ( $saleDetails[ "action" ] == "deposit" ) {
         ->execute();
 
 } // if ( $saleDetails[ "action" ] == "deposit" )
+
+
 
 if ( $saleDetails[ "action" ] == "sellReturn" ) {
 

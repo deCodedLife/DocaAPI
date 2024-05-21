@@ -26,7 +26,7 @@ $currentEnd = $currentDateTime->modify('last day of this month')->format("Y-m-d 
 /**
  * Начало прошлого месяца
  */
-$pastStart = $currentDateTime->modify("-1 month")->format("Y-m-01 00:00:00");
+$pastStart = $currentDateTime->modify("-32 days")->format("Y-m-01 00:00:00");
 
 /**
  * Конец прошлого месяца
@@ -42,17 +42,6 @@ $beforeLastStart = $currentDateTime->modify("-2 month")->format("Y-m-01 00:00:00
  * Конец позапрошлого месяца
  */
 $beforeLastEnd = $currentDateTime->modify('last day of this month')->format("Y-m-d 23:59:59");
-
-/**
- * Фильтр для продаж
- */
-
-$salesFilter[ "salesList.status" ] = "done";
-$salesFilter[ "salesProductsList.type" ] = "service";
-$salesFilter[ "salesList.action" ] = "sell";
-$salesFilter[ "salesList.created_at >= ?" ] = $beforeLastStart;
-$salesFilter[ "salesList.created_at <= ?" ] = $currentEnd;
-
 
 /**
  * Получение списка продаж
@@ -72,7 +61,6 @@ $salesList = mysqli_query(
             LEFT JOIN services ON salesProductsList.product_id = services.id
             LEFT JOIN serviceGroups ON serviceGroups.id = services.category_id
             WHERE salesList.status = 'done'
-              AND salesProductsList.type = 'service'
               AND serviceGroups.is_active = 'Y'
               AND salesList.action = 'sell'
               AND salesList.created_at >= '$beforeLastStart'
@@ -202,6 +190,7 @@ if ( $sort_by == "sum_two" ) {
     if ( $sort_order == "asc" ) $response[ "data" ] = array_values( array_sort( $response[ "data" ], "sum_two", SORT_ASC ) );
 
 }
+
 if ( $sort_by == "sum_three" ) {
 
     if ( $sort_order == "desc" ) $response[ "data" ] = array_values( array_sort( $response[ "data" ], "sum_three", SORT_DESC ) );
