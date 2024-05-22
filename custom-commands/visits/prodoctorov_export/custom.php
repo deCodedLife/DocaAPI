@@ -32,8 +32,6 @@ foreach ( $API->DB->from( "stores" ) as $store ) {
         $day_counter[ $user_id ] = [];
 
         if ( $max_worktime == 0 ) continue;
-        if ( empty( $visits ) ) continue;
-
 
         $scheduleRequest = $API->sendRequest( "visits", "schedule", [
             "performers_article" => "user_id",
