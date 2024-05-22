@@ -95,6 +95,8 @@ if ( $API->isPublicAccount() ) {
 
     } // foreach ( $requestData->services_id as $service ) {
 
+    if ( property_exists( $API->request->data, "context" ) && property_exists( $API->request->data->context, "from_prodoctorov" ) ) $requestData->status = "prodoctorov";
+
 } // if ( $API->isPublicAccount() )
 
 
