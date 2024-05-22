@@ -46,6 +46,19 @@ if ( !$requestData->end_at ) {
  */
 if ( $requestData->profession_id || $requestData->user_id ) {
 
+    if ( $requestData->profession_id ) {
+
+        $users = $API->DB->from( "users_professions" )
+            ->where( "profession_id", $requestData->profession_id )
+            ->fetchAll( "user_id[]" );
+
+        $requestData->user_id = array_keys( $users );
+        $requestData->end_at = date(
+            "Y-m-d", strtotime("+30 days", strtotime($requestData->start_at))
+        );
+
+    }
+
     if ( $API->isPublicAccount() ) {
 
         $requestData->start_at = date( "Y-m-d 00:00:00", strtotime( $API->request->data->start_at ) );
@@ -107,7 +120,7 @@ if ( !$requestData->user_id ) {
 
 } else {
 
-    $requestData->user_id = [ $requestData->user_id ];
+    if ( !is_array( $requestData->user_id ) ) $requestData->user_id = [ $requestData->user_id ];
 
 } // if ( !$requestData->user_id )
 
