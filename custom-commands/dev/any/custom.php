@@ -12,9 +12,16 @@
 //    "step" => 20
 //] );
 
-$result = prodoctorov\ExportEmployeesSchedule();
+$advirtiseID = $API->DB->from( "advertise" )
+    ->where(
+        "( title like :title OR title like :online)",
+        [
+            ":title" => "Продокторов",
+            ":online" => "Онлайн"
+        ] )
+    ->fetch();
 
-$API->returnResponse( $result );
+$API->returnResponse( $advirtiseID );
 
 
 

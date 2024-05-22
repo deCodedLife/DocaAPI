@@ -343,6 +343,10 @@
         {
           "title": "Remote",
           "value": "remote"
+        },
+        {
+          "title": "С продокторов",
+          "value": "prodoctorov"
         }
       ]
     },
