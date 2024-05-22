@@ -13,36 +13,39 @@ if ( property_exists( $API->request->data, "context" ) && property_exists( $API-
     $from_prodoctorov = true;
 
 
-/**
- * Статус "Повторное" у Посещения и Клиентов
- */
-
-foreach ( $requestData->clients_id as $clientId ) {
-
+if ( !$from_prodoctorov )
+{
     /**
-     * Получение посещений Клиента
+     * Статус "Повторное" у Посещения и Клиентов
      */
 
-    $clientVisits = $API->DB->from( "visits" )
-        ->innerJoin( "visits_clients ON visits_clients.visit_id = visits.id" )
-        ->where( [
-            "visits_clients.client_id" => intval( $clientId ),
-            "visits.status" => "ended",
-            "visits.is_active" => "Y"
-        ] );
+    foreach ( $requestData->clients_id as $clientId ) {
 
-    if ( count( $clientVisits ) > 0 ) {
+        /**
+         * Получение посещений Клиента
+         */
 
-        $requestData->status = "repeated";
+        $clientVisits = $API->DB->from( "visits" )
+            ->innerJoin( "visits_clients ON visits_clients.visit_id = visits.id" )
+            ->where( [
+                "visits_clients.client_id" => intval( $clientId ),
+                "visits.status" => "ended",
+                "visits.is_active" => "Y"
+            ] );
 
-        $API->DB->update( "clients" )
-            ->set( "is_repeat", "Y" )
-            ->where( "id", $clientId )
-            ->execute();
+        if ( count( $clientVisits ) > 0 ) {
 
-    }
+            $requestData->status = "repeated";
 
-} // foreach. $requestData->clients_id
+            $API->DB->update( "clients" )
+                ->set( "is_repeat", "Y" )
+                ->where( "id", $clientId )
+                ->execute();
+
+        }
+
+    } // foreach. $requestData->clients_id
+}
 
 
 /**
