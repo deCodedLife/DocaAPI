@@ -41,7 +41,8 @@
                   "name",
                   "address",
                   "map",
-                  "phone"
+                  "phone",
+                  "prodoctorov_article"
                 ]
               }
             ]

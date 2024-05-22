@@ -51,6 +51,13 @@
       "is_required": "N"
     },
     {
+      "title": "Имя клиники в продокторов",
+      "article": "prodoctorov_article",
+      "type": "varchar(255)",
+      "default": "DOCA clinic",
+      "is_required": "N"
+    },
+    {
       "title": "Адрес",
       "article": "address",
       "type": "varchar(255)",

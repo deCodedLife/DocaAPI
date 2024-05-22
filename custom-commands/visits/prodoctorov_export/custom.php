@@ -18,7 +18,7 @@ foreach ( $API->DB->from( "stores" ) as $store ) {
      * Получение списка докторов из филиала
      */
     $users_list = prodoctorov\getDoctors( $store[ "id" ] );
-    $body[ "schedule" ][ "{$store[ "id" ]}" ] = $store[ "title" ];
+    $body[ "schedule" ][ "{$store[ "id" ]}" ] = $store[ "prodoctorov_article" ];
 
 
     /**
@@ -90,7 +90,9 @@ foreach ( $API->DB->from( "stores" ) as $store ) {
 
                 for ( $eventIndex = $eventStart; $eventIndex <= $eventEnd; $eventIndex++ )
                 {
-                    $point = strtotime( $day . " ". $scheduleRequest->steps_list[ $current ] . " +19 minutes" );
+                    $time_interval = ($API::$configs[ "prodoctorov" ][ "time_interval" ] ?? 19);
+
+                    $point = strtotime( $day . " ". $scheduleRequest->steps_list[ $current ] . " +$time_interval minutes" );
                     $end = strtotime( $day . " ".  $scheduleRequest->steps_list[ $eventIndex ] );
 
                     if ( $point > $end ) continue;
