@@ -12,10 +12,18 @@
 //    "step" => 20
 //] );
 
-$serviceDetails = visits\getFullServiceDefault( 7590, 323 );
+$advirtiseID = $API->DB->from( "advertise" )
+    ->where(
+        "( title like :title OR title like :online)",
+        [
+            ":title" => "Продокторов",
+            ":online" => "Онлайн"
+        ] )
+    ->fetch();
 
-
-$API->returnResponse( $serviceDetails );
+if ( !empty( $advirtiseID ) ) $advirtiseID = $advirtiseID[ "id" ];
+else $advirtiseID = 0;
+$API->returnResponse( $advirtiseID );
 
 
 

@@ -8,6 +8,10 @@ $serviceDetail = $API->DB->from( "services" )
     ->limit( 1 )
     ->fetch();
 
+$from_prodoctorov = false;
+if ( property_exists( $API->request->data, "context" ) && property_exists( $API->request->data->context, "from_prodoctorov" ) )
+    $from_prodoctorov = true;
+
 
 /**
  * Статус "Повторное" у Посещения и Клиентов
@@ -45,7 +49,7 @@ foreach ( $requestData->clients_id as $clientId ) {
  * Заполнение недостающих полей для записи не из црм
  */
 
-if ( $API->isPublicAccount() ) {
+if ( $API->isPublicAccount() && !$from_prodoctorov ) {
 
     $requestData->status = "online";
     $requestData->price = 0;
@@ -94,8 +98,6 @@ if ( $API->isPublicAccount() ) {
         if ( $serviceInfo[ "is_remote" ] ) $requestData->status = "remote";
 
     } // foreach ( $requestData->services_id as $service ) {
-
-    if ( property_exists( $API->request->data, "context" ) && property_exists( $API->request->data->context, "from_prodoctorov" ) ) $requestData->status = "prodoctorov";
 
 } // if ( $API->isPublicAccount() )
 
