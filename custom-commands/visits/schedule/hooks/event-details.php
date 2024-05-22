@@ -37,6 +37,10 @@ switch ( $event[ "status" ] ) {
         $event[ "color" ] = "azure";
         break;
 
+    case "prodoctorov":
+        $event[ "color" ] = "blue";
+        break;
+
 } // switch. $event[ "status" ][ "value" ]
 
 if ( $event[ "status" ] == "ended" && $event[ "is_payed" ] == "Y" ) $event[ "color" ] = "purple";
