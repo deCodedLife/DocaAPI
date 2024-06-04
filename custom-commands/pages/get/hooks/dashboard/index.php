@@ -6,6 +6,16 @@ $userDetails = $API->DB->from( "users_stores" )
     ->limit( 1 )
     ->fetch();
 
+$serviceGroup = $API->DB->from( "serviceGroups" )
+    ->where( "is_active", "Y" )
+    ->limit( 1 )
+    ->fetch();
+
+$workDay = $API->DB->from( "workDays" )
+    ->orderBy( "event_from desc" )
+    ->limit( 1 )
+    ->fetch();
+
 $pageScheme[ "structure" ][ 0 ][ "settings" ][ "filters" ] = [
     [
         "property" => "start_at",
@@ -29,7 +39,7 @@ $pageScheme[ "structure" ][ 1 ][ "settings" ][ "filters" ] = [
     ],
     [
         "property" => "id",
-        "value" => 1227
+        "value" => $serviceGroup[ "id" ]
     ]
 ];
 
@@ -40,7 +50,7 @@ $pageScheme[ "structure" ][ 2 ][ "settings" ][ "filters" ] = [
     ],
     [
         "property" => "id",
-        "value" => 121
+        "value" => $workDay[ "user_id" ]
     ]
 ];
 
