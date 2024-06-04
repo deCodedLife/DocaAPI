@@ -9,6 +9,13 @@
       "is_required": "Y"
     },
     {
+      "title": "Название на сайте",
+      "article": "public_title",
+      "type": "varchar(255)",
+      "default": null,
+      "is_required": "Y"
+    },
+    {
       "title": "Артикул",
       "article": "article",
       "type": "varchar(255)",
@@ -138,7 +145,7 @@
       "title": "Номер",
       "article": "num",
       "type": "varchar(75)",
-      "default": "99999999",
+      "default": "99999999ZZZZZZZ",
       "is_required": "N"
     }
   ]

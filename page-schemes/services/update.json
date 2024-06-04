@@ -69,7 +69,6 @@
                         "title": "Настройки",
                         "fields": [
                           "is_equipment",
-                          "is_visibleOnSite",
                           "is_remote"
                         ]
                       }
@@ -161,6 +160,46 @@
                         "title": "Основная информация",
                         "fields": [
                           "services_consumables"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "components": {
+                "buttons": [
+                  {
+                    "type": "submit",
+                    "settings": {
+                      "title": "Сохранить",
+                      "background": "dark",
+                      "href": "services"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "public": {
+          "title": "Сайт",
+          "body": [
+            {
+              "title": "Интеграция на сайте",
+              "type": "form",
+              "size": 4,
+              "settings": {
+                "object": "services",
+                "command": "update",
+                "areas": [
+                  {
+                    "size": 2,
+                    "blocks": [
+                      {
+                        "title": "Основная информация",
+                        "fields": [
+                          "public_title",
+                          "is_visibleOnSite"
                         ]
                       }
                     ]

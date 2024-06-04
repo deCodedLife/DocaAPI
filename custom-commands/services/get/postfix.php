@@ -22,10 +22,11 @@ if ( $requestData->context->block == "form_list" || $requestData->context->block
     foreach ( $response[ "data" ] as $key => $service ) {
 
         $price = $services_price[ intval( $service[ "id" ] ) ];
+
         if ( !$price ) $price = $service[ "price" ];
-
-
         $response[ "title" ] = "{$service[ "article" ]} {$service[ "title" ]} + {$price}";
+
+        if ( $API->isPublicAccount() && !empty( $service[ "public_title" ] ) ) $service[ "title" ] = $service[ "public_title" ];
         $response[ "data" ][ $key ] = $service;
 
     }
