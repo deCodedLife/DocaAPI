@@ -1,5 +1,76 @@
 <?php
 
+if ( !$requestData->user_id ) {
+
+    $API->returnResponse(
+
+        [
+            [
+                "value" => 0,
+                "description" => "Сумма продаж",
+                "size" => "1",
+                "icon" => "",
+                "prefix" => "₽",
+                "postfix" => [
+                    "icon" => "",
+                    "value" => "",
+                    "background" => ""
+                ],
+                "type" => "char",
+                "background" => "",
+                "detail" => []
+            ],
+            [
+                "value" => 0,
+                "description" => "Сумма продаж с  %",
+                "size" => "1",
+                "icon" => "",
+                "prefix" => "₽",
+                "postfix" => [
+                    "icon" => "",
+                    "value" => "",
+                    "background" => ""
+                ],
+                "type" => "char",
+                "background" => "",
+                "detail" => []
+            ],
+            [
+                "value" => 0,
+                "description" => "Сумма %",
+                "size" => "1",
+                "icon" => "",
+                "prefix" => "₽",
+                "postfix" => [
+                    "icon" => "",
+                    "value" => "",
+                    "background" => ""
+                ],
+                "type" => "char",
+                "background" => "",
+                "detail" => []
+            ],
+            [
+                "value" => 0,
+                "description" => "Количество клиентов",
+                "icon" => "",
+                "size" => "1",
+                "prefix" => "",
+                "postfix" => [
+                    "icon" => "",
+                    "value" => "",
+                    "background" => ""
+                ],
+                "type" => "char",
+                "background" => "",
+                "detail" => []
+            ]
+        ]
+
+    );
+
+};
+
 /**
  * @file
  * Отчет "Клиенты посещавшие специалистов
@@ -95,8 +166,8 @@ $reportStatistic = [
 if ( $requestData->user_id ) $filters[ "visits.user_id" ] = $requestData->user_id;
 if ( $requestData->start_price ) $filters[ "visits.price >= ?" ] = $requestData->start_price;
 if ( $requestData->end_price ) $filters[ "visits.price <= ?" ] = $requestData->end_price;
-if ( $requestData->start_at ) $filters[ "visits.start_at >= ?" ] = $requestData->start_at;
-if ( $requestData->end_at ) $filters[ "visits.end_at <= ?" ] = $requestData->end_at;
+if ( $requestData->start_at ) $filters[ "visits.start_at >= ?" ] = $requestData->start_at . " 00:00:00";
+if ( $requestData->end_at ) $filters[ "visits.end_at <= ?" ] = $requestData->end_at . " 23:59:59";
 $filters[ "visits.status" ] = "ended";
 $filters[ "visits.is_payed" ] = "Y";
 
@@ -104,9 +175,14 @@ $servicesUserPercents = $API->DB->from( "services_user_percents")
     ->where( "row_id", $requestData->user_id );
 
 $services = [];
+$servicesCash = [];
 
-foreach ( $servicesUserPercents as $servicesUserPercent)
+foreach ( $servicesUserPercents as $servicesUserPercent) {
+
     $services[] = $servicesUserPercent[ "service_id" ];
+    $servicesCash[ $servicesUserPercent[ "service_id" ] ][ "percent" ] = $servicesUserPercent[ "percent" ];
+
+}
 
 $visitsList = $API->DB->from( "visits" )
     ->select( null )->select(
@@ -128,7 +204,14 @@ foreach ( $visitsList as $visit ) {
 
     if ( in_array( $visit[ "product_id" ], $services )  ) {
 
-        $reportStatistic[ "services_user_percents" ] += $visit[ "cost" ];
+        if ( $servicesCash[ $visit[ "product_id" ] ][ "percent" ] != 0 ) {
+
+            $reportStatistic[ "services_user_percents" ] +=  $servicesCash[ $visit[ "product_id" ] ][ "percent" ] * $visit[ "cost" ] / 100;
+
+        }
+
+
+        $reportStatistic[ "visit_user_percents" ] += $visit[ "cost" ];
 
     }
     $visits[] = $visit[ "visit_id" ];
@@ -154,8 +237,23 @@ $API->returnResponse(
             "detail" => []
         ],
         [
-            "value" => number_format( intval( $reportStatistic["services_user_percents"] ), 0, '.', ' ' ),
+            "value" => number_format( intval( $reportStatistic["visit_user_percents"] ), 0, '.', ' ' ),
             "description" => "Сумма продаж с  %",
+            "size" => "1",
+            "icon" => "",
+            "prefix" => "₽",
+            "postfix" => [
+                "icon" => "",
+                "value" => "",
+                "background" => ""
+            ],
+            "type" => "char",
+            "background" => "",
+            "detail" => []
+        ],
+        [
+            "value" => number_format( intval( $reportStatistic["services_user_percents"] ), 0, '.', ' ' ),
+            "description" => "Сумма %",
             "size" => "1",
             "icon" => "",
             "prefix" => "₽",

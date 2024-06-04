@@ -12,18 +12,6 @@
 //    "step" => 20
 //] );
 
-$advirtiseID = $API->DB->from( "advertise" )
-    ->where(
-        "( title like :title OR title like :online)",
-        [
-            ":title" => "Продокторов",
-            ":online" => "Онлайн"
-        ] )
-    ->fetch();
-
-if ( !empty( $advirtiseID ) ) $advirtiseID = $advirtiseID[ "id" ];
-else $advirtiseID = 0;
-$API->returnResponse( $advirtiseID );
 
 
 

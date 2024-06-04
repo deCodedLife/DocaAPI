@@ -59,14 +59,12 @@
                         ]
                       },
                       {
-                        "title": "Контакты",
+                        "title": "Документы",
                         "fields": [
-                          "phone",
-                          "second_phone",
-                          "email",
-                          "address",
-                          "geolocation",
-                          "client_groups"
+                          "passport_series",
+                          "passport_number",
+                          "passport_issued",
+                          "is_representative"
                         ]
                       }
                     ]
@@ -75,12 +73,14 @@
                     "size": 2,
                     "blocks": [
                       {
-                        "title": "Документы",
+                        "title": "Контакты",
                         "fields": [
-                          "passport_series",
-                          "passport_number",
-                          "passport_issued",
-                          "is_representative"
+                          "phone",
+                          "second_phone",
+                          "email",
+                          "address",
+                          "geolocation",
+                          "client_groups"
                         ]
                       },
                       {
@@ -529,16 +529,12 @@
                 "object": "salesList",
                 "filters": [
                   {
-                    "property": "client_id",
-                    "value": ":id"
+                    "property": "action",
+                    "value": "deposit"
                   },
                   {
-                    "property": "action",
-                    "value": [
-                      "deposit",
-                      "sell",
-                      "sellReturn"
-                    ]
+                    "property": "client_id",
+                    "value": ":id"
                   }
                 ],
                 "is_edit": false

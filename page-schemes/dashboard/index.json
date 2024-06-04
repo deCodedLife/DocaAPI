@@ -64,21 +64,42 @@
     },
     {
       "title": "Группы услуг",
-      "type": "list",
+      "type": "mini_list",
       "size": 2,
       "required_permissions": [
         "director_schedule"
       ],
+      "data": {
+        "limit": 0,
+        "page": 1
+      },
       "settings": {
         "is_edit": false,
         "link": "serviceGroupsReport",
         "object": "serviceGroupsReport"
       },
-      "components": []
+      "components": {
+        "filters": [
+          {
+            "title": "Группа услуг",
+            "type": "list",
+            "required_permissions": [],
+            "required_modules": [],
+            "settings": {
+              "is_search": false,
+              "is_clearable": false,
+              "recipient_property": "id",
+              "donor_object": "serviceGroups",
+              "donor_property_title": "title",
+              "donor_property_value": "id"
+            }
+          }
+        ]
+      }
     },
     {
       "title": "Сотрудники",
-      "type": "list",
+      "type": "mini_list",
       "size": 2,
       "required_permissions": [
         "director_schedule"
@@ -88,7 +109,28 @@
         "link": "users",
         "object": "usersReport"
       },
-      "components": []
+      "data": {
+        "limit": 0,
+        "page": 1
+      },
+      "components": {
+        "filters": [
+          {
+            "title": "Сотрудник",
+            "type": "list",
+            "required_permissions": [],
+            "required_modules": [],
+            "settings": {
+              "is_search": false,
+              "is_clearable": false,
+              "recipient_property": "id",
+              "donor_object": "users",
+              "donor_property_title": "fio",
+              "donor_property_value": "id"
+            }
+          }
+        ]
+      }
     },
     {
       "title": "Расписание",

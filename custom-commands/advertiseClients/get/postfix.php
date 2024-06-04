@@ -9,6 +9,11 @@ $filter = [];
 if ( $requestData->start_at ) $filter[ "created_at >= ?" ] = $requestData->start_at . " 00:00:00";
 if ( $requestData->end_at ) $filter[ "created_at <= ?" ] = $requestData->end_at . " 23:59:59";
 
+if ( $requestData->start_price ) $visitsFilter[ "price >= ?" ] = $requestData->start_price;
+if ( $requestData->end_price ) $visitsFilter[ "price <= ?" ] = $requestData->end_price;
+if ( $requestData->store_id ) $visitsFilter[ "store_id" ] = $requestData->store_id;
+
+
 $advertiseReturn = [];
 
 foreach ( $response[ "data" ] as $advertise ) {
@@ -29,6 +34,8 @@ foreach ( $response[ "data" ] as $advertise ) {
 
     if ( !empty( $clientsIds ) ) {
 
+        $visitsFilter[ "client_id" ] = $clientsIds;
+
         $visits = $API->DB->from( "visits" )
             ->select( null )
             ->select( [
@@ -38,7 +45,7 @@ foreach ( $response[ "data" ] as $advertise ) {
                 "SUM( CASE WHEN is_payed = 'Y' THEN price ELSE 0 END ) as price",
                 "client_id"
             ] )
-            ->where( [ "client_id" => $clientsIds ] )
+            ->where( $visitsFilter )
             ->groupBy( "client_id" )
             ->fetchAll( "client_id" );
 

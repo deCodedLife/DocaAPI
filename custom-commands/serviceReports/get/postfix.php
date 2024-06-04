@@ -77,19 +77,15 @@ foreach ( $response[ "data" ] as $service ) {
     /**
      * Проверка на наличие услуги в продажах
      */
-    if ( $count != 0 ) {
+    $returnServices[] = [
+        "id" => $service[ "id" ],
+        "title" => $service[ "title" ],
+        "count" => $count,
+        "date" => $service[ "date" ],
+        "sum" => $sum
+    ];
 
-        $returnServices[] = [
-            "id" => $service[ "id" ],
-            "title" => $service[ "title" ],
-            "count" => $count,
-            "date" => $service[ "date" ],
-            "sum" => $sum
-        ];
-
-    } // if ( $count != 0 )
 
 } // foreach. $response[ "data" ]
 
 $response[ "data" ] = $returnServices;
-$response[ "detail" ][ "rows_count" ] = null;

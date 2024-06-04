@@ -25,9 +25,48 @@ function sortObjects( $promotion, $type, $object ): array {
 
 }
 
+function isPartialOverlap ( $start1, $end1, $start2, $end2 ) {
 
+    $dateTime1 = new DateTime( $start1 );
+    $dateTime2 = new DateTime( $end1 );
+    $dateTime3 = new DateTime( $start2 );
+    $dateTime4 = new DateTime( $end2 );
+
+    if( $dateTime1 <= $dateTime3 && $dateTime2 >= $dateTime4 ) {
+
+        return true; // Период 1 полностью содержит период 2
+
+    } elseif ( $dateTime1 >= $dateTime3 && $dateTime2 <= $dateTime4 ) {
+
+        return true; // Период 1 полностью входит в период 2
+
+    } elseif ( $dateTime1 <= $dateTime3 && $dateTime2 >= $dateTime3 ) {
+
+        return true; // Часть периода 1 находится в периоде 2
+
+    } elseif ( $dateTime1 <= $dateTime4 && $dateTime2 >= $dateTime4 ) {
+
+        return true; // Часть периода 1 находится в периоде
+
+    } else {
+
+        return false; // Периоды не пересекаются
+
+    }
+}
 
 foreach ( $response[ "data" ] as $key => $promotion ) {
+
+    $promotionEnd_at = $promotion[ "end_at" ];
+
+    if ( $promotion[ "end_at" ] == null ) $promotionEnd_at = date('d.m.Y H:i:s', strtotime('+100000 day', strtotime($promotion[ "begin_at" ] ) ) );
+
+    if( $begin_at && $end_at && !isPartialOverlap( $begin_at, $end_at, $promotion[ "begin_at" ], $promotion[ "end_at" ] ) ) {
+
+        unset( $response[ "data" ][ $key ] );
+        continue;
+
+    }
 
     $promotionObjects = $API->DB->from( "promotionObjects" )
         ->where( "promotion_id", $promotion[ "id" ] );

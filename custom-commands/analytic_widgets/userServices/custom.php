@@ -21,7 +21,6 @@ $reportStatistic = [
  * Получение списка услуг
  */
 $userServices = $API->sendRequest( "userServices", "get", $requestData );
-
 /**
  * Обрабботка списка
  */

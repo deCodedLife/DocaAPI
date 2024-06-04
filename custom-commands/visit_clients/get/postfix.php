@@ -5,9 +5,7 @@
  * Формирование списка клиентов посещавшие специалистов
  */
 
-
 if ( !$requestData->user_id ) $API->returnResponse( [] );
-
 
 foreach ( $response[ "data" ] as $key => $visit ) {
 

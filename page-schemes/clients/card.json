@@ -45,7 +45,8 @@
                           "first_name",
                           "patronymic",
                           "gender",
-                          "birthday"
+                          "birthday",
+                          "advertise_id"
                         ]
                       },
                       {

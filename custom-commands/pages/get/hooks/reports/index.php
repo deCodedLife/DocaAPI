@@ -109,3 +109,14 @@ $pageScheme[ "structure" ][ 1 ][ "settings" ][ "visitsCancelled" ][ "body" ][ 0 
         "value" => date( 'Y-m-d' )
     ]
 ];
+
+$pageScheme[ "structure" ][ 1 ][ "settings" ][ "equipmentVisitsCancelled" ][ "body" ][ 0 ][ "settings" ][ "filters" ] = [
+    [
+        "property" => "cancelledDate_start",
+        "value" => date("Y-m-d", strtotime("-1 months"))
+    ],
+    [
+        "property" => "cancelledDate_end",
+        "value" => date( 'Y-m-d' )
+    ]
+];

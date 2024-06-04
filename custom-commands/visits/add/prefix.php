@@ -78,16 +78,25 @@ if ( $API->isPublicAccount() && !$from_prodoctorov ) {
 
 
     //Получение кабинета в котором принимает Врач
-    $event = $API->DB->from( "scheduleEvents" )
+    $events = $API->DB->from( "scheduleEvents" )
         ->where( [
             "event_from >= ?" => date( "Y-m-d 00:00:00", strtotime( $requestData->start_at ) ),
             "event_to <= ?" => date( "Y-m-d 23:59:59", strtotime( $requestData->end_at ) ),
             "user_id" => $requestData->user_id
         ] )
-        ->fetch();
+        ->fetchAll();
 
-    if ( strtotime( $requestData->end_at ) > strtotime( $event[ "event_to" ] ) )
+    foreach ( $events as $eventItem ) {
+
+        if ( strtotime( $requestData->start_at ) < strtotime( $eventItem[ "event_from" ] ) ) continue;
+        if ( strtotime( $requestData->end_at ) > strtotime( $eventItem[ "event_to" ] ) ) continue;
+        $event = $eventItem;
+
+    }
+
+    if ( empty( $event ) )
         $API->returnResponse( "Ошибка. Посещение выходит за рамки работы сотрудника", 403 );
+
 
     if ( $event ) $requestData->cabinet_id = $event[ "cabinet_id" ];
 
@@ -101,6 +110,8 @@ if ( $API->isPublicAccount() && !$from_prodoctorov ) {
         if ( $serviceInfo[ "is_remote" ] ) $requestData->status = "remote";
 
     } // foreach ( $requestData->services_id as $service ) {
+
+
 
 } // if ( $API->isPublicAccount() )
 

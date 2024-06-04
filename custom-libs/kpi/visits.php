@@ -26,7 +26,7 @@ function VisitsStat( $table ): array {
         $requestData->user_id
     );
     if ( empty( $visits_ids ) ) return [];
-    
+
     if ( property_exists( $requestData, "service" ) && $requestData->service ) {
 
         $visits_ids = visits\serviceFilter( $requestData->service, $visits_ids );
@@ -60,6 +60,6 @@ function VisitsStat( $table ): array {
 $visitsInfo = VisitsStat( "visits" );
 $equipmentInfo = VisitsStat( "equipmentVisits" );
 
-$visits_count = $visitsInfo[ "count" ] ?? 0 + $equipmentInfo[ "count" ] ?? 0;
-$sales_summary = $visitsInfo[ "summary" ] ?? 0 + $equipmentInfo[ "summary" ] ?? 0;
-$services_count = $visitsInfo[ "services" ] ?? 0 + $equipmentInfo[ "services" ] ?? 0;
+$visits_count = ( $visitsInfo[ "count" ] ?? 0 ) + ( $equipmentInfo[ "count" ] ?? 0 );
+$sales_summary = ( $visitsInfo[ "summary" ] ?? 0 ) + ( $equipmentInfo[ "summary" ] ?? 0 );
+$services_count = ( $visitsInfo[ "services" ] ?? 0 + $equipmentInfo[ "services" ] ?? 0 );

@@ -15,6 +15,18 @@ foreach ( $response[ "data" ] as $key => $row ) {
         $row[ "summary" ] = $with_discount;
 
 
+    if (
+        property_exists( $API->request->data, "action" ) &&
+        $API->request->data->action == "deposit" &&
+        $row[ "sum_deposit" ] != 0
+    ) {
+
+        $row[ "action" ][ "title" ] = "Списание депозита";
+        $row[ "summary" ] = $row[ "sum_deposit" ];
+
+    }
+
+
     $response[ "data" ][ $key ] = $row;
 
 }

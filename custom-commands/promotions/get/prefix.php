@@ -11,15 +11,15 @@ unset($requestData->sort_order);
 
 if ( $requestData->begin_at ) {
 
-    $requestSettings[ "filter" ][ "begin_at >= ?" ] = $requestData->begin_at;
+    $begin_at = $requestData->begin_at . " 00:00:00";
 
     unset( $requestData->begin_at );
 
 }
 if ( $requestData->end_at ) {
 
-    $requestSettings[ "filter" ][ "end_at <= ?" ] = $requestData->end_at;
+    $end_at = $requestData->end_at . " 23:59:59" ;
 
-    unset( $requestData->end_at );
+    unset( $requestData->end_at);
 
 }

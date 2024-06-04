@@ -6,11 +6,13 @@
 $body = [];
 $service_url = prodoctorov\API_URL . "/doctors/send_schedule/";
 
-$first_month_day = (new \DateTime('now'))->modify('first day of this month');
-$last_month_day = (new \DateTime('now'))->modify('last day of this month');
+$first_month_day = (new \DateTime('now'))->modify(' - 2 week');
+$last_month_day = (new \DateTime('now'))->modify(' + 2 week');
 
 $month_start = $first_month_day->format( 'Y-m-d' ) . " 00:00:00";
 $month_end = $last_month_day->format( 'Y-m-d' ) . " 23:59:59";
+
+$max_cells = $API::$configs[ "prodoctorov" ][ "max_cells" ];
 
 foreach ( $API->DB->from( "stores" ) as $store ) {
 
@@ -94,7 +96,7 @@ foreach ( $API->DB->from( "stores" ) as $store ) {
                     $end = strtotime( $day . " ".  $scheduleRequest->steps_list[ $eventIndex ] );
 
                     if ( $point > $end ) continue;
-                    if ( $day_counter[ $user_id ][ $day ] > 2 ) continue;
+                    if ( $day_counter[ $user_id ][ $day ] > $max_cells && $max_cells != 0 ) continue;
 
                     $appointments[] = [
                         'dt' => $day,

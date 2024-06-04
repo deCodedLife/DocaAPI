@@ -16,37 +16,25 @@
       ]
     },
     {
-      "title": "С начала текущего месяца",
-      "article": "sum_one",
+      "title": "Текущий месяц",
+      "article": "current_value",
       "data_type": "float",
-      "field_type": "price",
+      "field_type": "progress",
       "is_default_in_list": true,
       "is_unique": false,
-      "is_autofill": true,
+      "is_autofill": false,
       "use_in_commands": [
         "get"
       ]
     },
     {
-      "title": "С начала прошлого месяца",
-      "article": "sum_two",
+      "title": "Прошлый месяц",
+      "article": "previous_value",
       "data_type": "float",
-      "field_type": "price",
+      "field_type": "float",
       "is_default_in_list": true,
       "is_unique": false,
-      "is_autofill": true,
-      "use_in_commands": [
-        "get"
-      ]
-    },
-    {
-      "title": "С начала позапрошлого месяца",
-      "article": "sum_three",
-      "data_type": "float",
-      "field_type": "price",
-      "is_default_in_list": true,
-      "is_unique": false,
-      "is_autofill": true,
+      "is_autofill": false,
       "use_in_commands": [
         "get"
       ]
@@ -59,6 +47,18 @@
       "is_default_in_list": false,
       "is_unique": false,
       "is_autofill": true,
+      "use_in_commands": [
+        "get"
+      ]
+    },
+    {
+      "title": "Месяц",
+      "article": "month",
+      "data_type": "date",
+      "field_type": "date",
+      "is_default_in_list": false,
+      "is_unique": false,
+      "is_autofill": false,
       "use_in_commands": [
         "get"
       ]
@@ -98,6 +98,22 @@
       "use_in_commands": [
         "get"
       ]
+    },
+    {
+      "title": "id",
+      "article": "id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": false,
+      "is_unique": true,
+      "is_autofill": true,
+      "use_in_commands": [
+        "get"
+      ],
+      "list_donor": {
+        "table": "serviceGroups",
+        "properties_title": "title"
+      }
     }
   ]
 }

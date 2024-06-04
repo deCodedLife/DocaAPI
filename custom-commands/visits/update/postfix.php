@@ -74,7 +74,7 @@ if ( property_exists( $API->request->data, "context" ) && property_exists( $API-
 
         telegram\sendMessage(
             "Ваша запись отменена.",
-            telegram\getClient( $clientDetails[ "id" ] )
+            telegram\getClient( $visitDetails[ "client_id" ] )
         );
 
     } else {
@@ -86,7 +86,7 @@ if ( property_exists( $API->request->data, "context" ) && property_exists( $API-
 
         telegram\sendMessage(   
             $message,
-            telegram\getClient( $clientDetails[ "id" ] )
+            telegram\getClient( $visitDetails[ "client_id" ] )
         );
 
     }

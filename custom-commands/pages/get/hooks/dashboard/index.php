@@ -22,6 +22,28 @@ $pageScheme[ "structure" ][ 0 ][ "settings" ][ "filters" ] = [
     ]
 ];
 
+$pageScheme[ "structure" ][ 1 ][ "settings" ][ "filters" ] = [
+    [
+        "property" => "month",
+        "value" => date( 'Y-m-d' ),
+    ],
+    [
+        "property" => "id",
+        "value" => 1227
+    ]
+];
+
+$pageScheme[ "structure" ][ 2 ][ "settings" ][ "filters" ] = [
+    [
+        "property" => "month",
+        "value" => date( 'Y-m-d' ),
+    ],
+    [
+        "property" => "id",
+        "value" => 121
+    ]
+];
+
 $pageScheme[ "structure" ][ 4 ][ "settings" ][ "filters" ] = [
     "performers_article" => "user_id",
     "performers_table" => "users",

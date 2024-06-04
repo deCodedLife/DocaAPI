@@ -1,0 +1,8 @@
+{
+  "title": "Вывод",
+  "type": "get",
+  "object_scheme": "equipmentVisitsCancelled",
+  "required_permissions": [],
+  "required_modules": [],
+  "should_log": false
+}

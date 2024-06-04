@@ -77,10 +77,23 @@ foreach ( $response[ "data" ] as $key => $visit ) {
 
     $services = $relations[ $visit[ "id" ] ];
     $userServices = $visitServices[ $visit[ "id" ] ];
+    $limit = 0;
 
+    /**
+     * Фильтр услуг в чеке к услугам посещения
+     */
     foreach ( $services as $index => $service ) {
 
-        if ( in_array( $service[ "product_id" ], $userServices ) ) continue;
+        if ( in_array( $service[ "product_id" ], $userServices ) ) {
+            /**
+             * Ограничение на дублирование одинаковых услуг
+             */
+            if ( $limit < count( $userServices ) )
+            {
+                $limit++;
+                continue;
+            }
+        };
         unset( $services[ $index ] );
 
     }

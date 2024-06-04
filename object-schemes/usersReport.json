@@ -5,7 +5,7 @@
   "properties": [
     {
       "title": "Сотрудник",
-      "article": "last_name",
+      "article": "user",
       "data_type": "string",
       "field_type": "string",
       "is_default_in_list": true,
@@ -16,71 +16,47 @@
       ]
     },
     {
-      "title": "Смен в текущем месяце",
-      "article": "count_one",
-      "data_type": "integer",
-      "field_type": "integer",
+      "title": "Заголовок",
+      "article": "title",
+      "data_type": "string",
+      "field_type": "string",
       "is_default_in_list": true,
       "is_unique": false,
-      "is_autofill": false,
+      "is_autofill": true,
       "use_in_commands": [
         "get"
       ]
     },
     {
-      "title": "Продажи",
-      "article": "sum_one",
+      "title": "В текущем месяце",
+      "article": "current_value",
       "data_type": "float",
-      "field_type": "price",
+      "field_type": "progress",
       "is_default_in_list": true,
       "is_unique": false,
-      "is_autofill": false,
+      "is_autofill": true,
       "use_in_commands": [
         "get"
       ]
     },
     {
-      "title": "Смен в прошлом месяце",
-      "article": "count_two",
-      "data_type": "integer",
-      "field_type": "integer",
-      "is_default_in_list": true,
-      "is_unique": false,
-      "is_autofill": false,
-      "use_in_commands": [
-        "get"
-      ]
-    },
-    {
-      "title": "Продажи",
-      "article": "sum_two",
+      "title": "В прошлом месяце",
+      "article": "previous_value",
       "data_type": "float",
-      "field_type": "price",
+      "field_type": "progress",
       "is_default_in_list": true,
       "is_unique": false,
-      "is_autofill": false,
+      "is_autofill": true,
       "use_in_commands": [
         "get"
       ]
     },
     {
-      "title": "Смен в позапрошлом месяце",
-      "article": "count_three",
-      "data_type": "integer",
-      "field_type": "integer",
-      "is_default_in_list": true,
-      "is_unique": false,
-      "is_autofill": false,
-      "use_in_commands": [
-        "get"
-      ]
-    },
-    {
-      "title": "Продажи",
-      "article": "sum_three",
-      "data_type": "float",
-      "field_type": "price",
-      "is_default_in_list": true,
+      "title": "Месяц",
+      "article": "month",
+      "data_type": "date",
+      "field_type": "date",
+      "is_default_in_list": false,
       "is_unique": false,
       "is_autofill": false,
       "use_in_commands": [

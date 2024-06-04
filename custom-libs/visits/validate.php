@@ -407,7 +407,7 @@ function isEmployeeBusy( $employee, $visits ): int {
 
         // TODO
         if ( $visit[ "user_id" ] == $employee ) return $visit[ "id" ];
-        if ( $visit[ "assist_id" ] == $employee ) return $visit[ "id" ];
+//        if ( $visit[ "assist_id" ] == $employee ) return $visit[ "id" ];
 
     } // foreach ( $visits as $visit )
 

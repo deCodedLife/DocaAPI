@@ -52,6 +52,40 @@ function getVisitsIds( $table, $start_at, $end_at, $user_id ): array {
 
 }
 
+function getVisitsServices ( $type, $sqlFilter, $start_at, $end_at, $user_id )
+{
+    global $API, $visits_ids;
+
+    $sqlFilter = getVisitsIds( $type, $start_at, $end_at, $user_id );
+    $visits_ids += count( $sqlFilter );
+    if ( $visits_ids == 0 ) return [];
+
+    if ( $type == "equipmentVisits" ) {
+
+        $allServices = $API->DB->from( $type )
+            ->select( [ "id as visit_id", "service as service_id" ] )
+            ->where( "id", $sqlFilter )
+            ->fetchAll();
+
+    } else {
+
+        $allServices = $API->DB->from( "visits_services" )
+            ->where( "visit_id", $sqlFilter )
+            ->fetchAll();
+
+    }
+
+    foreach ( $allServices as $service )
+    {
+        $service = visits\getFullServiceDefault( $service[ "service_id" ], $user_id );
+        if ( !key_exists( "price", $service ) ) continue;
+//        if ( !property_exists( $service, "price" ) ) continue;
+        $servicesList[] = $service;
+    }
+
+    return  $servicesList ?? [];
+}
+
 function getPaymentServices( $type, $sqlFilter, $start_at, $end_at, $user_id ): array {
 
     global $API, $visits_ids;
@@ -92,11 +126,11 @@ if ( $requestData->category ) $sqlFilter[ "salesProductsList.product_id" ] = get
 if ( $requestData->service )  $sqlFilter[ "salesProductsList.product_id" ] = $requestData->service;
 
 $allServices = array_merge(
-    getPaymentServices( "visits", $sqlFilter, $start_at, $end_at, $requestData->user_id ),
-    getPaymentServices( "equipmentVisits", $sqlFilter, $start_at, $end_at, $requestData->user_id ),
+    getVisitsServices( "visits", $sqlFilter, $start_at, $end_at, $requestData->user_id ),
+    getVisitsServices( "equipmentVisits", $sqlFilter, $start_at, $end_at, $requestData->user_id ),
 );
 
-//$API->returnResponse( $allServices );
+//$API->returnResponse( $allServices, 400 );
 
 /**
  * Фиксированная часть зарплаты

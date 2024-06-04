@@ -15,6 +15,8 @@ foreach ( $servicesRows as $row ) $servicesDetails[ intval( $row[ "id" ] ) ] = $
 foreach ( $customPriceRows as $row ) $servicesDetails[ intval( $row[ "row_id" ] ) ][ "price" ] = $row[ "price" ];
 foreach ( $response[ "data" ] as $key => $row ) {
 
+    if ( $row[ "num" ] == "99999999ZZZZZZZ" ) $row[ "num" ] = "";
+
     $user = $API->request->data->users_id ?? $API->request->data->user_id ?? null;
 
     if ( $user ) {

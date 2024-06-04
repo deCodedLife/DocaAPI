@@ -489,7 +489,7 @@
                       "required_modules": [],
                       "settings": {
                         "is_search": false,
-                        "recipient_property": "store_id",
+                        "recipient_property": "stores_id",
                         "donor_object": "stores",
                         "donor_property_title": "title",
                         "donor_property_value": "id"
@@ -778,7 +778,7 @@
             ]
           },
         "visitsCancelled":  {
-            "title": "Удаленные записи",
+            "title": "Удаленные посещения",
             "body": [
               {
                 "title": "Список",
@@ -843,7 +843,74 @@
                 }
               }
             ]
-          }
+          },
+        "equipmentVisitsCancelled":  {
+          "title": "Удаленные записи оборудования",
+          "body": [
+            {
+              "title": "Список",
+              "type": "list",
+              "size": 4,
+              "settings": {
+                "is_edit": false,
+                "link": false,
+                "object": "equipmentVisitsCancelled"
+              },
+              "components": {
+                "filters": [
+                  {
+                    "title": "Дата",
+                    "type": "date",
+                    "required_permissions": [],
+                    "required_modules": [],
+                    "settings": {
+                      "size": 2,
+                      "is_search": false,
+                      "recipient_property": "cancelledDate_start"
+                    }
+                  },
+                  {
+                    "title": "",
+                    "type": "date",
+                    "required_permissions": [],
+                    "required_modules": [],
+                    "settings": {
+                      "size": 2,
+                      "is_search": false,
+                      "recipient_property": "cancelledDate_end"
+                    }
+                  },
+                  {
+                    "title": "Филиал",
+                    "type": "list",
+                    "required_permissions": [],
+                    "required_modules": [],
+                    "settings": {
+                      "is_search": false,
+                      "recipient_property": "store_id",
+                      "donor_object": "stores",
+                      "donor_property_title": "title",
+                      "donor_property_value": "id"
+                    }
+                  },
+                  {
+                    "title": "Причина отмены",
+                    "type": "list",
+                    "required_permissions": [],
+                    "required_modules": [],
+                    "settings": {
+                      "is_search": false,
+                      "recipient_property": "reason_id",
+                      "donor_object": "cancelReasons",
+                      "donor_property_title": "title",
+                      "donor_property_value": "id"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
       },
       "components": []
     }

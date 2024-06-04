@@ -30,35 +30,28 @@ $clientInfo = $API->DB->from( "clients" )
 /**
  * Получение посещений Сотрудника
  */
-$clientVisits = $API->DB->from( "salesList" )
-    ->where( [
-        "client_id" => $requestData->client_id,
-        "action" => "deposit",
-        "status" => "done"
+$salesList = $API->DB->from( "salesList" )
+    ->where( "sum_deposit > :sum_deposit OR action = :action", [
+        ":sum_deposit" => 0,
+        ":action" => "deposit",
     ] )
-    ->limit( 1000 );
+    ->where( "client_id = :client_id", [
+        ":client_id" => $requestData->client_id,
+    ] )
+    ->fetchAll( "id" );
 
 
 /**
  * Формирование пополнений
  */
-
-foreach ( $clientVisits as $userDepositt ) {
-
-    $clientStatistic[ "deposit_count" ]++;
-
-} // foreach. $userDepositt
+$clientStatistic[ "deposit_count" ] = count( $salesList );
 
 
 function num_word( $value, $words, $show = true ) { // function. num_word() for declension of nouns after the numeral
 
     $num = $value % 100;
 
-    if ( $num > 19 ) {
-
-        $num = $num % 10;
-
-    }
+    if ( $num > 19 ) $num = $num % 10;
 
     $out = ( $show ) ?  $value . ' ' : '';
     switch ( $num ) {
@@ -66,11 +59,8 @@ function num_word( $value, $words, $show = true ) { // function. num_word() for 
         case 1:  $out .= $words[0]; break;
 
         case 2:
-
         case 3:
-
         case 4:  $out .= $words[1]; break;
-
         default: $out .= $words[2]; break;
 
     }
@@ -82,7 +72,7 @@ $API->returnResponse(
 
     [
         [
-            "value" => num_word ( number_format($clientStatistic[ "deposit_count" ], 0, '.', ' ' ), [ 'операция', 'операции', 'операций' ]),
+            "value" => num_word ( number_format( $clientStatistic[ "deposit_count" ], 0, '.', ' ' ), [ 'операция', 'операции', 'операций' ]),
             "description" => "всего",
             "icon" => "",
             "prefix" => "",

@@ -1,5 +1,10 @@
 <?php
 
+foreach ( $response[ "data" ] as $key => $service ) {
+
+    if ( $service[ "num" ] == "99999999ZZZZZZZ" ) $response[ "data" ][ $key ][ "num" ] = "";
+
+}
 
 if ( $requestData->context->block == "form_list" || $requestData->context->block == "select" ) {
 

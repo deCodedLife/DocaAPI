@@ -43,6 +43,7 @@
                       {
                         "title": "",
                         "fields": [
+                          "num",
                           "article",
                           "title",
                           "category_id",
