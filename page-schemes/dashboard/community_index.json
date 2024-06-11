@@ -215,6 +215,28 @@
             }
           },
           {
+            "title": "Клиент",
+            "type": "list",
+            "required_permissions": [],
+            "required_modules": [],
+            "settings": {
+              "is_search": true,
+              "recipient_property": "clients_id",
+              "donor_object": "clients",
+              "donor_property_title": "last_name",
+              "donor_property_value": "id",
+              "select": [
+                [ "id" ],
+                [ "fio" ]
+              ],
+              "select_menu": [
+                [ "id" ],
+                [ "fio" ],
+                [ "phone", "second_phone"]
+              ]
+            }
+          },
+          {
             "title": "Специальность",
             "type": "list",
             "settings": {

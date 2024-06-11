@@ -22,20 +22,26 @@ if ( empty( $updates ) == false ) {
 
 } // if empty( $updates ) == false
 
-$API->DB->delete( "promotionStores" )
-    ->where( "promotion_id", $requestData->id )
-    ->execute();
+if ( $requestData->stores_id  ) {
 
-foreach ( $stores as $store ) {
-
-    $API->DB->insertInto( "promotionStores" )
-        ->values( [
-            "promotion_id" => $requestData->id,
-            "store_id" => $store
-        ] )
+    $API->DB->delete( "promotionStores" )
+        ->where( "promotion_id", $requestData->id )
         ->execute();
 
+    foreach ( $stores as $store ) {
+
+        $API->DB->insertInto( "promotionStores" )
+            ->values( [
+                "promotion_id" => $requestData->id,
+                "store_id" => $store
+            ] )
+            ->execute();
+
+    }
+
 }
+
+
 
 
 require $API::$configs[ "paths" ][ "public_app" ] . "/custom-commands/promotions/update/update-modifiers.php";

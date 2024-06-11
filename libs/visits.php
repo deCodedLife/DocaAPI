@@ -133,8 +133,8 @@ function getFullService( $id, $user_id = null )
 {
     global $API;
 
-    $innerPropertyRows = $API->sendRequest( "services", "get", [
-        "id" => $id
+    $innerPropertyRows = $API->sendRequest( "services", "search", [
+        "search" => "$id"
     ] );
 
     $service = (array) $innerPropertyRows[ 0 ];

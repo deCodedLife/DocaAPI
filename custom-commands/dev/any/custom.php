@@ -1,6 +1,9 @@
 <?php
 
 
+$API->returnResponse( visits\getFullServiceDefault( 8328, 335 ) );
+
+
 //$result = $API->sendRequest( "visits", "schedule", [
 //    "performers_article" => "user_id",
 //    "performers_table" => "users",

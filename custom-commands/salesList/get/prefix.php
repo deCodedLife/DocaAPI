@@ -25,7 +25,7 @@ if ( $requestData->context->block === "list" ) {
     if ( property_exists( $requestData, "action" ) && $requestData->action == "deposit" ) {
 
         $salesList = $API->DB->from( "salesList" )
-            ->where( "sum_deposit > :sum_deposit OR action = :action", [
+            ->where( "(sum_deposit > :sum_deposit OR action = :action)", [
                 ":sum_deposit" => 0,
                 ":action" => "deposit",
             ] )
@@ -35,9 +35,9 @@ if ( $requestData->context->block === "list" ) {
             ->fetchAll( "id" );
 
         unset( $requestData->action );
-        unset( $requestData->client_id );
-
         $requestSettings[ "filter" ][ "id" ]  = array_keys( $salesList );
+
+        if ( count( $requestSettings[ "filter" ][ "id" ] ) == 0 ) $requestSettings[ "filter" ][ "id" ] = [ -1 ];
 
     }
 

@@ -31,7 +31,7 @@ $clientInfo = $API->DB->from( "clients" )
  * Получение посещений Сотрудника
  */
 $salesList = $API->DB->from( "salesList" )
-    ->where( "sum_deposit > :sum_deposit OR action = :action", [
+    ->where( "(sum_deposit > :sum_deposit OR action = :action)", [
         ":sum_deposit" => 0,
         ":action" => "deposit",
     ] )

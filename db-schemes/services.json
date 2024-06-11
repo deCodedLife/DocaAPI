@@ -12,8 +12,8 @@
       "title": "Название на сайте",
       "article": "public_title",
       "type": "varchar(255)",
-      "default": null,
-      "is_required": "Y"
+      "default": "",
+      "is_required": "N"
     },
     {
       "title": "Артикул",

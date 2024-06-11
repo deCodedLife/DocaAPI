@@ -47,8 +47,8 @@ if ( $saleDetails[ "action" ] == "sell" ) {
 
     $API->DB->update( "clients" )
         ->set( [
-            "bonuses" => $clientDetails[ "bonuses" ] - $saleDetails[ "sum_bonus" ] ?? 0,
-            "deposit" => $clientDetails[ "deposit" ] - $saleDetails[ "sum_deposit" ] ?? 0,
+            "bonuses" => $clientDetails[ "bonuses" ] - ( $saleDetails[ "sum_bonus" ] ?? 0 ),
+            "deposit" => $clientDetails[ "deposit" ] - ( $saleDetails[ "sum_deposit" ] ?? 0 ),
         ] )
         ->where( "id", $saleDetails[ "client_id" ] )
         ->execute();
@@ -83,8 +83,8 @@ if ( $saleDetails[ "action" ] == "sellReturn" ) {
 
     $API->DB->update( "clients" )
         ->set( [
-            "bonuses" => $clientDetails[ "bonuses" ] + $saleDetails[ "sum_bonus" ] ?? 0,
-            "deposit" => $clientDetails[ "deposit" ] + $saleDetails[ "sum_deposit" ] ?? 0
+            "bonuses" => $clientDetails[ "bonuses" ] + ( $saleDetails[ "sum_bonus" ] ?? 0 ),
+            "deposit" => $clientDetails[ "deposit" ] + ( $saleDetails[ "sum_deposit" ] ?? 0 )
         ] )
         ->where( "id", $saleDetails[ "client_id" ] )
         ->execute();

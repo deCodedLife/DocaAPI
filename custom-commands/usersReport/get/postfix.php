@@ -207,10 +207,10 @@
 //
 //$response[ "data" ] = array_slice($response[ "data" ], $requestData->limit * $requestData->page - $requestData->limit, $requestData->limit);
 //ini_set("display_errors", true);
-$currentStart = date('Y-m-1 00:00:00', strtotime($requestData->month));
+$currentStart = date('Y-m-01 00:00:00', strtotime($requestData->month));
 $currentEnd = date('Y-m-t 23:59:59', strtotime($requestData->month));
 
-$previousStart = date('Y-m-1 00:00:00', strtotime($requestData->month . ' -1 month'));
+$previousStart = date('Y-m-01 00:00:00', strtotime($requestData->month . ' -1 month'));
 $previousEnd = date('Y-m-t 23:59:59', strtotime($requestData->month . ' -1 month'));
 
 $currentClients = 0;
@@ -231,39 +231,39 @@ $userDetail = $API->DB->from( "users" )
     ->limit( 1 )
     ->fetch();
 
-
 /**
  * Получение посещений Сотрудника за 3 месяца
  */
 $visits = $API->DB->from( "visits" )
-    ->where([
-        "start_at <= ?" => $currentEnd,
+    ->where( [
+        "end_at <= ?" => $currentEnd,
         "start_at >= ?" => $previousStart,
-        "is_payed" => "Y",
-        "user_id" => $requestData->id,
+        "is_active" => "Y",
+        "user_id" => $requestData->id
     ]);
 
 /**
  * Обход рабочих Сотрудника за 3 месяца
  */
-$workDays= $API->DB->from("workDays")
-    ->where([
+$workDays = $API->sendRequest( "workDays", "calendar", [
         "user_id" => $requestData->id,
-        "event_from <= ?" => $currentEnd,
-        "event_from >= ?" => $previousStart,
-    ]);
+        "event_to" => $currentEnd,
+        "event_from" => $previousStart
+    ] );
 
-foreach ( $workDays as $workDay ) {
+foreach ( $workDays as $date => $workDay ) {
 
-    if ( $workDay[ "event_from" ] >= $currentStart && $workDay[ "event_from" ] <= $currentEnd ) {
+    if ( $workDay[0]->is_weekend == "N" ) {
 
-        $currentWorkDays++;
+        if ( $date . " 00:00:00" >= $currentStart && $date . " 00:00:00" <= $currentEnd ) {
 
-    }
+            $currentWorkDays++;
 
-    if ( $workDay[ "event_from" ] >= $previousStart && $workDay[ "event_from" ] <= $previousEnd ) {
+        } else if ( $date . " 00:00:00" >= $previousStart && $date . " 00:00:00" <= $previousEnd ) {
 
-        $previousWorkDays++;
+            $previousWorkDays++;
+
+        }
 
     }
 
@@ -277,9 +277,7 @@ foreach ( $visits as $visit ) {
         $currentClients++;
         $currentVisitsSum += $visit[ "price" ];
 
-    }
-
-    if ( $visit[ "start_at" ] >= $previousStart && $visit[ "start_at" ] <= $previousEnd ) {
+    } else if ( $visit[ "start_at" ] >= $previousStart && $visit[ "start_at" ] <= $previousEnd ) {
 
         $previousClients++;
         $previousVisitsSum += $visit[ "price" ];
