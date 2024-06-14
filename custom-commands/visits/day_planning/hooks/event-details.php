@@ -23,32 +23,17 @@ if ( $eventDetails[ "body" ] )
     $eventDetails[ "body" ] = substr( $eventDetails[ "body" ], 0, -2 );
 
 
-/**
- * Формирование ссылок записи
- */
-
-$visitClients = $API->DB->from( "visits_clients" )
-    ->where( "visit_id", $event[ "id" ] );
-
-foreach ( $visitClients as $visitClient ) {
-
-    $visitClientDetail = $API->DB->from( "clients" )
-        ->where("id", $visitClient[ "client_id"] )
-        ->limit(1)
-        ->fetch();
-
-    $event[ "clients" ][] = $visitClientDetail;
-
-    $eventDetails[ "links" ][] = [
-        "title" => $visitClientDetail[ "last_name" ] . " " . $visitClientDetail[ "first_name" ] . " " . $visitClientDetail[ "patronymic" ],
-        "link" => "visits/update/" . $event[ "id" ]
-    ];
-
-} // foreach. $visitClients
-
-$visitDetails = $API->DB->from( "visits" )
-    ->where( "id", $event[ "id" ] )
+$visitClientDetail = $API->DB->from( "clients" )
+    ->where("id", $event[ "client_id"] )
+    ->limit(1)
     ->fetch();
+
+$event[ "clients" ] = $visitClientDetail;
+
+$eventDetails[ "links" ][] = [
+    "title" => $visitClientDetail[ "last_name" ] . " " . $visitClientDetail[ "first_name" ] . " " . $visitClientDetail[ "patronymic" ],
+    "link" => "visits/update/" . $event[ "id" ]
+];
 
 /**
  * Определение цвета
@@ -122,9 +107,9 @@ if ( $event[ "status" ] ) $eventDetails[ "buttons" ][] = [
                 "object" => "visitReports",
                 "command" => "add",
                 "properties" => [
-                    "client_id" => $visitDetails[ "client_id" ],
-                    "user_id" => $visitDetails[ "user_id" ],
-                    "visit_id" => $visitDetails[ "id" ],
+                    "client_id" => $event[ "client_id" ],
+                    "user_id" => $event[ "user_id" ],
+                    "visit_id" => $event[ "id" ],
                 ]
             ],
             "save_to" => [

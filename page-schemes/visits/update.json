@@ -38,6 +38,7 @@
                       {
                         "title": "",
                         "fields": [
+                          "status",
                           "start_at",
                           "end_at"
                         ]

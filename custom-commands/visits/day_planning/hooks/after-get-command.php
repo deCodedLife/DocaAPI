@@ -4,17 +4,32 @@
  */
 $filteredEvents = [];
 
-/**
- * Фильтрация Записей
- */
 $equipmentVisits = $API->DB->from( "equipmentVisits" )
+    ->innerJoin( "clients on clients.id = equipmentVisits.client_id" )
+    ->innerJoin( "services on services.id = equipmentVisits.service_id" )
+    ->select( [
+        "services.title",
+        "equipmentVisits.user_id",
+        "equipmentVisits.client_id",
+        "equipmentVisits.id",
+        "equipmentVisits.assist_id",
+        "equipmentVisits.start_at",
+        "equipmentVisits.end_at",
+        "equipmentVisits.status",
+        "clients.last_name",
+        "clients.first_name",
+        "clients.patronymic"
+    ] )
     ->where( [
 
-        "start_at >= ?" => $requestData->day . " 00:00:00",
-        "start_at <= ?" => $requestData->day . " 23:59:59",
-        "is_active" => "Y"
+        "equipmentVisits.start_at >= ?" => $requestData->day . " 00:00:00",
+        "services.is_active" => "Y",
+        "clients.is_active" => "Y",
+        "equipmentVisits.start_at <= ?" => $requestData->day . " 23:59:59",
+        "equipmentVisits.is_active" => "Y"
 
-    ] );
+    ] )
+    ->orderBy( "equipmentVisits.id DESC" );
 
 
 foreach ( $equipmentVisits as $equipmentVisit ) {
@@ -68,20 +83,16 @@ foreach ( $equipmentVisits as $equipmentVisit ) {
         } // switch. $event[ "status" ]
 
 
-        $visitServiceDetail = $API->DB->from("services")
-            ->where("id", $equipmentVisit["service_id"])
-            ->limit(1)
-            ->fetch();
 
-        $visitClientDetail = $API->DB->from("clients")
-            ->where("id", $equipmentVisit["client_id"])
-            ->limit(1)
-            ->fetch();
-
-        $event["clients"][] = $visitClientDetail;
+        $event["clients"][] = [
+                "last_name" => $equipmentVisit[ "last_name" ],
+                "first_name" => $equipmentVisit[ "first_name" ],
+                "id" => $equipmentVisit[ "client_id" ],
+                "patronymic" => $equipmentVisit[ "patronymic" ],
+            ];
 
         $equipmentVisit["links"][] = [
-            "title" => $visitClientDetail["last_name"] . " " . $visitClientDetail["first_name"] . " " . $visitClientDetail["patronymic"],
+            "title" => $equipmentVisit["last_name"] . " " . $equipmentVisit["first_name"] . " " . $equipmentVisit["patronymic"],
             "link" => "equipmentVisits/update/" . $equipmentVisit["id"]
         ];
 
@@ -179,7 +190,7 @@ foreach ( $equipmentVisits as $equipmentVisit ) {
         $filteredEvents[] = [
 
             "id" => $equipmentVisit[ "id" ],
-            "body" => $visitServiceDetail[ "title" ],
+            "body" => $equipmentVisit[ "title" ],
             "color" => $equipmentVisit[ "color" ],
             "links" => $equipmentVisit[ "links" ],
             "buttons" => $equipmentVisit[ "buttons" ],

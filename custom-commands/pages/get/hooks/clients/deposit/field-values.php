@@ -1,4 +1,9 @@
 <?php
+$formFieldValues[ "summary" ][ "is_disabled" ] = false;
+$formFieldValues[ "sum_card" ][ "is_disabled" ] = false;
+$formFieldValues[ "pay_method" ][ "is_disabled" ] = false;
+$formFieldValues[ "sum_cash" ][ "is_disabled" ] = false;
+$formFieldValues[ "sum_entity" ][ "is_disabled" ] = false;
 
 //$currentStore = $API->DB->from( "users" )
 //    ->where( "id", $API::$userDetail->id )

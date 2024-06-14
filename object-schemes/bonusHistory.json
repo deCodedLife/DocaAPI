@@ -30,6 +30,19 @@
       ]
     },
     {
+      "title": "Посещение",
+      "article": "visit_id",
+      "data_type": "integer",
+      "field_type": "list",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "get",
+        "add"
+      ]
+    },
+    {
       "title": "Тип действия",
       "article": "action",
       "data_type": "string",

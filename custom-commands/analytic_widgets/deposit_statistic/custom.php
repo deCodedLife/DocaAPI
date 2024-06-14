@@ -10,22 +10,12 @@
  */
 $clientStatistic = [
 
-    /**
-     * Количество посещений
-     */
     "deposit_count" => 0,
 
-    /**
-     * Сумма посещений
-     */
     "deposit_sum" => 0,
 
 
 ];
-
-$clientInfo = $API->DB->from( "clients" )
-    ->where( "id", $requestData->client_id )
-    ->fetch();
 
 /**
  * Получение посещений Сотрудника
@@ -45,7 +35,15 @@ $salesList = $API->DB->from( "salesList" )
  * Формирование пополнений
  */
 $clientStatistic[ "deposit_count" ] = count( $salesList );
+ foreach ( $salesList as $sale ) {
 
+     if ( $sale[ "status" ] == "done" ){
+
+         $clientStatistic[ "deposit_sum" ] += $sale[ "summary" ];
+
+     }
+
+ }
 
 function num_word( $value, $words, $show = true ) { // function. num_word() for declension of nouns after the numeral
 
@@ -86,7 +84,7 @@ $API->returnResponse(
             "detail" => []
         ],
         [
-            "value" => number_format ( $clientInfo[ "deposit" ], 0, '.', ' ' ),
+            "value" => number_format ( $clientStatistic[ "deposit_sum" ], 0, '.', ' ' ),
             "description" => "Баланс",
             "icon" => "",
             "prefix" => "₽",

@@ -22,7 +22,9 @@
         "object": "salesList",
         "command": "add",
         "data": {
-          "id": ":id"
+          "client_id": ":id",
+          "action": "deposit",
+          "online_receipt": "Y"
         },
         "areas": [
           {

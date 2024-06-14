@@ -544,6 +544,7 @@
                   {
                     "type": "modal",
                     "settings": {
+                      "refresh_after_submit": true,
                       "title": "Изменить баланс",
                       "background": "dark",
                       "page": "clients/deposit",

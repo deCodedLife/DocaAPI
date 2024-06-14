@@ -5,6 +5,7 @@ $pageScheme[ "structure" ][ 0 ][ "settings" ][ "data" ][ "id" ] = $requestData->
 
 $ruleDetails = $API->DB->from( "workDays" )
     ->where( "id", $requestData->context->rule_id )
+    ->limit(1)
     ->fetch();
 
 if ( $ruleDetails[ "is_weekend" ] === 'Y' ) {
@@ -17,9 +18,11 @@ if ( $ruleDetails[ "is_weekend" ] === 'Y' ) {
 
 
 if ( $ruleDetails[ "is_rule" ] === 'Y' ) {
-
-    $workdaysDetails = $API->DB->from( "workDaysWeekdays" )
-        ->where( "rule_id", $requestData->context->rule_id );
+    $rule_id = $requestData->context->rule_id;
+    $workdaysDetails = mysqli_query(
+        $API->DB_connection,
+        "SELECT * FROM `workDaysWeekdays` WHERE `rule_id` = " . $rule_id
+    );
 
     foreach ( $workdaysDetails as $detail )
         $workdays[] = $detail[ "workday" ];
