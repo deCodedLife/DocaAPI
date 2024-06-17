@@ -7,6 +7,8 @@ if ( !$requestData->sort_by ) {
 
 }
 
+$requestSettings[ "filter" ][ "is_active" ] = "Y";
+
 $role = $API->DB->from( "roles" )
     ->where( "id", $API::$userDetail->role_id )
     ->fetch()[ "article" ];

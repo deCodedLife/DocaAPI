@@ -81,9 +81,6 @@
       "use_in_commands": [
         "add",
         "update"
-      ],
-      "require_in_commands": [
-        "add"
       ]
     }
   ]

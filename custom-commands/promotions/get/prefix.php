@@ -23,3 +23,4 @@ if ( $requestData->end_at ) {
     unset( $requestData->end_at);
 
 }
+$requestSettings[ "filter" ][ "is_active" ] = "Y";
