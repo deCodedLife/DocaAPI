@@ -37,9 +37,17 @@ $salesList = $API->DB->from( "salesList" )
 $clientStatistic[ "deposit_count" ] = count( $salesList );
  foreach ( $salesList as $sale ) {
 
-     if ( $sale[ "status" ] == "done" ){
+     if ( $sale[ "status" ] == "done" ) {
 
-         $clientStatistic[ "deposit_sum" ] += $sale[ "summary" ];
+         if ( $sale[ "action" ] == "sell" ) {
+
+             $clientStatistic[ "deposit_sum" ] -= $sale[ "summary" ];
+
+         } else if ( $sale[ "action" ] == "deposit" ) {
+
+             $clientStatistic[ "deposit_sum" ] += $sale[ "summary" ];
+
+         }
 
      }
 
