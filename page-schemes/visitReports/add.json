@@ -1,0 +1,43 @@
+{
+  "required_modules": [],
+  "required_permissions": [],
+  "structure": [
+    {
+      "title": "Форма",
+      "type": "form",
+      "size": 4,
+      "settings": {
+        "object": "visitReports",
+        "command": "add",
+        "areas": [
+          {
+            "size": 4,
+            "blocks": [
+              {
+                "title": "",
+                "fields": [
+                  "title",
+                  "client_id",
+                  "user_id",
+                  "linkFile"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "components": {
+        "buttons": [
+          {
+            "type": "submit",
+            "settings": {
+              "title": "Сохранить",
+              "background": "dark",
+              "href": "[return]"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

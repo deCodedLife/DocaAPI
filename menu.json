@@ -179,6 +179,10 @@
           "required_permissions": [ "settings_main" ]
         },
         {
+          "title": "Мессенджеры",
+          "href": "messengers"
+        },
+        {
           "title": "Поставщики",
           "href": "providers",
           "required_permissions": [ "settings_providers" ]

@@ -1,0 +1,1 @@
+{"title":"Мессенджеры","table":"messengers","is_trash":false,"properties":[{"title":"Заголовок","article":"title","data_type":"string","field_type":"string","is_default_in_list":true,"is_unique":false,"is_autofill":true,"use_in_commands":["update","get","add"],"require_in_commands":["add"]}]}

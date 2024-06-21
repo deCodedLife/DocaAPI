@@ -450,7 +450,24 @@
                   }
                 ]
               },
-              "components": []
+              "components": {
+                "buttons": [
+                  {
+                    "type": "modal",
+                    "settings": {
+                      "title": "Прикрепить заключение",
+                      "background": "dark",
+                      "icon": "",
+                      "refresh_after_submit": true,
+                      "page": "visitReports/add",
+                      "context": {
+                        "form": "visitReports",
+                        "row_id": ":client_id"
+                      }
+                    }
+                  }
+                ]
+              }
             }
           ]
         },
@@ -472,7 +489,24 @@
                   }
                 ]
               },
-              "components": []
+              "components": {
+                "buttons": [
+                  {
+                    "type": "modal",
+                    "refresh_after_submit": true,
+                    "settings": {
+                      "context": {
+                        "form": "clientContracts",
+                        "row_id": ":client_id"
+                      },
+                      "title": "Прикрепить договор",
+                      "background": "dark",
+                      "icon": "",
+                      "page": "clientContracts/add"
+                    }
+                  }
+                ]
+              }
             }
           ]
         },

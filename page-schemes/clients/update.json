@@ -55,7 +55,8 @@
                           "birthday",
                           "fullYears",
                           "is_blacklist",
-                          "advertise_id"
+                          "advertise_id",
+                          "messenger_id"
                         ]
                       },
                       {
@@ -420,7 +421,24 @@
                   }
                 ]
               },
-              "components": []
+              "components": {
+                "buttons": [
+                  {
+                    "type": "modal",
+                    "settings": {
+                      "title": "Прикрепить заключение",
+                      "background": "dark",
+                      "icon": "",
+                      "page": "visitReports/add",
+                      "refresh_after_submit": true,
+                      "context": {
+                        "form": "visitReports",
+                        "row_id": ":id"
+                      }
+                    }
+                  }
+                ]
+              }
             }
           ]
         },
@@ -442,7 +460,24 @@
                   }
                 ]
               },
-              "components": []
+              "components": {
+                "buttons": [
+                  {
+                    "type": "modal",
+                    "settings": {
+                      "context": {
+                        "form": "clientContracts",
+                        "row_id": ":id"
+                      },
+                      "refresh_after_submit": true,
+                      "title": "Прикрепить договор",
+                      "background": "dark",
+                      "icon": "",
+                      "page": "clientContracts/add"
+                    }
+                  }
+                ]
+              }
             }
           ]
         },

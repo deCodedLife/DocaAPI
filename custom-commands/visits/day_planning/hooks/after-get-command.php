@@ -3,34 +3,29 @@
  * Отфильтрованные Записи
  */
 $filteredEvents = [];
-
-$equipmentVisits = $API->DB->from( "equipmentVisits" )
-    ->innerJoin( "clients on clients.id = equipmentVisits.client_id" )
-    ->innerJoin( "services on services.id = equipmentVisits.service_id" )
-    ->select( [
-        "services.title",
-        "equipmentVisits.user_id",
-        "equipmentVisits.client_id",
-        "equipmentVisits.id",
-        "equipmentVisits.assist_id",
-        "equipmentVisits.start_at",
-        "equipmentVisits.end_at",
-        "equipmentVisits.status",
-        "clients.last_name",
-        "clients.first_name",
-        "clients.patronymic"
-    ] )
-    ->where( [
-
-        "equipmentVisits.start_at >= ?" => $requestData->day . " 00:00:00",
-        "services.is_active" => "Y",
-        "clients.is_active" => "Y",
-        "equipmentVisits.start_at <= ?" => $requestData->day . " 23:59:59",
-        "equipmentVisits.is_active" => "Y"
-
-    ] )
-    ->orderBy( "equipmentVisits.id DESC" );
-
+$equipmentVisits = mysqli_query(
+    $API->DB_connection,
+    "SELECT services.title, 
+            equipmentVisits.user_id, 
+            equipmentVisits.client_id, 
+            equipmentVisits.id, 
+            equipmentVisits.assist_id, 
+            equipmentVisits.start_at, 
+            equipmentVisits.end_at, 
+            equipmentVisits.status, 
+            clients.last_name, 
+            clients.first_name, 
+            clients.patronymic
+            FROM equipmentVisits
+            INNER JOIN clients on clients.id = equipmentVisits.client_id
+            INNER JOIN services on services.id = equipmentVisits.service_id
+            WHERE equipmentVisits.start_at >= '$requestData->day 00:00:00'
+            AND services.is_active = 'Y'
+            AND clients.is_active = 'Y'
+            AND equipmentVisits.start_at <= '$requestData->day 23:59:59'
+            AND equipmentVisits.is_active = 'Y'
+            ORDER BY equipmentVisits.id DESC;"
+);
 
 foreach ( $equipmentVisits as $equipmentVisit ) {
 

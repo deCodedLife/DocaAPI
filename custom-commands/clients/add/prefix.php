@@ -1,6 +1,14 @@
 <?php
 
 
+if ( $API->isPublicAccount() ) {
+    $advert = $API->DB->from("advertise")
+        ->where( "title like :name", [ ":name" => "%сайт%" ] )
+        ->fetch();
+
+    $requestData->advertise_id = $advert[ "id" ];
+}
+
 /**
  * Подстановка геолокации
  */

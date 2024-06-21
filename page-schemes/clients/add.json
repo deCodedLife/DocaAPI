@@ -39,7 +39,8 @@
                   "gender",
                   "birthday",
                   "fullYears",
-                  "advertise_id"
+                  "advertise_id",
+                  "messenger_id"
                 ]
               },
               {

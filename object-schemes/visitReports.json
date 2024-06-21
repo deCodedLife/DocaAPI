@@ -13,8 +13,18 @@
       "is_autofill": true,
       "list_donor": {
         "table": "clients",
-        "properties_title": "last_name"
+        "properties_title": "last_name",
+        "select": [
+          [ "id" ],
+          [ "fio", "first_name", "last_name", "patronymic" ]
+        ],
+        "select_menu": [
+          [ "id" ],
+          [ "fio" ],
+          [ "phone", "second_phone"]
+        ]
       },
+      "search": "clients",
       "use_in_commands": [
         "add",
         "update",
@@ -61,6 +71,34 @@
       "article": "body",
       "data_type": "string",
       "field_type": "editor",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": true,
+      "use_in_commands": [
+        "get",
+        "add",
+        "update"
+      ]
+    },
+    {
+      "title": "Ссылка",
+      "article": "href",
+      "data_type": "string",
+      "field_type": "string",
+      "is_default_in_list": true,
+      "is_unique": false,
+      "is_autofill": false,
+      "use_in_commands": [
+        "get",
+        "add",
+        "update"
+      ]
+    },
+    {
+      "title": "Файл",
+      "article": "linkFile",
+      "data_type": "file",
+      "field_type": "file",
       "is_default_in_list": true,
       "is_unique": false,
       "is_autofill": true,

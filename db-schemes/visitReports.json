@@ -20,7 +20,7 @@
       "article": "body",
       "type": "longtext",
       "default": null,
-      "is_required": "Y"
+      "is_required": "N"
     },
     {
       "title": "Название",
@@ -28,6 +28,13 @@
       "type": "varchar(255)",
       "default": null,
       "is_required": "Y"
+    },
+    {
+      "title": "Связанный файл",
+      "article": "linkFile",
+      "type": "varchar(255)",
+      "default": null,
+      "is_required": "N"
     }
   ]
 }
