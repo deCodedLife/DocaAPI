@@ -73,4 +73,6 @@ foreach ( $visitsList as $client_id => $visits ) {
         telegram\getDefaultVisitHandlers( $visit_ids, $userDetails[ "phone" ] )
     );
 
+    sleep( 0.6 );
+
 }
