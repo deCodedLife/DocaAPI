@@ -149,3 +149,7 @@ if ( $requestData->is_earlier == "N" ) unset( $requestData->is_earlier );
 
 
 if ( !$requestData->user_id ) $requestData->end_at = $requestData->start_at;
+
+$requestData->end_at = date(
+    "Y-m-d 23:59:59", strtotime( $requestData->end_at )
+);
