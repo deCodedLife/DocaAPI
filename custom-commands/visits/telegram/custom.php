@@ -55,6 +55,8 @@ foreach ( $visitsList as $client_id => $visits ) {
     else $clientFio .= " " . trim( $clientDetail[ "patronymic" ] );
 
     $userDetails = telegram\getClient( $client_id );
+    if ( empty( $userDetails[ "messenger_id" ] ) ) continue;
+
     $times = join( ", ", $times );
     $employees = join( ", ", $employees );
     $tomorrow = date( "d.m.Y", strtotime( "+1 day" ) );
@@ -69,8 +71,7 @@ foreach ( $visitsList as $client_id => $visits ) {
 
     telegram\sendMessage(
         $message,
-        $userDetails,
-        telegram\getDefaultVisitHandlers( $visit_ids, $userDetails[ "phone" ] )
+        $userDetails
     );
 
     sleep( 0.6 );

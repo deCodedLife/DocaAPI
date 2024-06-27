@@ -94,6 +94,7 @@ function sendMessage ( string $message, array $client, array $handlers = null )
     $request[ "messenger" ] = "{$API::$configs[ "company" ]}_telegram";
     $request[ "user" ] = $client;
     $request[ "message" ] = $message;
-    $request[ "handlers" ] = $handlers;
+    if ( empty( $client[ "messenger_id" ] ) ) return;
+    if ( !empty( $handlers ) ) $request[ "handlers" ] = $handlers;
     $API->curlRequest ( $request, "bot.docacrm.com/send_message" );
 }
